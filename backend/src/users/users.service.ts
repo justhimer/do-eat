@@ -18,8 +18,8 @@ export class UsersService {
     return this.users[this.users.length - 1];
   }
 
-  findAll(): User[] {
-    return this.users;
+  async findAll(): Promise<User[]> {
+    return await this.prisma.user.findMany({});
   }
 
   findOne(id: number) {

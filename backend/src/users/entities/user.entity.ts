@@ -12,6 +12,7 @@ export class User {
     email: string;
 
     @ApiProperty()
+    @IsString()
     name: string;
 
     @ApiProperty()
