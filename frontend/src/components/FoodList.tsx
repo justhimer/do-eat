@@ -7,8 +7,6 @@ export function FoodList() {
 
     const foods: FoodSliceState[] = useSelector((state: IRootState) => state.foods);
 
-    
-
     return (
         <div>
             <div>Food List</div>

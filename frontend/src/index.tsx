@@ -5,13 +5,18 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+export const queryClient = new QueryClient()
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>
 );

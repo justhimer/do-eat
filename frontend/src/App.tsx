@@ -11,10 +11,10 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
-import Tab4 from './pages/Tab4';
+import Tab1 from './pages/Home';
+import Tab2 from './pages/Do';
+import Tab3 from './pages/Eat';
+import Tab4 from './pages/User';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';

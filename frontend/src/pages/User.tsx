@@ -1,6 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-// import ExploreContainer from '../components/ExploreContainer';
-import './Tab4.css';
+import './User.scss';
 import { UserList } from '../components/UserList';
 
 const Tab4: React.FC = () => {
@@ -19,8 +18,6 @@ const Tab4: React.FC = () => {
         </IonHeader> */}
 
         <UserList />
-
-        {/* <ExploreContainer name="Tab 4 page" /> */}
 
       </IonContent>
     </IonPage>
