@@ -8,6 +8,6 @@ interface DistrictItemProps {
 export function DistrictItem(props: DistrictItemProps) {
 
     return (
-        <IonButton size="large" color="warning">{props.name}</IonButton>
+        <IonButton size="large" color="dark" >{props.name}</IonButton>
     )
 }

@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { DistrictList } from '../components/DistrictList';
-import './Do.scss';
+import AppStyle from '../scss/App.module.scss';
 
 const Tab2: React.FC = () => {
   return (
@@ -11,13 +11,16 @@ const Tab2: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+
+        {/* <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Do</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
 
-        <DistrictList />
+        <div className={AppStyle.hero}>
+          <DistrictList />
+        </div>
 
       </IonContent>
     </IonPage>

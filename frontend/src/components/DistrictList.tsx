@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { DistrictItem } from "./DistrictItem";
 import { FetchDistrictItemModel, fetchDistrictItems } from "../api/districtAPIs";
-
+import AppStyle from '../scss/App.module.scss'
 
 export function DistrictList() {
 
@@ -13,15 +13,17 @@ export function DistrictList() {
 
     return (
         <div>
-            <div className="district-title">District</div>
-            {
-                districts && districts.map((district: FetchDistrictItemModel, index: number) => (
-                    <DistrictItem
-                        key={index}
-                        id={district.id}
-                        name={district.name} />
-                ))
-            }
+            <div className={AppStyle.title}>District</div>
+            <div className={AppStyle.district_container}>
+                {
+                    districts && districts.map((district: FetchDistrictItemModel, index: number) => (
+                        <DistrictItem
+                            key={index}
+                            id={district.id}
+                            name={district.name} />
+                    ))
+                }
+            </div>
         </div>
 
     );

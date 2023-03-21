@@ -2,6 +2,7 @@ import { useSelector } from "react-redux"
 import { FoodSliceState } from "../redux/foodSlice";
 import { IRootState } from "../redux/store";
 import { FoodItem } from "./FoodItem";
+import AppStyle from '../scss/App.module.scss';
 
 export function FoodList() {
 
@@ -9,7 +10,7 @@ export function FoodList() {
 
     return (
         <div>
-            <div>Food List</div>
+            <div className={AppStyle.title}>Food List</div>
             {
                 foods.map((food, index) => (
                     <FoodItem

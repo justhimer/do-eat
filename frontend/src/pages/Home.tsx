@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Home.scss';
+import AppStyle from '../scss/App.module.scss';
 
 const Tab1: React.FC = () => {
   return (
@@ -10,11 +10,15 @@ const Tab1: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+
+        {/* <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
+
+        <div className={AppStyle.hero}></div>
+
       </IonContent>
     </IonPage>
   );
