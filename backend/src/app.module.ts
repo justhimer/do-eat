@@ -5,13 +5,15 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { FoodsModule } from './foods/foods.module';
 import { FoodTypesModule } from './food_types/food_types.module';
+import { DistrictsModule } from './districts/districts.module';
 
 @Module({
   imports: [
     PrismaModule.forRoot(),
     UsersModule,
     FoodsModule,
-    FoodTypesModule],  // forRoot() : global use
+    FoodTypesModule,
+    DistrictsModule],  // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
 })

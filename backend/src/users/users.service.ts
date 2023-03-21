@@ -37,18 +37,22 @@ export class UsersService {
     return foundUser;
   }
 
-  async update(id:number, updateUserDto: UpdateUserDto) {
-    const updatedUser = await this.prisma.user.update({
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    await this.prisma.user.update({
       where: {
         id: id,
       },
       data: updateUserDto,
     });
-    
+
     return `User id: ${id} has been deleted`;
   }
 
-  remove(id: number) {
-
+  async remove(id: number) {
+    await this.prisma.user.delete({
+      where: {
+        id: id,
+      }
+    });
   }
 }
