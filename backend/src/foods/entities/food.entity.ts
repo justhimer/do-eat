@@ -19,6 +19,10 @@ export class Food {
     image: string;
 
     @ApiProperty()
+    @IsInt()
+    calories: number;
+
+    @ApiProperty()
     @IsString()
     description: string;
 
@@ -27,8 +31,4 @@ export class Food {
 
     @ApiProperty()
     allergens: string[];
-
-    @ApiProperty()
-    @IsString()
-    preparation: string;
 }

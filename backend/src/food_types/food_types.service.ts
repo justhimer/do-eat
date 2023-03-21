@@ -12,6 +12,7 @@ export class FoodTypesService {
     await this.prisma.foodType.create({
       data: {
         name: createFoodTypeDto.name,
+        icon: createFoodTypeDto.icon
       }
     })
     return 'Created food type';

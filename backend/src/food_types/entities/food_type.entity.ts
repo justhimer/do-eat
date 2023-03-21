@@ -9,4 +9,8 @@ export class FoodType {
     @ApiProperty()
     @IsString()
     name: string;
+
+    @ApiProperty()
+    @IsString()
+    icon: string;
 }

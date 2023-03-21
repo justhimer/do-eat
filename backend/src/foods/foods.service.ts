@@ -14,10 +14,10 @@ export class FoodsService {
         name: createFoodDto.name,
         food_type_id: createFoodDto.food_type_id,
         image: createFoodDto.image,
+        calories: createFoodDto.calories,
         description: createFoodDto.description,
         ingredients: createFoodDto.ingredient,
         allergens: createFoodDto.allergens,
-        preparation: createFoodDto.preparation
       },
     });
     return 'Food created';
@@ -33,10 +33,10 @@ export class FoodsService {
           },
         },
         image: true,
+        calories: true,
         description: true,
         ingredients: true,
         allergens: true,
-        preparation: true,
       },
     });
     return foods;
