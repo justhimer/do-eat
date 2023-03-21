@@ -8,7 +8,7 @@ export class FoodsService {
 
   constructor(private prisma: PrismaService) { }
 
-  async createFood(createFoodDto: CreateFoodDto) {
+  async create(createFoodDto: CreateFoodDto) {
     await this.prisma.foods.create({
       data: {
         name: createFoodDto.name,

@@ -11,7 +11,7 @@ export class FoodsController {
 
   @Post()
   createFood(@Body() createFoodDto: CreateFoodDto) {
-    return this.foodsService.createFood(createFoodDto);
+    return this.foodsService.create(createFoodDto);
   }
 
   @Get()

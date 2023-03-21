@@ -9,6 +9,7 @@ export class DistrictsService {
   constructor(private prisma: PrismaService) { }
 
   create(createDistrictDto: CreateDistrictDto) {
+    await this.prisma.districts
     return 'This action adds a new district';
   }
 
