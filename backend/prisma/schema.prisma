@@ -13,30 +13,30 @@ datasource db {
 model User {
   id       Int     @id @default(autoincrement())
   email    String  @unique
-  name     String?
-  password String
-  icon     String
+  username String? @db.VarChar(255)
+  password String  @db.Text
+  icon     String  @db.Text
 }
 
 model FoodType {
   id         Int      @id @default(autoincrement())
-  name       String
-  icon       String
+  name       String   @db.VarChar(255)
+  icon       String   @db.Text
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
-  food       Food[]
+  food       Food[]   
 }
 
 model Food {
-  id           Int           @id @default(autoincrement())
-  name         String
-  food_type    FoodType      @relation(fields: [food_type_id], references: [id])
-  food_type_id Int
-  image        String
-  calories     Int
-  description  String
+  id           Int      @id @default(autoincrement())
+  name         String   @db.Text
+  food_type    FoodType @relation(fields: [food_type_id], references: [id])
+  food_type_id Int      @db.Integer
+  image        String   @db.Text
+  calories     Int      @db.Integer
+  description  String   @db.Text
   ingredients  String[]
   allergens    String[]
-  created_at   DateTime      @default(now()) @db.Timestamptz
-  updated_at   DateTime      @updatedAt @db.Timestamptz
+  created_at   DateTime @default(now()) @db.Timestamptz
+  updated_at   DateTime @updatedAt @db.Timestamptz
 }

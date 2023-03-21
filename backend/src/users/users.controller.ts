@@ -28,7 +28,7 @@ export class UsersController {
   update(
     @Param('id', ParseIntPipe) id: string,  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
     @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(+id, updateUserDto);  // +id turns id type to number
   }
 
   @Delete(':id')
