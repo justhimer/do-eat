@@ -9,7 +9,7 @@ export class FoodTypesService {
   constructor(private prisma: PrismaService) { }
 
   async create(createFoodTypeDto: CreateFoodTypeDto) {
-    const result = await this.prisma.foodType.create({
+    const result = await this.prisma.foodTypes.create({
       data: {
         name: createFoodTypeDto.name,
         icon: createFoodTypeDto.icon,

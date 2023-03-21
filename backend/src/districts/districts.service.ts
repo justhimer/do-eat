@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import { CreateDistrictDto } from './dto/create-district.dto';
 import { UpdateDistrictDto } from './dto/update-district.dto';
 
 @Injectable()
 export class DistrictsService {
+
+  constructor(private prisma: PrismaService) { }
+
   create(createDistrictDto: CreateDistrictDto) {
     return 'This action adds a new district';
   }

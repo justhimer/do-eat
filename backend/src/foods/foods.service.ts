@@ -9,7 +9,7 @@ export class FoodsService {
   constructor(private prisma: PrismaService) { }
 
   async createFood(createFoodDto: CreateFoodDto) {
-    await this.prisma.food.create({
+    await this.prisma.foods.create({
       data: {
         name: createFoodDto.name,
         food_type_id: createFoodDto.food_type_id,
@@ -24,10 +24,10 @@ export class FoodsService {
   }
 
   async findAll() {
-    const foods = await this.prisma.food.findMany({
+    const foods = await this.prisma.foods.findMany({
       select: {
         id: true,
-        food_type: {
+        food_types: {
           select: {
             name: true,
           },
