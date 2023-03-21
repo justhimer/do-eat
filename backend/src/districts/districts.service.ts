@@ -8,13 +8,18 @@ export class DistrictsService {
 
   constructor(private prisma: PrismaService) { }
 
-  create(createDistrictDto: CreateDistrictDto) {
-    await this.prisma.districts
-    return 'This action adds a new district';
+  async create(createDistrictDto: CreateDistrictDto) {
+    await this.prisma.districts.create({
+      data: {
+        name: createDistrictDto.name,
+      }
+    })
+    return 'District created';
   }
 
-  findAll() {
-    return `This action returns all districts`;
+  async findAll() {
+    const districts = await this.prisma.districts.findMany({});
+    return districts;
   }
 
   findOne(id: number) {

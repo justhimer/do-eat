@@ -6,6 +6,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // apply cors to avoid crossed origins
+  app.enableCors();
+
   /***************************/
   /*** Swagger Setup Start ***/
   /***************************/

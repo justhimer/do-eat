@@ -12,23 +12,24 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
 
-    await this.prisma.user.create({
-      data: {
-        email: createUserDto.email,
-        username: createUserDto.username,
-        password: createUserDto.password,
-        icon: createUserDto.icon
-      },
-    });
-    return 'User created';
+    // await this.prisma.users.create({
+    //   data: {
+    //     email: createUserDto.email,
+    //     username: createUserDto.username,
+    //     password: createUserDto.password,
+    //     icon: createUserDto.icon
+    //   },
+    // });
+    // return 'User created';
+
   }
 
   async findAll(): Promise<User[]> {
-    return await this.prisma.user.findMany({});
+    return await this.prisma.users.findMany({});
   }
 
   async findOne(id: number) {
-    let foundUser = await this.prisma.user.findFirst({
+    let foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
       }
@@ -38,7 +39,7 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    await this.prisma.user.update({
+    await this.prisma.users.update({
       where: {
         id: id,
       },
@@ -49,7 +50,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    await this.prisma.user.delete({
+    await this.prisma.users.delete({
       where: {
         id: id,
       }
