@@ -1,16 +1,16 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsString } from 'class-validator';
 
 export class FoodType {
-    @ApiProperty()
-    @IsInt()
-    id: number;
+  @ApiProperty()
+  @IsInt()
+  id: number;
 
-    @ApiProperty()
-    @IsString()
-    name: string;
+  @ApiProperty()
+  @IsString()
+  name: string;
 
-    @ApiProperty()
-    @IsString()
-    icon: string;
+  @ApiProperty()
+  @IsString()
+  icon: string;
 }

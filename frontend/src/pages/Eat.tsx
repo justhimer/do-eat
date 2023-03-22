@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { FoodList } from '../components/FoodList';
 import AppStyle from '../scss/App.module.scss';
 
-const Tab3: React.FC = () => {
+const EatTab: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -27,4 +27,4 @@ const Tab3: React.FC = () => {
   );
 };
 
-export default Tab3;
+export default EatTab;

@@ -12,13 +12,13 @@ export const queryClient = new QueryClient()
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

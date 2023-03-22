@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import AppStyle from '../scss/App.module.scss';
 
-const Tab1: React.FC = () => {
+const HomeTab: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -24,4 +24,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default HomeTab;

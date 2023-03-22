@@ -1,1 +1,0 @@
-export const domainPort = "http://localhost:3000";

@@ -5,16 +5,15 @@ import { UpdateFoodTypeDto } from './dto/update-food_type.dto';
 
 @Injectable()
 export class FoodTypesService {
-  
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createFoodTypeDto: CreateFoodTypeDto) {
     const result = await this.prisma.foodTypes.create({
       data: {
         name: createFoodTypeDto.name,
         icon: createFoodTypeDto.icon,
-      }
-    })
+      },
+    });
     return result;
   }
 

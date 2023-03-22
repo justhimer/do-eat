@@ -5,15 +5,14 @@ import { UpdateDistrictDto } from './dto/update-district.dto';
 
 @Injectable()
 export class DistrictsService {
-
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createDistrictDto: CreateDistrictDto) {
     await this.prisma.districts.create({
       data: {
         name: createDistrictDto.name,
-      }
-    })
+      },
+    });
     return 'District created';
   }
 

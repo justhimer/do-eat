@@ -1,4 +1,4 @@
-import { domainPort } from "./backendConnection";
+import { domain } from "./domain";
 
 const controllerName = "districts";
 
@@ -8,16 +8,16 @@ export interface FetchDistrictItemModel {
 }
 
 export const fetchDistrictItems = async (): Promise<FetchDistrictItemModel[]> => {
-    
+
     console.log('fetching district...');
-    
-    const res = await fetch(`${domainPort}/${controllerName}`);
-    
+
+    const res = await fetch(`${domain}/${controllerName}`);
+
     if (res.ok) {
         const data = await res.json();
         return data;
     } else {
         throw new Error("Fetch districts fail");
     }
-    
+
 }

@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { UserList } from '../components/UserList';
+import { Login } from '../components/Login';
 import AppStyle from '../scss/App.module.scss';
 
-const Tab4: React.FC = () => {
+const UserTab: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -19,7 +19,7 @@ const Tab4: React.FC = () => {
         </IonHeader> */}
 
         <div className={AppStyle.hero}>
-        <UserList />
+          <Login />
         </div>
 
       </IonContent>
@@ -27,4 +27,4 @@ const Tab4: React.FC = () => {
   );
 };
 
-export default Tab4;
+export default UserTab;

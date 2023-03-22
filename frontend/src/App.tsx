@@ -11,10 +11,10 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Home';
-import Tab2 from './pages/Do';
-import Tab3 from './pages/Eat';
-import Tab4 from './pages/User';
+import HomeTab from './pages/Home';
+import DoTab from './pages/Do';
+import EatTab from './pages/Eat';
+import UserTab from './pages/User';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { FacebookCallback } from './components/SocialMediaCallback';
 
 setupIonicReact();
 
@@ -41,41 +42,60 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
+
+
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+
+          {/* nav bar */}
+          <Route exact path="/home-tab">
+            <HomeTab />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/do-tab">
+            <DoTab />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
+          <Route path="/eat-tab">
+            <EatTab />
           </Route>
-          <Route path="/tab4">
-            <Tab4 />
+          <Route path="/user-tab">
+            <UserTab />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/home-tab" />
           </Route>
+
+          {/* other routes */}
+          <Route path="/facebook-callback">
+            <FacebookCallback />
+          </Route>
+
         </IonRouterOutlet>
+
+
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+
+          <IonTabButton tab="home-tab" href="/home-tab">
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+
+          <IonTabButton tab="do-tab" href="/do-tab">
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+
+          <IonTabButton tab="eat-tab" href="/eat-tab">
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab4" href="/tab4">
+
+          <IonTabButton tab="user-tab" href="/user-tab">
             <IonIcon aria-hidden="true" icon={accessibilityOutline} />
             <IonLabel>User</IonLabel>
           </IonTabButton>
+
         </IonTabBar>
+
+
       </IonTabs>
     </IonReactRouter>
   </IonApp>

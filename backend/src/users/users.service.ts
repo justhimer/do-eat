@@ -1,17 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { hashPassword } from '../../utils/hash';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-
-  constructor(private prisma: PrismaService) { }
-
+  constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-
     // await this.prisma.users.create({
     //   data: {
     //     email: createUserDto.email,
@@ -21,20 +19,41 @@ export class UsersService {
     //   },
     // });
     // return 'User created';
+  }
 
+  async createByFacebook(email: string, username: string) {
+    const password = await hashPassword('facebook');
+    const user = await this.prisma.users.create({
+      data: {
+        email: email,
+        username: username,
+        password: password,
+      },
+    });
+    return user;
   }
 
   async findAll(): Promise<User[]> {
     return await this.prisma.users.findMany({});
   }
 
-  async findOne(id: number) {
-    let foundUser = await this.prisma.users.findFirst({
+  async findOneById(id: number) {
+    const foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
-      }
-    })
-    if (!foundUser) throw new NotFoundException('User not found.')
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
+    return foundUser;
+  }
+
+  async findOneByEmail(email: string) {
+    const foundUser = await this.prisma.users.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
 
@@ -53,7 +72,7 @@ export class UsersService {
     await this.prisma.users.delete({
       where: {
         id: id,
-      }
+      },
     });
   }
 }

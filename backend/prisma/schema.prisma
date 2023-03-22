@@ -15,9 +15,9 @@ model Users {
   email      String   @unique @db.Text
   username   String?  @db.VarChar(255)
   password   String   @db.Text
-  icon       String   @db.Text
-  credits    Int      @db.Integer
-  calories   Int      @db.Integer
+  icon       String   @default("default_icon.png") @db.Text
+  credits    Int      @default(0) @db.Integer
+  calories   Int      @default(0) @db.Integer
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
 }
@@ -61,7 +61,8 @@ model Districts {
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
   gyms       Gyms[]
-	@@map("Districts")
+
+  @@map("Districts")
 }
 
 model Franchise {
@@ -82,7 +83,7 @@ model Gyms {
   location_id     Int       @db.Integer
   franchise       Franchise @relation(fields: [franchise_id], references: [id])
   franchise_id    Int       @db.Integer
-  district        Districts  @relation(fields: [district_id], references: [id])
+  district        Districts @relation(fields: [district_id], references: [id])
   district_id     Int       @db.Integer
   opening_hour    Int       @db.Integer
   closing_hour    Int       @db.Integer

@@ -13,8 +13,9 @@ import { DistrictsModule } from './districts/districts.module';
     UsersModule,
     FoodsModule,
     FoodTypesModule,
-    DistrictsModule],  // forRoot() : global use
+    DistrictsModule,
+  ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

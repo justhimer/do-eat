@@ -1,13 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('foods')  // to categorize in swagger
+@ApiTags('foods') // to categorize in swagger
 @Controller('foods')
 export class FoodsController {
-  constructor(private readonly foodsService: FoodsService) { }
+  constructor(private readonly foodsService: FoodsService) {}
 
   @Post()
   createFood(@Body() createFoodDto: CreateFoodDto) {
