@@ -17,10 +17,24 @@ const HomeTab: React.FC = () => {
           </IonToolbar>
         </IonHeader> */}
 
-        <div className={AppStyle.hero}></div>
+        <div className={AppStyle.hero}>
+          <header className={AppStyle.Iam}>
+            <p>Do Eat</p>
+            <b>
+              <div className={AppStyle.innerIam}>
+                just do<br />
+                eat later<br />
+                just do! eat later !!<br />
+                不能逃避。<br />
+                逃げちゃだめだ!!
+              </div>
+            </b>
+
+          </header>
+        </div>
 
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 };
 
