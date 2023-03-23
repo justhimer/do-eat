@@ -1,9 +1,9 @@
 
-export async function facebookLogin(code:string){
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/users/login/facebook`,{
-        method:'POST',
-        headers:{
-            "Content-Type":"application/json; charset=utf-8"
+export async function facebookLogin(code: string) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/users/login/facebook`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
         },
         body: JSON.stringify({ code })
     })
@@ -12,7 +12,7 @@ export async function facebookLogin(code:string){
     return result
 
     // if(res.ok){
-        // localStorage.setItem('token', result.token)
+    // localStorage.setItem('token', result.token)
     //     return result
     // }else{
     //     return false
