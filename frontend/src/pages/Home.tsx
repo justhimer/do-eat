@@ -1,4 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { Logo } from '../components/Logo';
 import AppStyle from '../scss/App.module.scss';
 
 const HomeTab: React.FC = () => {
@@ -18,19 +19,7 @@ const HomeTab: React.FC = () => {
         </IonHeader> */}
 
         <div className={AppStyle.hero}>
-          <header className={AppStyle.Iam}>
-            <p>Do Eat</p>
-            <b>
-              <div className={AppStyle.innerIam}>
-                just do<br />
-                eat later<br />
-                just do! eat later !!<br />
-                不能逃避。<br />
-                逃げちゃだめだ!!
-              </div>
-            </b>
-
-          </header>
+          <Logo />
         </div>
 
       </IonContent>
