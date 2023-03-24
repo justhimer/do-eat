@@ -6,9 +6,9 @@ export function Logo() {
             <p>Do Eat</p>
             <b>
                 <div className={LogoStyle.innerIam}>
-                    just do!<br />
-                    just do it later ??<br />
-                    just do!! eat later !!<br />
+                    Just do.<br />
+                    Eat later.<br />
+                    No escape.<br />
                     不能逃避。<br />
                     逃げちゃだめだ!!
                 </div>
