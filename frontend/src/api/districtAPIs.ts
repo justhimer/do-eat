@@ -1,5 +1,3 @@
-import { domain } from "./domain";
-
 const controllerName = "districts";
 
 export interface FetchDistrictItemModel {
@@ -11,7 +9,7 @@ export const fetchDistrictItems = async (): Promise<FetchDistrictItemModel[]> =>
 
     console.log('fetching district...');
 
-    const res = await fetch(`${domain}/${controllerName}`);
+    const res = await fetch(`${process.env.BACKEND_SERVER}/${controllerName}`);
 
     if (res.ok) {
         const data = await res.json();
