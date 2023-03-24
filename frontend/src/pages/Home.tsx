@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+import { Logo } from '../components/Logo';
+import AppStyle from '../scss/App.module.scss';
 
-const Tab1: React.FC = () => {
+const HomeTab: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -11,15 +11,20 @@ const Tab1: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+
+        {/* <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+        </IonHeader> */}
+
+        <div className={AppStyle.hero}>
+          <Logo />
+        </div>
+
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 };
 
-export default Tab1;
+export default HomeTab;

@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  doeat:
+  
+    # environment:
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: postgres
+    #   POSTGRES_DB: doeat
+    #   POSTGRES_HOST: postgres
+    #   # NODE_ENV: production
+    #   PORT: 5432
+
+    build:  # build an image when compose
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres
+    image: "doeat:latest"
+    ports:
+      - "3000:3000"
+
+  postgres:
+    # postgres version 13
+    image: "postgres:13"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: doeat
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

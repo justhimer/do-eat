@@ -1,54 +1,78 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { hashPassword } from '../../utils/hash';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-
-  constructor(private prisma: PrismaService) { }
-
+  constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
+    // await this.prisma.users.create({
+    //   data: {
+    //     email: createUserDto.email,
+    //     username: createUserDto.username,
+    //     password: createUserDto.password,
+    //     icon: createUserDto.icon
+    //   },
+    // });
+    // return 'User created';
+  }
 
-    await this.prisma.user.create({
+  async createByFacebook(email: string, username: string) {
+    const password = await hashPassword('facebook');
+    const user = await this.prisma.users.create({
       data: {
-        email: createUserDto.email,
-        username: createUserDto.username,
-        password: createUserDto.password,
-        icon: createUserDto.icon
+        email: email,
+        username: username,
+        password: password,
       },
     });
-    return 'User created';
+    return user;
   }
 
   async findAll(): Promise<User[]> {
-    return await this.prisma.user.findMany({});
+    return await this.prisma.users.findMany({});
   }
 
-  async findOne(id: number) {
-    let foundUser = await this.prisma.user.findFirst({
+  async findOneById(id: number) {
+    const foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
-      }
-    })
-    if (!foundUser) throw new NotFoundException('User not found.')
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
 
-  async update(id:number, updateUserDto: UpdateUserDto) {
-    const updatedUser = await this.prisma.user.update({
+  async findOneByEmail(email: string) {
+    const foundUser = await this.prisma.users.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
+    return foundUser;
+  }
+
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    await this.prisma.users.update({
       where: {
         id: id,
       },
       data: updateUserDto,
     });
-    
+
     return `User id: ${id} has been deleted`;
   }
 
-  remove(id: number) {
-
+  async remove(id: number) {
+    await this.prisma.users.delete({
+      where: {
+        id: id,
+      },
+    });
   }
 }

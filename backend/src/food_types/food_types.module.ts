@@ -5,6 +5,6 @@ import { PrismaService } from 'nestjs-prisma';
 
 @Module({
   controllers: [FoodTypesController],
-  providers: [FoodTypesService, PrismaService]
+  providers: [FoodTypesService, PrismaService],
 })
 export class FoodTypesModule {}

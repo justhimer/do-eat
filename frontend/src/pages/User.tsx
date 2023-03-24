@@ -1,9 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-// import ExploreContainer from '../components/ExploreContainer';
-import './Tab4.css';
-import { UserList } from '../components/UserList';
+import { Login } from '../components/Login';
+import AppStyle from '../scss/App.module.scss';
 
-const Tab4: React.FC = () => {
+const UserTab: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -12,19 +11,20 @@ const Tab4: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+
         {/* <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">User</IonTitle>
           </IonToolbar>
         </IonHeader> */}
 
-        <UserList />
-
-        {/* <ExploreContainer name="Tab 4 page" /> */}
+        <div className={AppStyle.hero}>
+          <Login />
+        </div>
 
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab4;
+export default UserTab;

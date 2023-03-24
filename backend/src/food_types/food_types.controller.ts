@@ -1,10 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FoodTypesService } from './food_types.service';
 import { CreateFoodTypeDto } from './dto/create-food_type.dto';
 import { UpdateFoodTypeDto } from './dto/update-food_type.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('food-types')  // to categorize in swagger
+@ApiTags('food-types') // to categorize in swagger
 @Controller('food-types')
 export class FoodTypesController {
   constructor(private readonly foodTypesService: FoodTypesService) {}
@@ -25,7 +33,10 @@ export class FoodTypesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFoodTypeDto: UpdateFoodTypeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFoodTypeDto: UpdateFoodTypeDto,
+  ) {
     return this.foodTypesService.update(+id, updateFoodTypeDto);
   }
 

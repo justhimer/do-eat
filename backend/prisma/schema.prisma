@@ -68,12 +68,14 @@ model FoodHistory {
   CalorieTransaction CalorieTransaction[]
 }
 
-model District {
+model Districts {
   id         Int      @id @default(autoincrement())
   name       String   @unique @db.VarChar(255)
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
   gyms       Gyms[]
+
+  @@map("Districts")
 }
 
 model Franchise {
@@ -93,7 +95,7 @@ model Gyms {
   password        String        @db.Text
   franchise       Franchise     @relation(fields: [franchise_id], references: [id])
   franchise_id    Int           @db.Integer
-  district        District      @relation(fields: [district_id], references: [id])
+  district        Districts     @relation(fields: [district_id], references: [id])
   district_id     Int           @db.Integer
   opening_hour    Int           @db.Integer
   closing_hour    Int           @db.Integer

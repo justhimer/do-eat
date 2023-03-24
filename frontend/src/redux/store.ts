@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import foodSlice, { FoodSliceState } from "./foodSlice";
-import userSlice, { UserSliceState } from "./userSlice";
+import foodSlice from "./foodSlice";
+import userSlice from "./userSlice";
 
-export interface IRootState {
-    users: UserSliceState[];
-    foods: FoodSliceState[];
-}
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
 
 export const store = configureStore({
     reducer: {
@@ -13,3 +11,6 @@ export const store = configureStore({
         foods: foodSlice,
     }
 });
+
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+// export type AppDispatch = typeof store.dispatch

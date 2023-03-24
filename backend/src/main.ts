@@ -6,6 +6,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // apply cors to avoid crossed origins
+  app.enableCors();
+
   /***************************/
   /*** Swagger Setup Start ***/
   /***************************/
@@ -18,9 +21,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   // validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe(),
-  );
+  app.useGlobalPipes(new ValidationPipe());
 
   SwaggerModule.setup('api', app, document);
 
