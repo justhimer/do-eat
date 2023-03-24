@@ -3,16 +3,18 @@ version: "3"
 services:
 
   doeat:
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: doeat
-      POSTGRES_HOST: postgres
-      # NODE_ENV: production
-      PORT: 5432
-    # build:
-    #   context: ./
-    #   dockerfile: ./Dockerfile
+  
+    # environment:
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: postgres
+    #   POSTGRES_DB: doeat
+    #   POSTGRES_HOST: postgres
+    #   # NODE_ENV: production
+    #   PORT: 5432
+
+    build:  # build an image when compose
+      context: ./
+      dockerfile: ./Dockerfile
     depends_on:
       - postgres
     image: "doeat:latest"
