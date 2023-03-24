@@ -83,6 +83,14 @@ const App: React.FC = () => (
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
+          {/* invisible button for applying QR code css */}
+          <IonTabButton>
+            <IonIcon aria-hidden="true" />
+            <IonLabel>
+              <div className=''></div>
+              </IonLabel>
+          </IonTabButton>
+
           <IonTabButton tab="eat-tab" href="/eat-tab">
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
