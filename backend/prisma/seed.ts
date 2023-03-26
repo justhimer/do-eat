@@ -1,4 +1,4 @@
-import { PrismaClient, Gyms } from "@prisma/client";
+import { PrismaClient, Gyms, Prisma} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -82,7 +82,7 @@ async function main() {
     })
 
     const foodTypes = await prisma.foodTypes.upsert({
-        where: {},
+        where: {name: "LowCarbs"},
         update: {},
         create: {
             name: "LowCarbs",
@@ -91,7 +91,7 @@ async function main() {
     })
 
     const foodTypes2 = await prisma.foodTypes.upsert({
-        where: {},
+        where: {name: "HighProtein"},
         update: {},
         create: {
             name: "HighProtein",
@@ -100,7 +100,7 @@ async function main() {
     })
 
     const intensities = await prisma.intensities.upsert({
-        where: {},
+        where: {level: "Low"},
         update: {},
         create: {
             level: "Low",
@@ -108,7 +108,7 @@ async function main() {
     })
 
     const intensities2 = await prisma.intensities.upsert({
-        where: {},
+        where: {level: "Medium"},
         update: {},
         create: {
             level: "Medium",
@@ -116,55 +116,79 @@ async function main() {
     })
 
     const intensities3 = await prisma.intensities.upsert({
-        where: {},
+        where: {level: "High"},
         update: {},
         create: {
             level: "High",
         },
     })
 
-    const attendanceTypes = await prisma.attendanceTypes.upsert({
-        where: {},
-        update: {},
-        create: {
-            details: "attennded",
-        },
+    const attendanceValue: Prisma.AttendanceTypesCreateInput[] = [
+        {details: "pending"},
+        {details: "attended"},
+        {details: "absent"}
+    ]
+    const attendanceInsert = await prisma.attendanceTypes.createMany({
+        data: attendanceValue
+    })
+    // const attendanceTypes = await prisma.attendanceTypes.upsert({
+    //     where: {details: "attennded"},
+    //     update: {},
+    //     create: {
+    //         details: "attennded",
+    //     },
+    // })
+
+    // const attendanceTypes2 = await prisma.attendanceTypes.upsert({
+    //     where: {},
+    //     update: {},
+    //     create: {
+    //         details: "pending",
+    //     },
+    // })
+
+    const subPlansValue :Prisma.SubPlansCreateInput[] = [
+        {name: "Basic",
+        unlimited: false,
+        credits: 10,
+        fee: 2750,
+        duration: 30,},
+        {name: "Premium",
+        unlimited: true,
+        credits: 99999,
+        fee: 5999,
+        duration: 30,}
+    ]
+    const subPlansInsert = await prisma.subPlans.createMany({
+        data:subPlansValue
     })
 
-    const attendanceTypes2 = await prisma.attendanceTypes.upsert({
-        where: {},
-        update: {},
-        create: {
-            details: "pending",
-        },
-    })
+    // const subPlans = await prisma.subPlans.upsert({
+    //     where: {},
+    //     update: {},
+    //     create: {
+    //         name: "Basic",
+    //         unlimited: false,
+    //         credits: 10,
+    //         fee: 2750,
+    //         duration: 30,
+    //     },
+    // })
 
-    const subPlans = await prisma.subPlans.upsert({
-        where: {},
-        update: {},
-        create: {
-            name: "Basic",
-            unlimited: false,
-            credits: 10,
-            fee: 2750,
-            duration: 30,
-        },
-    })
-
-    const subPlans2 = await prisma.subPlans.upsert({
-        where: {},
-        update: {},
-        create: {
-            name: "Premium",
-            unlimited: true,
-            credits: 99999,
-            fee: 5999,
-            duration: 30,
-        },
-    })
+    // const subPlans2 = await prisma.subPlans.upsert({
+    //     where: {},
+    //     update: {},
+    //     create: {
+    //         name: "Premium",
+    //         unlimited: true,
+    //         credits: 99999,
+    //         fee: 5999,
+    //         duration: 30,
+    //     },
+    // })
 
 
-    const districts1 = await prisma.district.upsert({
+    const districts1 = await prisma.districts.upsert({
         where: { name: "CausewayBay" },
         update: {},
         create: {
@@ -172,7 +196,7 @@ async function main() {
         },
     })
 
-    const district2 = await prisma.district.upsert({
+    const district2 = await prisma.districts.upsert({
         where: { name: "Central" },
         update: {},
         create: {
@@ -180,7 +204,7 @@ async function main() {
         },
     })
 
-    const district3 = await prisma.district.upsert({
+    const district3 = await prisma.districts.upsert({
         where: { name: "Wan Chai" },
         update: {},
         create: {
@@ -188,7 +212,7 @@ async function main() {
         },
     })
 
-    const district4 = await prisma.district.upsert({
+    const district4 = await prisma.districts.upsert({
         where: { name: "Tsim Sha Tsui" },
         update: {},
         create: {
@@ -196,7 +220,7 @@ async function main() {
         },
     })
 
-    const district5 = await prisma.district.upsert({
+    const district5 = await prisma.districts.upsert({
         where: { name: "Monk Kok" },
         update: {},
         create: {
