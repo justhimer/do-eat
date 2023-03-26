@@ -13,5 +13,4 @@ EXPOSE 3000
 # run command
 CMD yarn install && \
     yarn prisma migrate reset -f &&\
-    # yarn knex seed:run &&\
     yarn start:dev
