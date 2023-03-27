@@ -36,6 +36,15 @@ const userSlice = createSlice({
             state.username = payload.username;
 
             localStorage.setItem("token", payload.token);
+        },
+
+        logout: (state: UserSliceState) => {
+            state.isAuthenticated = false;
+            state.id = 0;
+            state.email = "";
+            state.username = "";
+
+            localStorage.removeItem("token");
         }
     },
 
