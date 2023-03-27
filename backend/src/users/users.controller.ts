@@ -68,7 +68,7 @@ export class UsersController {
     // find existing user from database according to user's facebook email
     let user = await this.usersService.findOneByEmail(profileData.email);
 
-    // Create a new user if the user does not exist
+    // create a new user if the user does not exist
     if (!user) {
       user = await this.usersService.createByFacebook(
         profileData.email,
