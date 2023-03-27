@@ -79,7 +79,6 @@ const App: React.FC = () => (
 
         </IonRouterOutlet>
 
-
         <IonTabBar slot="bottom">
           <IonTabButton tab="home-tab" href="/home-tab">
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
