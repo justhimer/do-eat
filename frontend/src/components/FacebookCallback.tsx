@@ -9,7 +9,7 @@ import { RedirectPage } from "./RedirectPage";
 export function FacebookCallback() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state: RootState) => state.users.isAuthenticated);
+    const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search)
@@ -28,10 +28,10 @@ export function FacebookCallback() {
     }, []);
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isLoggedIn) {
             history.push("/user-tab")
         }
-    }, [isAuthenticated])
+    }, [isLoggedIn])
 
     return <RedirectPage />
 
