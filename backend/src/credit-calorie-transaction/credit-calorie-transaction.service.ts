@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class CreditCalorieTransactionService {
-    constructor (private prisma: PrismaClient){}
+    constructor (private prisma: PrismaService){}
 
     async updateUserCredits(id:number){
-       const addCredit = await this.prisma.creditTransaction.aggregate({
+        console.log('diu')
+       const addCredit = (await this.prisma.creditTransaction.aggregate({
         _sum: {
             credit: true
         },where:{
@@ -15,10 +16,10 @@ export class CreditCalorieTransactionService {
                 name:"add"
             }
         }
-       })
+       }))._sum.credit || 0
        console.log("addCredit ", addCredit);
        
-       const deductCredit = await this.prisma.creditTransaction.aggregate({
+       const deductCredit = (await this.prisma.creditTransaction.aggregate({
         _sum: {
             credit: true
         },where:{
@@ -27,10 +28,10 @@ export class CreditCalorieTransactionService {
                 name:"minus"
             }
         }
-       })
+       }))._sum.credit || 0
        console.log("deductCredit ", deductCredit);
 
-       const newCredit = addCredit._sum.credit - deductCredit._sum.credit
+       const newCredit = addCredit - deductCredit
 
        console.log("newCredit ", newCredit);
        await this.prisma.users.update({
@@ -46,11 +47,12 @@ export class CreditCalorieTransactionService {
             select:{credits:true},
             where:{id:id}
         })
+        console.log('dim gun')
         return userCredits.credits
     }
 
     async updateUserCalories(id:number){
-        const addCalorie = await this.prisma.calorieTransaction.aggregate({
+        const addCalorie = (await this.prisma.calorieTransaction.aggregate({
             _sum:{
                 calorie:true
             },
@@ -60,9 +62,9 @@ export class CreditCalorieTransactionService {
                     name:"add"
                 }
             }
-        })
+        }))._sum.calorie || 0
 
-        const deductCalorie = await this.prisma.calorieTransaction.aggregate({
+        const deductCalorie = (await this.prisma.calorieTransaction.aggregate({
             _sum:{
                 calorie:true
             },
@@ -72,9 +74,9 @@ export class CreditCalorieTransactionService {
                     name:"minus"
                 }
             }
-        })
+        }))._sum.calorie || 0
 
-        const newCalorie = addCalorie._sum.calorie - deductCalorie._sum.calorie
+        const newCalorie = addCalorie - deductCalorie
 
         await this.prisma.users.update({
             where:{id:id},

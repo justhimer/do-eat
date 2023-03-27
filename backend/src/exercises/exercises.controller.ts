@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, Query, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
@@ -8,33 +8,29 @@ import { CreditCalorieTransactionService } from 'src/credit-calorie-transaction/
 export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditCalorieTransactionService) {}
 
-  @Post()
-  create(@Body() createExerciseDto: CreateExerciseDto) {
-    return this.exercisesService.create(createExerciseDto);
-  }
 
-  @Get()
+  @Get("/")
   findAll() {
-    return this.exercisesService.findAll();
+    console.log('wtf')
+    return "wtf"
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exercisesService.findOne(+id);
-  }
+  @Post('join/:course')
+  async join(@Param('course',ParseIntPipe) course:number ,@Body('id', ParseIntPipe) id: number){
+    await this.creditService.updateUserCredits(id)
+    
+    //need api to get subscription model
+    if (null){
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
-    return this.exercisesService.update(+id, updateExerciseDto);
+    }else{
+      let userCredit = await this.creditService.getUserCredit(id)
+      let courseCredit = await this.exercisesService.getExerciseCredit(course)
+      if (courseCredit>userCredit){
+        throw new BadRequestException('Not Enough Credits', { cause: new Error(), description: 'Not Enough Credits' })
+        return
+      }
+      await this.exercisesService.addCourse(id,course)
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exercisesService.remove(+id);
-  }
-
-  @Get('test')
-  diu(@Body('id',ParseIntPipe) id: number){
-    this.creditService.updateUserCalories(1)
-  }
+    }
+    
 }

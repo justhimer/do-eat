@@ -1,26 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 @Injectable()
 export class ExercisesService {
-  create(createExerciseDto: CreateExerciseDto) {
-    return 'This action adds a new exercise';
-  }
+  constructor(private readonly prisma: PrismaClient){}
 
-  findAll() {
-    return `This action returns all exercises`;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} exercise`;
-  }
+  async getExerciseCredit(exercise_id:number){
+    let credits = (await this.prisma.courseSchedules.findFirstOrThrow({
+     where:{
+      id:exercise_id
+     },
+     include:{
+      courses:{
+        select:{
+          credits:true
+        }
+      }
+     }
+  })).courses.credits
 
-  update(id: number, updateExerciseDto: UpdateExerciseDto) {
-    return `This action updates a #${id} exercise`;
-  }
+  return credits
+}
 
-  remove(id: number) {
-    return `This action removes a #${id} exercise`;
-  }
+async addCourse(user_id:number, exercise_id:number){
+  // const addToCourse = this.prisma.userSchedule.create({
+  //   data:{
+
+  //   }
+  // })
+
+  // const removeCredits = this.prisma.creditTransaction.update({
+  //   where:{
+  //     id:user_id
+  //   },
+  //   data:{
+
+  //   }
+  // })
+
+  await this.prisma.$transaction([])
+}
+
 }
