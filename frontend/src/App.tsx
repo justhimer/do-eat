@@ -91,6 +91,7 @@ const App: React.FC = () => (
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
+          {/* invisible button for applying QR code css */}
           <IonTabButton>
           </IonTabButton>
 

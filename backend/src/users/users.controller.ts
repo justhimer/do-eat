@@ -14,18 +14,25 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtService } from '@nestjs/jwt';
 
 @ApiTags('users') // to categorize in swagger
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService
+    ) { }
 
   @Post('login/facebook')
   async facebookLogin(@Body('code') code: any) {
+
+    // code should have been given by facebook to frontend
     if (!code) {
       throw new HttpException('Forbidden', HttpStatus.UNAUTHORIZED); // return status 401
     }
 
+    // fetch facebook api using the code
     const fetchResponse = await fetch(
       `https://graph.facebook.com/oauth/access_token`,
       {
@@ -42,9 +49,9 @@ export class UsersController {
         }),
       },
     );
-
     const data = await fetchResponse.json();
 
+    // ensure access token is received from facebook
     if (!data.access_token) {
       throw new HttpException(
         'Failed to get access token!',
@@ -52,11 +59,13 @@ export class UsersController {
       );
     }
 
+    // use the access token to fetch user info, e.g. name and email
     const profileResponse = await fetch(
       `https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`,
     );
     const profileData = await profileResponse.json();
 
+    // find existing user from database according to user's facebook email
     let user = await this.usersService.findOneByEmail(profileData.email);
 
     // Create a new user if the user does not exist
@@ -66,17 +75,25 @@ export class UsersController {
         profileData.name,
       );
     }
-    // const payload = {
-    //   id: user.id,
-    //   username: user.username
-    // };
+
+    // produce in-app token
+    const payload = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
+    const token = this.jwtService.sign(payload);
+
     // const token = jwtSimple.encode(payload, jwt.jwtSecret);
     // res.json({
     //   username: user.username,
     //   token: token
     // });
 
-    return user;
+    return {
+      ...payload,
+      token: token
+    };
   }
 
   @Post()
