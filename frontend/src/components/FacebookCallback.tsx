@@ -16,7 +16,6 @@ export function FacebookCallback() {
         const code = searchParams.get('code') || "";
         (async function () {
             const data = await facebookLogin(code);
-            console.log('user = ', data);
 
             if (data) {
                 dispatch(userAction.fbLogin(data));
