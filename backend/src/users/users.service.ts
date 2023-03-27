@@ -7,7 +7,7 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createUserDto: CreateUserDto) {
     // await this.prisma.users.create({
@@ -33,11 +33,11 @@ export class UsersService {
     return user;
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.prisma.users.findMany({});
-  }
+  // async findAll(): Promise<User[]> {
+  //   return await this.prisma.users.findMany({});
+  // }
 
-  async findOneById(id: number) {
+  async findById(id: number) {
     const foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
@@ -47,7 +47,7 @@ export class UsersService {
     return foundUser;
   }
 
-  async findOneByEmail(email: string) {
+  async findByEmail(email: string) {
     const foundUser = await this.prisma.users.findFirst({
       where: {
         email: email,
@@ -55,6 +55,19 @@ export class UsersService {
     });
     // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
+  }
+
+  async findCalories(id: number): Promise<number> {
+    const result = await this.prisma.users.findFirst({
+      select: {
+        calories: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
+    return result.calories;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
