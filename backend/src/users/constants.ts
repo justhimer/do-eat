@@ -1,3 +1,3 @@
-export const jwtConstants = {
-    secret: 'shfgiwercnhcluegiosvlnarethgq',
-  };
+// export const jwtConstants = {
+//   secret: 'shfgiwercnhcluegiosvlnarethgq',
+// };

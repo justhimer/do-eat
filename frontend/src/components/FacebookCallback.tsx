@@ -9,14 +9,13 @@ import { RedirectPage } from "./RedirectPage";
 export function FacebookCallback() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state: RootState) => state.users.isAuthenticated);
+    const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search)
         const code = searchParams.get('code') || "";
         (async function () {
             const data = await facebookLogin(code);
-            console.log('user = ', data);
 
             if (data) {
                 dispatch(userAction.fbLogin(data));
@@ -28,10 +27,10 @@ export function FacebookCallback() {
     }, []);
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isLoggedIn) {
             history.push("/user-tab")
         }
-    }, [isAuthenticated])
+    }, [isLoggedIn])
 
     return <RedirectPage />
 

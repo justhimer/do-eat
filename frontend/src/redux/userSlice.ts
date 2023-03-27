@@ -26,9 +26,7 @@ const userSlice = createSlice({
     reducers: {
 
         fbLogin: (state: UserSliceState, action: PayloadAction<any>) => {
-
             const payload = action.payload;
-            console.log('payload = ', payload);
 
             state.isAuthenticated = true;
             state.id = payload.id;
