@@ -1,6 +1,7 @@
 import { useIonToast } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { fetchCalories } from "../api/userAPIs";
 import { RootState } from "../redux/store";
 import CornerStyle from "../scss/CornerBox.module.scss";
 import NotificationStyle from "../scss/Notification.module.scss";
@@ -22,13 +23,11 @@ export function CornerBox() {
     const [isClicked, setIsClicked] = useState(false);
 
     const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
-
+    const userID = useSelector((state: RootState) => state.users.id);
+    
     async function showCalories() {
         if (isLoggedIn) {
-            //   const res = await fetch("/users/calories");
-            //   const result = await res.json();
-            //   const calories = result.calories;
-            const calories = 100;
+            const calories = await fetchCalories(userID);
             setBoxText(`Remaining ${calories} Calories.`);
         }
     }

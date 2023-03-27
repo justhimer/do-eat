@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import jwt_decode from 'jwt-decode';
 
 export interface UserSliceState {
     isAuthenticated: boolean;
@@ -7,10 +8,41 @@ export interface UserSliceState {
     username: string;
 }
 
+interface Token {
+    id?: number,
+    email?: string,
+    username?: string,
+    iat?: number,
+    exp?: number
+}
+
 const isLoggedIn = () => {
     const token = localStorage.getItem("token");
+    // if (!!token) {
+    //     const decoded = jwt_decode(token);
+    //     console.log(decoded);
+    // }
     return !!token
 }
+
+const getUserInfo = () => {
+    const token = localStorage.getItem("token");
+    let data = {
+        id: 0,
+        email: "",
+        username: "",
+    }
+    if (!!token) {
+        const decoded = jwt_decode<Token>(token);
+        return {
+            id: decoded.id,
+            email: decoded.email,
+            username: decoded.username
+        }
+    }
+    return data;
+}
+
 
 const userSlice = createSlice({
 
@@ -18,9 +50,9 @@ const userSlice = createSlice({
 
     initialState: {
         isAuthenticated: isLoggedIn(),
-        id: 0,
-        email: "",
-        username: "",
+        id: getUserInfo().id,
+        email: getUserInfo().email,
+        username: getUserInfo().username,
     } as UserSliceState,
 
     reducers: {
