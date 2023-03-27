@@ -1,4 +1,4 @@
-import { PrismaClient, Gyms, Prisma} from "@prisma/client";
+import { PrismaClient, Gyms, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -82,7 +82,7 @@ async function main() {
     })
 
     const foodTypes = await prisma.foodTypes.upsert({
-        where: {name: "LowCarbs"},
+        where: { name: "LowCarbs" },
         update: {},
         create: {
             name: "LowCarbs",
@@ -91,7 +91,7 @@ async function main() {
     })
 
     const foodTypes2 = await prisma.foodTypes.upsert({
-        where: {name: "HighProtein"},
+        where: { name: "HighProtein" },
         update: {},
         create: {
             name: "HighProtein",
@@ -99,8 +99,525 @@ async function main() {
         },
     })
 
-    const intensities = await prisma.intensities.upsert({
-        where: {level: "Low"},
+    const foodTypes3 = await prisma.foodTypes.upsert({
+        where: { name: "Recommended" },
+        update: {},
+        create: {
+            name: "Recommended",
+            icon: "recommended.png",
+        },
+    })
+
+    const foodTypes4 = await prisma.foodTypes.upsert({
+        where: { name: "WheyProtein" },
+        update: {},
+        create: {
+            name: "WheyProtein",
+            icon: "wheyprotein.png",
+        },
+    })
+
+    const foodTypes5 = await prisma.foodTypes.upsert({
+        where: { name: "SNACKS AND DRINKS" },
+        update: {},
+        create: {
+            name: "SNACKS AND DRINKS",
+            icon: "snacks.png",
+        },
+    })
+
+    const food1 = await prisma.foods.upsert({
+        where: { name: "MEATBALLS WITH SPANAKOPITA RICE" },
+        update: {},
+        create: {
+            name: "MEATBALLS WITH SPANAKOPITA RICE",
+            image: "Meatballs-with-Spanakopita-Rice_1120x.webp",
+            calories: 536,
+            description: "Our Meatballs and Spanakopita Rice dish is a highly nutritious, low-fat source of Vitamin E, B, and Potassium that boosts energy and well-being.",
+            ingredients: { ingredients: "Spanakopita rice (44.1%), Basmati Rice (99.9%), Curly Kale (24%), Olive Oil (3.4%), Beef Meatballs (44.1%), Tomato and Basil Sauce (11.8%), Carrots (5.5%), Onions (4.4%), Olive Oil (2.6%), Basil (0.66%), Salt (0.22%), Dried basil (0.09%), White pepper (0.04%)." },
+            allergens: [],
+            food_type_id: 3,
+        },
+    })
+
+    const food2 = await prisma.foods.upsert({
+        where: { name: "BEEF MEX LOADED & SWEET POTATO" },
+        update: {},
+        create: {
+            name: "BEEF MEX LOADED & SWEET POTATO",
+            image: "BEEF-MEX-LOADED-_-SWEET-POTATO_1120x.webp",
+            calories: 406,
+            description: "Enjoy our natural and flavorful Mexican beef with sweet potato - a wholesome meal that boosts your immune system and body function.",
+            ingredients: { ingredients: "Sweet Potato (55%), Chilli Con Carne (41.7%), Carrots (5.9%), Diced Tomatoes (5.9%), Red Chilli Peppers (5.9%), Kidney Beans (5.9%), Onions (0.88%), Lemon Juice (0.59%), Ground Cinnamon (0.29%), Garlic (0.29%), Cumin Seeds (0.29%), Chilli Powder (0.29%), Mozzarella Cheese (3.3%), Salt, Non-animal Rennet." },
+            allergens: ["Dairy"],
+            food_type_id: 3,
+        },
+    })
+
+    const food3 = await prisma.foods.upsert({
+        where: { name: "CREAMY CHICKEN KORMA" },
+        update: {},
+        create: {
+            name: "CREAMY CHICKEN KORMA",
+            image: "Creamy-Chicken-Korma_1120x.webp",
+            calories: 290,
+            description: "Improve your digestive health and brain function with our slow-cooked Korma dish, rich in ancient herbs and spices that can lower blood sugar and blood pressure levels.",
+            ingredients: { ingredients: "Chicken (41.5%), Coconut Milk Canned (33.2%), Peas (10.4%), Broccoli (6.5%), Coriander Seeds (1.2%), Onions (1.1%), Ginger Paste (1%), Chaat Masala Spice Blend (0.79%), Garlic (0.62%), Turmeric (0.46%)." },
+            allergens: [],
+            food_type_id: 3,
+        },
+    })
+
+    const food4 = await prisma.foods.upsert({
+        where: { name: "CHILLI CON CARNE" },
+        update: {},
+        create: {
+            name: "CHILLI CON CARNE",
+            image: "chilliconcarne_1120x.webp",
+            calories: 478,
+            description: "With its hotly-contested origins, our Chilli con Carne spice stew has enormous appeal as a healthy, low-fat option that will kick start your metabolism. Containing chilli peppers, ground meat, tomatoes together with garlic and onions, this dish is sure to ignite visions of Texas or Mexico!!!! ",
+            ingredients: { ingredients: "Chilli Con Carne (55.7%), Carrots (5.9%), Diced Tomatoes (5.9%), Red Chilli Peppers (5.9%), Kidney Beans (5.9%), Onions (0.88%), Lemon Juice (0.59%), Ground Cinnamon (0.29%), Garlic (0.29%), Cumin Seeds (0.29%), Chilli Powder (0.29%)], Basmati Rice (42.6%), Parsley (1.6%)." },
+            allergens: [],
+            food_type_id: 3,
+        },
+    })
+
+    const food5 = await prisma.foods.upsert({
+        where: { name: "PORTUGUESE CHICKEN WITH BROCCOLI RICE", },
+        update: {},
+        create: {
+            name: "PORTUGUESE CHICKEN WITH BROCCOLI RICE",
+            calories: 353,
+            image: "Portuguese-Chicken-with-Broccoli-Rice_1120x.webp",
+            description: "Ignite the senses with the superfood which superbly caters to all your health needs. Broccoli Rice is not only fat-free but also has powerful antioxidant and anti-inflammatory qualities to supercharge your metabolism. The succulently curated Portuguese chicken, not only juicy and crunchy but heavenly due to its earthy and aromatic qualities designed to invigorate your taste buds.",
+            ingredients: { ingredients: "Broccoli Rice (46.9%) [Broccoli, Onion, Garlic, Lemon Juice], Portuguese Chicken (40.6%) [Chicken, Dried Spices, Garlic, Chilli, Salt, Pepper], Portuguese Marinade (12.5%), Iodised Salt, Sugar Garlic, Onion, Vegetable Fat, Potato Starch, Mineral Salt (Potassium Chloride) SPICES: Chilli (13%), Paprika HERBS: Oregano, Parsley (1%)." },
+            allergens: [],
+            food_type_id: 1,
+        },
+    })
+
+    const food6 = await prisma.foods.upsert({
+        where: { name: "CHIPOTLE CHICKEN BURRITO BOWL" },
+        update: {},
+        create: {
+            name: "CHIPOTLE CHICKEN BURRITO BOWL",
+            calories: 675,
+            image: "ChipotleChickenWorkoutMeals_1120x.jpg",
+            description: "A delectable classic with seasoned chicken breast pieces, black beans, basmati Rice and colourful vegetable mix lightly covered in chipotle mayo.",
+            ingredients: { ingredients: "Basmati Bean Mix (35%)[Water,  Basmati Rice, Black Beans), Taco Chicken (33%)[Diced Chicken Breast (33%), Canola Oil, Taco Seasoning (Natural Flavour, Yeast Extract, Oleoresin Spice Extracts, Food Acid (330)], Chipotle Sauce (18%) [Mayonnaise (2%) (Free-Range Whole Egg, Food Acid (330), Colour (161b), Sour Cream (Milk, Cultures), Chipotle Peppers (Food Acid (260)), Lemon Juice (Preservative (202)), Corn Starch, Smoky Chipotle Powder, Garlic, Salt, Sugar] Capsicum Onion Mix (13%)(Red Capsicum, Yellow Capsicum, Onion, Red Cabbage, Canola Oil, Taco Seasoning, Salt)" },
+            allergens: ["Gluten", "Wheat", "Peanuts"],
+            food_type_id: 3,
+        },
+    })
+
+    const food7 = await prisma.foods.upsert({
+        where: { name: "MANGO CHICKEN & BASMATI RICE" },
+        update: {},
+        create: {
+            name: "MANGO CHICKEN & BASMATI RICE",
+            calories: 419,
+            image: "MangoChickenWorkoutMeals_1120x.jpg",
+            description: "Mango Chicken with corn, peas and basmati rice.",
+            ingredients: { ingredients: "Chicken Breast 36%, Corn, Pea & Basmati Rice36%, Mango Chicken Sauce (Mango Frozen, Red Capsicum, Coriander, Cream coconut, Thickened Cream, garlic, ginger, sweet chilli sauce, Spanish onion, olive oil, corn flour 27%, " },
+            allergens: ["Dairy", "Gluten"],
+            food_type_id: 3,
+        },
+    })
+
+    const food8 = await prisma.foods.upsert({
+        where: { name: "DELUXE CHICKEN & QUINOA BROWN RICE" },
+        update: {},
+        create: {
+            name: "DELUXE CHICKEN & QUINOA BROWN RICE",
+            calories: 409,
+            image: "DeluxeChickenWorkoutMeals_1120x.jpg",
+            description: "Chicken Breast with Quinoa brown rice.",
+            ingredients: { ingredients: "Chicken Breast36%, Vegetable Quinoa Brown Rice 36%, Deluxe Sauce (Onion Brown, Mushroom, Thickened Cream, Butter unsalted, Parsley, Salt, Capsicum red, Chili, Oregano, Vegeta )27%" },
+            allergens: ["Dairy"],
+            food_type_id: 3,
+        },
+    })
+
+    const food9 = await prisma.foods.upsert({
+        where: { name: "CRUMBED CHICKEN PARMIGIANA" },
+        update: {},
+        create: {
+            name: "CRUMBED CHICKEN PARMIGIANA",
+            calories: 435,
+            image: "Low-Carb-Chicken-Parmigiana_1120x.jpg",
+            description: "Our exquisitely prepared Chicken Parmigiana with Roasted Potatoes and Peas dish will improve your overall health biomarkers, but the added protein will curb your cravings.",
+            ingredients: { ingredients: "Panko Crumbed Chicken 46%, Roasted Potato 30%, Napolitana Sauce 6% (Tomato crushed, Onion Brown, Olive Oil, Basil, Garlic, Pepper, Salt, Sugar white, Vegeta, Tomato Past), Peas 12%, Cheese (Cheese Mozzarella, Cheese Cheddar) 6%" },
+            allergens: ["Dairy", "Gluten"],
+            food_type_id: 1,
+        },
+    })
+
+    const food10 = await prisma.foods.upsert({
+        where: { name: "BUTTER CHICKEN & CAULIFLOWER RICE" },
+        update: {},
+        create: {
+            name: "BUTTER CHICKEN & CAULIFLOWER RICE",
+            calories: 438,
+            image: "ButterChickenCauliflowerRiceWorkoutMeals_1120x.webp",
+            description: "Moroccan Chicken with cauliflower rice",
+            ingredients: { ingredients: "Cauliflower (33%), Chicken Tenderloin (32%), Water, Green Peas (3.5%), Corn (3.5%), Crushed Tomato (Tomatoes, Tomato Juice, Citric Acid), Thickened Cream (Milk), Onion, Tandoori Paste ((1.23%) Oil, Durum Wheat Semolina, Salt, Sugar, Acetic Acid, Citric Acid, Cumin, Ginger, Chilli, Mustard, Coriander, Cinnamon, Garlic, Paprika, Onion, Fenugreek, Colour, Celery Seeds, Stabilisers, Black Pepper), Yoghurt (Milk), Vegetable Oil (Soybean), Ghee (Milk), Salt, Garlic Crushed, Ginger Crushed (Soybean), Cumin, Paprika, Curry Powder, Garam Masala, Sugar, Cayenne Pepper, Chilli, Cinnamon, Turmeric. Black Mustard Seeds, Curry Leaves, Lemon Juice" },
+            allergens: ["Milk", "tree nut", "soybean"],
+            food_type_id: 2,
+        },
+    })
+
+    const food11 = await prisma.foods.upsert({
+        where: { name: "MOROCCAN CHICKEN & PUMPKIN PUREE" },
+        update: {},
+        create: {
+            name: "MOROCCAN CHICKEN & PUMPKIN PUREE",
+            calories: 333,
+            image: "MoroccanChicken_PumpkinPuree_1120x.webp",
+            description: "Moroccan Chicken with pumpkin puree and vegetables.",
+            ingredients: { ingredients: "Chicken Tenderloin (36%), Thickened Cream (Milk), Pumpkin (18%), Green Peas (15%), Potato (9%), Vegetable Oil (Soybean), Butter (Milk), Moroccan Spice ((1.05%) Salt, Chicken Flavour, Pepper, Garlic, Sugar, Rice Flour, Onion, Paprika, Rosemary, Turmeric, Citric Acid, Capsicum, Coriander, Cumin, Vegetable Oil, Lemon Oil, Ginger), Water, Salt, Roasted Red Pepper, Honey, Red Hot Pepper, Cumin, Sweet Paprika, Coriander, Parsley, Lemon Juice, White Pepper, Garlic Crushed, Carraway." },
+            allergens: ["Milk", "Soybean"],
+            food_type_id: 2,
+        },
+    })
+
+    const food12 = await prisma.foods.upsert({
+        where: { name: "HONEY SOY CHICKEN STIR FRY" },
+        update: {},
+        create: {
+            name: "HONEY SOY CHICKEN STIR FRY",
+            calories: 367,
+            image: "Honey-Soy-Chicken-Stir-Frycopy_1120x.webp",
+            description: "Keep it fresh – keep it simple. We use Basmati rice, it's gluten-free and low in fat. It contains all eight essential amino acids, folic acid, and is low in sodium, and has no cholesterol. With a delectable honey soy sauce for maximum flavour and a perfectly tangy mouth-watering result.",
+            ingredients: { ingredients: "Honey Soy Chicken Stir-fry (52.5%), Green Beans (6.7%), Broccoli (6.7%), Carrots (3.3%), Oyster Sauce (3.3%), Onions (3.3%), Red Chilli Peppers (3.3%), Honey (2.3%), Low Sodium SOY Sauce (2%), Garlic (1%), Chilli Flakes (0.73%), Basmati Rice (45.9%), Spring onions (1.6%)." },
+            allergens: ["Gluten", "Molluscs", "Soy"],
+            food_type_id: 2,
+        },
+    })
+
+    const food13 = await prisma.foods.upsert({
+        where: { name: "THAI GREEN CURRY WITH CAULIFLOWER RICE" },
+        update: {},
+        create: {
+            name: "THAI GREEN CURRY WITH CAULIFLOWER RICE",
+            calories: 244,
+            image: "Thai-Green-Curry-with-Cauliflower-Rice_1120x.webp",
+            description: "Our famous Thai Green curry will ignite your exotic journey to superfood heaven! Awash with tantalising herbs and spices experience the wonders of the orient without leaving home!",
+            ingredients: { ingredients: "Chicken, Coconut Cream, Water, Onion, Broccoli, Carrot, Capsicum, Green Curry Paste, kaffir lime peel, coriander seed, pepper, cumin, turmeric, Vegetable Oil, Garlic, Salt, Kaffir lime powder Cauliflower." },
+            allergens: ["null"],
+            food_type_id: 1,
+        },
+    })
+
+    const food14 = await prisma.foods.upsert({
+        where: { name: "BUTTER CHICKEN & BASMATI RICE" },
+        update: {},
+        create: {
+            name: "BUTTER CHICKEN & BASMATI RICE",
+            calories: 475,
+            image: "ButterChickenWorkoutMeals_1120x.jpg",
+            description: "A creamy and scrumptious dish loaded rich in protein chicken promotes excellent brain function and keeps the immune system strong. An excellent source of Vitamin B6 and B12!  This meal also reduces appetite and hunger levels whilst boosting your metabolism.",
+            ingredients: { ingredients: "Chicken Breast 36%g, Basmati Rice Pea & Corn 36%, Butter chicken Sauce (Butter Chicken Mix, Ghee, Brown onion, ginger, Garlic, Tomato Puree, Sugar brown, Thickened Cream, Butter Unsalted, Paprika sweet, Turmeric, Cumin, Salt, Chicken Stock, Food Colouring, Tomato Paste, Cashew Paste, Fenugreek leaves, Chilli powder, Garam Masala) 27%. " },
+            allergens: ["Dairy, Tree nut"],
+            food_type_id: 3
+        },
+    })
+
+    const food15 = await prisma.foods.upsert({
+        where: { name: "BLACK PEPPER BEEF, PICKLED CABBAGE & VEGGIE FRIED RICE" },
+        update: {},
+        create: {
+            name: "BLACK PEPPER BEEF, PICKLED CABBAGE & VEGGIE FRIED RICE",
+            calories: 340,
+            image: "BlackPepperBeef_1120x.jpg",
+            description: "Tge pepper make you eat more!",
+            ingredients: { ingredients: "Black Pepper Beef (50%) [Beef (70%), Black Pepper Sauce (30%) [Water (53.1%), Oyster Sauce (26.5%), Low Sodium SOY Sauce (13.3%) (WHEAT), Corn Flour (3.2%) [Cornflour], Sugar (2.7%), White Pepper (1.3%) [Pepper]]], Brown Veggie Fried Rice (33.3%) [Brown Rice (60.3%), Carrots (9%), Bean Sprouts (9%), Broccoli Rice (9%) [Broccoli, Shallot, Garlic, Lemon Juice], Fried Rice Dressing (7.5%) [Oyster Sauce (52.6%), SESAME Oil (28.6%), Low Sodium SOY Sauce (10.5%) (WHEAT), Garlic (7.9%), Olive Oil (0.44%)], Shallot (5.1%)], Sour Cabbage (16.7%) [Cabbage (54.3%), Rice Vinegar (24.4%), Ginger (10.9%), Olive Oil (5.8%), Brown Sugar (2.7%), Low Sodium SOY Sauce (1.1%) (WHEAT), Mustard Seed, Yellow (0.27%), Fennel Seeds (0.27%), Chinese Five Spice (0.27%)]" },
+            allergens: ["Soy, Wheat, Sesame"],
+            food_type_id: 2,
+        },
+    })
+
+    const food16 = await prisma.foods.upsert({
+        where: { name: "MOROCCAN MEATBALLS & COUS COUS" },
+        update: {},
+        create: {
+            name: "MOROCCAN MEATBALLS & COUS COUS",
+            calories: 689,
+            image: "MoroccanMeatballsWorkoutMeals_1120x.jpg",
+            description: "A delectable classic with Beef Meatballs with a Moroccan Style sauce served with Roasted pumpkin and Couscous.",
+            ingredients: { ingredients: "Moroccan Sauce [Roasted Capsicum [Red Peppers (60%), Water, Vinegar, Salt, Sugar], Passata [Tomato, Acidity regulator (330)], Diced Onion, Water, Canola Oil, Tomato Paste [Tomato Paste, Acidity regulator (330)], Crushed Garlic [Garlic, Salt], Corn Starch, Salt, Coriander, Ground Coriander, Ground Cumin, Smoked Paprika, Caraway Seeds, Ground Black Pepper, Preservative (234) [Nisin, Sodium chloride]], SUB4034 Couscous Cooked [Couscous [Durum Wheat Semolina, Water], Water, Canola Oil, Salt, Ground Black Pepper], SUB1003 Beef & Oregano Meatballs Cooked [Meatballs [Beef, Water, Onion, Rice Flour, Vegetable Fibre (460), Salt, Dextrose, Vegetable Powders, Pea Protein, Acidity Regulator (331), Vegetable Gums (407, 415), Yeast Extract, Hydrolysed Vegetable Protein (Maize), Gluten Free Breadcrumbs [rice Flour, Maize Flour, Mineral Salts 450, 500], Dried Oregano, Herbs And Spices]], SUB3004 Roasted Pumpkin 30mm Skin On [Pumpkin Diced 3x3, Canola Oil, Salt, Ground Black Pepper], SUB3033 Roasted Chickpeas [Chickpeas [Chickpeas (60%), Water, Salt], Canola Oil, Salt, Cracked Black Pepper]" },
+            allergens: ["Gluten"],
+            food_type_id: 2,
+        },
+    })
+
+    const food17 = await prisma.foods.upsert({
+        where: { name: "BEEF BOLOGNESE & PASTA" },
+        update: {},
+        create: {
+            name: "BEEF BOLOGNESE & PASTA",
+            calories: 663,
+            image: "Beef-Bolognese-_-Pasta_1120x.webp",
+            description: "Experience a heavenly journey to Bella Roma with our flavoursome beef bolognese dish straight from Nonna's kitchen chockfull of tasty goodness and healthy life-enhancing good fats!",
+            ingredients: { ingredients: "Pasta (50%), Bolognese (50%), Carrots (10%), Onions (6.7%), Olive Oil (3.3%), White Pepper (0.47%), Salt (0.4%), Italian Herbs (0.27%)." },
+            allergens: ["Gluten"],
+            food_type_id: 3,
+        },
+    })
+
+    const food18 = await prisma.foods.upsert({
+        where: { name: "BEEF HOKKIEN NOODLES" },
+        update: {},
+        create: {
+            name: "BEEF HOKKIEN NOODLES",
+            calories: 435,
+            image: "beef-hokkien-noodles_1120x.jpg",
+            description: "Beef Hokkien Noodles with sesame.",
+            ingredients: { ingredients: "Ingredients: Beef (40%), Hokkien Noodle (24%) (Wheat Flour, Water, Vegetable Oil, Salt, Colours (102, 110)), Onion (13%), Capsicum (13%), Ginger (4%), Garlic (2%), Rice Malt Syrup (2%), Olive Oil (1%), Tamari Sauce (SOY), Sesame Seeds (SESAME). " },
+            allergens: ["Soy", "Wheat", "Sesame"],
+            food_type_id: 3,
+        },
+    })
+
+    const food19 = await prisma.foods.upsert({
+        where: { name: "PEPPERCORN STEAK & CHIPS" },
+        update: {},
+        create: {
+            name: "PEPPERCORN STEAK & CHIPS",
+            calories: 260,
+            image: "ScreenShot2021-05-24at12.14.12pm.webp",
+            description: "Celebrate everything great about classic Aussie pub meals without the calorific overload. We have re-created this classic traditional dish using organic condiments to add extra zest and relish to an already epic meal combination.",
+            ingredients: { ingredients: "White Potato Chips (43.7%), Beef (43.7%), Water, Cream, Pink Pepper, Green Pepper, Spices, Canola Oil, Dijon Mustard, Onion, Garlic, Green Peas." },
+            allergens: ["Dairy"],
+            food_type_id: 2,
+        },
+    })
+
+    const food20 = await prisma.foods.upsert({
+        where: { name: "THYME LEMON CHICKEN & PUMPKIN PUREE" },
+        update: {},
+        create: {
+            name: "THYME LEMON CHICKEN & PUMPKIN PUREE",
+            calories: 316,
+            image: "ThymeLemonChicken_PumpkinPureeWorkoutMeals_1120x.webp",
+            description: "Moroccan Chicken with cauliflower rice",
+            ingredients: { ingredients: "Chicken Tenderloin (36%), Pumpkin (30%), Chicken Stock ((12%) Water, Chicken, Carrots, Celery, Cabbage, Onions, Parsley, Sage Extract, Natural Antioxidant (Rosemary Extract), Sugar, Salt, Glucose, Yeast Extract), Green Peas (15%), Butter (Milk), Thickened Cream (Milk), Vegetable Oil (Soybean), Vegetable Stock Powder, Lemon Juice (1.40%), Corn Flour Wheaten (Wheat), Water, Salt, Sugar, Thyme (0.04%), Garlic Crushed, White Pepper." },
+            allergens: ["Milk", "Wheat"],
+            food_type_id: 1,
+        },
+    })
+
+    const food21 = await prisma.foods.upsert({
+        where: { name: "MONGOLIAN BEEF WITH BROWN RICE" },
+        update: {},
+        create: {
+            name: "MONGOLIAN BEEF WITH BROWN RICE",
+            calories: 437,
+            image: "MongolianBeef_1120x.webp",
+            description: "Visit the orient and experience our mouthwatering and tantalising Mongolian beef dish crammed with zesty herbs and spices to ignite the senses.",
+            ingredients: { ingredients: "Beef (68.4%), Brown Rice (19%), Soy sauce (3%), Rice Vinegar (2.3%), Hoisin Sauce (2.3%), Olive Oil (1.6%), Garlic minced (1.5%), Cornstarch (0.76%), Spring Onion Raw (0.76%), Sesame seeds (0.3%)." },
+            allergens: ["Wheat", "Soy", "Sesame"],
+            food_type_id: 3,
+        },
+    })
+
+    const food22 = await prisma.foods.upsert({
+        where: { name: "ASIAN CHICKEN STIR FRY & HOKKIEN NOODLES" },
+        update: {},
+        create: {
+            name: "ASIAN CHICKEN STIR FRY & HOKKIEN NOODLES",
+            calories: 513,
+            image: "AsianChickenStirFryWorkoutMeals_1120x.jpg",
+            description: "A delectable classic with Asian Chicken Stir Fry & Hokkien Noodles!",
+            ingredients: { ingredients: "Water, Higher Welfare Chicken (18%), Hokkien Noodles (17%) [Wheat Flour, Water, Gluten, Salt, Mineral salts (500, 501, 341), Vegetable oil (Canola oil), Natural Colour (160b), Preservative (202)], Roasted Red Capsicum (10%) (Red Peppers, Water, Vinegar, Salt, Sugar), Wombok (7%), Red Onion (6%), Soy Sauce (6%) (Soy Bean, Wheat, Salt, Water), Bean Cross Cut (4%), Demerara Sugar (3.5%), Ginger Crushed (1%) (Acidity Regulator (270)), Canola Oil, Garlic Minced, Corn Starch, White Sesame Seeds, Salt, Black Pepper" },
+            allergens: ["Gluten", "Wheat", "Sesame", "Soy"],
+            food_type_id: 3,
+        },
+    })
+
+    const food23 = await prisma.foods.upsert({
+        where: { name: "CHICKEN & CHORIZO PAELLA" },
+        update: {},
+        create: {
+            name: "CHICKEN & CHORIZO PAELLA",
+            calories: 563,
+            image: "ChickenChrizoWorkoutMeals_1120x.jpg",
+            description: "A delectable classic with traditional Spanish style Paella with Australian chicken, chorizo and mixed vegetables.",
+            ingredients: { ingredients: "Cooked Long Grain Rice (35%) (Long Grain Rice, Water), Chicken Breast(22%), Water, Chorizo (9%) [Pork, Salt, Modified Starch (1412), Spices,Corn Syrup Solids, Garlic, Wheat Fibre, Mineral Salt (451), Antioxidant(316), Preservative (250). Wood Smoked], Onion, Peas, Carrots, Celery, Fire Roasted Capsicum, Vegetable Oil, Chicken Style Stock Powder, Corn Starch, Crushed Garlic, Cajun Spice [Anticaking Agent (551), Colour (160a)],Paprika Powder, Turmeric, Cumin, Cracked Black Pepper." },
+            allergens: ["Gluten", "Milk", "Soy"],
+            food_type_id: 3,
+        },
+    })
+
+    const food24 = await prisma.foods.upsert({
+        where: { name: "PERI PERI CHICKEN & VEG" },
+        update: {},
+        create: {
+            name: "PERI PERI CHICKEN & VEG",
+            calories: 242,
+            image: "PeriPeriChickenLowcarbWorkoutMeals_1120x.jpg",
+            description: "Peri Peri Chicken & Vegetables",
+            ingredients: { ingredients: "Chicken Breast (50%), Broccoli (20%), Green Beans (16%), Carrot (14%)" },
+            allergens: [],
+            food_type_id: 2,
+        },
+    })
+
+    const food25 = await prisma.foods.upsert({
+        where: { name: "TURKEY MINCE POKE BOWL" },
+        update: {},
+        create: {
+            name: "TURKEY MINCE POKE BOWL",
+            calories: 403,
+            image: "pokebowl_1120x.webp",
+            description: "You don’t need to be a hipster to enjoy our Turkey Poke Bowl! This the dish is loaded with good fats to support muscle strength and growth. You will love the Star Power of this deconstructed Poke, an all-year-round, health-orientated wonder meal.",
+            ingredients: { ingredients: "Vermicelli rice noodles (53.8%), Turkey San Choy Bao (44.6%), Onion, Garlic, Soy Sauce, Chilli, Honey, Lemon Juice, Wombok, Carrots, Mint, Coriander, Crushed Peanuts, Spring Onion Raw (1.5%)." },
+            allergens: ["Peanuts", "Sesame", "Soy", "Tree nuts"],
+            food_type_id: 3,
+        },
+    })
+
+    const food26 = await prisma.foods.upsert({
+        where: { name: "BBQ GRILLED CHICKEN & SWEET POTATO" },
+        update: {},
+        create: {
+            name: "BBQ GRILLED CHICKEN & SWEET POTATO",
+            calories: 318,
+            image: "0Z8FfSmw_1120x.jpg",
+            description: "Savour this tantalising and zesty dish packed with delicious superfoods and loaded with hearty good fats.",
+            ingredients: { ingredients: "Plain Sweet Potato Mash (50%) [sweet potato, olive oil, salt, pepper], Chicken (41.7%) [Chicken Breast], BBQ Sauce (8.3%) [Tomatoes (from Paste, Food Acid (Citric)) 45%, Sugar, Water, Cornflour (from WHEAT), Food Acids (Acetic, Citric), Salt, Glucose Syrup, Colour (Caramel (150c)), Thickener (Pectin), Tamarind Paste, Yeast Extract, Clove, Nutmeg, Onion 0.5%, Pepper]" },
+            allergens: ["Gluten"],
+            food_type_id: 2,
+        },
+    })
+
+    const food27 = await prisma.foods.upsert({
+        where: { name: "Whey Protein Isolate Chocolate" },
+        update: {},
+        create: {
+            name: "Whey Protein Isolate Chocolate",
+            calories: 120,
+            image: "WheyProteinIsolateChocolate_1120x.jpg",
+            description: "Whey Protein Isolate Chocolate",
+            ingredients: { ingredients: "Whey Protein Isolate (Milk), Cocoa Powder, Natural Flavour, Sweetener (Sucralose)." },
+            allergens: ["Milk"],
+            food_type_id: 4,
+        },
+    })
+
+    const food28 = await prisma.foods.upsert({
+        where: { name: "Whey Protein Isolate Vanilla" },
+        update: {},
+        create: {
+            name: "Whey Protein Isolate Vanilla",
+            calories: 124,
+            image: "WheyProteinIsolateVanilla_1120x.jpg",
+            description: "Whey Protein Isolate Vanilla",
+            ingredients: { ingredients: "Whey Protein Isolate (Milk), Natural Flavour, Sweetener (Sucralose)." },
+            allergens: ["Milk"],
+            food_type_id: 4,
+        },
+    })
+
+    const food29 = await prisma.foods.upsert({
+        where: { name: "Whey Protein Isolate Strawberry" },
+        update: {},
+        create: {
+            name: "Whey Protein Isolate Strawberry",
+            calories: 127,
+            image: "WheyProteinIsolateStrawberry_1120x.jpg",
+            description: "Whey Protein Isolate Strawberry",
+            ingredients: { ingredients: "Whey Protein Isolate (Milk), Natural Flavour, Sweetener (Sucralose)." },
+            allergens: ["Milk"],
+            food_type_id: 4,
+        },
+    })
+
+    const food30 = await prisma.foods.upsert({
+        where: { name: "Whey Protein Isolate Banana" },
+        update: {},
+        create: {
+            name: "Whey Protein Isolate Banana",
+            calories: 127,
+            image: "WheyProteinIsolateBanana_1120x.jpg",
+            description: "Whey Protein Isolate Banana",
+            ingredients: { ingredients: "Whey Protein Isolate (Milk), Natural Flavour, Sweetener (Sucralose)." },
+            allergens: ["Milk"],
+            food_type_id: 4,
+        },
+    })
+
+    const food31 = await prisma.foods.upsert({
+        where: { name: "PROTEIN BAR COOKIES & CREAM" },
+        update: {},
+        create: {
+            name: "PROTEIN BAR COOKIES & CREAM",
+            calories: 200,
+            image: "ProteinBarCookiesCream_1120x.jpg",
+            description: "Amazing source of Vitamin E laden with antioxidants and unsaturated fats to promote heart health and lowering cholesterol properties.",
+            ingredients: { ingredients: "Protein Blend (Whey Protein Isolate (Milk), Whey Protein Concentrate (Milk), Milk Protein Isolate (Milk)), Milk Chocolate Coating (Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Mass, Emulsifier (Soy Lecithin), Natural Vanilla Flavour), Humectant (Glycerol), Vegetable Oils (Palm, Palm Kernel, Coconut), Oligofructose, Sweetener (Sucralose), Flavouring, Salt, Emulsifier (Soy Lecithin), Colour (Caramel)." },
+            allergens: ["Milk", "Soy"],
+            food_type_id: 5,
+        },
+    })
+
+    const food32 = await prisma.foods.upsert({
+        where: { name: "PROBIOTICS, GINGER & CAYENNE PEPPER Juice" },
+        update: {},
+        create: {
+            name: "PROBIOTICS, GINGER & CAYENNE PEPPER JUICE",
+            calories: 20,
+            image: "ProbioticsGingerCayennePepperJuice_1120x.jpg",
+            description: "Amazing source of Vitamin E laden with antioxidants and unsaturated fats to promote heart health and lowering cholesterol properties.",
+            ingredients: { ingredients: "Probiotics, Ginger & Cayenne Pepper Juice" },
+            allergens: [],
+            food_type_id: 5,
+        },
+    })
+
+    const food33 = await prisma.foods.upsert({
+        where: { name: "JUST ORANGE JUICE" },
+        update: {},
+        create: {
+            name: "JUST ORANGE JUICE",
+            calories: 93,
+            image: "JustOrangeJuice_1120x.jpg",
+            description: "Amazing source of Vitamin E laden with antioxidants and unsaturated fats to promote heart health and lowering cholesterol properties.",
+            ingredients: { ingredients: "Orange Juice" },
+            allergens: [],
+            food_type_id: 5,
+        },
+    })
+
+    const food34 = await prisma.foods.upsert({
+        where: { name: "JUST APPLE JUICE" },
+        update: {},
+        create: {
+            name: "JUST APPLE JUICE",
+            calories: 96,
+            image: "JustAppleJuice_1120x.jpg",
+            description: "Amazing source of Vitamin E laden with antioxidants and unsaturated fats to promote heart health and lowering cholesterol properties.",
+            ingredients: { ingredients: "Apple Juice" },
+            allergens: [],
+            food_type_id: 5,
+        },
+    })
+
+    const food35 = await prisma.foods.upsert({
+        where: { name: "JUST WATERMELON APPLE MINT" },
+        update: {},
+        create: {
+            name: "JUST WATERMELON APPLE MINT",
+            calories: 80,
+            image: "JustWatermelonAppleMint_1120x.jpg",
+            description: "Amazing source of Vitamin E laden with antioxidants and unsaturated fats to promote heart health and lowering cholesterol properties.",
+            ingredients: { ingredients: "Watermelon, Apple, Mint" },
+            allergens: [],
+            food_type_id: 5,
+        },
+    })
+
+    const intensities1 = await prisma.intensities.upsert({
+        where: { level: "Low" },
         update: {},
         create: {
             level: "Low",
@@ -108,7 +625,7 @@ async function main() {
     })
 
     const intensities2 = await prisma.intensities.upsert({
-        where: {level: "Medium"},
+        where: { level: "Medium" },
         update: {},
         create: {
             level: "Medium",
@@ -116,7 +633,7 @@ async function main() {
     })
 
     const intensities3 = await prisma.intensities.upsert({
-        where: {level: "High"},
+        where: { level: "High" },
         update: {},
         create: {
             level: "High",
@@ -124,9 +641,9 @@ async function main() {
     })
 
     const attendanceValue: Prisma.AttendanceTypesCreateInput[] = [
-        {details: "pending"},
-        {details: "attended"},
-        {details: "absent"}
+        { details: "pending" },
+        { details: "attended" },
+        { details: "absent" }
     ]
     const attendanceInsert = await prisma.attendanceTypes.createMany({
         data: attendanceValue
@@ -147,20 +664,24 @@ async function main() {
     //     },
     // })
 
-    const subPlansValue :Prisma.SubPlansCreateInput[] = [
-        {name: "Basic",
-        unlimited: false,
-        credits: 10,
-        fee: 2750,
-        duration: 30,},
-        {name: "Premium",
-        unlimited: true,
-        credits: 99999,
-        fee: 5999,
-        duration: 30,}
+    const subPlansValue: Prisma.SubPlansCreateInput[] = [
+        {
+            name: "Basic",
+            unlimited: false,
+            credits: 10,
+            fee: 2750,
+            duration: 30,
+        },
+        {
+            name: "Premium",
+            unlimited: true,
+            credits: 99999,
+            fee: 5999,
+            duration: 30,
+        }
     ]
     const subPlansInsert = await prisma.subPlans.createMany({
-        data:subPlansValue
+        data: subPlansValue
     })
 
     // const subPlans = await prisma.subPlans.upsert({
@@ -361,6 +882,295 @@ async function main() {
         } as Gyms & { franchise_id?: number, district_id?: number },
     })
 
+    const trainers1 = await prisma.trainers.upsert({
+        where: { name: "John" },
+        update: {},
+        create: {
+            name: "John Chan",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
+            franchise_id: franchise1.id,
+        },
+    })
+
+    const trainers2 = await prisma.trainers.upsert({
+        where: { name: "Ceci" },
+        update: {},
+        create: {
+            name: "Ceci Lee",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: " 200 Hour RYT Arcata, California 2022, Certified Strength and Conditioning Specialist® (CSCS®) 2022, NASM Certified Personal Trainer 2022",
+            franchise_id: franchise2.id,
+        },
+    })
+
+    const trainers3 = await prisma.trainers.upsert({
+        where: { name: "James" },
+        update: {},
+        create: {
+            name: "James Chou",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: "Fitness Kickboxing Instructor Certification ,NSCA Certified Personal Trainer®(NSCA-CPT®), Tactical Strength & Conditioning Facilitator®(TSAC-F®)",
+            franchise_id: franchise3.id,
+        },
+    })
+
+    const trainers4 = await prisma.trainers.upsert({
+        where: { name: "Cindy" },
+        update: {},
+        create: {
+            name: "Cindy Chan",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: "Myths and Science of Pilates Breathing , Pilates Touch ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
+            franchise_id: franchise1.id,
+        },
+    })
+
+    const trainers5 = await prisma.trainers.upsert({
+        where: { name: "Angela" },
+        update: {},
+        create: {
+            name: "Angela",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: "Total Body Tabata™ HIIT Instructor ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
+            franchise_id: franchise2.id,
+        },
+    })
+
+    const trainers6 = await prisma.trainers.upsert({
+        where: { name: "Jason" },
+        update: {},
+        create: {
+            name: "Jason",
+            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
+            franchise_id: franchise3.id,
+        },
+    })
+
+    const courseTypes1 = await prisma.courseTypes.upsert({
+        where: { name: "Yoga" },
+        update: {},
+        create: {
+            name: "Yoga",
+        },
+    })
+
+    const courseTypes2 = await prisma.courseTypes.upsert({
+        where: { name: "Pilates" },
+        update: {},
+        create: {
+            name: "Pilates",
+        },
+    })
+
+    const courseTypes3 = await prisma.courseTypes.upsert({
+        where: { name: "HIIT" },
+        update: {},
+        create: {
+            name: "HIIT",
+        },
+    })
+
+    const courseTypes4 = await prisma.courseTypes.upsert({
+        where: { name: "BOXONG" },
+        update: {},
+        create: {
+            name: "BOXONG",
+        },
+    })
+
+    const course1 = await prisma.courses.upsert({
+        where: { name: "Yoga Beginner" },
+        update: {},
+        create: {
+            name: "Yoga Beginner",
+            credits: 1,
+            course_type_id: courseTypes1.id,
+            gym_id: gym1.id,
+            intensity_id: intensities1.id,
+            duration: 60,
+            calorise: 200,
+            default_trainer_id: trainers2.id,
+            default_quota: 20,
+        },
+    })
+
+    const course2 = await prisma.courses.upsert({
+        where: { name: "Yoga Intermediate" },
+        update: {},
+        create: {
+            name: "Yoga Intermediate",
+            credits: 2,
+            course_type_id: courseTypes1.id,
+            gym_id: gym1.id,
+            intensity_id: intensities2.id,
+            duration: 60,
+            calorise: 300,
+            default_trainer_id: trainers2.id,
+            default_quota: 20,
+        },
+    })
+
+    const course3 = await prisma.courses.upsert({
+        where: { name: "Yoga Advanced" },
+        update: {},
+        create: {
+            name: "Yoga Advanced",
+            credits: 3,
+            course_type_id: courseTypes1.id,
+            gym_id: gym2.id,
+            intensity_id: intensities3.id,
+            duration: 60,
+            calorise: 400,
+            default_trainer_id: trainers2.id,
+            default_quota: 20,
+        },
+    })
+
+    const course4 = await prisma.courses.upsert({
+        where: { name: "Pilates Beginner" },
+        update: {},
+        create: {
+            name: "Pilates Beginner",
+            credits: 1,
+            course_type_id: courseTypes2.id,
+            gym_id: gym1.id,
+            intensity_id: intensities1.id,
+            duration: 60,
+            calorise: 200,
+            default_trainer_id: trainers4.id,
+            default_quota: 20,
+        },
+    })
+
+    const course5 = await prisma.courses.upsert({
+        where: { name: "Pilates Intermediate" },
+        update: {},
+        create: {
+            name: "Pilates Intermediate",
+            credits: 2,
+            course_type_id: courseTypes2.id,
+            gym_id: gym4.id,
+            intensity_id: intensities2.id,
+            duration: 60,
+            calorise: 300,
+            default_trainer_id: trainers4.id,
+            default_quota: 20,
+        },
+    })
+
+    const course6 = await prisma.courses.upsert({
+        where: { name: "Pilates Advanced" },
+        update: {},
+        create: {
+            name: "Pilates Advanced",
+            credits: 3,
+            course_type_id: courseTypes2.id,
+            gym_id: gym5.id,
+            intensity_id: intensities3.id,
+            duration: 60,
+            calorise: 400,
+            default_trainer_id: trainers4.id,
+            default_quota: 20,
+        },
+    })
+
+    const course7 = await prisma.courses.upsert({
+        where: { name: "HIIT Beginner" },
+        update: {},
+        create: {
+            name: "HIIT Beginner",
+            credits: 1,
+            course_type_id: courseTypes3.id,
+            gym_id: gym2.id,
+            intensity_id: intensities1.id,
+            duration: 60,
+            calorise: 200,
+            default_trainer_id: trainers5.id,
+            default_quota: 20,
+        },
+    })
+
+    const course8 = await prisma.courses.upsert({
+        where: { name: "HIIT Intermediate" },
+        update: {},
+        create: {
+            name: "HIIT Intermediate",
+            credits: 2,
+            course_type_id: courseTypes3.id,
+            gym_id: gym3.id,
+            intensity_id: intensities2.id,
+            duration: 60,
+            calorise: 300,
+            default_trainer_id: trainers5.id,
+            default_quota: 20,
+        },
+    })
+
+    const course9 = await prisma.courses.upsert({
+        where: { name: "HIIT Advanced" },
+        update: {},
+        create: {
+            name: "HIIT Advanced",
+            credits: 3,
+            course_type_id: courseTypes3.id,
+            gym_id: gym6.id,
+            intensity_id: intensities3.id,
+            duration: 60,
+            calorise: 400,
+            default_trainer_id: trainers5.id,
+            default_quota: 20,
+        },
+    })
+
+    const course10 = await prisma.courses.upsert({
+        where: { name: "Boxing Beginner" },
+        update: {},
+        create: {
+            name: "Boxing Beginner",
+            credits: 1,
+            course_type_id: courseTypes4.id,
+            gym_id: gym2.id,
+            intensity_id: intensities1.id,
+            duration: 60,
+            calorise: 200,
+            default_trainer_id: trainers6.id,
+            default_quota: 20,
+        },
+    })
+
+    const course11 = await prisma.courses.upsert({
+        where: { name: "Boxing Intermediate" },
+        update: {},
+        create: {
+            name: "Boxing Intermediate",
+            credits: 2,
+            course_type_id: courseTypes4.id,
+            gym_id: gym3.id,
+            intensity_id: intensities2.id,
+            duration: 60,
+            calorise: 300,
+            default_trainer_id: trainers6.id,
+            default_quota: 20,
+        },
+    })
+
+    const course12 = await prisma.courses.upsert({
+        where: { name: "Boxing Advanced" },
+        update: {},
+        create: {
+            name: "Boxing Advanced",
+            credits: 3,
+            course_type_id: courseTypes4.id,
+            gym_id: gym6.id,
+            intensity_id: intensities3.id,
+            duration: 60,
+            calorise: 400,
+            default_trainer_id: trainers6.id,
+            default_quota: 20,
+        },
+    })
 }
 
 main()

@@ -1,21 +1,54 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserSliceState {
+    isAuthenticated: boolean;
     id: number;
     email: string;
     username: string;
-    icon: string;
+}
+
+const isLoggedIn = () => {
+    const token = localStorage.getItem("token");
+    return !!token
 }
 
 const userSlice = createSlice({
+
     name: "users",
-    initialState: [{
-        id: 1,
-        email: "haha@haha.com",
-        username: "haha",
-        icon: "haha.jpg"
-    }] as UserSliceState[],
-    reducers: {},
+
+    initialState: {
+        isAuthenticated: isLoggedIn(),
+        id: 0,
+        email: "",
+        username: "",
+    } as UserSliceState,
+
+    reducers: {
+
+        fbLogin: (state: UserSliceState, action: PayloadAction<any>) => {
+
+            const payload = action.payload;
+            console.log('payload = ', payload);
+
+            state.isAuthenticated = true;
+            state.id = payload.id;
+            state.email = payload.email;
+            state.username = payload.username;
+
+            localStorage.setItem("token", payload.token);
+        },
+
+        logout: (state: UserSliceState) => {
+            state.isAuthenticated = false;
+            state.id = 0;
+            state.email = "";
+            state.username = "";
+
+            localStorage.removeItem("token");
+        }
+    },
+
 })
 
+export const userAction = userSlice.actions;
 export default userSlice.reducer;

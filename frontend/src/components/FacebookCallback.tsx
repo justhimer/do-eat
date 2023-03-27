@@ -1,31 +1,38 @@
 import { useEffect } from "react";
-import { facebookLogin } from "../api/loginAPIs";
+import { useDispatch, useSelector } from "react-redux";
+import { facebookLogin } from "../api/userAPIs";
+import { RootState } from "../redux/store";
+import { userAction } from "../redux/userSlice";
+import { useHistory } from 'react-router';
+import { RedirectPage } from "./RedirectPage";
 
-export function FacebookCallback(){
-    // const dispatch = useAppDispatch()
-    // const isAuthenticated = useAppSelector(state=> state.auth.isAuthenticated)
-    useEffect(()=>{
+export function FacebookCallback() {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state: RootState) => state.users.isAuthenticated);
+
+    useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search)
         const code = searchParams.get('code') || "";
-        (async function(){
+        (async function () {
             const data = await facebookLogin(code);
             console.log('user = ', data);
-            
-            // if(data){
-            //     dispatch(login(data.username))
-            // }else{
-            //     Error handling with React-Toastify
-            // }
+
+            if (data) {
+                dispatch(userAction.fbLogin(data));
+            } else {
+                // Error handling with React - Toastify
+            }
 
         })()
-    },[])
+    }, []);
 
-    return (
-        <div>facebook called back</div>
-    )
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push("/user-tab")
+        }
+    }, [isAuthenticated])
 
-    // if(isAuthenticated){
-    //     return <Navigate to="/" replace/>
-    // }
-    // return <h3>Redirecting to main page...</h3>
+    return <RedirectPage />
+
 }

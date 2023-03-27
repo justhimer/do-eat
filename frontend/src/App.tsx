@@ -79,7 +79,6 @@ const App: React.FC = () => (
 
         </IonRouterOutlet>
 
-
         <IonTabBar slot="bottom">
           <IonTabButton tab="home-tab" href="/home-tab">
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
@@ -91,6 +90,7 @@ const App: React.FC = () => (
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
+          {/* invisible button for applying QR code css */}
           <IonTabButton>
           </IonTabButton>
 
