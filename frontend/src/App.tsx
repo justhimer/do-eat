@@ -1,16 +1,20 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonButton,
+  IonFab,
+  IonFabButton,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
+  IonTab,
   IonTabBar,
   IonTabButton,
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
+import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
 import HomeTab from './pages/Home';
 import DoTab from './pages/Do';
 import EatTab from './pages/Eat';
@@ -35,6 +39,12 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { FacebookCallback } from './components/FacebookCallback';
+
+/* custom SCSS modules */
+import tabStyle from "./scss/TabBar.module.scss"
+import "./scss/RootChanges.scss"
+import BottomSpacing from './pages/Buffer';
+
 
 setupIonicReact();
 
@@ -72,7 +82,6 @@ const App: React.FC = () => (
 
 
         <IonTabBar slot="bottom">
-
           <IonTabButton tab="home-tab" href="/home-tab">
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
@@ -83,12 +92,16 @@ const App: React.FC = () => (
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
+<<<<<<< HEAD
+          <IonTabButton>
+=======
           {/* invisible button for applying QR code css */}
           <IonTabButton>
             <IonIcon aria-hidden="true" />
             <IonLabel>
               <div className=''></div>
               </IonLabel>
+>>>>>>> e72d91fb1a09886de409a9b379a7cfd57393f75d
           </IonTabButton>
 
           <IonTabButton tab="eat-tab" href="/eat-tab">
@@ -105,6 +118,11 @@ const App: React.FC = () => (
 
 
       </IonTabs>
+      <IonFab vertical="bottom" horizontal="center" slot="fixed" className={tabStyle.reposition}>
+        <IonFabButton className={tabStyle.button}>
+          <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+        </IonFabButton>
+      </IonFab>
     </IonReactRouter>
   </IonApp>
 );

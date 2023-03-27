@@ -11,20 +11,26 @@ datasource db {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique @db.Text
-  username   String?  @db.VarChar(255)
-  password   String   @db.Text
-  icon       String   @default("default_icon.png") @db.Text
-  credits    Int      @default(0) @db.Integer
-  calories   Int      @default(0) @db.Integer
-  created_at DateTime @default(now()) @db.Timestamptz
-  updated_at DateTime @updatedAt @db.Timestamptz
+  id                 Int                  @id @default(autoincrement())
+  email              String               @unique @db.Text
+  username           String?              @db.VarChar(255)
+  password           String               @db.Text
+  icon               String               @db.Text
+  credits            Int                  @db.Integer
+  calories           Int                  @db.Integer
+  created_at         DateTime             @default(now()) @db.Timestamptz
+  updated_at         DateTime             @updatedAt @db.Timestamptz
+  FavouriteFoods     FavouriteFoods[]
+  FavouriteCourse    FavouriteCourse[]
+  FoodCart           FoodCart[]
+  FoodHistory        FoodHistory[]
+  UserSchedule       UserSchedule[]
+  CalorieTransaction CalorieTransaction[]
 }
 
 model FoodTypes {
   id         Int      @id @default(autoincrement())
-  name       String   @unique @db.VarChar(255)
+  name       String   @unique @db.Text
   icon       String   @db.Text
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
@@ -32,32 +38,39 @@ model FoodTypes {
 }
 
 model Foods {
-  id           Int       @id @default(autoincrement())
-  name         String    @db.Text
-  food_types   FoodTypes @relation(fields: [food_type_id], references: [id])
-  food_type_id Int       @db.Integer
-  image        String    @db.Text
-  calories     Int       @db.Integer
-  description  String    @db.Text
-  ingredients  Json      @db.Json
-  allergens    Json      @db.Json
-  created_at   DateTime  @default(now()) @db.Timestamptz
-  updated_at   DateTime  @updatedAt @db.Timestamptz
+  id             Int              @id @default(autoincrement())
+  name           String           @unique @db.Text
+  food_types     FoodTypes        @relation(fields: [food_type_id], references: [id])
+  food_type_id   Int              @db.Integer
+  image          String           @db.Text
+  calories       Int              @db.Integer
+  description    String           @db.Text
+  ingredients    Json             @db.Json
+  allergens      Json             @db.Json
+  created_at     DateTime         @default(now()) @db.Timestamptz
+  updated_at     DateTime         @updatedAt @db.Timestamptz
+  FavouriteFoods FavouriteFoods[]
+  FoodCart       FoodCart[]
+  FoodHistory    FoodHistory[]
 }
 
 model FoodHistory {
-  id                Int      @id @default(autoincrement())
-  user_id           Int      @db.Integer
-  food_id           Int      @db.Integer
-  collection_status String   @db.Text
-  gym_id            Int      @db.Integer
-  created_at        DateTime @default(now()) @db.Timestamptz
-  updated_at        DateTime @updatedAt @db.Timestamptz
+  id                 Int                  @id @default(autoincrement())
+  gym_id             Int                  @db.Integer
+  gym                Gyms                 @relation(fields: [gym_id], references: [id])
+  user_id            Int                  @db.Integer
+  user               Users                @relation(fields: [user_id], references: [id])
+  food_id            Int                  @db.Integer
+  food               Foods                @relation(fields: [food_id], references: [id])
+  collection_status  String               @db.Text
+  created_at         DateTime             @default(now()) @db.Timestamptz
+  updated_at         DateTime             @updatedAt @db.Timestamptz
+  CalorieTransaction CalorieTransaction[]
 }
 
 model Districts {
   id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255)
+  name       String   @unique @db.VarChar(255)
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
   gyms       Gyms[]
@@ -67,7 +80,7 @@ model Districts {
 
 model Franchise {
   id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255)
+  name       String   @unique @db.VarChar(255)
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
   email      String   @db.Text
@@ -76,61 +89,68 @@ model Franchise {
 }
 
 model Gyms {
-  id              Int       @id @default(autoincrement())
-  name            String    @db.VarChar(255)
-  username        String    @db.VarChar(255)
-  password        String    @db.Text
-  location_id     Int       @db.Integer
-  franchise       Franchise @relation(fields: [franchise_id], references: [id])
-  franchise_id    Int       @db.Integer
-  district        Districts @relation(fields: [district_id], references: [id])
-  district_id     Int       @db.Integer
-  opening_hour    Int       @db.Integer
-  closing_hour    Int       @db.Integer
-  no_close        Boolean   @db.Boolean
-  address         String    @db.Text
-  google_position Json      @db.Json
-  created_at      DateTime  @default(now()) @db.Timestamptz
-  updated_at      DateTime  @updatedAt @db.Timestamptz
+  id              Int           @id @default(autoincrement())
+  name            String        @db.VarChar(255)
+  username        String        @unique @db.VarChar(255)
+  password        String        @db.Text
+  franchise       Franchise     @relation(fields: [franchise_id], references: [id])
+  franchise_id    Int           @db.Integer
+  district        Districts     @relation(fields: [district_id], references: [id])
+  district_id     Int           @db.Integer
+  opening_hour    Int           @db.Integer
+  closing_hour    Int           @db.Integer
+  no_close        Boolean       @db.Boolean
+  address         String        @db.Text
+  google_position Json          @db.Json
+  created_at      DateTime      @default(now()) @db.Timestamptz
+  updated_at      DateTime      @updatedAt @db.Timestamptz
+  FoodHistory     FoodHistory[]
 }
 
 model Trainers {
-  id             Int      @id @default(autoincrement())
-  name           String   @db.VarChar(255)
-  icon           String   @db.Text
-  certifications String   @db.Text
-  franchise_id   Int      @db.Integer
-  created_at     DateTime @default(now()) @db.Timestamptz
-  updated_at     DateTime @updatedAt @db.Timestamptz
+  id               Int               @id @default(autoincrement())
+  name             String            @unique @db.VarChar(255)
+  icon             String            @db.Text
+  certifications   String            @db.Text
+  franchise_id     Int               @db.Integer
+  created_at       DateTime          @default(now()) @db.Timestamptz
+  updated_at       DateTime          @updatedAt @db.Timestamptz
+  courses          Courses[]
+  course_schedules CourseSchedules[]
 }
 
 model Intensities {
-  id         Int      @id @default(autoincrement())
-  level      String   @db.Text
-  created_at DateTime @default(now()) @db.Timestamptz
-  updated_at DateTime @updatedAt @db.Timestamptz
+  id         Int       @id @default(autoincrement())
+  level      String    @unique @db.Text
+  created_at DateTime  @default(now()) @db.Timestamptz
+  updated_at DateTime  @updatedAt @db.Timestamptz
+  coruses    Courses[]
 }
 
 model CourseTypes {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.Text
-  created_at DateTime @default(now()) @db.Timestamptz
-  updated_at DateTime @updatedAt @db.Timestamptz
+  id         Int       @id @default(autoincrement())
+  name       String    @unique @db.Text
+  created_at DateTime  @default(now()) @db.Timestamptz
+  updated_at DateTime  @updatedAt @db.Timestamptz
+  coruses    Courses[]
 }
 
 model Courses {
-  id                 Int      @id @default(autoincrement())
-  intensity_id       Int      @db.Integer
-  course_type_id     Int      @db.Integer
-  gym_id             Int      @db.Integer
-  name               String   @db.Text
-  credits            Int      @db.Integer
-  calorise           Int      @db.Integer
-  duration           Int      @db.Integer
-  default_quota      Int      @db.Integer
-  default_trainer_id Int      @db.Integer
-  created_at         DateTime @default(now()) @db.Timestamptz
-  updated_at         DateTime @updatedAt @db.Timestamptz
+  id                 Int         @id @default(autoincrement())
+  intensity_id       Int         @db.Integer
+  course_type_id     Int         @db.Integer
+  gym_id             Int         @db.Integer
+  name               String      @unique @db.Text
+  credits            Int         @db.Integer
+  intensity          Intensities @relation(fields: [intensity_id], references: [id])
+  course_type        CourseTypes @relation(fields: [course_type_id], references: [id])
+  calorise           Int         @db.Integer
+  duration           Int         @db.Integer
+  default_quota      Int         @db.Integer
+  default_trainer_id Int         @db.Integer
+  trainers           Trainers    @relation(fields: [default_trainer_id], references: [id])
+  created_at         DateTime    @default(now()) @db.Timestamptz
+  updated_at         DateTime    @updatedAt @db.Timestamptz
 }
 
 model CourseSchedules {
@@ -138,6 +158,7 @@ model CourseSchedules {
   course_id  Int      @db.Integer
   trainer_id Int      @db.Integer
   quota      Int      @db.Integer
+  trainers   Trainers @relation(fields: [trainer_id], references: [id])
   time       DateTime @db.Timestamptz
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
@@ -146,7 +167,100 @@ model CourseSchedules {
 model FavouriteCourse {
   id         Int      @id @default(autoincrement())
   user_id    Int      @db.Integer
+  user       Users    @relation(fields: [user_id], references: [id])
   course_id  Int      @db.Integer
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
+}
+
+model CreditTransactionType {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.Text
+  created_at        DateTime            @default(now()) @db.Timestamptz
+  updated_at        DateTime            @updatedAt @db.Timestamptz
+  creditTransaction CreditTransaction[]
+}
+
+model CreditTransaction {
+  id                         Int                   @id @default(autoincrement())
+  user_schedule_id           Int                   @db.Integer
+  user_schedule              UserSchedule          @relation(fields: [user_schedule_id], references: [id])
+  credit                     Int                   @db.Integer
+  details                    String                @db.Text
+  credit_transaction_type    CreditTransactionType @relation(fields: [credit_transaction_type_id], references: [id])
+  credit_transaction_type_id Int                   @db.Integer
+  created_at                 DateTime              @default(now()) @db.Timestamptz
+  updated_at                 DateTime              @updatedAt @db.Timestamptz
+}
+
+model AttendanceTypes {
+  id            Int            @id @default(autoincrement())
+  details       String         @db.Text
+  user_schedule UserSchedule[]
+}
+
+model UserSchedule {
+  id                 Int                 @id @default(autoincrement())
+  user_id            Int                 @db.Integer
+  user               Users               @relation(fields: [user_id], references: [id])
+  course_schedule_id Int                 @db.Integer
+  attendance_type_id Int                 @db.Integer
+  attendance_type    AttendanceTypes     @relation(fields: [attendance_type_id], references: [id])
+  created_at         DateTime            @default(now()) @db.Timestamptz
+  updated_at         DateTime            @updatedAt @db.Timestamptz
+  creditTransaction  CreditTransaction[]
+}
+
+model SubPlans {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.Text
+  unlimited  Boolean  @db.Boolean
+  credits    Int      @db.Integer
+  fee        Int      @db.Integer
+  duration   Int      @db.Integer
+  created_at DateTime @default(now()) @db.Timestamptz
+  updated_at DateTime @updatedAt @db.Timestamptz
+}
+
+model CalorieTransactionType {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.Text
+  created_at         DateTime             @default(now()) @db.Timestamptz
+  updated_at         DateTime             @updatedAt @db.Timestamptz
+  calorieTransaction CalorieTransaction[]
+}
+
+model CalorieTransaction {
+  id                  Int                    @id @default(autoincrement())
+  user_id             Int                    @db.Integer
+  user                Users                  @relation(fields: [user_id], references: [id])
+  food_history_id     Int                    @db.Integer
+  food_history        FoodHistory            @relation(fields: [food_history_id], references: [id])
+  calorie             Int                    @db.Integer
+  transaction_type_id Int                    @db.Integer
+  transaction_type    CalorieTransactionType @relation(fields: [transaction_type_id], references: [id])
+  details             String                 @db.Text
+  created_at          DateTime               @default(now()) @db.Timestamptz
+  updated_at          DateTime               @updatedAt @db.Timestamptz
+}
+
+model FavouriteFoods {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      @db.Integer
+  users      Users    @relation(fields: [user_id], references: [id])
+  food_id    Int      @db.Integer
+  foods      Foods    @relation(fields: [food_id], references: [id])
+  created_at DateTime @default(now()) @db.Timestamptz
+  updated_at DateTime @updatedAt @db.Timestamptz
+}
+
+model FoodCart {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      @db.Integer
+  users      Users    @relation(fields: [user_id], references: [id])
+  food_id    Int      @db.Integer
+  foods      Foods    @relation(fields: [food_id], references: [id])
+  quantity   Int      @db.Integer
+  updated_at DateTime @updatedAt @db.Timestamptz
+  created_at DateTime @default(now()) @db.Timestamptz
 }
