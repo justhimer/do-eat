@@ -1,23 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Food` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `FoodType` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Food" DROP CONSTRAINT "Food_food_type_id_fkey";
-
--- DropTable
-DROP TABLE "Food";
-
--- DropTable
-DROP TABLE "FoodType";
-
--- DropTable
-DROP TABLE "User";
-
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
@@ -36,7 +16,7 @@ CREATE TABLE "Users" (
 -- CreateTable
 CREATE TABLE "FoodTypes" (
     "id" SERIAL NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
+    "name" TEXT NOT NULL,
     "icon" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
@@ -74,13 +54,13 @@ CREATE TABLE "FoodHistory" (
 );
 
 -- CreateTable
-CREATE TABLE "District" (
+CREATE TABLE "Districts" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
 
-    CONSTRAINT "District_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Districts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -101,7 +81,6 @@ CREATE TABLE "Gyms" (
     "name" VARCHAR(255) NOT NULL,
     "username" VARCHAR(255) NOT NULL,
     "password" TEXT NOT NULL,
-    "location_id" INTEGER NOT NULL,
     "franchise_id" INTEGER NOT NULL,
     "district_id" INTEGER NOT NULL,
     "opening_hour" INTEGER NOT NULL,
@@ -297,6 +276,36 @@ CREATE TABLE "FoodCart" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "FoodTypes_name_key" ON "FoodTypes"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Foods_name_key" ON "Foods"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Districts_name_key" ON "Districts"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Franchise_name_key" ON "Franchise"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Gyms_username_key" ON "Gyms"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Trainers_name_key" ON "Trainers"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Intensities_level_key" ON "Intensities"("level");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "CourseTypes_name_key" ON "CourseTypes"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Courses_name_key" ON "Courses"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "SubPlans_name_key" ON "SubPlans"("name");
+
 -- AddForeignKey
 ALTER TABLE "Foods" ADD CONSTRAINT "Foods_food_type_id_fkey" FOREIGN KEY ("food_type_id") REFERENCES "FoodTypes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -313,7 +322,7 @@ ALTER TABLE "FoodHistory" ADD CONSTRAINT "FoodHistory_food_id_fkey" FOREIGN KEY 
 ALTER TABLE "Gyms" ADD CONSTRAINT "Gyms_franchise_id_fkey" FOREIGN KEY ("franchise_id") REFERENCES "Franchise"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Gyms" ADD CONSTRAINT "Gyms_district_id_fkey" FOREIGN KEY ("district_id") REFERENCES "District"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Gyms" ADD CONSTRAINT "Gyms_district_id_fkey" FOREIGN KEY ("district_id") REFERENCES "Districts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Courses" ADD CONSTRAINT "Courses_intensity_id_fkey" FOREIGN KEY ("intensity_id") REFERENCES "Intensities"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -328,13 +337,25 @@ ALTER TABLE "Courses" ADD CONSTRAINT "Courses_default_trainer_id_fkey" FOREIGN K
 ALTER TABLE "CourseSchedules" ADD CONSTRAINT "CourseSchedules_trainer_id_fkey" FOREIGN KEY ("trainer_id") REFERENCES "Trainers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "FavouriteCourse" ADD CONSTRAINT "FavouriteCourse_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "CreditTransaction" ADD CONSTRAINT "CreditTransaction_user_schedule_id_fkey" FOREIGN KEY ("user_schedule_id") REFERENCES "UserSchedule"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CreditTransaction" ADD CONSTRAINT "CreditTransaction_credit_transaction_type_id_fkey" FOREIGN KEY ("credit_transaction_type_id") REFERENCES "CreditTransactionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "UserSchedule" ADD CONSTRAINT "UserSchedule_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "UserSchedule" ADD CONSTRAINT "UserSchedule_attendance_type_id_fkey" FOREIGN KEY ("attendance_type_id") REFERENCES "AttendanceTypes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CalorieTransaction" ADD CONSTRAINT "CalorieTransaction_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CalorieTransaction" ADD CONSTRAINT "CalorieTransaction_food_history_id_fkey" FOREIGN KEY ("food_history_id") REFERENCES "FoodHistory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CalorieTransaction" ADD CONSTRAINT "CalorieTransaction_transaction_type_id_fkey" FOREIGN KEY ("transaction_type_id") REFERENCES "CalorieTransactionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

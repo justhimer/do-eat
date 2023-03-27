@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { FoodsModule } from './foods/foods.module';
 import { FoodTypesModule } from './food_types/food_types.module';
 import { DistrictsModule } from './districts/districts.module';
+import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DistrictsModule } from './districts/districts.module';
     FoodsModule,
     FoodTypesModule,
     DistrictsModule,
+    ExercisesModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
