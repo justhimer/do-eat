@@ -1,6 +1,6 @@
-
 export async function facebookLogin(code:string){
-    const res = await fetch(`${process.env.BACKEND_SERVER}/users/login/facebook`,{
+   
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/users/login/facebook`,{
         method:'POST',
         headers:{
             "Content-Type":"application/json; charset=utf-8"
@@ -9,12 +9,11 @@ export async function facebookLogin(code:string){
     })
     const result = await res.json();
 
-    return result
+    if(res.ok){
+        // localStorage.setItem('token', result.token)
+            return result
+        }else{
+            return false
+        }
 
-    // if(res.ok){
-    // localStorage.setItem('token', result.token)
-    //     return result
-    // }else{
-    //     return false
-    // }
 }
