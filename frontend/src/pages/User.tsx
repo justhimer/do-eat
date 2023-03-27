@@ -1,5 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { CornerBox } from '../components/CornerBox';
 import { Login } from '../components/Login';
+import { Logout } from '../components/Logout';
 import AppStyle from '../scss/App.module.scss';
 
 const UserTab: React.FC = () => {
@@ -19,7 +21,9 @@ const UserTab: React.FC = () => {
         </IonHeader> */}
 
         <div className={AppStyle.hero}>
+          <CornerBox />
           <Login />
+          <Logout />
         </div>
 
       </IonContent>

@@ -1,6 +1,4 @@
 import { IonButton } from "@ionic/react";
-import { CornerBox } from "./CornerBox";
-import { Logout } from "./Logout";
 
 const onFacebookLogin = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -19,11 +17,6 @@ const onFacebookLogin = (event: React.MouseEvent) => {
 
 export function Login() {
     return (
-        <div>
-            <CornerBox />
-            <IonButton onClick={onFacebookLogin}>Facebook Login</IonButton>
-            <Logout />
-        </div>
-
+        <IonButton onClick={onFacebookLogin}>Facebook Login</IonButton>
     )
 }
