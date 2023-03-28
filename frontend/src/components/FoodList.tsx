@@ -3,21 +3,30 @@ import { FoodSliceState } from "../redux/foodSlice";
 import { RootState } from "../redux/store";
 import { FoodItem } from "./FoodItem";
 import AppStyle from '../scss/App.module.scss';
+import { useQuery } from "@tanstack/react-query";
+import { fetchFoods } from "../api/foodAPIs";
+import React, { useState } from 'react';
+
 
 export function FoodList() {
 
-    const foods: FoodSliceState[] = useSelector((state: RootState) => state.foods);
+    // get foods from backend
+    const { data: foods, isLoading, refetch } = useQuery({
+        queryKey: ["foods"],
+        queryFn: fetchFoods,
+    });  // rename data to foods
+
 
     return (
         <div>
             <div className={AppStyle.title}>Food List</div>
             {
-                foods.map((food, index) => (
+                foods && foods.length > 0 && foods.map((food: any, index: number) => (
                     <FoodItem
-                    key={index}
-                    id={food.id}
-                    name={food.name}
-                    description={food.description}/>
+                        key={index}
+                        id={food.id}
+                        name={food.name}
+                        description={food.description} />
                 ))
             }
         </div>
