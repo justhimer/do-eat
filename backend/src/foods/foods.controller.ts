@@ -15,7 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('foods') // to categorize in swagger
 @Controller('foods')
 export class FoodsController {
-  constructor(private readonly foodsService: FoodsService) {}
+  constructor(private readonly foodsService: FoodsService) { }
 
   @Post()
   createFood(@Body() createFoodDto: CreateFoodDto) {
@@ -28,7 +28,8 @@ export class FoodsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    const food = await this.foodsService.findOne(+id);
     return this.foodsService.findOne(+id);
   }
 
