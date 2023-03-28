@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { ExercisesController } from './exercises.controller';
+import { CreditTransactionModule } from 'src/credit-transaction/credit-transaction.module';
+import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
 import { PrismaService } from 'nestjs-prisma';
-import { CreditCalorieTransactionService } from 'src/credit-calorie-transaction/credit-calorie-transaction.service';
-import { CreditCalorieTransactionModule } from 'src/credit-calorie-transaction/credit-calorie-transaction.module';
 
 @Module({
-  imports:[CreditCalorieTransactionModule],
+  imports:[CreditTransactionModule],
   controllers: [ExercisesController],
-  providers: [ExercisesService,PrismaService,CreditCalorieTransactionService]
+  providers: [ExercisesService,CreditTransactionService,PrismaService]
 })
 export class ExercisesModule {}

@@ -1,9 +1,19 @@
-.button{
+.button {
     border-radius: 100%;
     // border: 5px solid #cfc1ac;
     box-shadow: 0 0 0 0.2rem #cfc1ac;
     background-color: #cfc1ac;
 }
-.reposition{
-    transform: translate(0,-10px) scale(1.1,1.1);
+
+.reposition {
+    transform: translate(0, -10px) scale(1.1, 1.1);
+}
+
+.tab {
+    background-color: #615c59;
+    color: #cfc1ac;
+}
+
+.tab_bar {
+    border: none;
 }

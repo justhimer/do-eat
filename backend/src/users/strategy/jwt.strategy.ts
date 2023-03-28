@@ -5,10 +5,17 @@ export class JwtStrategy extends PassportStrategy(
     Strategy,
     'jwt'  // assign the strategy to this name for AuthGuard
 ) {
+
     constructor() {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_SECRET,
         });
+
     }
+
+    async validate(payload: any) {
+        return { userId: payload.sub, username: payload.username };
+    }
+    
 }

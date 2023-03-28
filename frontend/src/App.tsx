@@ -41,9 +41,9 @@ import './theme/variables.css';
 import { FacebookCallback } from './components/FacebookCallback';
 
 /* custom SCSS modules */
-import tabStyle from "./scss/TabBar.module.scss"
+import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
-
+import PrivateRouter from './components/PrivateRoute';
 
 setupIonicReact();
 
@@ -79,27 +79,27 @@ const App: React.FC = () => (
 
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home-tab" href="/home-tab">
+        <IonTabBar slot="bottom" className={TabStyle.tab_bar}>
+          <IonTabButton tab="home-tab" href="/home-tab" className={TabStyle.tab}>
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="do-tab" href="/do-tab">
+          <IonTabButton tab="do-tab" href="/do-tab" className={TabStyle.tab}>
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
           {/* invisible button for applying QR code css */}
-          <IonTabButton>
+          <IonTabButton className={TabStyle.tab}>
           </IonTabButton>
 
-          <IonTabButton tab="eat-tab" href="/eat-tab">
+          <IonTabButton tab="eat-tab" href="/eat-tab" className={TabStyle.tab}>
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="user-tab" href="/user-tab">
+          <IonTabButton tab="user-tab" href="/user-tab" className={TabStyle.tab}>
             <IonIcon aria-hidden="true" icon={accessibilityOutline} />
             <IonLabel>User</IonLabel>
           </IonTabButton>
@@ -108,8 +108,8 @@ const App: React.FC = () => (
 
 
       </IonTabs>
-      <IonFab vertical="bottom" horizontal="center" slot="fixed" className={tabStyle.reposition}>
-        <IonFabButton className={tabStyle.button}>
+      <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
+        <IonFabButton className={TabStyle.button}>
           <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
         </IonFabButton>
       </IonFab>

@@ -8,6 +8,8 @@ import { FoodTypesModule } from './food_types/food_types.module';
 import { DistrictsModule } from './districts/districts.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { CreditCalorieTransactionModule } from './credit-calorie-transaction/credit-calorie-transaction.module';
+import { CalorieTransactionModule } from './calorie-transaction/calorie-transaction.module';
+import { CreditTransactionModule } from './credit-transaction/credit-transaction.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { CreditCalorieTransactionModule } from './credit-calorie-transaction/cre
     DistrictsModule,
     ExercisesModule,
     CreditCalorieTransactionModule,
+    CreditTransactionModule,
+    CalorieTransactionModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
