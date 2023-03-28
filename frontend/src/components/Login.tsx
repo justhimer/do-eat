@@ -1,10 +1,10 @@
 import { IonButton } from "@ionic/react";
 
-const onFacebookLogin = (event: React.MouseEvent)=>{
+const onFacebookLogin = (event: React.MouseEvent) => {
     event.preventDefault();
     const authURL = 'https://www.facebook.com/dialog/oauth'
     const search = new URLSearchParams()
-    search.set('client_id', process.env.REACT_APP_FACEBOOK_APP_ID +"")
+    search.set('client_id', process.env.REACT_APP_FACEBOOK_APP_ID + "")
     search.set(
         'redirect_uri',
         `${window.location.origin}/facebook-callback`

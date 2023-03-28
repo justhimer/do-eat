@@ -3,16 +3,16 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { PrismaService } from 'nestjs-prisma';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '12h' },
     })
   ],
   controllers: [UsersController],
-  providers: [UsersService, PrismaService],
+  providers: [UsersService, PrismaService, JwtStrategy],
 })
 export class UsersModule {}

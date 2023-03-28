@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import jwt_decode from 'jwt-decode';
 
 export interface UserSliceState {
     isAuthenticated: boolean;
@@ -7,10 +8,41 @@ export interface UserSliceState {
     username: string;
 }
 
+interface Token {
+    id?: number,
+    email?: string,
+    username?: string,
+    iat?: number,
+    exp?: number
+}
+
 const isLoggedIn = () => {
     const token = localStorage.getItem("token");
+    // if (!!token) {
+    //     const decoded = jwt_decode(token);
+    //     console.log(decoded);
+    // }
     return !!token
 }
+
+const getUserInfo = () => {
+    const token = localStorage.getItem("token");
+    let data = {
+        id: 0,
+        email: "",
+        username: "",
+    }
+    if (!!token) {
+        const decoded = jwt_decode<Token>(token);
+        return {
+            id: decoded.id,
+            email: decoded.email,
+            username: decoded.username
+        }
+    }
+    return data;
+}
+
 
 const userSlice = createSlice({
 
@@ -18,17 +50,15 @@ const userSlice = createSlice({
 
     initialState: {
         isAuthenticated: isLoggedIn(),
-        id: 0,
-        email: "",
-        username: "",
+        id: getUserInfo().id,
+        email: getUserInfo().email,
+        username: getUserInfo().username,
     } as UserSliceState,
 
     reducers: {
 
         fbLogin: (state: UserSliceState, action: PayloadAction<any>) => {
-
             const payload = action.payload;
-            console.log('payload = ', payload);
 
             state.isAuthenticated = true;
             state.id = payload.id;
@@ -36,6 +66,15 @@ const userSlice = createSlice({
             state.username = payload.username;
 
             localStorage.setItem("token", payload.token);
+        },
+
+        logout: (state: UserSliceState) => {
+            state.isAuthenticated = false;
+            state.id = 0;
+            state.email = "";
+            state.username = "";
+
+            localStorage.removeItem("token");
         }
     },
 

@@ -137,26 +137,28 @@ model CourseTypes {
 }
 
 model Courses {
-  id                 Int         @id @default(autoincrement())
-  intensity_id       Int         @db.Integer
-  course_type_id     Int         @db.Integer
-  gym_id             Int         @db.Integer
-  name               String      @unique @db.Text
-  credits            Int         @db.Integer
-  intensity          Intensities @relation(fields: [intensity_id], references: [id])
-  course_type        CourseTypes @relation(fields: [course_type_id], references: [id])
-  calorise           Int         @db.Integer
-  duration           Int         @db.Integer
-  default_quota      Int         @db.Integer
-  default_trainer_id Int         @db.Integer
-  trainers           Trainers    @relation(fields: [default_trainer_id], references: [id])
-  created_at         DateTime    @default(now()) @db.Timestamptz
-  updated_at         DateTime    @updatedAt @db.Timestamptz
+  id                 Int               @id @default(autoincrement())
+  intensity_id       Int               @db.Integer
+  course_type_id     Int               @db.Integer
+  gym_id             Int               @db.Integer
+  name               String            @unique @db.Text
+  credits            Int               @db.Integer
+  intensity          Intensities       @relation(fields: [intensity_id], references: [id])
+  course_type        CourseTypes       @relation(fields: [course_type_id], references: [id])
+  calorise           Int               @db.Integer
+  duration           Int               @db.Integer
+  default_quota      Int               @db.Integer
+  default_trainer_id Int               @db.Integer
+  trainers           Trainers          @relation(fields: [default_trainer_id], references: [id])
+  created_at         DateTime          @default(now()) @db.Timestamptz
+  updated_at         DateTime          @updatedAt @db.Timestamptz
+  courseSchedules    CourseSchedules[]
 }
 
 model CourseSchedules {
   id         Int      @id @default(autoincrement())
   course_id  Int      @db.Integer
+  courses    Courses  @relation(fields: [course_id], references: [id])
   trainer_id Int      @db.Integer
   quota      Int      @db.Integer
   trainers   Trainers @relation(fields: [trainer_id], references: [id])
@@ -184,14 +186,14 @@ model CreditTransactionType {
 
 model CreditTransaction {
   id                         Int                   @id @default(autoincrement())
+  user_id                    Int                   @db.Integer
+  user                       Users                 @relation(fields: [user_id], references: [id])
   user_schedule_id           Int                   @db.Integer
   user_schedule              UserSchedule          @relation(fields: [user_schedule_id], references: [id])
   credit                     Int                   @db.Integer
   details                    String                @db.Text
   credit_transaction_type    CreditTransactionType @relation(fields: [credit_transaction_type_id], references: [id])
   credit_transaction_type_id Int                   @db.Integer
-  user_id                    Int                   @db.Integer
-  user                       Users                 @relation(fields: [user_id], references: [id])
   created_at                 DateTime              @default(now()) @db.Timestamptz
   updated_at                 DateTime              @updatedAt @db.Timestamptz
 }

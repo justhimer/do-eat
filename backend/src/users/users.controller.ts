@@ -9,12 +9,14 @@ import {
   ParseIntPipe,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users') // to categorize in swagger
 @Controller('users')
@@ -22,7 +24,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService
-    ) { }
+  ) { }
 
   @Post('login/facebook')
   async facebookLogin(@Body('code') code: any) {
@@ -66,9 +68,9 @@ export class UsersController {
     const profileData = await profileResponse.json();
 
     // find existing user from database according to user's facebook email
-    let user = await this.usersService.findOneByEmail(profileData.email);
+    let user = await this.usersService.findByEmail(profileData.email);
 
-    // Create a new user if the user does not exist
+    // create a new user if the user does not exist
     if (!user) {
       user = await this.usersService.createByFacebook(
         profileData.email,
@@ -84,12 +86,6 @@ export class UsersController {
     };
     const token = this.jwtService.sign(payload);
 
-    // const token = jwtSimple.encode(payload, jwt.jwtSecret);
-    // res.json({
-    //   username: user.username,
-    //   token: token
-    // });
-
     return {
       ...payload,
       token: token
@@ -101,14 +97,16 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  // @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.usersService.findById(+id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOneById(+id);
+  // @UseGuards(AuthGuard('jwt'))
+  @Get('calories/:id')
+  findCalories(@Param('id') id: string): Promise<number> {
+    return this.usersService.findCalories(+id);
   }
 
   @Patch(':id')
