@@ -3,6 +3,50 @@ import { PrismaClient, Gyms, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+    const subPlansValue: Prisma.SubPlansCreateInput[] = [
+        {
+            name: "Basic",
+            unlimited: false,
+            credits: 10,
+            fee: 2750,
+            duration: 30,
+        },
+        {
+            name: "Premium",
+            unlimited: true,
+            credits: 99999,
+            fee: 5999,
+            duration: 30,
+        }
+    ]
+    const subPlansInsert = await prisma.subPlans.createMany({
+        data: subPlansValue
+    })
+
+    // const subPlans = await prisma.subPlans.upsert({
+    //     where: {},
+    //     update: {},
+    //     create: {
+    //         name: "Basic",
+    //         unlimited: false,
+    //         credits: 10,
+    //         fee: 2750,
+    //         duration: 30,
+    //     },
+    // })
+
+    // const subPlans2 = await prisma.subPlans.upsert({
+    //     where: {},
+    //     update: {},
+    //     create: {
+    //         name: "Premium",
+    //         unlimited: true,
+    //         credits: 99999,
+    //         fee: 5999,
+    //         duration: 30,
+    //     },
+    // })
+
     const user1 = await prisma.users.upsert({
         where: { email: "user1@gmail.com" },
         update: {},
@@ -11,8 +55,10 @@ async function main() {
             username: "user1",
             password: "password1",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
+            subscribed:true,
+            sub_plan_id:2,
+            sub_plan_start:new Date(),
+            sub_plan_end:new Date(Date.now()+2592000000)
         }
     })
 
@@ -24,8 +70,10 @@ async function main() {
             username: "user2",
             password: "password2",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
+            subscribed:true,
+            sub_plan_id:1,
+            sub_plan_start:new Date(),
+            sub_plan_end:new Date(Date.now()+2592000000)
         }
     })
 
@@ -37,47 +85,43 @@ async function main() {
             username: "user3",
             password: "password3",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
+            subscribed:true,
+            sub_plan_id:1,
+            sub_plan_start:new Date(),
+            sub_plan_end:new Date(Date.now()+2592000000)
         }
     })
 
-    const gymadmin1 = await prisma.users.upsert({
-        where: { email: "gymadmin1@gmail.com" },
+    const user4 = await prisma.users.upsert({
+        where: { email: "user4@gmail.com" },
         update: {},
         create: {
-            email: "gymadmin1@gmail.com",
-            username: "gymadmin1",
-            password: "gymadmin1",
+            email: "user4@gmail.com",
+            username: "user4",
+            password: "user4",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
         }
     })
 
-    const gymadmin2 = await prisma.users.upsert({
-        where: { email: "gymadmin2@gmail.com" },
+    const user5 = await prisma.users.upsert({
+        where: { email: "user5@gmail.com" },
         update: {},
         create: {
-            email: "gymadmin2@gmail.com",
-            username: "gymadmin2",
-            password: "gymadmin2",
+            email: "user5@gmail.com",
+            username: "user5",
+            password: "user5",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
         }
     })
 
-    const gymadmin3 = await prisma.users.upsert({
-        where: { email: "gymadmin3@gmail.com" },
+    const user6 = await prisma.users.upsert({
+        where: { email: "user6@gmail.com" },
         update: {},
         create: {
-            email: "gymadmin3@gmail.com",
-            username: "gymadmin3",
-            password: "gymadmin3",
+            email: "user6@gmail.com",
+            username: "user6",
+            password: "user6",
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            credits: 0,
-            calories: 0,
         }
     })
 
@@ -664,49 +708,7 @@ async function main() {
     //     },
     // })
 
-    const subPlansValue: Prisma.SubPlansCreateInput[] = [
-        {
-            name: "Basic",
-            unlimited: false,
-            credits: 10,
-            fee: 2750,
-            duration: 30,
-        },
-        {
-            name: "Premium",
-            unlimited: true,
-            credits: 99999,
-            fee: 5999,
-            duration: 30,
-        }
-    ]
-    const subPlansInsert = await prisma.subPlans.createMany({
-        data: subPlansValue
-    })
-
-    // const subPlans = await prisma.subPlans.upsert({
-    //     where: {},
-    //     update: {},
-    //     create: {
-    //         name: "Basic",
-    //         unlimited: false,
-    //         credits: 10,
-    //         fee: 2750,
-    //         duration: 30,
-    //     },
-    // })
-
-    // const subPlans2 = await prisma.subPlans.upsert({
-    //     where: {},
-    //     update: {},
-    //     create: {
-    //         name: "Premium",
-    //         unlimited: true,
-    //         credits: 99999,
-    //         fee: 5999,
-    //         duration: 30,
-    //     },
-    // })
+    
 
 
     const districts1 = await prisma.districts.upsert({
@@ -993,6 +995,27 @@ async function main() {
             calorise: 200,
             default_trainer_id: trainers2.id,
             default_quota: 20,
+            courseSchedules:{
+                createMany:{
+                    data:[
+                        {
+                            trainer_id:trainers2.id,
+                            quota:20,
+                            time: new Date(1679982025107)
+                        },
+                        {
+                            trainer_id:trainers2.id,
+                            quota:20,
+                            time: new Date(1679982149097)
+                        },
+                        {
+                            trainer_id:trainers2.id,
+                            quota:20,
+                            time: new Date(1679982166881)
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1009,6 +1032,7 @@ async function main() {
             calorise: 300,
             default_trainer_id: trainers2.id,
             default_quota: 20,
+            
         },
     })
 
@@ -1025,6 +1049,7 @@ async function main() {
             calorise: 400,
             default_trainer_id: trainers2.id,
             default_quota: 20,
+            
         },
     })
 
@@ -1041,6 +1066,7 @@ async function main() {
             calorise: 200,
             default_trainer_id: trainers4.id,
             default_quota: 20,
+            
         },
     })
 
@@ -1057,6 +1083,27 @@ async function main() {
             calorise: 300,
             default_trainer_id: trainers4.id,
             default_quota: 20,
+            courseSchedules:{
+                createMany:{
+                    data:[
+                        {
+                            trainer_id:trainers4.id,
+                            quota:20,
+                            time: new Date(1679982025107)
+                        },
+                        {
+                            trainer_id:trainers4.id,
+                            quota:20,
+                            time: new Date(1679982149097)
+                        },
+                        {
+                            trainer_id:trainers2.id,
+                            quota:20,
+                            time: new Date(1679982166881)
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1171,6 +1218,41 @@ async function main() {
             default_quota: 20,
         },
     })
+    const creditTransactionAdd = await prisma.creditTransactionType.create({
+        data:{
+            name:"add",
+    }
+    })
+
+    const creditTransactionMinus = await prisma.creditTransactionType.create({
+        data:{
+            name:"minus"
+        }
+    })
+
+    const creditTransaction = await prisma.creditTransaction.create({
+        data:{
+            credit: 10000,
+            credit_transaction_type_id: creditTransactionAdd.id,
+            user_id:user1.id,
+            details:"test add"
+        }
+    })
+
+    const calorieTransactionAdd = await prisma.calorieTransactionType.create({
+        data:{
+            name:"add",
+        }
+    })
+
+    const calorieTransactionMinus = await prisma.calorieTransactionType.create({
+        data:{
+            name:"minus"
+        }
+    })
+
+
+
 }
 
 main()
