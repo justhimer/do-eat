@@ -57,18 +57,18 @@ export class UsersService {
     return foundUser;
   }
 
-  // async findIsSubscribed(id: number): Promise<boolean> {
-  //   const result = await this.prisma.users.findFirst({
-  //     select: {
-  //       subscribed: true,
-  //     },
-  //     where: {
-  //       id: id,
-  //     },
-  //   });
-  //   // if (!foundUser) throw new NotFoundException('User not found.');
-  //   return result.subscribed;
-  // }
+  async findIsSubscribed(id: number): Promise<boolean> {
+    const result = await this.prisma.users.findFirst({
+      select: {
+        subscribed: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+    // if (!foundUser) throw new NotFoundException('User not found.');
+    return result.subscribed;
+  }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.prisma.users.update({

@@ -103,11 +103,11 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @Get('/is_subscribed/:id')
-  // findIsSubscribed(@Param('id', ParseIntPipe) id: number) {
-  //   return this.usersService.findIsSubscribed(id);
-  // }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/is_subscribed/:id')
+  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findIsSubscribed(id);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
