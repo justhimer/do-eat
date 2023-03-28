@@ -791,10 +791,10 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 101, 1/F, 1-3 Paterson Street, Causeway Bay, Hong Kong",
-            google_position: "22.2793,114.1827",
+            google_position: {lat:22.2793,long:114.1827},
             franchise_id: franchise1.id,
             district_id: districts1.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        } 
     })
 
     const gym2 = await prisma.gyms.upsert({
@@ -808,10 +808,10 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 1001, 10/F, 27-29 Paterson Street, Central, Hong Kong",
-            google_position: "24.6744,117.1298",
+            google_position: {lat:24.6744,long:117.1298},
             franchise_id: franchise1.id,
             district_id: district2.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        }
     })
 
     const gym3 = await prisma.gyms.upsert({
@@ -825,10 +825,10 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 101, 1/F, 39 Hinnessy Road,Wan Chai, Hong Kong",
-            google_position: "19.1568,104.3564",
+            google_position: {lat:19.1568,long:104.3564},
             franchise_id: franchise1.id,
             district_id: district3.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        } 
     })
 
     const gym4 = await prisma.gyms.upsert({
@@ -842,10 +842,10 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 501, 5/F, 1-3 Star Road, Tsim Sha Tsui, Hong Kong",
-            google_position: "19.1568,104.3564",
+            google_position: {lat:19.1568,long:104.3564},
             franchise_id: franchise1.id,
             district_id: district4.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        } 
     })
 
     const gym5 = await prisma.gyms.upsert({
@@ -859,10 +859,10 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 301, 3/F, 11-15 Neton Road, Monk Kok, Hong Kong",
-            google_position: "19.1568,104.3564",
+            google_position: {lat:19.1568,long:104.3564},
             franchise_id: franchise1.id,
             district_id: district5.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        } 
     })
 
     const gym6 = await prisma.gyms.upsert({
@@ -876,10 +876,10 @@ async function main() {
             closing_hour: 2000,
             no_close: true,
             address: "Shop 101, 1/F, 1-3 LeaGarden, Causeway Bay, Hong Kong",
-            google_position: "22.2793,114.1827",
+            google_position: {lat:22.2793,long:114.1827},
             franchise_id: franchise2.id,
             district_id: districts1.id,
-        } as Gyms & { franchise_id?: number, district_id?: number },
+        } 
     })
 
     const trainers1 = await prisma.trainers.upsert({

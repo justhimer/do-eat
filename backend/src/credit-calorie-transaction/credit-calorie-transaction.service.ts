@@ -34,12 +34,7 @@ export class CreditCalorieTransactionService {
        const newCredit = addCredit - deductCredit
 
        console.log("newCredit ", newCredit);
-       await this.prisma.users.update({
-        where:{id:id},
-        data:{
-            credits: newCredit
-        }
-       })
+       return newCredit
     }
 
     async getUserCredit(id:number){

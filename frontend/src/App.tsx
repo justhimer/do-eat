@@ -43,6 +43,7 @@ import { FacebookCallback } from './components/FacebookCallback';
 /* custom SCSS modules */
 import tabStyle from "./scss/TabBar.module.scss"
 import "./scss/RootChanges.scss"
+import PrivateRouter from './components/PrivateRoute';
 
 
 setupIonicReact();

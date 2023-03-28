@@ -24,7 +24,7 @@ export function CornerBox() {
 
     const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
     const userID = useSelector((state: RootState) => state.users.id);
-    
+        
     async function showCalories() {
         if (isLoggedIn) {
             const calories = await fetchCalories(userID);
