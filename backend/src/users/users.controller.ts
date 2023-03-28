@@ -99,26 +99,28 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
-  findById(@Param('id') id: string) {
-    return this.usersService.findById(+id);
+  findById(@Param('id', ParseIntPipe) id: number) {   // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+    return this.usersService.findById(id);
   }
 
   // @UseGuards(AuthGuard('jwt'))
-  // @Get('calories/:id')
-  // findCalories(@Param('id') id: string): Promise<number> {
-  //   return this.usersService.findCalories(+id);
+  // @Get('/is_subscribed/:id')
+  // findIsSubscribed(@Param('id', ParseIntPipe) id: number) {
+  //   return this.usersService.findIsSubscribed(id);
   // }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: string, // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(+id, updateUserDto); // +id turns id type to number
+    return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id);
   }
 }

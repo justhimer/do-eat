@@ -4,9 +4,9 @@ import AppStyle from '../scss/App.module.scss';
 
 const HomeTab: React.FC = () => {
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
+    <IonPage >
+      <IonHeader >
+        <IonToolbar className={AppStyle.tool_bar}>
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
