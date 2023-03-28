@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'nestjs-prisma';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 @Injectable()
 export class ExercisesService {
-  constructor(private readonly prisma: PrismaClient){}
+  constructor(private readonly prisma: PrismaService){}
 
 async allLocations(){
   let data = await this.prisma.gyms.findMany({

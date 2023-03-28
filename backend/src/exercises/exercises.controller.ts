@@ -2,11 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
-import { CreditCalorieTransactionService } from 'src/credit-calorie-transaction/credit-calorie-transaction.service';
+import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
 
 @Controller('exercises')
 export class ExercisesController {
-  constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditCalorieTransactionService) { }
+  constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditTransactionService) { }
 
 
   @Get("/")
@@ -47,13 +47,13 @@ export class ExercisesController {
 
   @Post('join/:course')
   async join(@Param('course', ParseIntPipe) course: number, @Body('id', ParseIntPipe) id: number) {
-    await this.creditService.updateUserCredits(id)
+    await this.creditService.getUserCredits(id)
     //need api to get subscription model
     if (null) {
       await this.exercisesService.addCoursePremium(id, course)
       return "course subscribed"
     } else {
-      let userCredit = await this.creditService.getUserCredit(id)
+      let userCredit = await this.creditService.getUserCredits(id)
       let courseCredit = await this.exercisesService.getExerciseCredit(course)
       if (courseCredit > userCredit) {
         throw new BadRequestException('Not Enough Credits', { cause: new Error(), description: 'Not Enough Credits' })
