@@ -1,7 +1,7 @@
 import { useIonToast } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { fetchCalories } from "../api/userAPIs";
+import { fetchCalories } from "../api/calorieTransaction";
 import { RootState } from "../redux/store";
 import CornerStyle from "../scss/CornerBox.module.scss";
 import NotificationStyle from "../scss/Notification.module.scss";
