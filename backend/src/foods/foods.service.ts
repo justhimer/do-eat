@@ -41,15 +41,39 @@ export class FoodsService {
     return foods;
   }
 
-  findOne(id: number) {
+  async findOne(id: number): Promise<any> {
+    const food = await this.prisma.foods.findFirst({
+      select: {
+        id: true,
+        name: true,
+        calories: true,
+      },
+      where: {
+        id: id,
+      },
+    });
     return `This action returns a #${id} food`;
   }
 
-  update(id: number, updateFoodDto: UpdateFoodDto) {
+  async update(id: number, updateFoodDto: UpdateFoodDto) {
+    await this.prisma.foods.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: updateFoodDto.name,
+      },
+    });
     return `This action updates a #${id} food`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} food`;
+  async remove(id: number) {
+    await this.prisma.foods.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return `This action removes a #${id} food`
   }
 }
