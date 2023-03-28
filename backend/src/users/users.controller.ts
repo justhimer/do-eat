@@ -97,13 +97,13 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.usersService.findById(+id);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   @Get('calories/:id')
   findCalories(@Param('id') id: string): Promise<number> {
     return this.usersService.findCalories(+id);
