@@ -103,11 +103,11 @@ export class UsersController {
     return this.usersService.findById(+id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get('calories/:id')
-  findCalories(@Param('id') id: string): Promise<number> {
-    return this.usersService.findCalories(+id);
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get('calories/:id')
+  // findCalories(@Param('id') id: string): Promise<number> {
+  //   return this.usersService.findCalories(+id);
+  // }
 
   @Patch(':id')
   update(
