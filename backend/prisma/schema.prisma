@@ -26,6 +26,7 @@ model Users {
   FoodHistory        FoodHistory[]
   UserSchedule       UserSchedule[]
   CalorieTransaction CalorieTransaction[]
+  CreditTransaction  CreditTransaction[]
 }
 
 model FoodTypes {
@@ -189,6 +190,8 @@ model CreditTransaction {
   details                    String                @db.Text
   credit_transaction_type    CreditTransactionType @relation(fields: [credit_transaction_type_id], references: [id])
   credit_transaction_type_id Int                   @db.Integer
+  user_id                    Int                   @db.Integer
+  user                       Users                 @relation(fields: [user_id], references: [id])
   created_at                 DateTime              @default(now()) @db.Timestamptz
   updated_at                 DateTime              @updatedAt @db.Timestamptz
 }

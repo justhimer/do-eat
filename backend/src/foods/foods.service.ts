@@ -5,7 +5,7 @@ import { UpdateFoodDto } from './dto/update-food.dto';
 
 @Injectable()
 export class FoodsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createFoodDto: CreateFoodDto) {
     await this.prisma.foods.create({
