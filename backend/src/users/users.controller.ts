@@ -10,6 +10,7 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -98,14 +99,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number) {   // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
-    return this.usersService.findById(id);
+  @Get()
+  findById(@Request() req) {
+    const userID = req.user.id;
+    return this.usersService.findById(userID);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/is_subscribed/:id')
-  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {
+  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
     return this.usersService.findIsSubscribed(id);
   }
 

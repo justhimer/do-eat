@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CalorieTransactionService } from './calorie-transaction.service';
 
@@ -7,8 +7,9 @@ export class CalorieTransactionController {
   constructor(private readonly calorieTransactionService: CalorieTransactionService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  async calories(@Param('id',ParseIntPipe)id :number){
-    return await this.calorieTransactionService.getUserCalories(id)
+  @Get()
+  async calories(@Request() req){
+    const userID = req.user.id;
+    return await this.calorieTransactionService.getUserCalories(userID);
   }
 }
