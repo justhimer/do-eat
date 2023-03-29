@@ -18,6 +18,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
+import { checkPassword } from 'utils/hash';
+
+interface UserInfoWithToken {
+  id: number,
+  email: string,
+  username: string,
+  token: string
+}
 
 @ApiTags('users') // to categorize in swagger
 @Controller('users')
@@ -27,8 +35,90 @@ export class UsersController {
     private readonly jwtService: JwtService
   ) { }
 
+  @Post('login/email')
+  async emailLogin(@Request() req): Promise<UserInfoWithToken> {
+
+    // get username & password
+    let { email, password } = req.body;
+    if (!email || !password) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundUser = await this.usersService.findByEmail(email)
+
+    // check if user exists
+    if (!foundUser) {
+      throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
+    }
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      password,
+      foundUser.password
+    )
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    // produce in-app token
+    const payload = {
+      id: foundUser.id,
+      email: foundUser.email,
+      username: foundUser.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
+
+  @Post('login/username')
+  async usernameLogin(@Request() req): Promise<UserInfoWithToken> {
+
+    // get username & password
+    let { username, password } = req.body;
+    if (!username || !password) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundUser = await this.usersService.findByUsername(username)
+
+    // check if user exists
+    if (!foundUser) {
+      throw new HttpException('Invalid username', HttpStatus.UNAUTHORIZED);
+    }
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      password,
+      foundUser.password
+    )
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    // produce in-app token
+    const payload = {
+      id: foundUser.id,
+      email: foundUser.email,
+      username: foundUser.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
+
   @Post('login/facebook')
-  async facebookLogin(@Body('code') code: any) {
+  async facebookLogin(@Body('code') code: any): Promise<UserInfoWithToken> {
 
     // code should have been given by facebook to frontend
     if (!code) {

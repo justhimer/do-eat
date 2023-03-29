@@ -1,5 +1,5 @@
 import { IonButton } from "@ionic/react";
-import UserStyle from '../scss/User.module.scss';
+import UserStyle from '../../scss/User.module.scss';
 
 const onFacebookLogin = (event: React.MouseEvent) => {
     event.preventDefault();

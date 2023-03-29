@@ -1,9 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { CornerBox } from '../components/CornerBox';
-import { FacebookLogin } from '../components/FacebookLogin';
-import LoginInForm from '../components/LoginForm';
+import LoginForm from '../components/auth/LoginForm';
 import { Logo } from '../components/Logo';
-import { Logout } from '../components/Logout';
 import AppStyle from '../scss/App.module.scss';
 import UserStyle from '../scss/User.module.scss';
 
@@ -22,10 +20,7 @@ const UserTab: React.FC = () => {
           <CornerBox />
           <Logo />
           <div className={UserStyle.form}>
-            <LoginInForm />
-            <div className={UserStyle.text}>Alternative Login Methods :</div>
-            <FacebookLogin />
-            <Logout />
+            <LoginForm />
           </div>
         </div>
       </IonContent>
