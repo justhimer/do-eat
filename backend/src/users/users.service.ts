@@ -70,6 +70,24 @@ export class UsersService {
     return result.subscribed;
   }
 
+  async findIsUnlimited(id: number): Promise<boolean>{
+    const result = await this.prisma.users.findFirst({
+      include:{
+        subPlan:{
+          select:{
+            unlimited:true
+          }
+        }
+      },
+      where: {
+        id:id
+      }
+    })
+
+    console.log("findIsUnlimited: " , result.subPlan.unlimited)
+    return result.subPlan.unlimited
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.prisma.users.update({
       where: {

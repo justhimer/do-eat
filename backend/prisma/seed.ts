@@ -1234,7 +1234,7 @@ async function main() {
         data:{
             credit: 10000,
             credit_transaction_type_id: creditTransactionAdd.id,
-            user_id:user1.id,
+            user_id:user2.id,
             details:"test add"
         }
     })

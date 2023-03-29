@@ -1,17 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, Query, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, Query, HttpException, HttpStatus, BadRequestException, NotAcceptableException, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UsersService } from 'src/users/users.service';
+import { AuthGuard } from '@nestjs/passport';
 
+
+/* responsible for the following tables:
+user_schedules
+*/
+
+@ApiTags('exercises') // to categorize in swagger
 @Controller('exercises')
 export class ExercisesController {
-  constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditTransactionService) { }
+  constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditTransactionService, private readonly usersService: UsersService) { }
 
 
   @Get("/")
-  findAll() {
-    console.log('wtf')
+  async findAll() {
     return "wtf"
   }
 
@@ -45,28 +53,51 @@ export class ExercisesController {
 
   }
 
-  @Post('join/:course')
-  async join(@Param('course', ParseIntPipe) course: number, @Body('id', ParseIntPipe) id: number) {
-    await this.creditService.getUserCredits(id)
-    //need api to get subscription model
-    if (null) {
-      await this.exercisesService.addCoursePremium(id, course)
-      return "course subscribed"
+  @Post('join/:course/:id')
+  async join(@Param('course', ParseIntPipe) course: number, @Param('id', ParseIntPipe) id: number) {
+    // check to see if already registered to course
+    if (await this.exercisesService.findUserinCourse(id, course)) {
+      throw new NotAcceptableException('Already registered to course', { cause: new Error() });
+      return;
+    }
+    // check to see if there are any remaining slots for course, returns error 400 if filled
+    if (await this.exercisesService.getRemainingSlots(course) <= 0) {
+      throw new BadRequestException('No remaining slots left in course', { cause: new Error() });
+      return;
+    }
+
+    //if there are empty slots
+    if (await this.usersService.findIsUnlimited(id)) {
+      // checks if user has unlimited credit plan (premium user)
+      console.log("register as premium user");
+      // returns message course subscribed if ok
+      return this.exercisesService.addCoursePremium(id, course)
     } else {
+      console.log("register as basic user");
+      //gets credits of user and required course credit
       let userCredit = await this.creditService.getUserCredits(id)
       let courseCredit = await this.exercisesService.getExerciseCredit(course)
+
+      //if not enough credits, throw error
       if (courseCredit > userCredit) {
-        throw new BadRequestException('Not Enough Credits', { cause: new Error(), description: 'Not Enough Credits' })
+        throw new BadRequestException('Not Enough Credits', { cause: new Error() })
         return
       }
-      await this.exercisesService.addCourse(id, course)
-      return "course subscribed"
+
+      // returns message course subscribed if ok
+      return await this.exercisesService.addCourse(id, course)
     }
   }
 
-  @Post('cancel/:course')
-  cancel(){
-
+  @UseGuards(AuthGuard('jwt'))
+  @Post('cancel/:registeredCourse/')
+  async cancel(@Request() req, @Param('registeredCourse', ParseIntPipe) course: number) {
+    const user = req.user.userId
+    if (user == this.exercisesService.returnUserIdCourse(course)) {
+      return await this.exercisesService.deleteUserFromCourse(course)
+    }else{
+      throw new UnauthorizedException('Not authorized user to delete course', { cause: new Error() })
+    }
   }
 
 }
