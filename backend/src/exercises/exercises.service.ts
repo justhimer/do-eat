@@ -7,15 +7,57 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 export class ExercisesService {
   constructor(private readonly prisma: PrismaService){}
 
-async allLocations(){
-  let data = await this.prisma.gyms.findMany({
-    include:{district:{
-      select:{
-        name:true
+async allCourses(){
+  return await this.prisma.courses.findMany({
+    include:{
+      intensity:{select:{level:true}},
+      course_type:{select:{name:true}},
+      gyms:{select:{
+        name:true,
+        district:{select:{id:true,name:true}},
+        franchise:{select:{id:true,name:true}}
+      }}
+    },
+    where:{
+      courseSchedules:{
+        some:{
+          time:{
+            gt: new Date
+          }
+        }
       }
-    }}
+    }
   })
-  console.log(data)
+}
+
+async districtCourses(districts:Array<number>){
+  return await this.prisma.courses.findMany({
+    include:{
+      intensity:{select:{level:true}},
+      course_type:{select:{name:true}},
+      gyms:{select:{
+        name:true,
+        district:{select:{id:true,name:true}},
+        franchise:{select:{id:true,name:true}}
+      }}
+    },
+    where:{
+      AND : [
+        {courseSchedules:{
+          some:{
+            time:{
+              gt: new Date
+            }
+          }
+        }},
+        {
+          gyms:{
+            district_id: {in:districts}
+          }
+        }
+      ]      
+    }
+  })
 }
 
 async getExerciseCredit(exercise_id:number){
@@ -63,88 +105,7 @@ async findUserinCourse(user_id: number, exercise_id:number) :Promise<boolean>{
   return foundUser? true: false
 }
 
-//#region add course and premium add course 
 
 
-async addCourse(user_id:number, exercise_id:number){
-  try {
-    const addToCourse = this.prisma.userSchedule.create({
-      data:{
-        user_id:user_id,
-        course_schedule_id: exercise_id,
-        attendance_type_id:1,
-        creditTransaction:{
-          create:{
-            user_id:user_id,
-            credit: await this.getExerciseCredit(exercise_id),
-            details: `joined course`,
-            credit_transaction_type_id:2
-          }
-        }
-      },
-    })
-    
-    await this.prisma.$transaction([addToCourse])
-    return "course subscribed"
-  } catch (error) {
-    console.log(error);
-    return error    
-  }
-}
 
-async addCoursePremium(user_id:number, exercise_id:number){
-  try {
-    const addToCourse = this.prisma.userSchedule.create({
-      data:{
-        user_id:user_id,
-        course_schedule_id: exercise_id,
-        attendance_type_id:1,
-        creditTransaction:{
-          create:{
-            user_id:user_id,
-            credit: 0,
-            details: `joined course as Premium User`,
-            credit_transaction_type_id:2
-          }
-        }
-      },
-    })
-  
-    await this.prisma.$transaction([addToCourse])
-    return "course subscribed"
-  } catch (error) {
-    console.log(error);
-    return error    
-  }
-  
-}
-//#endregion
-
-async returnUserIdCourse(registered_id:number){
-  return (await this.prisma.userSchedule.findFirst({
-    where:{id:registered_id}
-  })).user_id
-}
-
-async deleteUserFromCourse(registered_id:number){
-  try {
-    const deleteFromCreditTransaction = this.prisma.creditTransaction.deleteMany({
-      where:{
-        user_schedule_id: registered_id
-      }
-    })
-    
-    const deleteFromUserSchedule = this.prisma.userSchedule.delete({
-      where:{
-        id: registered_id
-      }
-    })
-
-    await this.prisma.$transaction([deleteFromCreditTransaction,deleteFromUserSchedule])
-    return "Deleted course registration"
-  } catch (error) {
-    console.log(error)
-    return error
-  }
-}
 }

@@ -1001,17 +1001,17 @@ async function main() {
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982025107)
+                            time: new Date('2023-04-03T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982149097)
+                            time: new Date('2023-04-03T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982166881)
+                            time: new Date('2023-04-04T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1089,17 +1089,17 @@ async function main() {
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date(1679982025107)
+                            time: new Date('2023-04-03T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date(1679982149097)
+                            time: new Date('2023-04-03T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982166881)
+                            time: new Date('2023-04-04T09:00:00+08:00')
                         }
                     ]
                 }

@@ -5,10 +5,11 @@ import { CreditTransactionModule } from 'src/credit-transaction/credit-transacti
 import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
 import { PrismaService } from 'nestjs-prisma';
 import { UsersModule } from 'src/users/users.module';
+import { GymsModule } from 'src/gyms/gyms.module';
 
 
 @Module({
-  imports:[CreditTransactionModule,UsersModule],
+  imports:[CreditTransactionModule,UsersModule,GymsModule],
   controllers: [ExercisesController],
   providers: [ExercisesService,CreditTransactionService,PrismaService]
 })

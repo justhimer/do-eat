@@ -1,11 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, Query, HttpException, HttpStatus, BadRequestException, NotAcceptableException, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
-import { CreateExerciseDto } from './dto/create-exercise.dto';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {  ApiTags } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
 import { AuthGuard } from '@nestjs/passport';
+import { GymsService } from 'src/gyms/gyms.service';
 
 
 /* responsible for the following tables:
@@ -15,22 +14,23 @@ user_schedules
 @ApiTags('exercises') // to categorize in swagger
 @Controller('exercises')
 export class ExercisesController {
-  constructor(private readonly exercisesService: ExercisesService, private readonly creditService: CreditTransactionService, private readonly usersService: UsersService) { }
+  constructor(
+    private readonly exercisesService: ExercisesService, 
+    private readonly creditService: CreditTransactionService, 
+    private readonly usersService: UsersService,
+    private readonly gymService: GymsService
+    ) { }
 
 
-  @Get("/")
+  @Get("all")
   async findAll() {
-    return "wtf"
+    
+    return await this.exercisesService.allCourses()
   }
 
-  @Get("locations")
-  async getAllLocations() {
-    return await this.exercisesService.allLocations()
-  }
-
-  @Get("locations/:district")
-  getDistrictLocations() {
-
+  @Get("some")
+  async getDistrictLocations(@Body() districts: number[]) {
+    return this.exercisesService.districtCourses(districts)
   }
 
   @Get("random")
@@ -92,8 +92,8 @@ export class ExercisesController {
   @UseGuards(AuthGuard('jwt'))
   @Post('cancel/:registeredCourse/')
   async cancel(@Request() req, @Param('registeredCourse', ParseIntPipe) course: number) {
-    const user = req.user.userId
-    if (user == this.exercisesService.returnUserIdCourse(course)) {
+    const userId = req.user.id
+    if (userId == this.exercisesService.returnUserIdCourse(course)) {
       return await this.exercisesService.deleteUserFromCourse(course)
     }else{
       throw new UnauthorizedException('Not authorized user to delete course', { cause: new Error() })
