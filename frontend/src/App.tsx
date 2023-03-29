@@ -38,7 +38,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { FacebookCallback } from './components/FacebookCallback';
+import { FacebookCallback } from './components/auth/FacebookCallback';
 
 /* custom SCSS modules */
 import TabStyle from "./scss/TabBar.module.scss";
