@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { userAction } from "../redux/userSlice";
 import NotificationStyle from "../scss/Notification.module.scss";
+import UserStyle from '../scss/User.module.scss';
 
 export function Logout() {
 
@@ -29,7 +30,7 @@ export function Logout() {
 
     return (
         <div>
-            <IonButton onClick={logout}>Logout</IonButton>
+            <IonButton onClick={logout} className={UserStyle.button}>Logout</IonButton>
         </div>
     )
 }

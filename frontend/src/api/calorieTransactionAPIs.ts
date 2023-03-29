@@ -1,5 +1,5 @@
-export async function fetchCalories(id: number) {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/calorie/${id}`, {
+export async function fetchCalories() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/calorie`, {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',

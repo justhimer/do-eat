@@ -14,3 +14,14 @@ export async function facebookLogin(code: string) {
 
 }
 
+export async function getUserInfo() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/users`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    const result = await res.json();
+    return result;
+}

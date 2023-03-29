@@ -1,4 +1,5 @@
 import { IonButton } from "@ionic/react";
+import UserStyle from '../scss/User.module.scss';
 
 const onFacebookLogin = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -15,8 +16,8 @@ const onFacebookLogin = (event: React.MouseEvent) => {
     window.location.href = `${authURL}?${search.toString()}`
 }
 
-export function Login() {
+export function FacebookLogin() {
     return (
-        <IonButton onClick={onFacebookLogin}>Facebook Login</IonButton>
+        <IonButton onClick={onFacebookLogin} className={UserStyle.button}>Facebook Login</IonButton>
     )
 }

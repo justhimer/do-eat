@@ -4,9 +4,31 @@ ion-content {
 
 ion-tab-bar {
     --background: #615c59;
+    --color-selected: #ff978c;
+    --color: #cfc1ac;
 }
 
 ion-toolbar {
     --ion-toolbar-background: #615c59;
     --ion-toolbar-color: #cfc1ac;
 }
+
+ion-list {
+    --ion-item-background: #cfc1ac;
+}
+
+ion-item {
+    --background: #cfc1ac;
+    --color: black;
+    --border-color: #615c59;
+}
+
+ion-segment-button {
+    --color: white;
+    --color-checked:#e74c3c;
+}
+
+ion-button {
+    --background: #e74c3c;
+}
+
