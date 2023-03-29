@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { CoursesService } from 'src/courses/courses.service';
+import { CourseSchedulesService } from 'src/course_schedules/course_schedules.service';
 import { CreateUserScheduleDto } from './dto/create-user_schedule.dto';
 import { UpdateUserScheduleDto } from './dto/update-user_schedule.dto';
 
@@ -8,15 +9,13 @@ import { UpdateUserScheduleDto } from './dto/update-user_schedule.dto';
 export class UserSchedulesService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly coursesService: CoursesService
+    private readonly coursesService: CoursesService,
+    private readonly courseScheduleService: CourseSchedulesService
     ) { }
 
 
   async getRemainingSlots(exercise_id: number) {
-    let quota = (await this.prisma.courseSchedules.findFirstOrThrow({
-      select: { quota: true },
-      where: { id: exercise_id }
-    })).quota
+    let quota = await this.courseScheduleService.quotaForThisCourse(exercise_id)
     console.log("quota", quota)
     let filledSlots = (await this.prisma.userSchedule.aggregate({
       _count: { course_schedule_id: true },

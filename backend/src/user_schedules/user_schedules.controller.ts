@@ -6,8 +6,10 @@ import { CreditTransactionService } from 'src/credit-transaction/credit-transact
 import { UsersService } from 'src/users/users.service';
 import { CoursesService } from 'src/courses/courses.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('user-schedules')
+@ApiTags('usersSchedules') // to categorize in swagger
+@Controller('userSchedules')
 export class UserSchedulesController {
   constructor(
     private readonly userSchedulesService: UserSchedulesService,
