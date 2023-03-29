@@ -36,10 +36,12 @@ export class UsersController {
   ) { }
 
   @Post('login/email')
-  async emailLogin(@Request() req): Promise<UserInfoWithToken> {
+  async emailLogin(
+    @Body('email') email: string,
+    @Body('password') password: string
+  ): Promise<UserInfoWithToken> {
 
-    // get username & password
-    let { email, password } = req.body;
+    // check user has input username & password
     if (!email || !password) {
       throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
     }
@@ -77,10 +79,12 @@ export class UsersController {
   }
 
   @Post('login/username')
-  async usernameLogin(@Request() req): Promise<UserInfoWithToken> {
+  async usernameLogin(
+    @Body('username') username: string,
+    @Body('password') password: string
+  ): Promise<UserInfoWithToken> {
 
-    // get username & password
-    let { username, password } = req.body;
+    // check user has input username & password
     if (!username || !password) {
       throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
     }
