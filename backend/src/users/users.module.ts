@@ -5,7 +5,7 @@ import { PrismaService } from 'nestjs-prisma';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/jwt.strategy';
 
-@Global()
+// @Global()
 @Module({
   imports: [
     JwtModule.register({
@@ -15,5 +15,6 @@ import { JwtStrategy } from './strategy/jwt.strategy';
   ],
   controllers: [UsersController],
   providers: [UsersService, PrismaService, JwtStrategy],
+  exports: [UsersService]
 })
 export class UsersModule {}

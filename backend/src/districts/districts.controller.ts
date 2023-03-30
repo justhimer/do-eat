@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DistrictsService } from './districts.service';
@@ -27,21 +28,8 @@ export class DistrictsController {
     return this.districtsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.districtsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateDistrictDto: UpdateDistrictDto,
-  ) {
-    return this.districtsService.update(+id, updateDistrictDto);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.districtsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.districtsService.remove(id);
   }
 }

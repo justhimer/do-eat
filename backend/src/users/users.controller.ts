@@ -10,6 +10,7 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +18,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
+import { checkPassword } from 'utils/hash';
+
+interface UserInfoWithToken {
+  id: number,
+  email: string,
+  username: string,
+  token: string
+}
 
 @ApiTags('users') // to categorize in swagger
 @Controller('users')
@@ -26,8 +35,94 @@ export class UsersController {
     private readonly jwtService: JwtService
   ) { }
 
+  @Post('login/email')
+  async emailLogin(
+    @Body('email') email: string,
+    @Body('password') password: string
+  ): Promise<UserInfoWithToken> {
+
+    // check user has input username & password
+    if (!email || !password) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundUser = await this.usersService.findByEmail(email)
+
+    // check if user exists
+    if (!foundUser) {
+      throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
+    }
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      password,
+      foundUser.password
+    )
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    // produce in-app token
+    const payload = {
+      id: foundUser.id,
+      email: foundUser.email,
+      username: foundUser.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
+
+  @Post('login/username')
+  async usernameLogin(
+    @Body('username') username: string,
+    @Body('password') password: string
+  ): Promise<UserInfoWithToken> {
+
+    // check user has input username & password
+    if (!username || !password) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundUser = await this.usersService.findByUsername(username)
+
+    // check if user exists
+    if (!foundUser) {
+      throw new HttpException('Invalid username', HttpStatus.UNAUTHORIZED);
+    }
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      password,
+      foundUser.password
+    )
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    // produce in-app token
+    const payload = {
+      id: foundUser.id,
+      email: foundUser.email,
+      username: foundUser.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
+
   @Post('login/facebook')
-  async facebookLogin(@Body('code') code: any) {
+  async facebookLogin(@Body('code') code: any): Promise<UserInfoWithToken> {
 
     // code should have been given by facebook to frontend
     if (!code) {
@@ -98,16 +193,17 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number) {   // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
-    return this.usersService.findById(id);
+  @Get()
+  findById(@Request() req) {
+    const userID = req.user.id;
+    return this.usersService.findById(userID);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @Get('/is_subscribed/:id')
-  // findIsSubscribed(@Param('id', ParseIntPipe) id: number) {
-  //   return this.usersService.findIsSubscribed(id);
-  // }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/is_subscribed/:id')
+  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+    return this.usersService.findIsSubscribed(id);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')

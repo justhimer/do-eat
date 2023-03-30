@@ -1,4 +1,5 @@
 import { PrismaClient, Gyms, Prisma } from "@prisma/client";
+import { hashPassword } from "../utils/hash";
 
 const prisma = new PrismaClient();
 
@@ -53,7 +54,7 @@ async function main() {
         create: {
             email: "user1@gmail.com",
             username: "user1",
-            password: "password1",
+            password: await hashPassword('user1'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:2,
@@ -68,7 +69,7 @@ async function main() {
         create: {
             email: "user2@gmail.com",
             username: "user2",
-            password: "password2",
+            password: await hashPassword('user2'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
@@ -83,7 +84,7 @@ async function main() {
         create: {
             email: "user3@gamil.com",
             username: "user3",
-            password: "password3",
+            password: await hashPassword('user3'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
@@ -98,7 +99,7 @@ async function main() {
         create: {
             email: "user4@gmail.com",
             username: "user4",
-            password: "user4",
+            password: await hashPassword('user4'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
@@ -109,7 +110,7 @@ async function main() {
         create: {
             email: "user5@gmail.com",
             username: "user5",
-            password: "user5",
+            password: await hashPassword('user5'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
@@ -120,7 +121,7 @@ async function main() {
         create: {
             email: "user6@gmail.com",
             username: "user6",
-            password: "user6",
+            password: await hashPassword('user6'),
             icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
@@ -1001,17 +1002,17 @@ async function main() {
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982025107)
+                            time: new Date('2023-04-03T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982149097)
+                            time: new Date('2023-04-03T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982166881)
+                            time: new Date('2023-04-04T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1089,17 +1090,17 @@ async function main() {
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date(1679982025107)
+                            time: new Date('2023-04-03T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date(1679982149097)
+                            time: new Date('2023-04-03T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date(1679982166881)
+                            time: new Date('2023-04-04T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1234,7 +1235,7 @@ async function main() {
         data:{
             credit: 10000,
             credit_transaction_type_id: creditTransactionAdd.id,
-            user_id:user1.id,
+            user_id:user2.id,
             details:"test add"
         }
     })

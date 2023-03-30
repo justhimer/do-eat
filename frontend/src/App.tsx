@@ -38,7 +38,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { FacebookCallback } from './components/FacebookCallback';
+import { FacebookCallback } from './components/auth/FacebookCallback';
 
 /* custom SCSS modules */
 import TabStyle from "./scss/TabBar.module.scss";
@@ -80,26 +80,26 @@ const App: React.FC = () => (
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom" className={TabStyle.tab_bar}>
-          <IonTabButton tab="home-tab" href="/home-tab" className={TabStyle.tab}>
+          <IonTabButton tab="home-tab" href="/home-tab">
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="do-tab" href="/do-tab" className={TabStyle.tab}>
+          <IonTabButton tab="do-tab" href="/do-tab">
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
 
           {/* invisible button for applying QR code css */}
-          <IonTabButton className={TabStyle.tab}>
+          <IonTabButton disabled={true}>
           </IonTabButton>
 
-          <IonTabButton tab="eat-tab" href="/eat-tab" className={TabStyle.tab}>
+          <IonTabButton tab="eat-tab" href="/eat-tab">
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="user-tab" href="/user-tab" className={TabStyle.tab}>
+          <IonTabButton tab="user-tab" href="/user-tab">
             <IonIcon aria-hidden="true" icon={accessibilityOutline} />
             <IonLabel>User</IonLabel>
           </IonTabButton>

@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'doeat.io',
   appName: 'frontend',
   webDir: 'build',
   bundledWebRuntime: false

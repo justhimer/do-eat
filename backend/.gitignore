@@ -40,3 +40,4 @@ lerna-debug.log*
 # docker
 pgdata
 production
+docker-compose.yml
