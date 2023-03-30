@@ -1,4 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.title {
+    font-family: 'Righteous', cursive;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #3b3836;
+    padding: 0 1rem;
+}
+
+.segment {
+    padding: 1rem 0;
+}
+
 .form {
+    color: black;
     padding: 0 2rem;
 }
 

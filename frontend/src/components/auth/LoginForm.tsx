@@ -1,6 +1,5 @@
 import { IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
 import { useState } from 'react';
-import LoginStyle from '../../scss/LoginForm.module.scss';
 import UserStyle from '../../scss/User.module.scss';
 import { CornerBox } from '../CornerBox';
 import { Logo } from '../Logo';
@@ -19,17 +18,17 @@ export function LoginForm() {
         <>
 
             <Logo />
-            <CornerBox />
+            {/* <CornerBox /> */}
 
             <div className={UserStyle.form}>
 
-                <div className={LoginStyle.title}>
+                <div className={UserStyle.title}>
                     <h2>User Login</h2>
                 </div>
 
                 <IonSegment
                     value={loginMethod}
-                    className={LoginStyle.segment}
+                    className={UserStyle.segment}
                     onIonChange={(e) => { setLoginMethod(e.detail.value!); }}
                 >
                     <IonSegmentButton value="email">
