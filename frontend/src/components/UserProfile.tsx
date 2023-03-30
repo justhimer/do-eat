@@ -6,8 +6,8 @@ export function UserProfile() {
         <>
             <IonGrid>
                 <IonRow>
-                    <IonCol><IonButton expand="block">My Calories</IonButton></IonCol>
-                    <IonCol><IonButton expand="block">My Credits</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Calories</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Credits</IonButton></IonCol>
                 </IonRow>
             </IonGrid>
         </>

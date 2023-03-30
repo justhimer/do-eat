@@ -15,8 +15,8 @@ const UserTab: React.FC = () => {
 
       <IonContent fullscreen>
         <div className={AppStyle.hero}>
-            <LoginForm />
-            {/* <UserProfile /> */}
+            {/* <LoginForm /> */}
+            <UserProfile />
         </div>
       </IonContent>
 
