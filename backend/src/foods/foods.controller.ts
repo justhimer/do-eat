@@ -28,7 +28,11 @@ export class FoodsController {
   }
 
   @Get(':id')
+<<<<<<< HEAD
   findOne(@Param('id') id: string) {
+=======
+  async findOne(@Param('id') id: string) {
+>>>>>>> 5f96b2319f6cf27537e3c874fcfd705b5f66c992
     return this.foodsService.findOne(+id);
   }
 
