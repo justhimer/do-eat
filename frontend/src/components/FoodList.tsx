@@ -26,7 +26,9 @@ export function FoodList() {
                         key={index}
                         id={food.id}
                         name={food.name}
-                        description={food.description} />
+                        description={food.description}
+                        image={food.image}
+                        calories={food.calories} />
                 ))
             }
         </div>
