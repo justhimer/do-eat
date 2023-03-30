@@ -5,7 +5,7 @@ import React from 'react';
 
 export interface FoodItemProps {
     id: number;
-    name: any;
+    name: string;
     description: string;
     image: string;
     calories: number;
@@ -18,20 +18,24 @@ function addPath(img: string) {
 export function FoodItem(props: FoodItemProps) {
 
     return (
-        <IonCard>
+        <IonCard color="light">
             <img alt="food image" src={addPath(props.image)} className={FoodStyle.food_image} />
             <IonCardHeader>
-                <IonCardTitle>{props.name}</IonCardTitle>
+                <IonCardTitle>Name:{props.name}</IonCardTitle>
                 <IonCardSubtitle>Description</IonCardSubtitle>
             </IonCardHeader>
+
             <IonCardContent>
                 {props.description}
             </IonCardContent>
             <IonCardContent>
-                Calroies:{props.calories}
+                Calories:{props.calories}
             </IonCardContent>
-
-            <IonButton fill="clear">♡</IonButton>
+            <IonButton fill="solid">♡</IonButton>
+            <IonButton fill="solid">Details</IonButton>
+            <IonButton fill="solid">Add to Cart</IonButton>
         </IonCard>
     )
 }
+
+export default FoodItem;
