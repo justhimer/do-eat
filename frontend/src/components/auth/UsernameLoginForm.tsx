@@ -52,12 +52,12 @@ export function UsernameLoginForm() {
         <form onSubmit={handleLogin}>
             <IonList className={LoginStyle.form}>
                 <IonItem>
-                    <IonLabel>Username: </IonLabel>
-                    <IonInput aria-label="Username" placeholder="Enter your username" onIonChange={(e) => setUsername(`${e.detail.value!}`)} required></IonInput>
+                    <IonLabel aria-label="Username">Username: </IonLabel>
+                    <IonInput placeholder="Enter your username" onIonChange={(e) => setUsername(`${e.detail.value!}`)} required></IonInput>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>Password: </IonLabel>
-                    <IonInput aria-label="Password" type="password" value={password} placeholder="Enter your password" onIonChange={(e) => setPassword(`${e.detail.value!}`)} required></IonInput>
+                    <IonLabel aria-label="Password">Password: </IonLabel>
+                    <IonInput type="password" value={password} placeholder="Enter your password" onIonChange={(e) => setPassword(`${e.detail.value!}`)} required></IonInput>
                 </IonItem>
             </IonList>
             <IonButton type="submit" className={UserStyle.button}>Login</IonButton>

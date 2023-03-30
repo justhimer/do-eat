@@ -23,12 +23,19 @@ ion-item {
     --border-color: #615c59;
 }
 
+ion-segment {
+    --background: none;
+}
+
 ion-segment-button {
     --color: white;
-    --color-checked:#e74c3c;
+    --color-checked: #e74c3c;
 }
 
 ion-button {
-    --background: #e74c3c;
+    // --background: #e74c3c;
+    --background: #e5ddd1;
+    --color: #3b3836;
+    --background-activated: #3b3836;
+    --color-activated: #e5ddd1;
 }
-
