@@ -1,24 +1,37 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/react';
+import FoodStyle from '../scss/Food.module.scss'
+import React from 'react';
 
-interface FoodItemProps {
+
+export interface FoodItemProps {
     id: number;
-    name: string;
+    name: any;
     description: string;
+    image: string;
+    calories: number;
+}
+
+function addPath(img: string) {
+    return `./assets/foodimage/${img}`;
 }
 
 export function FoodItem(props: FoodItemProps) {
 
     return (
         <IonCard>
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+            <img alt="food image" src={addPath(props.image)} className={FoodStyle.food_image} />
             <IonCardHeader>
                 <IonCardTitle>{props.name}</IonCardTitle>
                 <IonCardSubtitle>Description</IonCardSubtitle>
             </IonCardHeader>
-
             <IonCardContent>
                 {props.description}
             </IonCardContent>
+            <IonCardContent>
+                Calroies:{props.calories}
+            </IonCardContent>
+
+            <IonButton fill="clear">♡</IonButton>
         </IonCard>
     )
 }
