@@ -31,6 +31,11 @@ ion-segment-button {
     --color-checked: #e74c3c;
 }
 
+ion-input {
+    --ion-color-step-50: none;
+    --ion-color-step-150: none;
+}
+
 ion-button {
     --border-radius: 8px;
     --background: #e74c3c;
