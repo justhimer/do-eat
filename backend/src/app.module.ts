@@ -6,10 +6,14 @@ import { UsersModule } from './users/users.module';
 import { FoodsModule } from './foods/foods.module';
 import { FoodTypesModule } from './food_types/food_types.module';
 import { DistrictsModule } from './districts/districts.module';
-import { ExercisesModule } from './exercises/exercises.module';
-import { CreditCalorieTransactionModule } from './credit-calorie-transaction/credit-calorie-transaction.module';
 import { CalorieTransactionModule } from './calorie-transaction/calorie-transaction.module';
 import { CreditTransactionModule } from './credit-transaction/credit-transaction.module';
+import { GymsModule } from './gyms/gyms.module';
+import { FranchiseModule } from './franchise/franchise.module';
+import { TrainersModule } from './trainers/trainers.module';
+import { CourseSchedulesModule } from './course_schedules/course_schedules.module';
+import { CoursesModule } from './courses/courses.module';
+import { UserSchedulesModule } from './user_schedules/user_schedules.module';
 
 @Module({
   imports: [
@@ -18,10 +22,14 @@ import { CreditTransactionModule } from './credit-transaction/credit-transaction
     FoodsModule,
     FoodTypesModule,
     DistrictsModule,
-    ExercisesModule,
-    CreditCalorieTransactionModule,
     CreditTransactionModule,
     CalorieTransactionModule,
+    GymsModule,
+    FranchiseModule,
+    TrainersModule,
+    CourseSchedulesModule,
+    CoursesModule,
+    UserSchedulesModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
