@@ -28,8 +28,7 @@ export class FoodsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const food = await this.foodsService.findOne(+id);
+  findOne(@Param('id') id: string) {
     return this.foodsService.findOne(+id);
   }
 

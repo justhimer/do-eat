@@ -21,7 +21,7 @@ export function FoodItem(props: FoodItemProps) {
         <IonCard color="light">
             <img alt="food image" src={addPath(props.image)} className={FoodStyle.food_image} />
             <IonCardHeader>
-                <IonCardTitle>Name:{props.name}</IonCardTitle>
+                <IonCardTitle>{props.name}</IonCardTitle>
                 <IonCardSubtitle>Description</IonCardSubtitle>
             </IonCardHeader>
 
