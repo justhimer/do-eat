@@ -2,6 +2,7 @@ import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import UserProfileStyle from "../scss/UserProfile.module.scss";
 import UserStyle from '../scss/User.module.scss';
 import { Logo } from "./Logo";
+import { Logout } from "./auth/Logout";
 
 export function UserProfile() {
     return (
@@ -24,7 +25,10 @@ export function UserProfile() {
                     <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Credits</IonButton></IonCol>
                 </IonRow>
                 <IonRow>
-                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Calories</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>Profile</IonButton></IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol><Logout/></IonCol>
                 </IonRow>
             </IonGrid>
         </>

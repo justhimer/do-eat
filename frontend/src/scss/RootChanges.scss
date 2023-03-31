@@ -36,6 +36,16 @@ ion-input {
     --ion-color-step-150: none;
 }
 
+.sc-ion-input-ios-h {
+    --highlight-color-valid: blue;
+    --highlight-color-invalid: #e74c3c;
+}
+
+.sc-ion-input-md-h {
+    --highlight-color-valid: blue;
+    --highlight-color-invalid: #e74c3c;
+}
+
 ion-button {
     --border-radius: 8px;
     --background: #e74c3c;

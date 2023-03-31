@@ -2,19 +2,20 @@ import { IonButton, IonInput, IonItem, IonLabel, IonList, useIonToast } from "@i
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { usernameLogin } from "../../api/userAPIs";
+import { gymLogin } from "../../api/gymAPIs";
 import { RootState } from "../../redux/store";
 import UserStyle from '../../scss/User.module.scss';
 import NotificationStyle from "../../scss/Notification.module.scss";
 import { userAction } from "../../redux/userSlice";
+import { gymAction } from "../../redux/gymSlice";
 
-export function UsernameLoginForm() {
+export function GymLoginForm() {
 
     const [present] = useIonToast();
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
+    const isLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated);
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -23,7 +24,7 @@ export function UsernameLoginForm() {
         if (isLoggedIn) {
             // history.push("/home-tab");
             present({
-                message: 'Login Success',
+                message: 'Gym Login Success',
                 duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
@@ -34,12 +35,13 @@ export function UsernameLoginForm() {
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const data = await usernameLogin(username, password);
+        const data = await gymLogin(username, password);
         if (data) {
-            dispatch(userAction.login(data));
+            dispatch(userAction.logout());
+            dispatch(gymAction.login(data));
         } else {
             present({
-                message: 'Login Failed',
+                message: 'Gym Login Failed',
                 duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,

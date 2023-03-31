@@ -2,18 +2,20 @@ import { IonButton, IonInput, IonItem, IonLabel, IonList, useIonToast } from "@i
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { emailLogin } from "../../api/userAPIs";
+import { userLogin } from "../../api/userAPIs";
 import { RootState } from "../../redux/store";
 import { userAction } from "../../redux/userSlice";
 import UserStyle from '../../scss/User.module.scss';
 import NotificationStyle from "../../scss/Notification.module.scss";
+import { gymAction } from "../../redux/gymSlice";
+import { FacebookLogin } from "./FacebookLogin";
 
-export function EmailLoginForm() {
+export function UserLoginForm() {
 
     const [present] = useIonToast();
     const history = useHistory();
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
+    const isLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -22,7 +24,7 @@ export function EmailLoginForm() {
         if (isLoggedIn) {
             // history.push("/home-tab");
             present({
-                message: 'Login Success',
+                message: 'User Login Success',
                 duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
@@ -33,12 +35,13 @@ export function EmailLoginForm() {
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const data = await emailLogin(email, password);
+        const data = await userLogin(email, password);
         if (data) {
+            dispatch(gymAction.logout());
             dispatch(userAction.login(data));
         } else {
             present({
-                message: 'Login Failed',
+                message: 'User Login Failed',
                 duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
@@ -78,32 +81,33 @@ export function EmailLoginForm() {
     /***********************************/
 
     return (
-        <form onSubmit={handleLogin}>
+        <div>
+            <form onSubmit={handleLogin}>
 
-            <IonInput
-                className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                type="email"
-                fill="solid"
-                label="Email"
-                labelPlacement="floating"
-                helperText="Enter your email"
-                errorText="Invalid email"
-                onIonInput={(event) => { validate(event); setEmail(`${event.detail.value!}`); }}
-                onIonBlur={() => markTouched()}
-            ></IonInput>
+                <IonInput
+                    className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                    type="email"
+                    fill="solid"
+                    label="Email"
+                    labelPlacement="floating"
+                    helperText="Enter your email"
+                    errorText="Invalid email"
+                    onIonInput={(event) => { validate(event); setEmail(`${event.detail.value!}`); }}
+                    onIonBlur={() => markTouched()}
+                ></IonInput>
 
-            <IonInput
-                className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                type="password"
-                fill="solid"
-                label="Password"
-                labelPlacement="floating"
-                helperText="Enter your password"
-                onIonInput={(event) => setPassword(`${event.detail.value!}`)}
-                onIonBlur={() => markTouched()}
-            ></IonInput>
+                <IonInput
+                    className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                    type="password"
+                    fill="solid"
+                    label="Password"
+                    labelPlacement="floating"
+                    helperText="Enter your password"
+                    onIonInput={(event) => setPassword(`${event.detail.value!}`)}
+                    onIonBlur={() => markTouched()}
+                ></IonInput>
 
-            {/* <IonList className={LoginStyle.form}>
+                {/* <IonList className={LoginStyle.form}>
                 <IonItem>
                     <IonLabel aria-label="Email">Email: </IonLabel>
                     <IonInput type="email" value={email} placeholder="Enter your email" onIonChange={(e) => setEmail(`${e.detail.value!}`)} required></IonInput>
@@ -114,7 +118,11 @@ export function EmailLoginForm() {
                 </IonItem>
             </IonList> */}
 
-            <IonButton type="submit" className={UserStyle.button}>Login</IonButton>
-        </form>
+                <IonButton type="submit" className={UserStyle.button}>Login</IonButton>
+            </form>
+
+            <div className={UserStyle.text}>Alternative Login Methods :</div>
+            <FacebookLogin />
+        </div>
     )
 }

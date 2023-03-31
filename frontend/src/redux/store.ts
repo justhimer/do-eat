@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import foodSlice from "./foodSlice";
+import gymSlice from "./gymSlice";
 import userSlice from "./userSlice";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
@@ -7,8 +8,9 @@ export type RootState = ReturnType<typeof store.getState>
 
 export const store = configureStore({
     reducer: {
-        users: userSlice,
-        foods: foodSlice,
+        user: userSlice,
+        gym: gymSlice,
+        food: foodSlice,
     }
 });
 
