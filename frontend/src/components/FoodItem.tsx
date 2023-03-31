@@ -1,7 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/react';
 import FoodStyle from '../scss/Food.module.scss'
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 
 export interface FoodItemProps {
     id: number;
@@ -32,8 +32,7 @@ export function FoodItem(props: FoodItemProps) {
                 Calories:{props.calories}
             </IonCardContent>
             <IonButton fill="solid">♡</IonButton>
-            <IonButton fill="solid">Details</IonButton>
-            <IonButton fill="solid">Add to Cart</IonButton>
+            <IonButton fill="solid" routerLink='/Fooddetails'>Details</IonButton>
         </IonCard>
     )
 }

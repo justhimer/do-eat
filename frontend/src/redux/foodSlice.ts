@@ -5,23 +5,21 @@ export interface FoodSliceState {
     id: number;
     name: string;
     description: string;
+    calories: number;
 }
 
 const foodSlice = createSlice({
     name: "foods",
-    initialState: [
-        {
-            id: 1,
-            name: "pizza",
-            description: "pizza is so delicous!",
-        },
-        {
-            id: 2,
-            name: "noodles",
-            description: "noodles with nice soup!",
-        },
-    ] as FoodSliceState[],
+    initialState: [] as FoodSliceState[],
     reducers: {},
 })
+
+const initstate = {
+    cartItems: [],
+}
+
+
+
+
 
 export default foodSlice.reducer;
