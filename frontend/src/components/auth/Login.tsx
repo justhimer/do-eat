@@ -11,7 +11,6 @@ import { GymLoginForm } from './GymLoginForm';
 export function Login() {
 
     const defaultLoginMethod = "email";
-
     const [loginMethod, setLoginMethod] = useState<string>(defaultLoginMethod);
 
     return (
