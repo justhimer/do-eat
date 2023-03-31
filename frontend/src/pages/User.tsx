@@ -1,11 +1,19 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { CornerBox } from '../components/CornerBox';
-import LoginForm from '../components/auth/LoginForm';
-import { Logo } from '../components/Logo';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Login from '../components/auth/Login';
+import { Logout } from '../components/auth/Logout';
+import { UserProfile } from '../components/UserProfile';
+import { RootState } from '../redux/store';
 import AppStyle from '../scss/App.module.scss';
-import UserStyle from '../scss/User.module.scss';
 
 const UserTab: React.FC = () => {
+
+  const history = useHistory();
+  const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+  const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated);
+
   return (
     <IonPage>
 
@@ -17,11 +25,9 @@ const UserTab: React.FC = () => {
 
       <IonContent fullscreen>
         <div className={AppStyle.hero}>
-          <CornerBox />
-          <Logo />
-          <div className={UserStyle.form}>
-            <LoginForm />
-          </div>
+          {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
+          {isUserLoggedIn ? (<UserProfile />) : (<></>)}
+          {isGymLoggedIn ? (<Logout />) : (<></>)}
         </div>
       </IonContent>
 

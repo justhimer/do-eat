@@ -44,6 +44,7 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 import PrivateRouter from './components/PrivateRoute';
+import Login from './components/auth/Login';
 
 setupIonicReact();
 
@@ -56,6 +57,9 @@ const App: React.FC = () => (
         <IonRouterOutlet>
 
           {/* nav bar */}
+          <Route exact path="/">
+            <Redirect to="/home-tab" />
+          </Route>
           <Route exact path="/home-tab">
             <HomeTab />
           </Route>
@@ -68,11 +72,11 @@ const App: React.FC = () => (
           <Route path="/user-tab">
             <UserTab />
           </Route>
-          <Route exact path="/">
-            <Redirect to="/home-tab" />
-          </Route>
 
           {/* other routes */}
+          <Route path="/login">
+            <UserTab />
+          </Route>
           <Route path="/facebook-callback">
             <FacebookCallback />
           </Route>

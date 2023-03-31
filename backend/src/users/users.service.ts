@@ -57,15 +57,15 @@ export class UsersService {
     return foundUser;
   }
 
-  async findByUsername(username: string) {
-    const foundUser = await this.prisma.users.findFirst({
-      where: {
-        username: username,
-      },
-    });
-    // if (!foundUser) throw new NotFoundException('User not found.');
-    return foundUser;
-  }
+  // async findByUsername(username: string) {
+  //   const foundUser = await this.prisma.users.findFirst({
+  //     where: {
+  //       username: username,
+  //     },
+  //   });
+  //   // if (!foundUser) throw new NotFoundException('User not found.');
+  //   return foundUser;
+  // }
 
   async findIsSubscribed(id: number): Promise<boolean> {
     const result = await this.prisma.users.findFirst({

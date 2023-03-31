@@ -6,6 +6,26 @@ import { GymDistrictDto } from './dto/gym-district.dto';
 export class GymsService {
     constructor(private readonly prisma: PrismaService) { }
 
+    async findById(id: number) {
+        const foundGym = await this.prisma.gyms.findFirst({
+            where: {
+                id: id,
+            },
+        });
+        // if (!foundUser) throw new NotFoundException('User not found.');
+        return foundGym;
+    }
+
+    async findByUsername(username: string) {
+        const foundGym = await this.prisma.gyms.findFirst({
+            where: {
+                username: username,
+            },
+        });
+        // if (!foundUser) throw new NotFoundException('User not found.');
+        return foundGym;
+    }
+
     async allGyms() {
         let data = await this.prisma.gyms.findMany({
             include: {
@@ -14,9 +34,9 @@ export class GymsService {
                         name: true
                     }
                 },
-                franchise:{
-                    select:{
-                        name:true
+                franchise: {
+                    select: {
+                        name: true
                     }
                 }
             }
@@ -34,10 +54,10 @@ export class GymsService {
         return data
     }
 
-    async districtGyms(districts: Array<number>){
+    async districtGyms(districts: Array<number>) {
         let data = await this.prisma.gyms.findMany({
-            where:{
-                district_id: {in: districts}
+            where: {
+                district_id: { in: districts }
             },
             include: {
                 district: {
@@ -45,9 +65,9 @@ export class GymsService {
                         name: true
                     }
                 },
-                franchise:{
-                    select:{
-                        name:true
+                franchise: {
+                    select: {
+                        name: true
                     }
                 }
             }
@@ -58,9 +78,9 @@ export class GymsService {
 
     async districtGymsID(districts: Array<number>) {
         let data = await this.prisma.gyms.findMany({
-            select:{id:true},
-            where:{
-                district_id: {in: districts}
+            select: { id: true },
+            where: {
+                district_id: { in: districts }
             }
         })
 

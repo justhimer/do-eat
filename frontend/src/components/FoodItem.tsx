@@ -1,8 +1,5 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/react';
-import FoodStyle from '../scss/Food.module.scss'
-import React from 'react';
-
-
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
+// import FoodStyle from '../scss/Food.module.scss'
 export interface FoodItemProps {
     id: number;
     name: string;
@@ -18,10 +15,10 @@ function addPath(img: string) {
 export function FoodItem(props: FoodItemProps) {
 
     return (
-        <IonCard color="light">
-            <img alt="food image" src={addPath(props.image)} className={FoodStyle.food_image} />
+        <IonCard>
+            <img alt="food image" src={addPath(props.image)} />
             <IonCardHeader>
-                <IonCardTitle>Name:{props.name}</IonCardTitle>
+                <IonCardTitle>{props.name}</IonCardTitle>
                 <IonCardSubtitle>Description</IonCardSubtitle>
             </IonCardHeader>
 
@@ -31,9 +28,15 @@ export function FoodItem(props: FoodItemProps) {
             <IonCardContent>
                 Calories:{props.calories}
             </IonCardContent>
-            <IonButton fill="solid">♡</IonButton>
-            <IonButton fill="solid">Details</IonButton>
-            <IonButton fill="solid">Add to Cart</IonButton>
+
+            <IonGrid>
+                <IonRow>
+                    <IonCol><IonButton fill="solid" expand='block'>♡</IonButton></IonCol>
+                    <IonCol><IonButton fill="solid" expand='block'>Details</IonButton></IonCol>
+                    <IonCol><IonButton fill="solid" expand='block'>Add to Cart</IonButton></IonCol>
+                </IonRow>
+            </IonGrid>
+
         </IonCard>
     )
 }

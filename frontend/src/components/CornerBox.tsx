@@ -22,8 +22,8 @@ export function CornerBox() {
     const [boxText, setBoxText] = useState("My Calories");
     const [isClicked, setIsClicked] = useState(false);
 
-    const isLoggedIn = useSelector((state: RootState) => state.users.isAuthenticated);
-        
+    const isLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+
     async function showCalories() {
         if (isLoggedIn) {
             const calories = await fetchCalories();
