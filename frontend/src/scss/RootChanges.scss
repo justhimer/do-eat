@@ -22,13 +22,14 @@ ion-item {
     --color: black;
 }
 
-ion-segment {
-    --background: none;
-}
+// ion-segment {
+//     --background: #e1d6c6;
+// }
 
 ion-segment-button {
-    --color: white;
-    --color-checked: #e74c3c;
+    --color: black;
+    --color-checked: white;
+    --indicator-color: #615c59;
 }
 
 ion-input {
@@ -37,11 +38,15 @@ ion-input {
 }
 
 .sc-ion-input-ios-h {
+    --border-width: 0.55px;
+    --border-color: #615c59;
     --highlight-color-valid: blue;
     --highlight-color-invalid: #e74c3c;
 }
 
 .sc-ion-input-md-h {
+    --border-width: 0.55px;
+    --border-color: #615c59;
     --highlight-color-valid: blue;
     --highlight-color-invalid: #e74c3c;
 }
