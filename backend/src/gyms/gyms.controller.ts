@@ -1,25 +1,83 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
-import { GymDistrictDto } from './dto/gym-district.dto';
+import { checkPassword } from 'utils/hash';
 import { GymsService } from './gyms.service';
+
+interface GymInfoWithToken {
+  id: number,
+  username: string,
+  franchise_id: number,
+  district_id: number,
+  token: string
+}
 
 @ApiTags('gyms') // to categorize in swagger
 @Controller('gyms')
 export class GymsController {
-  constructor(private readonly gymsService: GymsService) {}
+  constructor(
+    private readonly gymsService: GymsService,
+    private readonly jwtService: JwtService
+  ) { }
+
+  @Post('login')
+  async usernameLogin(
+    @Body('username') username: string,
+    @Body('password') password: string
+  ): Promise<GymInfoWithToken> {
+
+    // check user has input username & password
+    if (!username || !password) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundGym = await this.gymsService.findByUsername(username)
+
+    // check if user exists
+    if (!foundGym) {
+      throw new HttpException('Invalid username', HttpStatus.UNAUTHORIZED);
+    }
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      password,
+      foundGym.password
+    )
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    // produce in-app token
+    const payload = {
+      id: foundGym.id,
+      username: foundGym.username,
+      franchise_id: foundGym.franchise_id,
+      district_id: foundGym.district_id,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
 
   @Get('all')
-  async all(){
+  async all() {
     return await this.gymsService.allGyms()
   }
 
   @Get('some')
-  async some(){
+  async some() {
 
   }
 
+  @UseGuards(AuthGuard('jwt_gym'))
   @Post('district')
-  async district(@Body() list: number[]){
+  async district(@Body() list: number[]) {
     return await this.gymsService.districtGyms(list)
   }
 }

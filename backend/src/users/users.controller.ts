@@ -35,7 +35,7 @@ export class UsersController {
     private readonly jwtService: JwtService
   ) { }
 
-  @Post('login/email')
+  @Post('login')
   async emailLogin(
     @Body('email') email: string,
     @Body('password') password: string
@@ -52,49 +52,6 @@ export class UsersController {
     // check if user exists
     if (!foundUser) {
       throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
-    }
-
-    // check if password matches
-    let isPasswordValid = await checkPassword(
-      password,
-      foundUser.password
-    )
-    if (!isPasswordValid) {
-      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
-    }
-
-    // produce in-app token
-    const payload = {
-      id: foundUser.id,
-      email: foundUser.email,
-      username: foundUser.username,
-    };
-    const token = this.jwtService.sign(payload);
-
-    return {
-      ...payload,
-      token: token
-    };
-
-  }
-
-  @Post('login/username')
-  async usernameLogin(
-    @Body('username') username: string,
-    @Body('password') password: string
-  ): Promise<UserInfoWithToken> {
-
-    // check user has input username & password
-    if (!username || !password) {
-      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
-    }
-
-    // get user's info from userService
-    let foundUser = await this.usersService.findByUsername(username)
-
-    // check if user exists
-    if (!foundUser) {
-      throw new HttpException('Invalid username', HttpStatus.UNAUTHORIZED);
     }
 
     // check if password matches

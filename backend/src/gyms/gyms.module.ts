@@ -4,12 +4,20 @@ import { GymsController } from './gyms.controller';
 import { PrismaService } from 'nestjs-prisma';
 import { DistrictsModule } from 'src/districts/districts.module';
 import { DistrictsService } from 'src/districts/districts.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtGymStrategy } from './strategy/jwtgym.strategy';
 
-@Global()
+// @Global()
 @Module({
-  imports:[DistrictsModule],
+  imports: [
+    DistrictsModule,
+    JwtModule.register({
+      secret: process.env.JWT_GYM_SECRET,
+      signOptions: { expiresIn: '12h' },
+    })
+  ],
   controllers: [GymsController],
-  providers: [GymsService,PrismaService,DistrictsService],
+  providers: [GymsService, PrismaService, DistrictsService, JwtGymStrategy],
   exports: [GymsService]
 })
-export class GymsModule {}
+export class GymsModule { }

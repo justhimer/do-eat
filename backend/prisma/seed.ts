@@ -784,12 +784,12 @@ async function main() {
 
 
     const gym1 = await prisma.gyms.upsert({
-        where: { username: "purefitnesscausewaybay" },
+        where: { username: "pure_cwb" },
         update: {},
         create: {
             name: "PureFitness Causeway Bay",
-            username: "purefitnesscausewaybay",
-            password: "purefitnesscausewaybay",
+            username: "pure_cwb",
+            password: await hashPassword('pfcwb'),
             opening_hour: 1000,
             closing_hour: 2300,
             no_close: false,
@@ -801,12 +801,12 @@ async function main() {
     })
 
     const gym2 = await prisma.gyms.upsert({
-        where: { username: "purefitnesscentral" },
+        where: { username: "pure_central" },
         update: {},
         create: {
             name: "PureFitness Central",
-            username: "purefitnesscentral",
-            password: "purefitnesscentral",
+            username: "pure_central",
+            password: await hashPassword('pfcentral'),
             opening_hour: 1000,
             closing_hour: 2300,
             no_close: false,
@@ -818,12 +818,12 @@ async function main() {
     })
 
     const gym3 = await prisma.gyms.upsert({
-        where: { username: "purefitnesswanchai" },
+        where: { username: "pure_wc" },
         update: {},
         create: {
             name: "PureFitness Wan Chai",
-            username: "purefitnesswanchai",
-            password: "purefitnesswanchai",
+            username: "pure_wc",
+            password: await hashPassword('pfwc'),
             opening_hour: 1000,
             closing_hour: 2300,
             no_close: false,
@@ -835,12 +835,12 @@ async function main() {
     })
 
     const gym4 = await prisma.gyms.upsert({
-        where: { username: "purefitnesstsimshatsui" },
+        where: { username: "pure_tst" },
         update: {},
         create: {
             name: "PureFitness Tsim Sha Tsui",
-            username: "purefitnesstsimshatsui",
-            password: "purefitnesstsimshatsui",
+            username: "pure_tst",
+            password: await hashPassword('pftst'),
             opening_hour: 1000,
             closing_hour: 2300,
             no_close: false,
@@ -852,12 +852,12 @@ async function main() {
     })
 
     const gym5 = await prisma.gyms.upsert({
-        where: { username: "purefitnessmonkkok" },
+        where: { username: "pure_mk" },
         update: {},
         create: {
             name: "PureFitness Monk Kok",
-            username: "purefitnessmonkkok",
-            password: "purefitnessmonkkok",
+            username: "pure_mk",
+            password: await hashPassword('pfmk'),
             opening_hour: 1000,
             closing_hour: 2300,
             no_close: false,
@@ -869,12 +869,12 @@ async function main() {
     })
 
     const gym6 = await prisma.gyms.upsert({
-        where: { username: "247fitnesscausewaybay" },
+        where: { username: "247_cwb" },
         update: {},
         create: {
             name: "247Fitness Causeway Bay",
-            username: "247fitnesscausewaybay",
-            password: "247fitnesscausewaybay",
+            username: "247_cwb",
+            password: await hashPassword('247cwb'),
             opening_hour: 1000,
             closing_hour: 2000,
             no_close: true,

@@ -1,5 +1,6 @@
 import { IonButton, useIonToast } from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
+import { gymAction } from "../../redux/gymSlice";
 import { RootState } from "../../redux/store";
 import { userAction } from "../../redux/userSlice";
 import NotificationStyle from "../../scss/Notification.module.scss";
@@ -19,11 +20,16 @@ export function Logout() {
     };
 
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state: RootState) => state.users.isAuthenticated);
+    const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+    const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated);
 
     function logout() {
-        if (isAuthenticated) {
+        if (isUserLoggedIn) {
             dispatch(userAction.logout());
+            presentToast('top');
+        }
+        if (isGymLoggedIn) {
+            dispatch(gymAction.logout());
             presentToast('top');
         }
     }
