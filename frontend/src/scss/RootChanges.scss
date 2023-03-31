@@ -11,6 +11,13 @@ ion-tab-bar {
 ion-toolbar {
     --ion-toolbar-background: #615c59;
     --ion-toolbar-color: #cfc1ac;
+
+    ion-button {
+        --ion-toolbar-background: transplant;
+        --ion-toolbar-color: transplant;
+        --color: #cfc1ac;
+        --box-shadow: none;
+    }
 }
 
 ion-list {
@@ -56,6 +63,8 @@ ion-button {
     --background: #e74c3c;
     --background-activated: #615c59;
     --color-activated: #e5ddd1;
+    // margin-top: 0;
+    // margin-bottom: 0;
 }
 
 ion-card {

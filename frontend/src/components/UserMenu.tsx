@@ -1,15 +1,23 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonRow } from "@ionic/react";
-import UserProfileStyle from "../scss/UserProfile.module.scss";
+import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
+import UserMenuStyle from "../scss/UserMenu.module.scss";
 import UserStyle from '../scss/User.module.scss';
-import { Logo } from "./Logo";
 import { Logout } from "./auth/Logout";
+import { useHistory } from "react-router";
 
 export function UserMenu() {
+
+    const history = useHistory();
+
+    const onProfile = () => {
+        console.log('yes');
+        history.push("/user-profile");
+    }
+
     return (
         <>
 
-            <div className={UserProfileStyle.icon_container}>
-                <img src="./assets/user_image/default_user_icon.png" alt="" className={UserProfileStyle.icon} />
+            <div className={UserMenuStyle.icon_container}>
+                <img src="./assets/user_image/default_user_icon.png" alt="" className={UserMenuStyle.icon} />
             </div>
 
             <div className={UserStyle.title}>
@@ -18,24 +26,26 @@ export function UserMenu() {
 
             <IonGrid>
                 <IonRow>
-                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Calories</IonButton></IonCol>
-                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>My Credits</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Calories</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Credits</IonButton></IonCol>
                 </IonRow>
 
                 <IonRow>
-                    <IonCol className={UserProfileStyle.list}>
-                        <IonItem button detail={true} className={UserProfileStyle.item}>
-                            <IonLabel>Profile</IonLabel>
-                        </IonItem>
-                        <IonItem button detail={true} className={UserProfileStyle.item}>
-                            <IonLabel>Booked Courses</IonLabel>
-                        </IonItem>
-                        <IonItem button detail={true} className={UserProfileStyle.item}>
-                            <IonLabel>Ordered Food</IonLabel>
-                        </IonItem>
-                        <IonItem button detail={true} className={UserProfileStyle.item_last}>
-                            <IonLabel>History</IonLabel>
-                        </IonItem>
+                    <IonCol>
+                        <IonList className={UserMenuStyle.list}>
+                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onProfile}>
+                                <IonLabel>Profile</IonLabel>
+                            </IonItem>
+                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                                <IonLabel>Booked Courses</IonLabel>
+                            </IonItem>
+                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                                <IonLabel>Ordered Food</IonLabel>
+                            </IonItem>
+                            <IonItem button detail={true} className={UserMenuStyle.item_last}>
+                                <IonLabel>History</IonLabel>
+                            </IonItem>
+                        </IonList>
                     </IonCol>
                 </IonRow>
 

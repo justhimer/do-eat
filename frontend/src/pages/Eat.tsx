@@ -10,19 +10,13 @@ const EatTab: React.FC = () => {
           <IonTitle>Eat</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent fullscreen>
-
-        {/* <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Eat</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
-
         <div className={AppStyle.hero}>
           <FoodList />
         </div>
-
       </IonContent>
+
     </IonPage>
   );
 };
