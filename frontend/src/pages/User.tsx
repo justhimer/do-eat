@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import LoginForm from '../components/auth/LoginForm';
+import Login from '../components/auth/Login';
 import { Logout } from '../components/auth/Logout';
 import { UserProfile } from '../components/UserProfile';
 import { RootState } from '../redux/store';
@@ -25,7 +25,7 @@ const UserTab: React.FC = () => {
 
       <IonContent fullscreen>
         <div className={AppStyle.hero}>
-          {!isUserLoggedIn && !isGymLoggedIn ? (<LoginForm />) : (<></>)}
+          {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
           {isUserLoggedIn ? (<UserProfile />) : (<></>)}
           {isGymLoggedIn ? (<Logout />) : (<></>)}
         </div>

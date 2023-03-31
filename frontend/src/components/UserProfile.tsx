@@ -28,6 +28,15 @@ export function UserProfile() {
                     <IonCol><IonButton expand="block" className={UserProfileStyle.button}>Profile</IonButton></IonCol>
                 </IonRow>
                 <IonRow>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>Booked Courses</IonButton></IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>Ordered Food</IonButton></IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol><IonButton expand="block" className={UserProfileStyle.button}>History</IonButton></IonCol>
+                </IonRow>
+                <IonRow>
                     <IonCol><Logout/></IonCol>
                 </IonRow>
             </IonGrid>

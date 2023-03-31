@@ -8,7 +8,7 @@ import { FacebookLogin } from './FacebookLogin';
 import { Logout } from './Logout';
 import { GymLoginForm } from './GymLoginForm';
 
-export function LoginForm() {
+export function Login() {
 
     const defaultLoginMethod = "email";
 
@@ -46,4 +46,4 @@ export function LoginForm() {
         </>
     );
 }
-export default LoginForm;
+export default Login;
