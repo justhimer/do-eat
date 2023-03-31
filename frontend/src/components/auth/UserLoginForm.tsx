@@ -15,22 +15,9 @@ export function UserLoginForm() {
     const [present] = useIonToast();
     const history = useHistory();
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            // history.push("/home-tab");
-            present({
-                message: 'User Login Success',
-                duration: 1500,
-                position: "top",
-                cssClass: NotificationStyle.ionicToast,
-            });
-        }
-    }, [isLoggedIn]);
 
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -39,6 +26,12 @@ export function UserLoginForm() {
         if (data) {
             dispatch(gymAction.logout());
             dispatch(userAction.login(data));
+            present({
+                message: 'User Login Success',
+                duration: 1500,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
         } else {
             present({
                 message: 'User Login Failed',

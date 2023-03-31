@@ -15,22 +15,9 @@ export function GymLoginForm() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated);
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            // history.push("/home-tab");
-            present({
-                message: 'Gym Login Success',
-                duration: 1500,
-                position: "top",
-                cssClass: NotificationStyle.ionicToast,
-            });
-        }
-    }, [isLoggedIn]);
 
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -39,6 +26,12 @@ export function GymLoginForm() {
         if (data) {
             dispatch(userAction.logout());
             dispatch(gymAction.login(data));
+            present({
+                message: 'Gym Login Success',
+                duration: 1500,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
         } else {
             present({
                 message: 'Gym Login Failed',
