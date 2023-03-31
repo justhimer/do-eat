@@ -26,7 +26,7 @@ export function FacebookCallback() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            history.push("/home-tab")
+            history.push("/user-tab")
         }
     }, [isLoggedIn])
 
