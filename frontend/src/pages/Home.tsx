@@ -12,11 +12,9 @@ const HomeTab: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
-        <div className={AppStyle.hero}>
+      <IonContent fullscreen className={AppStyle.hero}>
           <Logo />
           <CornerBox />
-        </div>
       </IonContent>
     </IonPage >
   );

@@ -14,16 +14,14 @@ export function DistrictList() {
     return (
         <div>
             <div className={AppStyle.title}>District</div>
-            <div className={AppStyle.district_container}>
-                {
-                    districts && districts.map((district: FetchDistrictItemModel, index: number) => (
-                        <DistrictItem
-                            key={index}
-                            id={district.id}
-                            name={district.name} />
-                    ))
-                }
-            </div>
+            {
+                districts && districts.map((district: FetchDistrictItemModel, index: number) => (
+                    <DistrictItem
+                        key={index}
+                        id={district.id}
+                        name={district.name} />
+                ))
+            }
         </div>
 
     );

@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
-import UserMenuStyle from "../scss/UserMenu.module.scss";
-import UserStyle from '../scss/User.module.scss';
-import { Logout } from "./auth/Logout";
+import UserMenuStyle from "../../scss/UserMenu.module.scss";
+import UserStyle from '../../scss/User.module.scss';
+import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
 
 export function UserMenu() {
@@ -9,8 +9,15 @@ export function UserMenu() {
     const history = useHistory();
 
     const onProfile = () => {
-        console.log('yes');
         history.push("/user-profile");
+    }
+
+    const onSubscription = () => {
+        history.push("/user-subscription");
+    }
+
+    const onBookedCourses = () => {
+        history.push("/user-courses");
     }
 
     return (
@@ -32,15 +39,18 @@ export function UserMenu() {
 
                 <IonRow>
                     <IonCol>
-                        <IonList className={UserMenuStyle.list}>
+                        <IonList className={UserMenuStyle.menu_list}>
                             <IonItem button detail={true} className={UserMenuStyle.item} onClick={onProfile}>
                                 <IonLabel>Profile</IonLabel>
                             </IonItem>
-                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onSubscription}>
+                                <IonLabel>Subscription</IonLabel>
+                            </IonItem>
+                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onBookedCourses}>
                                 <IonLabel>Booked Courses</IonLabel>
                             </IonItem>
                             <IonItem button detail={true} className={UserMenuStyle.item}>
-                                <IonLabel>Ordered Food</IonLabel>
+                                <IonLabel>Ordered Foods</IonLabel>
                             </IonItem>
                             <IonItem button detail={true} className={UserMenuStyle.item_last}>
                                 <IonLabel>History</IonLabel>
