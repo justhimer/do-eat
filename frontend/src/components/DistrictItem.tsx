@@ -1,13 +1,21 @@
-import { IonButton } from '@ionic/react';
+import { IonButton, IonCheckbox } from '@ionic/react';
 
-interface DistrictItemProps {
+interface DistrictItemInterface{
+    checked: Boolean;
     id: number;
     name: string;
 }
 
-export function DistrictItem(props: DistrictItemProps) {
+export function DistrictItem(props: DistrictItemInterface) {
 
-    return (
-        <IonButton size="large" color="dark" >{props.name}</IonButton>
-    )
+    if (props.checked){
+        return (
+            <IonCheckbox id={`checkbox_${props.id}`} labelPlacement="end" checked>{props.name}</IonCheckbox>
+        )
+    }else{
+        return(
+            <IonCheckbox id={`checkbox_${props.id}`} labelPlacement="end">{props.name}</IonCheckbox>
+        )
+    }
+    
 }

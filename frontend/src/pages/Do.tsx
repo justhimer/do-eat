@@ -2,7 +2,10 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { DistrictList } from '../components/DistrictList';
 import AppStyle from '../scss/App.module.scss';
 
+
 const DoTab: React.FC = () => {
+
+
   return (
     <IonPage>
       <IonHeader>
