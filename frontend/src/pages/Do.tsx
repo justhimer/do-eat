@@ -13,19 +13,11 @@ const DoTab: React.FC = () => {
           <IonTitle>Do</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
 
-        {/* <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Do</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
-
-        <div className={AppStyle.hero}>
+      <IonContent fullscreen className={AppStyle.hero}>
           <DistrictList />
-        </div>
-
       </IonContent>
+      
     </IonPage>
   );
 };

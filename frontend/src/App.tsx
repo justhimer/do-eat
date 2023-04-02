@@ -44,7 +44,9 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 import PrivateRouter from './components/PrivateRoute';
-import Login from './components/auth/Login';
+import { UserProfile } from './components/user/UserProfile';
+import { UserSubscription } from './components/user/UserSubscription';
+import { UserCourses } from './components/user/UserCourses';
 
 setupIonicReact();
 
@@ -52,7 +54,6 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
-
 
         <IonRouterOutlet>
 
@@ -73,12 +74,23 @@ const App: React.FC = () => (
             <UserTab />
           </Route>
 
-          {/* other routes */}
+          {/* auth routes */}
+          <Route path="/facebook-callback">
+            <FacebookCallback />
+          </Route>
           <Route path="/login">
             <UserTab />
           </Route>
-          <Route path="/facebook-callback">
-            <FacebookCallback />
+
+          {/* user routes */}
+          <Route path="/user-profile">
+            <UserProfile />
+          </Route>
+          <Route path="/user-subscription">
+            <UserSubscription />
+          </Route>
+          <Route path="/user-courses">
+            <UserCourses />
           </Route>
 
         </IonRouterOutlet>
@@ -112,11 +124,13 @@ const App: React.FC = () => (
 
 
       </IonTabs>
+
       <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
         <IonFabButton className={TabStyle.button}>
           <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
         </IonFabButton>
       </IonFab>
+
     </IonReactRouter>
   </IonApp>
 );

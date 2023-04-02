@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Login from '../components/auth/Login';
 import { Logout } from '../components/auth/Logout';
-import { UserProfile } from '../components/UserProfile';
+import { UserMenu } from '../components/user/UserMenu';
 import { RootState } from '../redux/store';
 import AppStyle from '../scss/App.module.scss';
 
@@ -23,12 +23,10 @@ const UserTab: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
-        <div className={AppStyle.hero}>
+      <IonContent fullscreen className={AppStyle.hero}>
           {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
-          {isUserLoggedIn ? (<UserProfile />) : (<></>)}
+          {isUserLoggedIn ? (<UserMenu />) : (<></>)}
           {isGymLoggedIn ? (<Logout />) : (<></>)}
-        </div>
       </IonContent>
 
     </IonPage>
