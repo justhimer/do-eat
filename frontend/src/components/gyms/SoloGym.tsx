@@ -1,4 +1,6 @@
-import { IonThumbnail,IonItem,IonLabel,IonCardSubtitle } from '@ionic/react';
+import { IonThumbnail,IonItem,IonLabel,IonCardSubtitle, IonContent } from '@ionic/react';
+import { SelectedGymInterface, toggleGymSelection } from '../../redux/userGymSlice';
+import { useDispatch } from 'react-redux';
 
 interface GymCardInterface {
     district: string;
@@ -8,15 +10,20 @@ interface GymCardInterface {
     id: number;
 }
 
+
 export function SoloGym(props: GymCardInterface) {
 
+  const dispatch = useDispatch()
+
     return (
-        <IonItem>
+        <IonItem onClick={()=>dispatch(toggleGymSelection({id:props.id, name:props.name}))}>
             <IonThumbnail slot="start">
               <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
             </IonThumbnail>
-            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-            <IonLabel>Item</IonLabel>
+            <IonContent>
+              <IonLabel>{props.name}</IonLabel>
+              <IonCardSubtitle>{props.district}</IonCardSubtitle>
+            </IonContent>
           </IonItem>
     )
 }

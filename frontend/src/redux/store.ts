@@ -3,6 +3,7 @@ import foodSlice from "./foodSlice";
 import gymSlice from "./gymSlice";
 import userSlice from "./userSlice";
 import userDistrictSlice from "./userDistrictSlice";
+import userGymSlice from "./userGymSlice";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
@@ -12,7 +13,8 @@ export const store = configureStore({
         user: userSlice,
         gym: gymSlice,
         food: foodSlice,
-        userDistrict: userDistrictSlice
+        userDistrict: userDistrictSlice,
+        userGym: userGymSlice
     }
 });
 
