@@ -1,31 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export interface UserDistrictInterface {
-    id: number,
-    name: string
+interface SelectedDistrictsInterface{
+    districts: number[]
 }
 
-const initialState : UserDistrictInterface[] = []
+const initialState : SelectedDistrictsInterface = {districts:[]}
 
 const userDistrictSlice = createSlice({
     name: "userDistrict",
     initialState,
     reducers: {
-        add: (state, action:PayloadAction<UserDistrictInterface>)=>{
-            if (!state.find(elem => elem.id === action.payload.id)){
-                state.push(action.payload)
-            }
+        replaceDistrictSelection: (state, action:PayloadAction<number[]>) =>{
+            console.log("replacing")
+            let newArr = [...action.payload]
+            state.districts = newArr
         },
-        remove: (state, action:PayloadAction<number>) =>{
-            let newArr = state.filter((item:UserDistrictInterface) => item.id !== action.payload)
-            state = newArr
-        },
-        reset:(state)=>{
-            state = []
+        resetDistrictSelection:(state)=>{
+            state.districts = []
         }
     },
 })
 
-export const {add,remove,reset} = userDistrictSlice.actions
+export const {replaceDistrictSelection,resetDistrictSelection} = userDistrictSlice.actions
 
 export default userDistrictSlice.reducer;

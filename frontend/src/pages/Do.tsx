@@ -1,6 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { DistrictList } from '../components/DistrictList';
+import { DistrictList } from '../components/districts/DistrictList';
 import AppStyle from '../scss/App.module.scss';
+import { SelectedGymsDisplay } from '../components/gyms/SelectedGymsDisplay';
+
 
 
 const DoTab: React.FC = () => {
@@ -16,6 +18,7 @@ const DoTab: React.FC = () => {
 
       <IonContent fullscreen className={AppStyle.hero}>
           <DistrictList />
+          <SelectedGymsDisplay/>
       </IonContent>
       
     </IonPage>
