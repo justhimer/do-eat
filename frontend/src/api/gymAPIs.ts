@@ -15,3 +15,29 @@ export async function gymLogin(username: string, password: string) {
     if (res.ok) { return result }
     else { return false }
 }
+
+
+export async function gymAll() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/district/all`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        }
+    })
+    const result = await res.json();
+    console.log(result)
+    return result
+}
+
+export async function gymSome(districts:number[]) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/district/some`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(districts)
+    })
+    const result = await res.json();
+    console.log(result)
+    return result
+}
