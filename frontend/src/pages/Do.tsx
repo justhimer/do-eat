@@ -20,7 +20,7 @@ const DoTab: React.FC = () => {
       <IonContent fullscreen className={AppStyle.hero}>
           <DistrictList />
           <SelectedGymsDisplay/>
-          <GymList/>
+
       </IonContent>
       
     </IonPage>

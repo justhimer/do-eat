@@ -12,6 +12,8 @@ const userDistrictSlice = createSlice({
     reducers: {
         replaceDistrictSelection: (state, action:PayloadAction<number[]>) =>{
             console.log("replacing")
+            console.log({state, action});
+            
             let newArr = [...action.payload]
             state.districts = newArr
         },

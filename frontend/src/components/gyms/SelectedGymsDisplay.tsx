@@ -10,7 +10,7 @@ import userGymSlice, { SelectedGymInterface} from '../../redux/userGymSlice';
 
 export function SelectedGymsDisplay(){
 
-    const dispatch = useDispatch()
+
     const selectedGyms = useSelector((state:RootState)=>state.userGym)
     const selectedDistricts = useSelector((state:RootState)=>state.userDistrict)
     const gyms = useQuery({
