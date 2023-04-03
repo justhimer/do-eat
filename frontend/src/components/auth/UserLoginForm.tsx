@@ -19,6 +19,10 @@ export function UserLoginForm() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    const onSignUp = () => {
+        history.push("/signup");
+    }
+
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
@@ -116,6 +120,11 @@ export function UserLoginForm() {
 
             <div className={UserStyle.text}>Alternative Login Methods :</div>
             <FacebookLogin />
+
+            <div className={UserStyle.text}>Not a member yet?</div>
+            <a onClick={onSignUp}>Sign up to enjoy membership services.</a>
+            {/* <IonButton className={UserStyle.button} onClick={onSignUp}>Sign Up</IonButton> */}
+
         </div>
     )
 }
