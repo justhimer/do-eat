@@ -47,6 +47,7 @@ import PrivateRouter from './components/PrivateRoute';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserCourses } from './components/user/UserCourses';
+import { Signup } from './components/auth/Signup';
 
 setupIonicReact();
 
@@ -81,6 +82,9 @@ const App: React.FC = () => (
           <Route path="/login">
             <UserTab />
           </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
 
           {/* user routes */}
           <Route path="/user-profile">
@@ -107,7 +111,12 @@ const App: React.FC = () => (
           </IonTabButton>
 
           {/* invisible button for applying QR code css */}
-          <IonTabButton disabled={true}>
+          <IonTabButton disabled={false}>
+            <IonFab horizontal="center" className={TabStyle.reposition}>
+              <IonFabButton className={TabStyle.button} translucent={true}>
+                <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+              </IonFabButton>
+            </IonFab>
           </IonTabButton>
 
           <IonTabButton tab="eat-tab" href="/eat-tab">
@@ -125,11 +134,11 @@ const App: React.FC = () => (
 
       </IonTabs>
 
-      <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
-        <IonFabButton className={TabStyle.button}>
+      {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
+        <IonFabButton className={TabStyle.button} translucent={true}>
           <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
         </IonFabButton>
-      </IonFab>
+      </IonFab> */}
 
     </IonReactRouter>
   </IonApp>
