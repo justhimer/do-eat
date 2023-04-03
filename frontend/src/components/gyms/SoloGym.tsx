@@ -1,6 +1,7 @@
 import { IonThumbnail,IonItem,IonLabel,IonCardSubtitle, IonContent } from '@ionic/react';
 import { SelectedGymInterface, toggleGymSelection } from '../../redux/userGymSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 interface GymCardInterface {
     district: string;
@@ -12,9 +13,8 @@ interface GymCardInterface {
 
 
 export function SoloGym(props: GymCardInterface) {
-
+  const selectedGyms = useSelector((state:RootState)=>state.userGym)
   const dispatch = useDispatch()
-
     return (
         <IonItem onClick={()=>dispatch(toggleGymSelection({id:props.id, name:props.name}))}>
             <IonThumbnail slot="start">

@@ -4,49 +4,64 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { gymAll, gymSome } from '../../api/gymAPIs';
 import { SoloGym } from './SoloGym';
-import { IonCard,IonCardHeader,IonCardTitle,IonCardSubtitle,IonCardContent, IonChip } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonChip } from '@ionic/react';
 import { GymChip, GymChipInterface } from './GymChip';
-import userGymSlice, { SelectedGymInterface} from '../../redux/userGymSlice';
+import { SelectedGymInterface } from '../../redux/userGymSlice';
+import { SelectedGymDisplayInterface } from '../../pages/Do';
+import { useEffect, useState } from 'react';
 
-export function SelectedGymsDisplay(){
+export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
 
 
-    const selectedGyms = useSelector((state:RootState)=>state.userGym)
-    const selectedDistricts = useSelector((state:RootState)=>state.userDistrict)
+    const selectedGyms = useSelector((state: RootState) => state.userGym);
+    const [availableGyms, setAvailableGyms] = useState([]);
     const gyms = useQuery({
-        queryKey:['gymLocations'],
-        queryFn: ()=>{
-            if(selectedDistricts.districts.length>0){
-                return gymSome(selectedDistricts.districts)
-            }else{
-                return gymAll()
+        queryKey: ["gymLocations",props.selectedDistricts],
+        queryFn: () => {
+            if (props.selectedDistricts.length > 0) {
+                return gymSome(props.selectedDistricts);
+            } else {
+                return gymAll();
             }
+        },
+    });
+
+    useEffect(() => {
+        if (gyms.isLoading) {
+        } else {
+            setAvailableGyms(gyms.data);
         }
-    })
+    }, [gyms]);
 
-    
-
-
-    if (gyms.isLoading){
-        return <div>loading</div>
-    }else{
-        return (
-            <IonCard>
+    return (
+        <IonCard>
             <IonCardHeader>
-              <IonCardTitle>Card Title</IonCardTitle>
-              {
-                selectedGyms.length > 0 && selectedGyms.map((i:SelectedGymInterface,index)=><GymChip key={index} id={i.id} name={i.name}/>)
-              }
+                <IonCardTitle>Available Gyms</IonCardTitle>
+                <IonCardSubtitle>Selected Locations: {selectedGyms.length+"/3"}</IonCardSubtitle>
+                {selectedGyms.length > 0 &&
+                    selectedGyms.map((i: SelectedGymInterface, index) => (
+                        <GymChip key={index} id={i.id} name={i.name} />
+                    ))}
             </IonCardHeader>
             <IonCardContent>
-                {
-                    gyms.data && gyms.data.map((gym:any, index:any)=><SoloGym key={index} id={gym.id} name={gym.name} district={gym.district.name} icon={""} details={gym.address}/>)
-                }
+                {gyms.isLoading ? (
+                    <p>Loading...</p>
+                ) : gyms.error ? (
+                    <p>Error:</p>
+                ) : (
+                    availableGyms.map((gym: any, index: any) => (
+                        <SoloGym
+                            key={index}
+                            id={gym.id}
+                            name={gym.name}
+                            district={gym.district.name}
+                            icon={""}
+                            details={gym.address}
+                        />
+                    ))
+                )}
             </IonCardContent>
-            </IonCard>
-            
-            
-            )
-    }
-    
+        </IonCard>
+    );
+
 }

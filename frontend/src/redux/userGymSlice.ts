@@ -12,21 +12,23 @@ const userGymSlice = createSlice({
     initialState,
     reducers: {
         toggleGymSelection: (state, action: PayloadAction<SelectedGymInterface>) => {
-            console.log('togglegymselection received')
-            if (state.filter((elem) => { return elem.id === action.payload.id })) {
-                const newState = state.filter((elem) => { return elem.id !== action.payload.id })
-                state = newState
+
+            if (state.filter((elem) => { return elem.id === action.payload.id }).length > 0) {
+                const newState = state.findIndex((elem) => { return elem.id === action.payload.id })
+                state.splice(newState,1)
             } else {
                 if (state.length < 3) {
                     const newState = [...state, action.payload]
-                    state = newState
+                    state.push(action.payload)
+                }else{
+                    console.log('error more than 3 gyms selected')
                 }
-                console.log('error more than 3 gyms selected')
+                
             }
         },
         removeGymSelection: (state, action: PayloadAction<number>) => {
-            const newState = state.filter((elem) => { return elem.id !== action.payload })
-            state = newState
+            const newState = state.findIndex((elem) => { return elem.id === action.payload })
+                state.splice(newState,1)
         }
     },
 })

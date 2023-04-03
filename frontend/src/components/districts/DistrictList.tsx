@@ -6,30 +6,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { IonItem, IonList, IonSelect} from '@ionic/react';
 import { replaceDistrictSelection } from "../../redux/userDistrictSlice";
+import { Interface } from "readline";
+import { DistrictListInterface } from "../../pages/Do";
 
-export function DistrictList() {
 
-    const dispatch = useDispatch()
-    const selectedDistrict = useSelector((state: RootState) => state.userDistrict)
-    
+
+export function DistrictList(props:DistrictListInterface) {
+  
     // get districts from backend
     const { data: districts, isLoading, refetch } = useQuery({  // rename data to districts
         queryKey: ["districts"],
         queryFn: fetchDistrictItems,
     });
 
-    //control district list
-    const valuesOnChange = (e:any)=>{
-        if(JSON.stringify(selectedDistrict.districts)!==JSON.stringify(e.detail.value)){
-            (dispatch(replaceDistrictSelection(e.detail.value)))
-            return
-        }
-    }
-
     return (
         <IonList>
       <IonItem>
-        <IonSelect aria-label="Districts" label="Districts" placeholder="All districts" multiple={true} onIonChange={valuesOnChange}>
+        <IonSelect aria-label="Districts" label="Districts" placeholder="All districts" multiple={true} onIonChange={(e)=>{props.replaceDistrict(e.detail.value)}}>
           {
             districts && districts.map((district,index)=>{
                 return <DistrictItem key={index} id={district.id} name={district.name}/>
