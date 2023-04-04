@@ -18,6 +18,15 @@ export interface DoButtonInterface {
   downPage: () => void
 }
 
+export interface CoursesGetInterface{
+  gyms: number[];
+  time: string
+}
+export interface MarkedDatesInterface{
+  date: Date;
+  marked: boolean;
+}
+
 const DoTab: React.FC = () => {
 
   const [selectedDistrict, setSelectedDistrict] = useState([])

@@ -6,7 +6,7 @@ interface GooglePosition{
     long:number
 }
 
-export class Dllm {
+export class CourseSchedules {
   @ApiProperty()
   @IsDateString()
   time: string;

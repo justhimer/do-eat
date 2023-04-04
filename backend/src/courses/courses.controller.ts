@@ -20,23 +20,4 @@ export class CoursesController {
     return this.coursesService.districtCourses(districts)
   }
 
-  @Get("random")
-  getRandomCourses() {
-
-  }
-
-  @Get("suggested")
-  getSuggestedCourses() {
-
-  }
-
-  @Get("courses/:location/:date")
-  getCoursesDates() {
-
-  }
-
-  @Get("details")
-  getCourseDetails() {
-
-  }
 }

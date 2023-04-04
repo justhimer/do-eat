@@ -1,6 +1,6 @@
 import { addDays } from "date-fns";
 import hexToRgb from "../../../node_modules/hex-to-rgb/index";
-import dateStyles from "../DatePicker/DatePicker.module.css"
+import dateStyles from "../DatePicker/DatePicker.module.scss"
 import { DateView } from "./Dateview";
 
 

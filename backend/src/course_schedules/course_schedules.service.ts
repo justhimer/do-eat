@@ -61,12 +61,71 @@ export class CourseSchedulesService {
                         }
                     }
                 ]
+            },
+            select:{
+                trainers:{
+                    select: {
+                        name:true,
+                        icon:true,
+                    }
+                },courses:{
+                    select:{
+                        intensity:{
+                            select:{
+                                level:true
+                            }
+                        },gyms:{
+                            select:{
+                                name:true,
+                                    franchise:{
+                                    select:{
+                                        name:true
+                                    }
+                                }
+                            }
+                        },
+                        name:true,
+                        credits:true,
+                        calorise:true,
+                        duration:true
+                    }
+                },userSchedule:{
+                    select:{
+                        _count:{
+                        }
+                    }
+                }
             }
         })
 
-        console.log(data)
+        console.log("data: ",data)
         return data
     }
 
-
+    async getDatesWithCourses(listGyms: Array<number>){
+        const data = await this.prisma.courseSchedules.findMany({
+            select: {
+                time:true
+            },
+            orderBy: [
+                {time:'asc'}
+            ],
+            where:{
+                AND: [
+                    {
+                        time: {
+                            gt: new Date
+                        }
+                    },
+                    {
+                        courses:{
+                            gym_id: {in: listGyms}
+                        }
+                    }
+                ]
+            }
+        })
+        console.log("date: ",data)
+        return data
+    }
 }
