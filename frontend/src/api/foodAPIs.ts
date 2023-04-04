@@ -5,7 +5,23 @@ export async function fetchFoods() {
             "Content-Type": 'application/json',
         }
     })
-    console.log(res)
+    // console.log(res)
     const data = await res.json();
+    return data;
+}
+
+export async function fetchOneFoods(id: number) {
+    console.log(id);
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/foods/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+        }
+    })
+    // console.log(res)
+    const data = await res.json();
+    // console.log(data);
+
     return data;
 }

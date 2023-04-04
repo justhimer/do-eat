@@ -1,11 +1,13 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
-// import FoodStyle from '../scss/Food.module.scss'
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol, IonList, IonItem } from '@ionic/react';
+import FoodStyle from '../scss/Food.module.scss'
+import { useHistory } from 'react-router-dom';
 export interface FoodItemProps {
     id: number;
     name: string;
     description: string;
     image: string;
     calories: number;
+    allergens: string;
 }
 
 function addPath(img: string) {
@@ -14,30 +16,22 @@ function addPath(img: string) {
 
 export function FoodItem(props: FoodItemProps) {
 
+    const history = useHistory();
+    const toFoodDetails = (id: number) => {
+        history.push(`/fooddetails/${id}`)
+    }
     return (
         <IonCard>
-            <img alt="food image" src={addPath(props.image)} />
-            <IonCardHeader>
-                <IonCardTitle>{props.name}</IonCardTitle>
-                <IonCardSubtitle>Description</IonCardSubtitle>
-            </IonCardHeader>
+            <IonList>
+                <IonItem onClick={() => toFoodDetails(props.id)}>
+                    <img alt="food image" src={addPath(props.image)} className={FoodStyle.image} />
+                    <IonCardHeader>
+                        <IonCardTitle className={FoodStyle.name || FoodStyle.calories}>{props.name} Calories:{props.calories}</IonCardTitle>
+                    </IonCardHeader>
 
-            <IonCardContent>
-                {props.description}
-            </IonCardContent>
-            <IonCardContent>
-                Calories:{props.calories}
-            </IonCardContent>
-
-            <IonGrid>
-                <IonRow>
-                    <IonCol><IonButton fill="solid" expand='block'>♡</IonButton></IonCol>
-                    <IonCol><IonButton fill="solid" expand='block'>Details</IonButton></IonCol>
-                    <IonCol><IonButton fill="solid" expand='block'>Add to Cart</IonButton></IonCol>
-                </IonRow>
-            </IonGrid>
-
-        </IonCard>
+                </IonItem>
+            </IonList>
+        </IonCard >
     )
 }
 

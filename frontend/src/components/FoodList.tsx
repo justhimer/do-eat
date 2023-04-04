@@ -28,7 +28,8 @@ export function FoodList() {
                         name={food.name}
                         description={food.description}
                         image={food.image}
-                        calories={food.calories} />
+                        calories={food.calories}
+                        allergens={food.calories} />
                 ))
             }
         </div>

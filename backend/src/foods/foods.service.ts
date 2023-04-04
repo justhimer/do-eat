@@ -48,12 +48,16 @@ export class FoodsService {
         id: true,
         name: true,
         calories: true,
+        description: true,
+        ingredients: true,
+        allergens: true,
+        image: true,
       },
       where: {
         id: id,
       },
     });
-    return `This action returns a #${id} food`;
+    return food;
   }
 
   async update(id: number, updateFoodDto: UpdateFoodDto) {
