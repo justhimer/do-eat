@@ -7,7 +7,7 @@ export const initFormidable = (): IncomingForm => {
     let param: Partial<Options> = {
         keepExtensions: true,
         maxFiles: 1,
-        maxFileSize: 200 * 1024 ** 2, // the default limit is 200KB
+        maxFileSize: 5 * 1024 ** 3, // limit is 5MB
         filter: (part) => {
             return part.mimetype?.startsWith('image/') || false
         },

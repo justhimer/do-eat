@@ -65,18 +65,13 @@ export class GymsController {
 
   }
 
-  @Get('all')
+  @Get('/users/district/all')
   async all() {
     return await this.gymsService.allGyms()
   }
 
-  @Get('some')
-  async some() {
-
-  }
-
-  @UseGuards(AuthGuard('jwt_gym'))
-  @Post('district')
+  // @UseGuards(AuthGuard('jwt_gym'))
+  @Post('users/district/some')
   async district(@Body() list: number[]) {
     return await this.gymsService.districtGyms(list)
   }

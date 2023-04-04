@@ -45,6 +45,10 @@ import "./scss/RootChanges.scss"
 import PrivateRouter from './components/PrivateRoute';
 import Login from './components/auth/Login';
 import Fooddetails from './components/Fooddetails';
+import { UserProfile } from './components/user/UserProfile';
+import { UserSubscription } from './components/user/UserSubscription';
+import { UserCourses } from './components/user/UserCourses';
+import { Signup } from './components/auth/Signup';
 
 setupIonicReact();
 
@@ -52,7 +56,6 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
-
 
         <IonRouterOutlet>
 
@@ -73,12 +76,26 @@ const App: React.FC = () => (
             <UserTab />
           </Route>
 
-          {/* other routes */}
+          {/* auth routes */}
+          <Route path="/facebook-callback">
+            <FacebookCallback />
+          </Route>
           <Route path="/login">
             <UserTab />
           </Route>
-          <Route path="/facebook-callback">
-            <FacebookCallback />
+          <Route path="/signup">
+            <Signup />
+          </Route>
+
+          {/* user routes */}
+          <Route path="/user-profile">
+            <UserProfile />
+          </Route>
+          <Route path="/user-subscription">
+            <UserSubscription />
+          </Route>
+          <Route path="/user-courses">
+            <UserCourses />
           </Route>
 
           {/* food routes */}
@@ -99,7 +116,12 @@ const App: React.FC = () => (
           </IonTabButton>
 
           {/* invisible button for applying QR code css */}
-          <IonTabButton disabled={true}>
+          <IonTabButton disabled={false}>
+            <IonFab horizontal="center" className={TabStyle.reposition}>
+              <IonFabButton className={TabStyle.button} translucent={true}>
+                <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+              </IonFabButton>
+            </IonFab>
           </IonTabButton>
 
           <IonTabButton tab="eat-tab" href="/eat-tab">
@@ -116,11 +138,13 @@ const App: React.FC = () => (
 
 
       </IonTabs>
-      <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
-        <IonFabButton className={TabStyle.button}>
+
+      {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
+        <IonFabButton className={TabStyle.button} translucent={true}>
           <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
         </IonFabButton>
-      </IonFab>
+      </IonFab> */}
+
     </IonReactRouter>
   </IonApp>
 );

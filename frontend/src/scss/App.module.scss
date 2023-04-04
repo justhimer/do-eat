@@ -10,9 +10,10 @@
   color: #3b3836;
   font-size: 2rem;
   font-weight: bold;
-  padding: 10px;
+  padding: 0.5rem 0;
 }
 
-.district_container {
-  padding: 0 10px;
+.center {
+  display: flex;
+  justify-content: center;
 }
