@@ -19,7 +19,6 @@ import HomeTab from './pages/Home';
 import DoTab from './pages/Do';
 import EatTab from './pages/Eat';
 import UserTab from './pages/User';
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -44,6 +43,8 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 import PrivateRouter from './components/PrivateRoute';
+import Login from './components/auth/Login';
+import Fooddetails from './components/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserCourses } from './components/user/UserCourses';
@@ -95,6 +96,10 @@ const App: React.FC = () => (
           </Route>
           <Route path="/user-courses">
             <UserCourses />
+          </Route>
+
+          {/* food routes */}
+          <Route path="/fooddetails/:id" component={Fooddetails}>
           </Route>
 
         </IonRouterOutlet>
