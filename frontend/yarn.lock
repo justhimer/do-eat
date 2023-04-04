@@ -1092,11 +1092,6 @@
   resolved "https://registry.npmjs.org/@capacitor/app/-/app-4.1.1.tgz"
   integrity sha512-SJcJA1rhFQyeH6eLfUEbdKkHzAwzahJNVPNXmU88fdmXpMgM2dJGzZj1vrm6e21aQq+Z4aBVLJ2RCdj92zD7wg==
 
-"@capacitor/camera@^4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-4.1.4.tgz#5d019f88d1f3547b537270e35bcb96084eb48df6"
-  integrity sha512-7f4n7PlnstYsdGyxc0Kc4hIyS6csFLOjXvffm7pJsuy9pSo+kfdOPdYgGg360QwbUAmA+Yv+J1ZW1eFIwgvWrQ==
-
 "@capacitor/cli@4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@capacitor/cli/-/cli-4.7.0.tgz"
@@ -1141,11 +1136,6 @@
   version "4.1.1"
   resolved "https://registry.npmjs.org/@capacitor/keyboard/-/keyboard-4.1.1.tgz"
   integrity sha512-fdC7u2TeG4BqwC0LnPnhOdya31C4QKdhk/8pc5lxI9X5jyYAetMCN1kEkKa7KREw4DdzXotJt27B9BXxAza6og==
-
-"@capacitor/preferences@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-4.0.2.tgz#83bee8cadb3456a4f2a89118b8351d488c20ec77"
-  integrity sha512-HgcRkMdVHSIV3TeQLZFmCaCeMWQ25wLyZZ7dA2f8Rw81Q1Nroxsi7HxTEGNqrWKSN9PNKBJD8vChr6eB2GNtZg==
 
 "@capacitor/status-bar@4.1.1":
   version "4.1.1"
@@ -1294,21 +1284,6 @@
   version "8.36.0"
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.36.0.tgz"
   integrity sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==
-
-"@googlemaps/js-api-loader@^1.13.7":
-  version "1.15.1"
-  resolved "https://registry.npmjs.org/@googlemaps/js-api-loader/-/js-api-loader-1.15.1.tgz"
-  integrity sha512-AsnEgNsB7S/VdrHGEQUaUM2e5tmjFGKBAfzR/AqO8O7TPq/jQGvoRw5liPBw4EMF38RDsHmKDV89q/X+qiUREQ==
-  dependencies:
-    fast-deep-equal "^3.1.3"
-
-"@googlemaps/markerclusterer@^2.0.7":
-  version "2.0.15"
-  resolved "https://registry.npmjs.org/@googlemaps/markerclusterer/-/markerclusterer-2.0.15.tgz"
-  integrity sha512-/I6Esi5FtyeVHsezN9Kut8zRJoqe7KkTIJXGVqpKFf6BjC7qQ1xRajLMkOz0s8XKgLevbr+KdYjuvmj+LohOGg==
-  dependencies:
-    fast-deep-equal "^3.1.3"
-    supercluster "^7.1.3"
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
@@ -2189,11 +2164,6 @@
   integrity sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==
   dependencies:
     "@types/node" "*"
-
-"@types/google.maps@^3.50.5":
-  version "3.52.4"
-  resolved "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.52.4.tgz"
-  integrity sha512-FXtZsLDX7fbxJ03zbze3MdUjaH4Y/zRmW8O65LNIWEHJ7RqddrabusRm/U3zF1ifmqe8y4oPqBvs+vBG8kv0yQ==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.6"
@@ -6469,11 +6439,6 @@ jwt-decode@^3.1.2:
   resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-3.1.2.tgz"
   integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
-kdbush@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/kdbush/-/kdbush-3.0.0.tgz"
-  integrity sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==
-
 kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
@@ -8464,10 +8429,10 @@ sass-loader@^12.3.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass@^1.59.3:
-  version "1.59.3"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.59.3.tgz#a1ddf855d75c70c26b4555df4403e1bbf8e4403f"
-  integrity sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==
+sass@^1.60.0:
+  version "1.60.0"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.60.0.tgz#657f0c23a302ac494b09a5ba8497b739fb5b5a81"
+  integrity sha512-updbwW6fNb5gGm8qMXzVO7V4sWf7LMXnMly/JEyfbfERbVH46Fn6q02BX7/eHTdKpE7d+oTkMMQpFWNUMfFbgQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
@@ -8963,13 +8928,6 @@ stylehacks@^5.1.1:
   dependencies:
     browserslist "^4.21.4"
     postcss-selector-parser "^6.0.4"
-
-supercluster@^7.1.3:
-  version "7.1.5"
-  resolved "https://registry.npmjs.org/supercluster/-/supercluster-7.1.5.tgz"
-  integrity sha512-EulshI3pGUM66o6ZdH3ReiFcvHpM3vAigyK+vcxdjpJyEbIIrtbmBdY23mGgnI24uXiGFvrGq9Gkum/8U7vJWg==
-  dependencies:
-    kdbush "^3.0.0"
 
 supports-color@^5.3.0:
   version "5.5.0"
