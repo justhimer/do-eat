@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@types/flat": "^5.0.2",
+    "flat": "^5.0.2"
+  }
+}

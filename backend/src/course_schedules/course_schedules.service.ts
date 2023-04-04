@@ -63,6 +63,9 @@ export class CourseSchedulesService {
                 ]
             },
             select:{
+                course_id:true,
+                quota:true,
+                time:true,
                 trainers:{
                     select: {
                         name:true,
@@ -89,16 +92,9 @@ export class CourseSchedulesService {
                         calorise:true,
                         duration:true
                     }
-                },userSchedule:{
-                    select:{
-                        _count:{
-                        }
-                    }
                 }
             }
         })
-
-        console.log("data: ",data)
         return data
     }
 

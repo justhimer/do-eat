@@ -13,6 +13,7 @@ import { CoursesService } from 'src/courses/courses.service';
 @Module({
   imports:[CreditTransactionModule,UsersModule,CoursesModule],
   controllers: [UserSchedulesController],
-  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService]
+  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService],
+  exports: [UserSchedulesService]
 })
 export class UserSchedulesModule {}
