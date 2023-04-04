@@ -45,7 +45,10 @@ export class CourseSchedulesController {
           franchise:elem.courses.gyms.franchise.name,
           gym:elem.courses.gyms.name,
           trainer_icon:elem.trainers.icon,
-          trainer_name:elem.trainers.name
+          trainer_name:elem.trainers.name,
+          course_type_id: elem.courses.course_type.id,
+          course_type_name:elem.courses.course_type.name,
+          
         }
       )
     })

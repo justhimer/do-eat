@@ -86,6 +86,11 @@ export class CourseSchedulesService {
                                     }
                                 }
                             }
+                        },course_type:{
+                            select:{
+                                name:true,
+                                id:true
+                            }
                         },
                         name:true,
                         credits:true,
