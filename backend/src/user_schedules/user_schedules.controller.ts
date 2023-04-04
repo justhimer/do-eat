@@ -18,6 +18,11 @@ export class UserSchedulesController {
     private readonly coursesService: CoursesService
     ) {}
 
+    @Post('remaining/:course')
+    async getSlots(@Param('course') course: number){
+      return await this.userSchedulesService.getRemainingSlots(course)
+    }
+
     @Post('join/:course/:id')
     async join(@Param('course', ParseIntPipe) course: number, @Param('id', ParseIntPipe) id: number) {
       // check to see if already registered to course

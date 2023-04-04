@@ -1,0 +1,18 @@
+.districtContainer {
+    ion-checkbox {
+        --size: 32px;
+        --checkbox-background-checked: transparent;
+        --checkbox-background: transparent;
+        --border-width: 0;
+
+        ::part(container) {
+            border-radius: 6px;
+            border: 2px solid transparent;
+        }
+    }
+}
+
+.justifyContainer{
+    display: flex;
+    flex-direction: column;
+}
