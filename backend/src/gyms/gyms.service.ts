@@ -41,7 +41,6 @@ export class GymsService {
                 }
             }
         })
-        console.log(data)
         return data
     }
 
@@ -50,7 +49,6 @@ export class GymsService {
         let data = await this.prisma.gyms.findMany({
             select: { id: true }
         })
-        console.log(data)
         return data
     }
 

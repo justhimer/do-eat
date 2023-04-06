@@ -39,11 +39,11 @@ export class UserSchedulesController {
       //if there are empty slots
       if (await this.usersService.findIsUnlimited(id)) {
         // checks if user has unlimited credit plan (premium user)
-        console.log("register as premium user");
+
         // returns message course subscribed if ok
         return this.userSchedulesService.addCoursePremium(id, course)
       } else {
-        console.log("register as basic user");
+
         //gets credits of user and required course credit
         let userCredit = await this.creditService.getUserCredits(id)
         let courseCredit = await this.coursesService.getExerciseCredit(course)

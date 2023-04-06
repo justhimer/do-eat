@@ -1,0 +1,56 @@
+.courseContainer{
+    height: auto;
+    min-height: 60vh;
+}
+.courseList{
+    height: auto;
+}
+
+.itemContainer{
+    height: auto;
+    min-height: 3vh;
+}
+.cardSplitter{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.cardLeftComponent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 30%;
+}
+.cardThumbnail{
+    max-height: inherit;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    border-radius: 100%;
+}
+.cardContent{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+.cardTopChips{
+    position: absolute;
+    z-index: 3;
+    top: 5px;
+    right: 2px;
+}
+.cardBottomChips{
+    position: absolute;
+    z-index: 3;
+    bottom: 5px;
+    right: 2px;
+}
+.filledCourse{
+    filter: grayscale(1);
+
+    .cardBottomChips{
+        background-color: black;
+    }
+}
