@@ -46,5 +46,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 
+	<!-- for camera API -->
+	<key>NSCameraUsageDescription</key>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+
 </dict>
 </plist>

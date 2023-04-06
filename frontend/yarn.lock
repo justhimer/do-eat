@@ -1092,6 +1092,11 @@
   resolved "https://registry.npmjs.org/@capacitor/app/-/app-4.1.1.tgz"
   integrity sha512-SJcJA1rhFQyeH6eLfUEbdKkHzAwzahJNVPNXmU88fdmXpMgM2dJGzZj1vrm6e21aQq+Z4aBVLJ2RCdj92zD7wg==
 
+"@capacitor/camera@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-4.1.4.tgz#5d019f88d1f3547b537270e35bcb96084eb48df6"
+  integrity sha512-7f4n7PlnstYsdGyxc0Kc4hIyS6csFLOjXvffm7pJsuy9pSo+kfdOPdYgGg360QwbUAmA+Yv+J1ZW1eFIwgvWrQ==
+
 "@capacitor/cli@4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@capacitor/cli/-/cli-4.7.0.tgz"
@@ -1122,6 +1127,11 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/filesystem@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/filesystem/-/filesystem-4.1.4.tgz#021ef707ca199d554042ebc85151416dec07020a"
+  integrity sha512-ivko1RNK4hq63xhMacq8D6D97N5/SAafTsrmY/pghYrG6Cl2SEY0+IgRu7V9/VWeN3FSplyUPucjUTAFQxXN5g==
+
 "@capacitor/haptics@4.1.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@capacitor/haptics/-/haptics-4.1.0.tgz"
@@ -1136,6 +1146,11 @@
   version "4.1.1"
   resolved "https://registry.npmjs.org/@capacitor/keyboard/-/keyboard-4.1.1.tgz"
   integrity sha512-fdC7u2TeG4BqwC0LnPnhOdya31C4QKdhk/8pc5lxI9X5jyYAetMCN1kEkKa7KREw4DdzXotJt27B9BXxAza6og==
+
+"@capacitor/preferences@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-4.0.2.tgz#83bee8cadb3456a4f2a89118b8351d488c20ec77"
+  integrity sha512-HgcRkMdVHSIV3TeQLZFmCaCeMWQ25wLyZZ7dA2f8Rw81Q1Nroxsi7HxTEGNqrWKSN9PNKBJD8vChr6eB2GNtZg==
 
 "@capacitor/status-bar@4.1.1":
   version "4.1.1"
@@ -1321,6 +1336,11 @@
     "@stencil/core" "^3.1.0"
     ionicons "^7.1.0"
     tslib "^2.1.0"
+
+"@ionic/pwa-elements@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@ionic/pwa-elements/-/pwa-elements-3.1.1.tgz#ae1a97260886545b3285364974674576f2b090a7"
+  integrity sha512-BoEX1pSrKn5dP4VQwaf8DweAmT4ynmpW+9f6oj/W1xLe54bmuXcUY07ziuZX1DLu50xHSYcO5qJ/dbYC/w6wgA==
 
 "@ionic/react-router@^7.0.0-rc.5":
   version "7.0.0-rc.5"
