@@ -2,6 +2,8 @@ import { IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, Ion
 import { FormEvent, useState } from "react";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
+import { TakeProfilePic } from "../user/TakeProfilePic";
+import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 
 export function Signup() {
 
@@ -81,6 +83,9 @@ export function Signup() {
                         <h2>Sign Up</h2>
                     </div>
 
+                    <TakeProfilePic />
+                    <div className={UserStyle.text_center}>Profile Picture</div>
+
                     <form onSubmit={handleSignup}>
 
                         <IonInput
@@ -127,15 +132,17 @@ export function Signup() {
                             onIonBlur={() => markTouched()}
                         ></IonInput>
 
-                        <br />
+                        {/* <br />
                         <div className={UserStyle.text_center}>Profile Picture</div>
                         <div className={UserStyle.image_container}>
-                            <img src={imgSrc} alt="" className={UserStyle.image_box} />
+                            <img id="profile_pic" src={imgSrc} alt="" className={UserStyle.image_box} />
                         </div>
-                        <input type="file" onChange={previewImg} />
+                        <input type="file" onChange={previewImg} /> */}
 
                         <IonButton type="submit" className={UserStyle.button}>Submit</IonButton>
                     </form>
+
+                    
 
                 </div>
 
