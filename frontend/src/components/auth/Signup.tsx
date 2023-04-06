@@ -2,14 +2,20 @@ import { IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, Ion
 import { FormEvent, useState } from "react";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
-import { Logo } from "../Logo";
 
 export function Signup() {
 
     const [present] = useIonToast();
     const [email, setEmail] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    // const { register, handleSubmit } = useForm();
+    const [imgSrc, setImgSrc] = useState<string>("");
+
+    function previewImg(event: any) {
+        const file = event.target.files[0];
+        const tempURL = URL.createObjectURL(file)
+        setImgSrc(tempURL);
+    }
 
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -91,6 +97,16 @@ export function Signup() {
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+                            fill="solid"
+                            label="Username"
+                            labelPlacement="floating"
+                            helperText="Enter your username"
+                            onIonInput={(event) => setUsername(`${event.detail.value!}`)}
+                            onIonBlur={() => markTouched()}
+                        ></IonInput>
+
+                        <IonInput
+                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
                             type="password"
                             fill="solid"
                             label="Password"
@@ -111,7 +127,12 @@ export function Signup() {
                             onIonBlur={() => markTouched()}
                         ></IonInput>
 
-                        {/* <input type="file" name="image" ref={register} /> */}
+                        <br />
+                        <div className={UserStyle.text_center}>Profile Picture</div>
+                        <div className={UserStyle.image_container}>
+                            <img src={imgSrc} alt="" className={UserStyle.image_box} />
+                        </div>
+                        <input type="file" onChange={previewImg} />
 
                         <IonButton type="submit" className={UserStyle.button}>Submit</IonButton>
                     </form>
