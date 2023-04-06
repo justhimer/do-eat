@@ -1,12 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { DistrictItem } from "./DistrictItem";
-import { FetchDistrictItemModel, fetchDistrictItems } from "../../api/districtAPIs";
-import districtStyle from '../scss/DistrictButton.module.scss'
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { fetchDistrictItems } from "../../api/districtAPIs";
 import { IonItem, IonList, IonSelect} from '@ionic/react';
-import { replaceDistrictSelection } from "../../redux/userDistrictSlice";
-import { Interface } from "readline";
 import { DistrictListInterface } from "../../pages/Do";
 
 

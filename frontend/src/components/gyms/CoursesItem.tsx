@@ -11,10 +11,10 @@ export function CoursesItem(props:CoursesItemInterface) {
                 <img className={courseStyle.cardThumbnail} />
                 <div className={courseStyle.cardContent}>
                     <IonCardHeader>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+                        <IonCardSubtitle>{props.franchise}</IonCardSubtitle>
+                        <IonCardTitle>{props.name}</IonCardTitle>
+                        <IonCardSubtitle>{props.gym}</IonCardSubtitle>
+                        <IonCardSubtitle>{props.duration} min</IonCardSubtitle>
                     </IonCardHeader>
                 </div>
             </div>

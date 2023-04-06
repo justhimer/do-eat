@@ -29,15 +29,6 @@ export interface MarkedDatesInterface{
   marked: boolean;
 }
 
-export interface CoursesDatePickInterface{
-  selectedDay:string;
-  changeDay: (date:string)=>void
-}
-
-export interface CoursesPickInterface{
-  selectedDay:string;
-}
-
 export interface CoursesItemInterface{
   calorise: number;
 course_id: number;
@@ -95,8 +86,8 @@ const DoTab: React.FC = () => {
     } else if (pageNumber == 2) {
       setDisplayPage(
         <>
-        <CoursesDatePick selectedDay={singleDate} changeDay={setSingleDate}/>
-        <CoursesPick selectedDay={singleDate}/>
+        <CoursesDatePick/>
+        <CoursesPick/>
         </>
       )
     } else if (pageNumber == 3) {

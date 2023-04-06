@@ -30,28 +30,35 @@ export class CourseSchedulesController {
   @Post('users/onDay')
   async coursesOnDay(@Body() diu: CourseSchedules){
     const test =  await this.courseSchedulesService.someCoursesTimed(diu.gyms,diu.time)
-    let newArray = []
-    test.forEach((elem, index)=>{
-      newArray.push(
-        {
-          course_id:elem.course_id,
-          name:elem.courses.name,
-          duration:elem.courses.duration,
-          level:elem.courses.intensity.level,
-          quota:elem.quota,
-          time:elem.time,
-          calorise:elem.courses.calorise,
-          credits:elem.courses.credits,
-          franchise:elem.courses.gyms.franchise.name,
-          gym:elem.courses.gyms.name,
-          trainer_icon:elem.trainers.icon,
-          trainer_name:elem.trainers.name,
-          course_type_id: elem.courses.course_type.id,
-          course_type_name:elem.courses.course_type.name,
-          
-        }
-      )
-    })
-    return newArray
+    if (test.length=0){
+      console.log("failed")
+      return []
+    }else{
+      let newArray = []
+      test.forEach((elem, index)=>{
+        newArray.push(
+          {
+            course_id:elem.course_id,
+            name:elem.courses.name,
+            duration:elem.courses.duration,
+            level:elem.courses.intensity.level,
+            quota:elem.quota,
+            time:elem.time,
+            calorise:elem.courses.calorise,
+            credits:elem.courses.credits,
+            franchise:elem.courses.gyms.franchise.name,
+            gym:elem.courses.gyms.name,
+            trainer_icon:elem.trainers.icon,
+            trainer_name:elem.trainers.name,
+            course_type_id: elem.courses.course_type.id,
+            course_type_name:elem.courses.course_type.name,
+            
+          }
+        )
+      })
+      console.log("newArray", newArray)
+      return newArray
+    }
+    
   }
 }

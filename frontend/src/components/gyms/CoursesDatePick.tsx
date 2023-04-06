@@ -2,15 +2,15 @@ import { IonContent} from "@ionic/react";
 import { DatePicker } from "../DatePicker/DatePicker";
 import format from "date-fns/format";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { getCoursesOnDate, getDatesWithCourses } from "../../api/coursesApi";
-import { CoursesDatePickInterface, MarkedDatesInterface } from "../../pages/Do";
 import { CoursesItem } from "./CoursesItem";
+import userDateSlice, { replaceDateSelection } from "../../redux/userDateSlice";
 
 
-export function CoursesDatePick(props: CoursesDatePickInterface) {
+export function CoursesDatePick() {
 
     //#region To Get Gyms selected by user
     const selectedGyms = useSelector((state: RootState) => state.userGym);
@@ -37,9 +37,12 @@ export function CoursesDatePick(props: CoursesDatePickInterface) {
     }
     //#endregion
 
-    const selectedDay = (val: any) => {
-        props.changeDay(format(val, "yyyy-MM-dd"))
+    const singleDate = useSelector((state:RootState)=>state.userDate.date)
+    const dispatch = useDispatch()
+
+    const selectedDay = (val: Date) => {
         console.log(val)
+        dispatch(replaceDateSelection(format(val,"yyyy-MM-dd")))
     }
 
     return <>
