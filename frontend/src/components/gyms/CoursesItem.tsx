@@ -5,7 +5,6 @@ import { flameOutline, cardOutline } from "ionicons/icons"
 import {
     format,
 } from "date-fns";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -18,16 +17,7 @@ export interface CoursesItemInterface {
 export function CoursesItem(props: CoursesItemInterface) {
     const filled = props.courseItem.filled < props.courseItem.quota
     const notify = () => {
-        toast.error('Course is full!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
+
     }
 
     return <>

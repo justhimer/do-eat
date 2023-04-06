@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { refreshGymSelection } from '../redux/userGymSlice';
 import { replaceDateSelection } from '../redux/userDateSlice';
 import { CourseDetail } from '../components/gyms/CourseDetail';
-import { ToastContainer } from 'react-toastify';
+
 
 export interface DistrictListInterface {
   replaceDistrict: (districts: number[]) => void;
@@ -106,18 +106,7 @@ const DoTab: React.FC = () => {
     } else if (pageNumber == 2) {
       setDisplayPage(
         <>
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
+
           <CoursesDatePick />
           <CoursesPick function={getPickedCourse} />
         </>

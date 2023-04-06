@@ -98,6 +98,20 @@ const App: React.FC = () => (
             <UserCourses />
           </Route>
 
+          {/* gym routes */}
+          <Route path="/do-eat/locations" exact={true}>
+
+          </Route>
+          <Route path="/do-eat/locations/courses" exact={true}>
+
+          </Route>
+          <Route path="/do-eat/locations/courses/timeslots" exact={true}>
+
+          </Route>
+          <Route path="/do-eat/locations/courses/timeslots/confirmation" exact={true}>
+
+          </Route>
+
           {/* food routes */}
           <Route path="/fooddetails/:id" component={Fooddetails}>
           </Route>
