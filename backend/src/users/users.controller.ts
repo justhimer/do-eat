@@ -10,7 +10,9 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
-  Request
+  Request,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,6 +21,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { checkPassword } from 'utils/hash';
+import IncomingForm from 'formidable/Formidable';
+import { initFormidable } from 'utils/upload';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
 
 interface UserInfoWithToken {
   id: number,
@@ -143,6 +148,50 @@ export class UsersController {
       token: token
     };
   }
+
+  @Post('image')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file, @Body() body) {
+    const fileName = file.originalname;
+    try {
+
+      const form: IncomingForm = initFormidable();
+      console.log('form: ', form);
+
+      form.parse(body, async (err, fields, files) => {
+        console.log('fields: ', fields);
+        console.log('files: ', files);
+        
+        // body = fields;
+        // // console.log({fields})
+        // console.log({ files });
+
+        // let file: File = Array.isArray(files.test123) ? files.test123[0] : files.test123;
+        // let fileName = file ? file.newFilename : undefined;
+
+        // // // Upload file to AWS S3
+        // const accessPath = await uploadToS3({
+        //   Bucket: 'alphafile',
+        //   Key: `${fileName}`,
+        //   Body: file.buffer
+        // });
+        // console.log(accessPath);
+        // res.json({ accessPath: accessPath });
+      });
+
+    } catch (e) {
+      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Post('signup')
+  async signup(@Body() createUserDto: CreateUserDto) {
+
+
+
+
+  }
+
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

@@ -11,6 +11,12 @@ export const initFormidable = (): IncomingForm => {
         filter: (part) => {
             return part.mimetype?.startsWith('image/') || false
         },
+        filename: (originalName, originalExt, part, form) => {
+            let fieldName = part.name?.substring(0, part.name.length - 1);
+            let timestamp = Date.now();
+            let ext = part.mimetype?.split("/").pop();
+            return `${fieldName}-${timestamp}.${ext}`;
+        }
     }
     const form = new formidable.IncomingForm(param)
     return form
