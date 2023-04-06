@@ -16,13 +16,12 @@ export class UserSchedulesService {
 
   async getRemainingSlots(exercise_id: number) {
     let quota = await this.courseScheduleService.quotaForThisCourse(exercise_id)
-    console.log("quota", quota)
+
     let filledSlots = (await this.prisma.userSchedule.aggregate({
       _count: { course_schedule_id: true },
       where: { course_schedule_id: exercise_id }
     }))._count.course_schedule_id
-    console.log("filledSlots", filledSlots)
-    console.log("remaining slots:", quota - filledSlots)
+
     return (quota - filledSlots)
   }
 
@@ -34,8 +33,7 @@ export class UserSchedulesService {
       }
     })
 
-    console.log("foundUser.id", foundUser)
-    console.log("foundUser.id test", foundUser ? true : false)
+
     return foundUser ? true : false
   }
 

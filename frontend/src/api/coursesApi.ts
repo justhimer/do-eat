@@ -14,7 +14,7 @@ export async function getDatesWithCourses(gyms:number[]) {
 }
 
 export async function getCoursesOnDate(time:string,gyms:number[]) {
-    console.log('getting courses on date')
+
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/onDay`, {
         method: 'POST',
@@ -24,6 +24,6 @@ export async function getCoursesOnDate(time:string,gyms:number[]) {
         body: JSON.stringify({time:time,gyms:gyms})
     })
     const result = await res.json();
-    console.log("result at courses on date: ", result)
+
     return result
 }

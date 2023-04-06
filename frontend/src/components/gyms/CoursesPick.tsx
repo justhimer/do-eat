@@ -1,14 +1,20 @@
-import { IonCard, IonCardContent, IonContent, IonList } from "@ionic/react";
-import { CoursesItem } from "./CoursesItem";
+import { IonContent} from "@ionic/react";
+import { CoursesItem} from "./CoursesItem";
 import courseStyle from '../../scss/GymCourses.module.scss'
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCoursesOnDate } from "../../api/coursesApi";
-import { CoursesItemInterface } from "../../pages/Do";
+import { CoursesInterface } from "../../pages/Do";
 
-export function CoursesPick() {
+
+interface GetCourseInterface{
+    function: (courses:CoursesInterface)=>void
+}
+
+export function CoursesPick(props: GetCourseInterface){
+    console.log("CoursePick Rendering")
     //#region To Get Gyms selected by user
     const selectedGyms = useSelector((state: RootState) => state.userGym);
     // to mutate values of selected gym from Array<{name,id}> to Array<id>
@@ -30,9 +36,8 @@ export function CoursesPick() {
         queryFn: () => getCoursesOnDate(singleDate, gymArray())
     })
     useEffect(() => {
-        console.log(gymArray())
+        
         setCoursesOnDay(fetchedCourses.data)
-        console.log("fetchedCourses.data ", fetchedCourses.data)
     },[fetchedCourses.data])
    
     //#endregion
@@ -40,7 +45,7 @@ export function CoursesPick() {
     return <>
         <IonContent className={courseStyle.courseContainer}>
             {
-                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesItemInterface, index:number)=><CoursesItem key={index} {...course}/>) : <div>"No Courses Today"</div>
+                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} courseItem={course} pick_function={props.function} />) : <div>"No Courses Today"</div>
             }
             {/* <CoursesItem /> */}
         </IonContent>

@@ -3,12 +3,14 @@ import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import express from 'express';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(), {
     cors: true,
     logger: ['error', 'warn', 'log'] // <--- Add this line in options object
-});
+  });
 
   // apply cors to avoid crossed origins
   app.enableCors();
@@ -37,5 +39,8 @@ async function bootstrap() {
   /*** Port Listening ***/
   /**********************/
   await app.listen(3000);
+
+
+
 }
 bootstrap();

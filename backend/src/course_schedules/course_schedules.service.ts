@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { addDays } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import { PrismaService } from 'nestjs-prisma';
+import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
 
 @Injectable()
 export class CourseSchedulesService {
@@ -39,9 +40,18 @@ export class CourseSchedulesService {
 
     }
 
+    async getRemainingSlots(exercise_id: number) {
+        let quota = await this.quotaForThisCourse(exercise_id)
+    
+        let filledSlots = (await this.prisma.userSchedule.aggregate({
+          _count: { course_schedule_id: true },
+          where: { course_schedule_id: exercise_id }
+        }))._count.course_schedule_id
+    
+        return (quota - filledSlots)
+      }
+
     async someCoursesTimed(listGyms: Array<number>,time: string) {
-        console.log("gte: ", zonedTimeToUtc(time,"Asia/Hong_Kong"))
-        console.log("lt: ", addDays(zonedTimeToUtc(time,"Asia/Hong_Kong"),1))
         
         const data = await this.prisma.courseSchedules.findMany({
             orderBy:[
@@ -63,9 +73,15 @@ export class CourseSchedulesService {
                 ]
             },
             select:{
+                id:true,
                 course_id:true,
                 quota:true,
                 time:true,
+                _count:{
+                    select:{
+                        userSchedule:true
+                    }
+                },
                 trainers:{
                     select: {
                         name:true,
@@ -100,7 +116,37 @@ export class CourseSchedulesService {
                 }
             }
         })
-        return data
+
+        if (data.length == 0){
+            return data
+          }else{
+            let newArray = []
+            
+            data.map(async elem=>{
+                newArray.push(
+                        {
+                          this_id:elem.id,
+                          filled: elem._count.userSchedule,
+                          course_id:elem.course_id,
+                          name:elem.courses.name,
+                          duration:elem.courses.duration,
+                          level:elem.courses.intensity.level,
+                          quota:elem.quota,
+                          time:elem.time,
+                          calorise:elem.courses.calorise,
+                          credits:elem.courses.credits,
+                          franchise:elem.courses.gyms.franchise.name,
+                          gym:elem.courses.gyms.name,
+                          trainer_icon:elem.trainers.icon,
+                          trainer_name:elem.trainers.name,
+                          course_type_id: elem.courses.course_type.id,
+                          course_type_name:elem.courses.course_type.name,
+                          
+                        }
+                      )
+            })
+            return newArray
+          }
     }
 
     async getDatesWithCourses(listGyms: Array<number>){
@@ -126,7 +172,6 @@ export class CourseSchedulesService {
                 ]
             }
         })
-        console.log("date: ",data)
         return data
     }
 }

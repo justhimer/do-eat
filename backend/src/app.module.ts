@@ -14,9 +14,17 @@ import { TrainersModule } from './trainers/trainers.module';
 import { CourseSchedulesModule } from './course_schedules/course_schedules.module';
 import { CoursesModule } from './courses/courses.module';
 import { UserSchedulesModule } from './user_schedules/user_schedules.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { FileModule } from './file/file.module';
+
+
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname,"public")
+    }),
     PrismaModule.forRoot(),
     UsersModule,
     FoodsModule,
@@ -30,6 +38,7 @@ import { UserSchedulesModule } from './user_schedules/user_schedules.module';
     CourseSchedulesModule,
     CoursesModule,
     UserSchedulesModule,
+    FileModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],

@@ -15,7 +15,6 @@ export function DoButton(props:DoButtonInterface){
         }else{
             setButtonDisplay(
             <IonContent>
-                <div onClick={props.upPage}>Next</div>
                 <div onClick={props.downPage}>Back</div>
             </IonContent>
             )

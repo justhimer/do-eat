@@ -10,10 +10,14 @@ import {
     lastDayOfMonth,
     startOfMonth
 } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import userDateSlice, { replaceDateSelection } from "../../redux/userDateSlice";
 
 
-const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor, labelFormat, marked}) => {
-    const [selectedDate, setSelectedDate] = useState(null);
+const DateView = ({startDate, lastDate, selectDate, primaryColor, labelFormat, marked}) => {
+    const singleDate = useSelector((state) => state.userDate.date)
+    const dispatch = useDispatch()
+    const [selectedDate, setSelectedDate] = useState(new Date(singleDate));
     const firstSection = {marginLeft: '40px'};
     const selectedStyle = {fontWeight:"bold",width:"45px",height:"45px",borderRadius:"50%",border:`2px solid ${primaryColor}`,color:primaryColor};
     const labelColor = {color: primaryColor};
@@ -48,8 +52,6 @@ const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor
 
         const months = [];
         let days = [];
-
-        // const styleItemMarked = marked ? styles.dateDayItemMarked : styles.dateDayItem;
 
         for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
             let start, end;
@@ -90,39 +92,27 @@ const DateView = ({startDate, lastDate, selectDate, getSelectedDay, primaryColor
 
         }
 
-        return <div id={"container"} className={dateStyles.dateListScrollable}>{months}</div>;
+        return <div id={"datePickContainer"} className={dateStyles.dateListScrollable}>{months}</div>;
     }
 
     const onDateClick = day => {
         setSelectedDate(day);
-        if (getSelectedDay) {
-            getSelectedDay(day);
-        }
+        dispatch(replaceDateSelection(format(day, "yyyy-MM-dd")))
     };
 
-    useEffect(() => {
-        if (getSelectedDay) {
-            if (selectDate) {
-                getSelectedDay(selectDate);
-            } else {
-                getSelectedDay(startDate);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (selectDate) {
-            if (!isSameDay(selectedDate, selectDate)) {
-                setSelectedDate(selectDate);
-                setTimeout(() => {
-                    let view = document.getElementById('selected');
-                    if (view) {
-                        view.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
-                    }
-                }, 20);
-            }
-        }
-    }, [selectDate]);
+    // useEffect(() => {
+    //     if (selectDate) {
+    //         if (!isSameDay(selectedDate, selectDate)) {
+    //             setSelectedDate(selectDate);
+    //             setTimeout(() => {
+    //                 let view = document.getElementById('selected');
+    //                 if (view) {
+    //                     view.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
+    //                 }
+    //             }, 20);
+    //         }
+    //     }
+    // }, [selectDate]);
 
     return <React.Fragment>{renderDays()}</React.Fragment>
 }

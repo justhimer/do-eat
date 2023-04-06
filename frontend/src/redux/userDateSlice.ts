@@ -12,7 +12,6 @@ const userDateSlice = createSlice({
     initialState,
     reducers: {
         replaceDateSelection: (state, action:PayloadAction<string>) =>{
-            console.log("state change at user date")
             state.date = format(new Date(action.payload), "yyyy-MM-dd")
         },
     },

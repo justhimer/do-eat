@@ -29,10 +29,13 @@ const userGymSlice = createSlice({
         removeGymSelection: (state, action: PayloadAction<number>) => {
             const newState = state.findIndex((elem) => { return elem.id === action.payload })
                 state.splice(newState,1)
+        },
+        refreshGymSelection: (state)=>{
+            state.length = 0
         }
     },
 })
 
-export const { toggleGymSelection, removeGymSelection } = userGymSlice.actions
+export const { toggleGymSelection, removeGymSelection , refreshGymSelection } = userGymSlice.actions
 
 export default userGymSlice.reducer;

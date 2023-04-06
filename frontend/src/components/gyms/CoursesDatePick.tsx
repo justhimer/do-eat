@@ -1,16 +1,18 @@
-import { IonContent} from "@ionic/react";
-import { DatePicker } from "../DatePicker/DatePicker";
-import format from "date-fns/format";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { getCoursesOnDate, getDatesWithCourses } from "../../api/coursesApi";
-import { CoursesItem } from "./CoursesItem";
-import userDateSlice, { replaceDateSelection } from "../../redux/userDateSlice";
+import { getDatesWithCourses } from "../../api/coursesApi";
+import { addDays } from "date-fns";
+import dateStyles from "../DatePicker/DatePicker.module.scss"
+import { DateView } from "../DatePicker/Dateview";
 
 
 export function CoursesDatePick() {
+    const color = 'rgb(54, 105, 238)';
+    const startDate = new Date;
+    const numOfDays = 50
+    const labelFormat="MMMM"
+
 
     //#region To Get Gyms selected by user
     const selectedGyms = useSelector((state: RootState) => state.userGym);
@@ -37,24 +39,41 @@ export function CoursesDatePick() {
     }
     //#endregion
 
-    const singleDate = useSelector((state:RootState)=>state.userDate.date)
-    const dispatch = useDispatch()
+    const next = (event:any) => {
+        event.preventDefault();
+        const e = document.getElementById('datePickContainer');
+        if (e){
+            const width = e.getBoundingClientRect().width;
+            e!.scrollLeft += width - 60;
+        }
 
-    const selectedDay = (val: Date) => {
-        console.log(val)
-        dispatch(replaceDateSelection(format(val,"yyyy-MM-dd")))
-    }
+    };
+
+    const prev = (event:any) => {
+        event.preventDefault();
+        const e = document.getElementById('datePickContainer');
+        if (e){
+            const width = e.getBoundingClientRect().width
+            e!.scrollLeft -= width - 60;
+        }
+    };
+
+    const primaryColor = color
+    const lastDate = addDays(startDate, numOfDays || 90);
+
+    let buttonzIndex = { zIndex: 2 };
+    let buttonStyle = { background: primaryColor };
 
     return <>
-        <DatePicker
-            getSelectedDay={selectedDay}
-            startDate={new Date}
-            numOfDays={14}
-            selectDate={new Date}
-            labelFormat={"MMMM"}
-            color={"#374e8c"}
-            marked={marked()}
-        />
-        
+        <div className={dateStyles.Container}>
+            <DateView primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} selectDate={startDate} marked={marked()} labelFormat={labelFormat}/>
+        </div>
+        <div className={dateStyles.buttonWrapper} style={buttonzIndex}>
+            <button className={dateStyles.button} style={buttonStyle} onClick={prev}>&lt;</button>
+        </div>
+        <div className={dateStyles.buttonWrapper} style={buttonzIndex}>
+            <button className={dateStyles.button} style={buttonStyle} onClick={next}>&gt;</button>
+        </div>
+
     </>
 }
