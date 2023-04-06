@@ -49,6 +49,8 @@ import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserCourses } from './components/user/UserCourses';
 import { Signup } from './components/auth/Signup';
+import { GymCourses } from './components/gyms/superstructure/GymCourses';
+import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
 
 setupIonicReact();
 
@@ -99,16 +101,10 @@ const App: React.FC = () => (
           </Route>
 
           {/* gym routes */}
-          <Route path="/do-eat/locations" exact={true}>
+          <Route path="/do-tab/courses" exact={true} component={GymCourses}>
 
           </Route>
-          <Route path="/do-eat/locations/courses" exact={true}>
-
-          </Route>
-          <Route path="/do-eat/locations/courses/timeslots" exact={true}>
-
-          </Route>
-          <Route path="/do-eat/locations/courses/timeslots/confirmation" exact={true}>
+          <Route path="/do-tab/confirmation" exact={true} component={GymConfirmation}>
 
           </Route>
 

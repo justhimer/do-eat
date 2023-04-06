@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotAcceptableException, BadRequestException, UnauthorizedException, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotAcceptableException, BadRequestException, UnauthorizedException, Request, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { UserSchedulesService } from './user_schedules.service';
 import { CreateUserScheduleDto } from './dto/create-user_schedule.dto';
 import { UpdateUserScheduleDto } from './dto/update-user_schedule.dto';
@@ -8,7 +8,7 @@ import { CoursesService } from 'src/courses/courses.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('usersSchedules') // to categorize in swagger
+@ApiTags('userSchedules') // to categorize in swagger
 @Controller('userSchedules')
 export class UserSchedulesController {
   constructor(
@@ -23,16 +23,20 @@ export class UserSchedulesController {
       return await this.userSchedulesService.getRemainingSlots(course)
     }
 
-    @Post('join/:course/:id')
-    async join(@Param('course', ParseIntPipe) course: number, @Param('id', ParseIntPipe) id: number) {
-      // check to see if already registered to course
+    @UseGuards(AuthGuard('jwt'))
+    @Post('join/:course/')
+    async join(@Param('course', ParseIntPipe) course: number, @Request() req) {
+      const id = req.user.id
+      console.log('register to course')
+      try {
+        // check to see if already registered to course
       if (await this.userSchedulesService.findUserinCourse(id, course)) {
-        throw new NotAcceptableException('Already registered to course', { cause: new Error() });
+        throw new HttpException('Already registered to course', HttpStatus.BAD_REQUEST)
         return;
       }
       // check to see if there are any remaining slots for course, returns error 400 if filled
       if (await this.userSchedulesService.getRemainingSlots(course) <= 0) {
-        throw new BadRequestException('No remaining slots left in course', { cause: new Error() });
+        throw new HttpException('No remaining slots', HttpStatus.BAD_REQUEST)
         return;
       }
   
@@ -50,14 +54,19 @@ export class UserSchedulesController {
   
         //if not enough credits, throw error
         if (courseCredit > userCredit) {
-          throw new BadRequestException('Not Enough Credits', { cause: new Error() })
+          throw new HttpException({status:HttpStatus.BAD_REQUEST,error:'Not Enough Credits'},HttpStatus.BAD_REQUEST)
+          throw new HttpException('Not Enough Credits', HttpStatus.BAD_REQUEST)
           return
         }
   
         // returns message course subscribed if ok
         return await this.userSchedulesService.addCourse(id, course)
       }
-    }
+      } catch (error) {
+        console.log(error)
+      }
+      
+    } 
   
     @UseGuards(AuthGuard('jwt'))
     @Post('cancel/:registeredCourse/')

@@ -3,18 +3,17 @@ import { CoursesItem} from "./CoursesItem";
 import courseStyle from '../../scss/GymCourses.module.scss'
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCoursesOnDate } from "../../api/coursesApi";
-import { CoursesInterface } from "../../pages/Do";
+import { CoursesInterface } from "../../redux/userCourseSlice";
 
 
-interface GetCourseInterface{
-    function: (courses:CoursesInterface)=>void
-}
 
-export function CoursesPick(props: GetCourseInterface){
+
+export function CoursesPick(){
     console.log("CoursePick Rendering")
+    
     //#region To Get Gyms selected by user
     const selectedGyms = useSelector((state: RootState) => state.userGym);
     // to mutate values of selected gym from Array<{name,id}> to Array<id>
@@ -36,7 +35,7 @@ export function CoursesPick(props: GetCourseInterface){
         queryFn: () => getCoursesOnDate(singleDate, gymArray())
     })
     useEffect(() => {
-        
+        console.log('fetching courses')
         setCoursesOnDay(fetchedCourses.data)
     },[fetchedCourses.data])
    
@@ -45,7 +44,7 @@ export function CoursesPick(props: GetCourseInterface){
     return <>
         <IonContent className={courseStyle.courseContainer}>
             {
-                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} courseItem={course} pick_function={props.function} />) : <div>"No Courses Today"</div>
+                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} {...course}/>) : <div>"No Courses Today"</div>
             }
             {/* <CoursesItem /> */}
         </IonContent>

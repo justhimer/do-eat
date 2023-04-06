@@ -38,5 +38,19 @@ export async function getUserInfo() {
         },
     });
     const result = await res.json();
+    console.log("getUserInfo",res)
+    return result;
+}
+
+export async function getUserSubscribed(id:number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    console.log("getUserSubscribed",res)
+    const result = await res.json();
     return result;
 }
