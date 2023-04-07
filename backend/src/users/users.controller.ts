@@ -10,7 +10,9 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
-  Request
+  Request,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,6 +21,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { checkPassword } from 'utils/hash';
+import IncomingForm from 'formidable/Formidable';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
+import { uploadToS3 } from 'utils/aws-s3-upload';
 
 interface UserInfoWithToken {
   id: number,
@@ -143,6 +148,40 @@ export class UsersController {
       token: token
     };
   }
+
+  @Post('file')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file) {
+    
+    console.log(file);
+
+    // change filename
+    let fieldName = file.originalname?.split(".")[0].substring(0, file.originalname.length - 1);
+    let timestamp = Date.now();
+    let ext = file.mimetype?.split("/").pop();
+    const fileName = `${fieldName}-${timestamp}.${ext}`;
+
+    try {
+
+      const accessPath = await uploadToS3({
+        Bucket: 'doeat',
+        Key: `${fileName}`,
+        // ContentType: `${file.mimetype}`,
+        Body: file.buffer
+      });
+
+      return { accessPath: accessPath }
+
+    } catch (e) {
+      throw new HttpException(`Server Error: ${e}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Post('signup')
+  async signup(@Body() createUserDto: CreateUserDto) {
+
+  }
+
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

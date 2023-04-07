@@ -1,9 +1,9 @@
 import { IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
 import { FormEvent, useState } from "react";
+import { uploadImage } from "../../api/userAPIs";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { TakeProfilePic } from "../user/TakeProfilePic";
-import { usePhotoGallery } from '../../hooks/usePhotoGallery';
 
 export function Signup() {
 
@@ -11,16 +11,10 @@ export function Signup() {
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [imgSrc, setImgSrc] = useState<string>("");
-
-    function previewImg(event: any) {
-        const file = event.target.files[0];
-        const tempURL = URL.createObjectURL(file)
-        setImgSrc(tempURL);
-    }
 
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        await uploadImage(event);
         present({
             message: 'User Sign-up Success',
             duration: 1500,
@@ -141,8 +135,6 @@ export function Signup() {
 
                         <IonButton type="submit" className={UserStyle.button}>Submit</IonButton>
                     </form>
-
-                    
 
                 </div>
 
