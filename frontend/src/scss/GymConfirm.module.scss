@@ -67,3 +67,43 @@
     display: block;
     margin: 1.5rem 0;
 }
+
+.popup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menu{
+    padding: 10px;
+    height: 40%;
+    width: 80%;
+    background-color: rgb(229, 221, 209, 1);
+    border-radius: 5%;
+    box-shadow: 0 3px 4px 2px #5C4033;
+    position: relative;
+    display: block;
+}
+
+.menuBlock{
+    padding: 10px;
+    text-align: center;
+    width: auto;
+    min-height: 20%;
+    color: black;
+}
+.menuBottom{
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    min-height: 20%;
+    color: black;
+    margin-left:auto;
+    margin-right: auto;
+}

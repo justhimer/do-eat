@@ -14,15 +14,15 @@ export function GymCourses() {
         <IonPage >
             <IonHeader >
                 <IonToolbar >
-                <IonNavLink routerDirection="back" slot="start">
+                    <IonNavLink routerDirection="back" slot="start">
                         <IonBackButton></IonBackButton>
                     </IonNavLink>
                     <IonTitle>Do "When"</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-            <CoursesDatePick />
-            <CoursesPick />
+                <CoursesDatePick />
+                <CoursesPick />
             </IonContent>
         </IonPage >
     )

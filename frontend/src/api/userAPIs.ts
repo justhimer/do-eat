@@ -39,9 +39,13 @@ export async function getUserInfo() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    const result = await res.json();
-    console.log("getUserInfo",res)
-    return result;
+    if (res.ok){
+        console.log(res)
+        const result = await res.json();
+        return result;
+    }else{
+        throw new Error
+    }
 }
 
 export async function getUserSubscribed(id:number) {
@@ -52,22 +56,26 @@ export async function getUserSubscribed(id:number) {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    console.log("getUserSubscribed",res)
-    const result = await res.json();
-    return result;
+    if (res.ok){
+        const result = await res.json();
+        return result;
+    }else{
+        throw new Error
+    }
 }
 
 export async function uploadImage(event: FormEvent<HTMLFormElement>) {
 
     const form = event.target;
+    if (form){
+        const formData = new FormData(form as HTMLFormElement);
 
-    const formData = new FormData(form);
-
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/file`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify({ formData })
-    })
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/file`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({ formData })
+        })
+    }  
 }

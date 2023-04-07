@@ -11,9 +11,7 @@ import { CoursesInterface } from "../../redux/userCourseSlice";
 
 
 
-export function CoursesPick(){
-    console.log("CoursePick Rendering")
-    
+export function CoursesPick(){    
     //#region To Get Gyms selected by user
     const selectedGyms = useSelector((state: RootState) => state.userGym);
     // to mutate values of selected gym from Array<{name,id}> to Array<id>

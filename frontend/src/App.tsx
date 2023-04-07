@@ -115,12 +115,12 @@ const App: React.FC = () => (
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom" className={TabStyle.tab_bar}>
-          <IonTabButton tab="home-tab" href="/home-tab">
+          <IonTabButton tab="home-tab" href="/home-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="do-tab" href="/do-tab">
+          <IonTabButton tab="do-tab" href="/do-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
@@ -134,12 +134,12 @@ const App: React.FC = () => (
             </IonFab>
           </IonTabButton>
 
-          <IonTabButton tab="eat-tab" href="/eat-tab">
+          <IonTabButton tab="eat-tab" href="/eat-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="user-tab" href="/user-tab">
+          <IonTabButton tab="user-tab" href="/user-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={accessibilityOutline} />
             <IonLabel>User</IonLabel>
           </IonTabButton>
