@@ -65,7 +65,7 @@ export function DoTab() {
           </IonSegmentButton>
         </IonSegment>
         <DistrictList replaceDistrict={selectingDistrict} />
-        {mapView? <GoogleMapComp /> : <SelectedGymsDisplay selectedDistricts={selectedDistrict}/>}
+        {mapView? <GoogleMapComp selectedDistricts={selectedDistrict}/> : <SelectedGymsDisplay selectedDistricts={selectedDistrict}/>}
         <IonRow>
           <IonCol>
             <IonButton onClick={(e) => {

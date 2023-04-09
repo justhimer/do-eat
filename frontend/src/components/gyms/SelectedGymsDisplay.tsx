@@ -31,18 +31,19 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
         } else {
             setAvailableGyms(gyms.data);
         }
-    }, [gyms]);
+    }, [gyms.data]);
 
 
     return (
+        <>
+        {selectedGyms.length > 0 &&
+                    selectedGyms.map((i: SelectedGymInterface, index) => (
+                        <GymChip key={index} id={i.id} name={i.name} />
+                    ))}
         <IonCard>
             <IonCardHeader>
                 <IonCardTitle>Available Gyms</IonCardTitle>
                 <IonCardSubtitle>Selected Locations: {selectedGyms.length+"/3"}</IonCardSubtitle>
-                {selectedGyms.length > 0 &&
-                    selectedGyms.map((i: SelectedGymInterface, index) => (
-                        <GymChip key={index} id={i.id} name={i.name} />
-                    ))}
             </IonCardHeader>
             <IonCardContent>
                 {gyms.isLoading ? (
@@ -63,6 +64,7 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
                 )}
             </IonCardContent>
         </IonCard>
+        </>
     );
 
 }
