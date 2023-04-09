@@ -58,7 +58,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return "course subscribed"
+      return {message:"course subscribed"}
     } catch (error) {
       console.log(error);
       return error
@@ -84,7 +84,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return "course subscribed"
+      return {message:"course subscribed"}
     } catch (error) {
       console.log(error);
       return error

@@ -6,6 +6,7 @@ import {
   IonFabButton,
   IonIcon,
   IonLabel,
+  IonRouterLink,
   IonRouterOutlet,
   IonTab,
   IonTabBar,
@@ -68,9 +69,7 @@ const App: React.FC = () => (
           <Route exact path="/home-tab">
             <HomeTab />
           </Route>
-          <Route exact path="/do-tab">
-            <DoTab />
-          </Route>
+          <Route exact path="/do-tab/" component={DoTab}/>
           <Route path="/eat-tab">
             <EatTab />
           </Route>
@@ -101,12 +100,11 @@ const App: React.FC = () => (
           </Route>
 
           {/* gym routes */}
-          <Route path="/do-tab/courses" exact={true} component={GymCourses}>
+          <Route exact path="/test" component={GymCourses}>
+            </Route>
+            <Route exact path="/test2" component={GymConfirmation}>
+              </Route>
 
-          </Route>
-          <Route path="/do-tab/confirmation" exact={true} component={GymConfirmation}>
-
-          </Route>
 
           {/* food routes */}
           <Route path="/fooddetails/:id" component={Fooddetails}>
@@ -124,6 +122,7 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
+
 
           {/* invisible button for applying QR code css */}
           <IonTabButton disabled={false}>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { gymAll, gymSome } from '../../api/gymAPIs';
 import { SoloGym } from './SoloGym';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonChip } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonChip, useIonToast } from '@ionic/react';
 import { GymChip, GymChipInterface } from './GymChip';
 import { SelectedGymInterface } from '../../redux/userGymSlice';
 import { SelectedGymDisplayInterface } from '../../pages/Do';
@@ -32,6 +32,7 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
             setAvailableGyms(gyms.data);
         }
     }, [gyms]);
+
 
     return (
         <IonCard>

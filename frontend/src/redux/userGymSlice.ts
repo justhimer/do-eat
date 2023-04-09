@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+
 export interface SelectedGymInterface {
     id: number
     name: string
@@ -20,6 +21,7 @@ const userGymSlice = createSlice({
                 if (state.length < 3) {
                     const newState = [...state, action.payload]
                     state.push(action.payload)
+
                 }else{
                     console.log('error more than 3 gyms selected')
                 }

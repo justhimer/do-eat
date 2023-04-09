@@ -32,6 +32,7 @@ export async function facebookLogin(code: string) {
 }
 
 export async function getUserInfo() {
+    console.log("getting user info at userAPI")
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
         method: "GET",
         headers: {
@@ -40,7 +41,6 @@ export async function getUserInfo() {
         },
     });
     if (res.ok){
-        console.log(res)
         const result = await res.json();
         return result;
     }else{
@@ -48,8 +48,8 @@ export async function getUserInfo() {
     }
 }
 
-export async function getUserSubscribed(id:number) {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/${id}`, {
+export async function getUserSubscribed() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/`, {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',

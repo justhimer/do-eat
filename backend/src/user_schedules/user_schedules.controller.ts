@@ -31,12 +31,12 @@ export class UserSchedulesController {
       try {
         // check to see if already registered to course
       if (await this.userSchedulesService.findUserinCourse(id, course)) {
-        throw new HttpException('Already registered to course', HttpStatus.BAD_REQUEST)
+         return new HttpException('Already registered to course', HttpStatus.BAD_REQUEST)
         return;
       }
       // check to see if there are any remaining slots for course, returns error 400 if filled
       if (await this.userSchedulesService.getRemainingSlots(course) <= 0) {
-        throw new HttpException('No remaining slots', HttpStatus.BAD_REQUEST)
+        return new HttpException('No remaining slots', HttpStatus.BAD_REQUEST)
         return;
       }
   
@@ -54,8 +54,7 @@ export class UserSchedulesController {
   
         //if not enough credits, throw error
         if (courseCredit > userCredit) {
-          throw new HttpException({status:HttpStatus.BAD_REQUEST,error:'Not Enough Credits'},HttpStatus.BAD_REQUEST)
-          throw new HttpException('Not Enough Credits', HttpStatus.BAD_REQUEST)
+          return new HttpException({status:HttpStatus.BAD_REQUEST,error:'Not Enough Credits'},HttpStatus.BAD_REQUEST)
           return
         }
   

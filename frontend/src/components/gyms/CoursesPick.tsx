@@ -33,7 +33,6 @@ export function CoursesPick(){
         queryFn: () => getCoursesOnDate(singleDate, gymArray())
     })
     useEffect(() => {
-        console.log('fetching courses')
         setCoursesOnDay(fetchedCourses.data)
     },[fetchedCourses.data])
    
