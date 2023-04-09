@@ -32,7 +32,7 @@ export interface MarkedDatesInterface {
 export function DoTab() {
 
   const [selectedDistrict, setSelectedDistrict] = useState([])
-  const [mapView, setMapView] = useState(true)
+  const [mapView, setMapView] = useState(false)
 
   const selectingDistrict = (e: any) => {
     if (JSON.stringify(selectedDistrict) !== JSON.stringify(e)) {
@@ -56,7 +56,7 @@ export function DoTab() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonSegment value="true" onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
+        <IonSegment value="" onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
           <IonSegmentButton value="">
             <IonLabel>List View</IonLabel>
           </IonSegmentButton>
