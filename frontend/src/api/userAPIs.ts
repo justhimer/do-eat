@@ -43,6 +43,43 @@ export async function getUserInfo() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    const result = await res.json();
-    return result;
+    if (res.ok){
+        console.log(res)
+        const result = await res.json();
+        return result;
+    }else{
+        throw new Error
+    }
+}
+
+export async function getUserSubscribed(id:number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    if (res.ok){
+        const result = await res.json();
+        return result;
+    }else{
+        throw new Error
+    }
+}
+
+export async function uploadImage(event: FormEvent<HTMLFormElement>) {
+
+    const form = event.target;
+    if (form){
+        const formData = new FormData(form as HTMLFormElement);
+
+        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/file`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({ formData })
+        })
+    }  
 }

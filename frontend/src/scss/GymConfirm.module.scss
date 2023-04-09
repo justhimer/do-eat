@@ -1,0 +1,109 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.icon_container {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+.icon {
+    width: 12rem;
+    height: auto;
+    border-radius: 50%;
+}
+
+.title {
+    font-family: 'Righteous', cursive;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #3b3836;
+    padding: 0 1rem;
+}
+
+.button {
+    height: 3rem;
+    --background: #e5ddd1;
+    --color: #3b3836;
+    --box-shadow: none;
+}
+
+.menu_list {
+    margin-top: 0.5rem;
+    border: solid 1px #e5ddd1;
+    border-radius: 8px;
+    background-color: #e5ddd1;
+}
+
+.item_last {
+    --background: #e5ddd1;
+    --border-style: none;
+}
+.item {
+    --background: #e5ddd1;
+    --border-style: none;
+    border-bottom: solid 1px #948f8d;
+}
+.itemHead{
+    --background: #e5ddd1;
+    --border-style: none;
+    border-bottom: solid 1px #948f8d;
+    text-align: center;    
+}
+
+.Low{
+    --background: green;
+}
+.Medium{
+    --background: orange;
+}
+
+.High{
+    --background: red;
+}
+
+.bigButton {
+    display: block;
+    margin: 1.5rem 0;
+}
+
+.popup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menu{
+    padding: 10px;
+    height: 40%;
+    width: 80%;
+    background-color: rgb(229, 221, 209, 1);
+    border-radius: 5%;
+    box-shadow: 0 3px 4px 2px #5C4033;
+    position: relative;
+    display: block;
+}
+
+.menuBlock{
+    padding: 10px;
+    text-align: center;
+    width: auto;
+    min-height: 20%;
+    color: black;
+}
+.menuBottom{
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    min-height: 20%;
+    color: black;
+    margin-left:auto;
+    margin-right: auto;
+}

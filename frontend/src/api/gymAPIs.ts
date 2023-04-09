@@ -39,3 +39,4 @@ export async function gymSome(districts:number[]) {
     const result = await res.json();
     return result
 }
+
