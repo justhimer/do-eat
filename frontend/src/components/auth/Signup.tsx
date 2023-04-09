@@ -1,6 +1,7 @@
 import { IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
 import { FormEvent, useState } from "react";
-import { uploadImage } from "../../api/userAPIs";
+import { uploadFile } from "../../api/fileAPIs";
+import { userSignup } from "../../api/userAPIs";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { TakeProfilePic } from "../user/TakeProfilePic";
@@ -14,7 +15,14 @@ export function Signup() {
 
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await uploadImage(event);
+        const values = {
+            icon: "",
+            email: email,
+            username: username,
+            password: password
+        }
+        await uploadFile(values.icon);
+        await userSignup();
         present({
             message: 'User Sign-up Success',
             duration: 1500,
@@ -77,10 +85,10 @@ export function Signup() {
                         <h2>Sign Up</h2>
                     </div>
 
-                    <TakeProfilePic />
-                    <div className={UserStyle.text_center}>Profile Picture</div>
-
                     <form onSubmit={handleSignup}>
+
+                        <TakeProfilePic />
+                        <div className={UserStyle.text_center}>Profile Picture</div>
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}

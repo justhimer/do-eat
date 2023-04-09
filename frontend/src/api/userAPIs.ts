@@ -18,6 +18,10 @@ export async function userLogin(email: string, password: string) {
     else { return false }
 }
 
+export async function userSignup() {
+    
+}
+
 export async function facebookLogin(code: string) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/login/facebook`, {
         method: 'POST',
@@ -41,19 +45,4 @@ export async function getUserInfo() {
     });
     const result = await res.json();
     return result;
-}
-
-export async function uploadImage(event: FormEvent<HTMLFormElement>) {
-
-    const form = event.target;
-
-    const formData = new FormData(form);
-
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/file`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify({ formData })
-    })
 }
