@@ -42,6 +42,7 @@ export function DoTab() {
   }
 
   useIonViewWillLeave(() => {
+    setMapView(false)
     console.log("left")
   })
 

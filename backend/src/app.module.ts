@@ -17,6 +17,8 @@ import { UserSchedulesModule } from './user_schedules/user_schedules.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { FileModule } from './file/file.module';
+import { StripeModule } from './stripe/stripe.module';
+import { PaymentModule } from './payment/payment.module';
 
 
 
@@ -26,6 +28,7 @@ import { FileModule } from './file/file.module';
       rootPath: join(__dirname,"public")
     }),
     PrismaModule.forRoot(),
+    StripeModule.forRoot(process.env.STRIPE_API_SECRET_KEY,{apiVersion: '2022-11-15'}),
     UsersModule,
     FoodsModule,
     FoodTypesModule,
@@ -39,6 +42,8 @@ import { FileModule } from './file/file.module';
     CoursesModule,
     UserSchedulesModule,
     FileModule,
+    StripeModule,
+    PaymentModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
