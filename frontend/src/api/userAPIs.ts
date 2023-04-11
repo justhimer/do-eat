@@ -59,6 +59,12 @@ export async function fetchProfilePic() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
+    if (res.ok) {
+        const result = await res.json();
+        return result.data;
+    } else {
+        return "./assets/user_image/default_user_icon.png";
+    }
 }
 
 export async function getUserInfo() {
@@ -70,7 +76,7 @@ export async function getUserInfo() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    if (res.ok){
+    if (res.ok) {
         const result = await res.json();
         return result;
     } else {

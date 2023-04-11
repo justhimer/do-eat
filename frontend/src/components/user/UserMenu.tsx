@@ -31,7 +31,7 @@ export function UserMenu() {
         <>
 
             <div className={UserMenuStyle.icon_container}>
-                <img src="./assets/user_image/default_user_icon.png" alt="" className={UserMenuStyle.icon} />
+                <img src={icon} alt="" className={UserMenuStyle.icon} />
             </div>
 
             <div className={UserStyle.title}>

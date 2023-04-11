@@ -187,10 +187,11 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('prifile_pic')
-  findProfilePic(@Request() req) {
+  @Get('profile_pic')
+  async findProfilePic(@Request() req) {
     const userID = req.user.id;
-    return this.usersService.findProfilePic(userID);
+    const data = await this.usersService.findProfilePic(userID);
+    return { data: data };
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -202,14 +203,14 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/is_subscribed/')
-  findIsSubscribed(@Request() req) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+  findIsSubscribed(@Request() req) {
     return this.usersService.findIsSubscribed(req.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: number,  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(id, updateUserDto);
