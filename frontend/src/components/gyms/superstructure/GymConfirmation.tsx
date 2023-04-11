@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonToast, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
+import { IonBackButton, IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonRouter, useIonToast, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
 import ConfirmationStyle from '../../../scss/GymConfirm.module.scss'
 import { cardOutline, flameOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import { GymPopup } from "../GymPopup";
 import { queryClient } from "../../..";
 import { useHistory } from "react-router";
 import { fetchCredits } from "../../../api/creditTransactionsAPI";
+import { Router } from "workbox-routing";
 
 
 export interface GymPopupInterface {
@@ -34,8 +35,6 @@ export function GymConfirmation() {
     const history = useHistory()
     const selectedCourse = useSelector((state: RootState) => state.userCourse)
     const [popupBoolean, setPopupBoolean] = useState(false)
-    const [loadedUser, setLoadedUser] = useState<any>(null)
-    const [loadedSub, setLoadedSub] = useState<any>(null)
 
     const [date, setDate] = useState<Date>(new Date())
     useEffect(() => {
@@ -74,60 +73,26 @@ export function GymConfirmation() {
         }
     }
 
-
-
-
-    const { data: joinData, refetch: joinRefetch} = useQuery({
-        queryKey: ["joinQuery"],
-        queryFn: () => courseJoin(selectedCourse.this_id),
-        enabled: false,
-        keepPreviousData: false
-    })
-    const { data: userData, refetch: userRefetch } = useQuery({
+    const userData = useQuery({
         queryKey: ["userQuery"],
         queryFn: () => getUserInfo(),
-        enabled: false,
-        keepPreviousData: false,
     })
-    const { data: subData, refetch: subRefetch } = useQuery({
-        queryKey: ["subQuery"],
-        queryFn: () => getUserSubscribed(userData.id),
-        enabled: false,
-        keepPreviousData: false
-    })
-    const { data: creditData, refetch: creditRefetch} = useQuery({
+    const creditData = useQuery({
         queryKey: ["creditQuery"],
         queryFn: () => fetchCredits(),
-        enabled: false,
-        keepPreviousData: false
     })
 
-    useIonViewDidLeave(async () => {
-        console.log('user left')
-        setLoadedUser(null)
-        setLoadedSub(null)
+    useIonViewDidLeave(()=>{
+        userData.remove()
+        creditData.remove()
         setPopupBoolean(false)
-    })
-
-    useIonViewDidEnter(async () => {
-        console.log('user entered')
-        await userRefetch()
-        if (userData) {
-            setLoadedUser(userData)
-            await subRefetch(userData.id)
-            await creditRefetch()
-            console.log('is subbed',userData)
-            if (subData) {
-                setLoadedSub(subData)
-            }
-        }
-        return
     })
 
 
     const containerClick = async () => {
-        if (loadedUser) {
-            if (loadedSub) {
+        console.log("loadedUser", userData.data, "loading ", userData.isLoading, "PREVIOUS DATA ", userData.isPreviousData)
+        if (!userData.isLoading && !userData.isError && userData.data) {
+            if (!userData.isLoading && !userData.isError && userData.data.sub_plan_id) {
                 setPopupBoolean(true)
             } else {
                 notify('notSub')
@@ -141,10 +106,11 @@ export function GymConfirmation() {
     }
 
     const attemptJoinCourse = async()=>{
-        await joinRefetch()
-        if (joinData){
+        const joining = await courseJoin(selectedCourse.this_id)
+        
+        if (joining){
             notify('success')
-            history.replace('/do-tab')
+            history.push('/do-tab')
         }else{
             notify('error')
         }
@@ -153,7 +119,6 @@ export function GymConfirmation() {
 
     return (
         <IonPage >
-            {popupBoolean ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={loadedUser.sub_plan_id}/> : <></>}
             <IonHeader >
                 <IonToolbar >
                     <IonNavLink routerDirection="back" slot="start">
@@ -162,8 +127,8 @@ export function GymConfirmation() {
                     <IonTitle>Do "It"</IonTitle>
                 </IonToolbar>
             </IonHeader>
+            {popupBoolean ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.sub_plan_id}/> : <></>}
             <IonContent fullscreen>
-
                 <div className={ConfirmationStyle.icon_container}>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/${selectedCourse.trainer_icon}`} alt="" className={ConfirmationStyle.icon} />
                 </div>

@@ -794,7 +794,7 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 101, 1/F, 1-3 Paterson Street, Causeway Bay, Hong Kong",
-            google_position: {lat:22.2793,long:114.1827},
+            google_position: {lat:22.27847,lng:114.18320},
             franchise_id: franchise1.id,
             district_id: districts1.id,
         } 
@@ -811,7 +811,7 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 1001, 10/F, 27-29 Paterson Street, Central, Hong Kong",
-            google_position: {lat:24.6744,long:117.1298},
+            google_position: {lat: 22.286163428803967,lng: 114.15916750054413},
             franchise_id: franchise1.id,
             district_id: district2.id,
         }
@@ -828,7 +828,7 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 101, 1/F, 39 Hinnessy Road,Wan Chai, Hong Kong",
-            google_position: {lat:19.1568,long:104.3564},
+            google_position: {lat: 22.278287400747722, lng: 114.16885263948282},
             franchise_id: franchise1.id,
             district_id: district3.id,
         } 
@@ -845,7 +845,7 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 501, 5/F, 1-3 Star Road, Tsim Sha Tsui, Hong Kong",
-            google_position: {lat:19.1568,long:104.3564},
+            google_position: {lat: 22.29421531793089, lng: 114.17532064270728},
             franchise_id: franchise1.id,
             district_id: district4.id,
         } 
@@ -862,7 +862,7 @@ async function main() {
             closing_hour: 2300,
             no_close: false,
             address: "Shop 301, 3/F, 11-15 Neton Road, Monk Kok, Hong Kong",
-            google_position: {lat:19.1568,long:104.3564},
+            google_position: {lat: 22.318871736905805, lng: 114.1685881394834},
             franchise_id: franchise1.id,
             district_id: district5.id,
         } 
@@ -872,14 +872,14 @@ async function main() {
         where: { username: "247_cwb" },
         update: {},
         create: {
-            name: "247Fitness Causeway Bay",
+            name: "24/7 Fitness Causeway Bay",
             username: "247_cwb",
             password: await hashPassword('247cwb'),
             opening_hour: 1000,
             closing_hour: 2000,
             no_close: true,
             address: "Shop 101, 1/F, 1-3 LeaGarden, Causeway Bay, Hong Kong",
-            google_position: {lat:22.2793,long:114.1827},
+            google_position: {lat: 22.28020809554962, lng:114.1822722244828},
             franchise_id: franchise2.id,
             district_id: districts1.id,
         } 
@@ -1002,17 +1002,17 @@ async function main() {
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-03T09:00:00+08:00')
+                            time: new Date('2023-04-09T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-03T17:00:00+08:00')
+                            time: new Date('2023-04-09T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-04T09:00:00+08:00')
+                            time: new Date('2023-04-11T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1090,17 +1090,17 @@ async function main() {
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date('2023-04-03T09:00:00+08:00')
+                            time: new Date('2023-04-09T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date('2023-04-03T17:00:00+08:00')
+                            time: new Date('2023-04-09T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-04T09:00:00+08:00')
+                            time: new Date('2023-04-11T09:00:00+08:00')
                         }
                     ]
                 }

@@ -1,8 +1,9 @@
-import { IonButton, IonCol, IonContent, IonHeader,IonPage, IonRow, IonTitle, IonToolbar, useIonViewWillLeave } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonHeader, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonViewWillLeave } from '@ionic/react';
 import { DistrictList } from '../components/districts/DistrictList';
 import { SelectedGymsDisplay } from '../components/gyms/SelectedGymsDisplay';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
+import { GoogleMapComp } from '../components/gyms/GoogleMapComp';
 
 
 export interface DistrictListInterface {
@@ -28,13 +29,10 @@ export interface MarkedDatesInterface {
 }
 
 
-
-const DoTab: React.FC = () => {
+export function DoTab() {
 
   const [selectedDistrict, setSelectedDistrict] = useState([])
   const [mapView, setMapView] = useState(false)
-
-
 
   const selectingDistrict = (e: any) => {
     if (JSON.stringify(selectedDistrict) !== JSON.stringify(e)) {
@@ -44,6 +42,7 @@ const DoTab: React.FC = () => {
   }
 
   useIonViewWillLeave(() => {
+    setMapView(false)
     console.log("left")
   })
 
@@ -58,13 +57,21 @@ const DoTab: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonSegment value="" onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
+          <IonSegmentButton value="">
+            <IonLabel>List View</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="true">
+            <IonLabel>Map View</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
         <DistrictList replaceDistrict={selectingDistrict} />
-        <SelectedGymsDisplay selectedDistricts={selectedDistrict} />
+        {mapView? <GoogleMapComp selectedDistricts={selectedDistrict}/> : <SelectedGymsDisplay selectedDistricts={selectedDistrict}/>}
         <IonRow>
           <IonCol>
             <IonButton onClick={(e) => {
               e.preventDefault()
-              history.push('/do-tab/courses')
+              history.push('/test')
             }}>Next</IonButton>
           </IonCol>
         </IonRow>

@@ -201,9 +201,9 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/is_subscribed/:id')
-  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
-    return this.usersService.findIsSubscribed(id);
+  @Get('/is_subscribed/')
+  findIsSubscribed(@Request() req) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+    return this.usersService.findIsSubscribed(req.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

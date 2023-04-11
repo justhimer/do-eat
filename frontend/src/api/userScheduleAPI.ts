@@ -9,8 +9,14 @@ export async function courseJoin(course:number) {
         },body:JSON.stringify({})
         })
 
-        const result = await res.json()
-
-        return result
+        if (res.ok){
+            const result = await res.json()
+            if (result.status && result.status >= 300){
+                return false
+            }else{
+                return true
+            }
+        }
+        
     
 }

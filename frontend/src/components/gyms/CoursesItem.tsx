@@ -30,7 +30,7 @@ export function CoursesItem(props: CoursesInterface) {
     const changeData = ()=>{
 
         dispatch(changeSelectedCourse(props))
-        history.push('/do-tab/confirmation')
+        history.push('/test2')
     }
 
 
