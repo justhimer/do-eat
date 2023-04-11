@@ -2,6 +2,13 @@ import { FormEvent } from "react";
 
 const controllerName = "users";
 
+interface SignUpDetails {
+    email: string,
+    username: string,
+    password: string,
+    icon?: string
+}
+
 export async function userLogin(email: string, password: string) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/login`, {
         method: 'POST',
@@ -18,8 +25,17 @@ export async function userLogin(email: string, password: string) {
     else { return false }
 }
 
-export async function userSignup() {
-    
+export async function userSignup(signupDetails: SignUpDetails) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/signup`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(signupDetails)
+    })
+    const result = await res.json();
+    if (res.ok) { return result }
+    else { return false }
 }
 
 export async function facebookLogin(code: string) {
@@ -66,20 +82,4 @@ export async function getUserSubscribed(id:number) {
     }else{
         throw new Error
     }
-}
-
-export async function uploadImage(event: FormEvent<HTMLFormElement>) {
-
-    const form = event.target;
-    if (form){
-        const formData = new FormData(form as HTMLFormElement);
-
-        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/file`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({ formData })
-        })
-    }  
 }

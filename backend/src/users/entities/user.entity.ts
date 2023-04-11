@@ -13,13 +13,14 @@ export class User {
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   username: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @MinLength(8)
-  password?: string;
+  // @MinLength(8)
+  password: string;
 
   @ApiProperty({ default: 'default-icon.jpg' })
   @IsString()
