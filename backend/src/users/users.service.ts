@@ -106,6 +106,18 @@ export class UsersService {
     return result.subPlan.unlimited
   }
 
+  async findProfilePic(id:number): Promise<string> {
+    const result = await this.prisma.users.findFirst({
+      select: {
+        icon: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+    return result.icon;
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.prisma.users.update({
       where: {

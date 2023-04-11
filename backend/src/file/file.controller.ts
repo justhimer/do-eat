@@ -22,7 +22,7 @@ interface Photo {
 export class FileController {
   constructor(private readonly fileService: FileService) { }
 
-  // receiving photo in base64
+  // upload photo in base64
   @Post("/photo")
   async uploadPhoto(@Body('file') photo: Photo) {
 
@@ -50,7 +50,7 @@ export class FileController {
     }
   }
 
-  // receiving other files
+  // upload other files
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: File) {

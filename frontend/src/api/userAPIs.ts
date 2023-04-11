@@ -51,6 +51,16 @@ export async function facebookLogin(code: string) {
     else { return false }
 }
 
+export async function fetchProfilePic() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/profile_pic`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+}
+
 export async function getUserInfo() {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
         method: "GET",
@@ -59,16 +69,16 @@ export async function getUserInfo() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    if (res.ok){
+    if (res.ok) {
         console.log(res)
         const result = await res.json();
         return result;
-    }else{
+    } else {
         throw new Error
     }
 }
 
-export async function getUserSubscribed(id:number) {
+export async function getUserSubscribed(id: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/${id}`, {
         method: "GET",
         headers: {
@@ -76,10 +86,10 @@ export async function getUserSubscribed(id:number) {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    if (res.ok){
+    if (res.ok) {
         const result = await res.json();
         return result;
-    }else{
+    } else {
         throw new Error
     }
 }

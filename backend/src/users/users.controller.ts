@@ -186,10 +186,12 @@ export class UsersController {
     };
   }
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.usersService.create(createUserDto);
-  // }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('prifile_pic')
+  findProfilePic(@Request() req) {
+    const userID = req.user.id;
+    return this.usersService.findProfilePic(userID);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
