@@ -49,7 +49,7 @@ import Fooddetails from './components/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserCourses } from './components/user/UserCourses';
-import { Signup } from './components/auth/Signup';
+import { UserSignupForm } from './components/auth/UserSignupForm';
 import { GymCourses } from './components/gyms/superstructure/GymCourses';
 import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
 
@@ -85,7 +85,7 @@ const App: React.FC = () => (
             <UserTab />
           </Route>
           <Route path="/signup">
-            <Signup />
+            <UserSignupForm />
           </Route>
 
           {/* user routes */}

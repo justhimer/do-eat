@@ -1,26 +1,81 @@
-import { IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
+import { IonActionSheet, IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
 import { FormEvent, useState } from "react";
-import { uploadImage } from "../../api/userAPIs";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { uploadPhoto } from "../../api/fileAPIs";
+import { userSignup } from "../../api/userAPIs";
+import { usePhotoGallery } from "../../hooks/usePhotoGallery";
+import { gymAction } from "../../redux/gymSlice";
+import { userAction } from "../../redux/userSlice";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { TakeProfilePic } from "../user/TakeProfilePic";
 
-export function Signup() {
+export function UserSignupForm() {
 
     const [present] = useIonToast();
+    const history = useHistory();
+    const dispatch = useDispatch();
+
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [image, setImage] = useState<string | undefined>(undefined);
+
+    const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
 
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        await uploadImage(event);
-        present({
-            message: 'User Sign-up Success',
-            duration: 1500,
-            position: "top",
-            cssClass: NotificationStyle.ionicToast,
-        });
+        try {
+            event.preventDefault();
+
+            let iconUrl: string | undefined = undefined;
+
+            // upload photo
+            if (photo) {
+                const uploadedPhoto = await uploadPhoto(photo);
+                if (uploadedPhoto) {
+                    iconUrl = uploadedPhoto.accessPath;
+                }
+            }
+
+            // create account
+            const signupDetails = {
+                email: email,
+                username: username,
+                password: password,
+                icon: iconUrl
+            }
+            const data = await userSignup(signupDetails);
+
+            // auto-login
+            if (data) {
+                dispatch(gymAction.logout());
+                dispatch(userAction.login(data));
+                present({
+                    message: 'User Login Success',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+                history.push("/user-tab");
+            } else {
+                present({
+                    message: 'User Login Failed',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            }
+
+        } catch {
+            present({
+                message: 'User Sign Up Failed',
+                duration: 1500,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
+        }
+
     }
 
     /*************************************/
@@ -77,10 +132,37 @@ export function Signup() {
                         <h2>Sign Up</h2>
                     </div>
 
-                    <TakeProfilePic />
-                    <div className={UserStyle.text_center}>Profile Picture</div>
-
                     <form onSubmit={handleSignup}>
+
+                        {/* profile pic */}
+                        <TakeProfilePic photo={photo} />
+                        {/* <input type="file" src="" onChange={(e) => setImage(e.target.value)} /> */}
+                        <IonActionSheet
+                            trigger="change_profile_pic"
+                            header="Actions"
+                            buttons={[
+                                {
+                                    text: 'Take Photo',
+                                    handler: () => takePhoto(),
+                                },
+                                {
+                                    text: 'Choose from Album',
+                                    handler: () => choosePhoto(),
+                                },
+                                {
+                                    text: 'Remove Photo',
+                                    handler: () => removePhoto(),
+                                },
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel',
+                                    data: {
+                                        action: 'cancel'
+                                    }
+                                }
+                            ]}
+                        />
+                        <div className={UserStyle.text_center}>Profile Picture</div>
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
@@ -142,8 +224,4 @@ export function Signup() {
 
         </IonPage >
     )
-}
-
-function useForm(): { register: any; handleSubmit: any; } {
-    throw new Error("Function not implemented.");
 }

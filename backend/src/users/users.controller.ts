@@ -32,6 +32,12 @@ interface UserInfoWithToken {
   token: string
 }
 
+interface SignUpDetails {
+  email: string,
+  username: string,
+  password: string
+}
+
 @ApiTags('users') // to categorize in swagger
 @Controller('users')
 export class UsersController {
@@ -39,6 +45,37 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService
   ) { }
+
+  @Post('signup')
+  async signup(@Body() createUserDto: CreateUserDto) {
+
+    console.log('signing up');
+
+    console.log('createUserDto: ', createUserDto);
+
+    // check if email has been registered
+    const foundUser = await this.usersService.findByEmail(createUserDto.email);
+    if (foundUser) {
+      throw new HttpException('Email registered', HttpStatus.UNAUTHORIZED);
+    }
+
+    const newUser = await this.usersService.create(createUserDto);
+    console.log('newUser: ', newUser);
+
+    // auto-login and produce in-app token
+    const payload = {
+      id: newUser.data.id,
+      email: newUser.data.email,
+      username: newUser.data.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
 
   @Post('login')
   async emailLogin(
@@ -149,44 +186,10 @@ export class UsersController {
     };
   }
 
-  @Post('file')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file) {
-    
-    console.log(file);
-
-    // change filename
-    let fieldName = file.originalname?.split(".")[0].substring(0, file.originalname.length - 1);
-    let timestamp = Date.now();
-    let ext = file.mimetype?.split("/").pop();
-    const fileName = `${fieldName}-${timestamp}.${ext}`;
-
-    try {
-
-      const accessPath = await uploadToS3({
-        Bucket: 'doeat',
-        Key: `${fileName}`,
-        // ContentType: `${file.mimetype}`,
-        Body: file.buffer
-      });
-
-      return { accessPath: accessPath }
-
-    } catch (e) {
-      throw new HttpException(`Server Error: ${e}`, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto) {
-
-  }
-
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
+  // @Post()
+  // create(@Body() createUserDto: CreateUserDto) {
+  //   return this.usersService.create(createUserDto);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
