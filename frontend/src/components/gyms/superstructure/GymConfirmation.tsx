@@ -32,12 +32,9 @@ export interface GymPopupInterface {
 
 export function GymConfirmation() {
 
-    const router= useIonRouter()
     const history = useHistory()
     const selectedCourse = useSelector((state: RootState) => state.userCourse)
     const [popupBoolean, setPopupBoolean] = useState(false)
-    const [loadedUser, setLoadedUser] = useState<any>(null)
-    const [loadedSub, setLoadedSub] = useState<any>(null)
 
     const [date, setDate] = useState<Date>(new Date())
     useEffect(() => {
@@ -76,10 +73,6 @@ export function GymConfirmation() {
         }
     }
 
-
-
-
-
     const userData = useQuery({
         queryKey: ["userQuery"],
         queryFn: () => getUserInfo(),
@@ -89,40 +82,16 @@ export function GymConfirmation() {
         queryFn: () => fetchCredits(),
     })
 
-
-    useEffect(()=>{
-        console.log("enter")
-        // userData.refetch()
-        // subData.refetch()
-    },[])
-    
-    // useEffect(()=>{
-    //     setLoadedUser(null)
-    // },[userData.isFetching])
-
-    // useEffect(()=>{
-    //     setLoadedUser(userData.data)
-    // },[userData.isSuccess])
-
-    // useEffect(()=>{
-    //     setLoadedSub(null)
-    // },[subData.isFetching])
-
-    // useEffect(()=>{
-    //     setLoadedSub(subData.data)
-    // },[subData.isSuccess])
-
-    // useIonViewDidEnter(async () => {
-    //     console.log("entered")
-    //     userData.refetch()
-    //     subData.refetch()
-    // })
+    useIonViewDidLeave(()=>{
+        userData.remove()
+        creditData.remove()
+        setPopupBoolean(false)
+    })
 
 
     const containerClick = async () => {
         console.log("loadedUser", userData.data, "loading ", userData.isLoading, "PREVIOUS DATA ", userData.isPreviousData)
         if (!userData.isLoading && !userData.isError && userData.data) {
-            console.log(userData.data)
             if (!userData.isLoading && !userData.isError && userData.data.sub_plan_id) {
                 setPopupBoolean(true)
             } else {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, HttpCode, UseGuards, Request, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, HttpCode, UseGuards, Request, ParseIntPipe, Res, Redirect, HttpStatus } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
@@ -6,11 +6,14 @@ import { STRIPE_CLIENT } from 'src/stripe/constants';
 import Stripe from 'stripe';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { SubscriptionsService } from 'src/subscriptions/subscriptions.service';
 
 @ApiTags('stripe_payment')
 @Controller('payment')
 export class PaymentController {
-  constructor(private readonly paymentService: PaymentService,
+  constructor(
+    private readonly subscriptionsService: SubscriptionsService,
+    private readonly paymentService: PaymentService,
     @Inject(STRIPE_CLIENT) private stripe: Stripe
     ) {}
 
@@ -41,32 +44,47 @@ export class PaymentController {
   }
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @Post('web/session/:product')
   async create(@Request() req, @Param('product', ParseIntPipe) product : number) {
+
+    // const id = req.id
+    const subscriptionData = await this.subscriptionsService.findOne(product)
+    const subscribedProduced = {
+            currency:"hkd",
+            product_data:{
+              name: `${subscriptionData.name} plan`,
+              description: subscriptionData.unlimited ? `Unlimited credit plan for ${subscriptionData.duration}` : `Add ${subscriptionData.credits} credits and enjoy our services for another ${subscriptionData.duration} days` 
+            },
+            unit_amount_decimal: String(subscriptionData.fee*100)
+    }
+
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       line_items: [
-        { price_data:{
-          currency:"HKD",
-          product_data:{
-            name: "basic"
-          },
-          unit_amount_decimal:"400"
-        },
+        { price_data:subscribedProduced,
         quantity:1,
         
       }],
-      success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/test_success`,
-      cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/test_failure`,
+      success_url: `${process.env.BACKEND_HOSTNAME}/payment/web/success/1`,
+      cancel_url: `${process.env.BACKEND_HOSTNAME}/payment/web/fail/1`,
     })
     return {url:session.url}
   }
 
-  @Get()
-  findAll() {
-    return this.stripe.customers.list();
+  @Redirect()
+  @Get('web/success/:id')
+  successfulStripe() {
+    
+    return {statusCode: HttpStatus.FOUND, url:`${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`}
+  }
+
+  @Redirect()
+  @Get('web/fail/:id')
+  failedStripe() {
+
+    return {statusCode: HttpStatus.FOUND, url:`${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`}
   }
 
 }
