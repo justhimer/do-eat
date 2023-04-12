@@ -9,7 +9,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { SubscriptionsService } from 'src/subscriptions/subscriptions.service';
 import bodyParser from 'body-parser';
 
-const endpointSecret = 'whsec_45358f47d58c06865dcdc2db94ad1540ac3a893010588df8b9cc7cf68ac5abfc'
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 
 @ApiTags('stripe_payment')
@@ -76,25 +76,10 @@ export class PaymentController {
         quantity:1,
         
       }],
-      success_url: `${process.env.BACKEND_HOSTNAME}/payment/web/success/1`,
-      cancel_url: `${process.env.BACKEND_HOSTNAME}/payment/web/fail/1`,
+      success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
+      cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
     })
-    console.log("session: ", session)
     return {url:session.url}
-  }
-
-  @Redirect()
-  @Get('web/success/:id')
-  successfulStripe() {
-    
-    return {statusCode: HttpStatus.FOUND, url:`${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`}
-  }
-
-  @Redirect()
-  @Get('web/fail/:id')
-  failedStripe() {
-
-    return {statusCode: HttpStatus.FOUND, url:`${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`}
   }
 
   @Post('webhook')
@@ -112,10 +97,21 @@ export class PaymentController {
 
       // Handle the checkout.session.completed event
   if (event.type === 'checkout.session.completed') {
-    console.log('event.metadata: ', event.metadata)
     // process into database
+    console.log('event.metadata: ', event.metadata)
+    const exist = this.paymentService.check(event.id)
+    //exits api if we processed event before
+    if (exist){
+      return //no error needed as we do not need to log repeated hooks
+    }
+    const addingData = await this.paymentService.create(event.metadata.user_id,event.metadata.product,event.id)
+    if (addingData){
+      console.log('successfully created new payment record')
+      return
+    }else{
+      throw new Error("error with creating new payment record")
+    }
   }
-
     return
   }
 
