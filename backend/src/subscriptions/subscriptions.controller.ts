@@ -11,7 +11,7 @@ import { error } from 'console';
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.subscriptionsService.findAll();
   }

@@ -24,9 +24,9 @@ const UserTab: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen className={AppStyle.hero}>
-          {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
-          {isUserLoggedIn ? (<UserMenu />) : (<></>)}
-          {isGymLoggedIn ? (<Logout />) : (<></>)}
+        {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
+        {isUserLoggedIn ? (<UserMenu />) : (<></>)}
+        {isGymLoggedIn ? (<Logout remove={() => { }} />) : (<></>)}
       </IonContent>
 
     </IonPage>

@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model SubPlansTransactions {
+  id Int @id @default(autoincrement())
+  event_id String @db.VarChar(250)
+  user_id Int @db.Integer
+  sub_plans_id Int @db.Integer
+  created_at DateTime @default(now()) @db.Timestamptz
+  updated_at DateTime @updatedAt @db.Timestamptz
+  user Users @relation(fields: [user_id],references: [id])
+  subPlan SubPlans @relation(fields: [sub_plans_id],references: [id])
+  
+}
+
 model SubPlans {
   id         Int      @id @default(autoincrement())
   name       String   @unique @db.Text
@@ -20,6 +32,7 @@ model SubPlans {
   created_at DateTime @default(now()) @db.Timestamptz
   updated_at DateTime @updatedAt @db.Timestamptz
   users       Users[]
+  subPlansTransactions SubPlansTransactions[]
 }
 
 model Users {
@@ -42,6 +55,7 @@ model Users {
   UserSchedule       UserSchedule[]
   CalorieTransaction CalorieTransaction[]
   CreditTransaction  CreditTransaction[]
+  subPlanTransactions SubPlansTransactions[]
 }
 
 model FoodTypes {

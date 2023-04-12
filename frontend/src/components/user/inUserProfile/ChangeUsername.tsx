@@ -18,7 +18,7 @@ export function ChangeUsername() {
     const dispatch = useDispatch();
 
     const changeUsername = useMutation(
-        async (newUsername: string) =>
+        (newUsername: string) =>
             updateUsername(newUsername),
         {
             onSuccess: (data) => {

@@ -7,17 +7,27 @@ import { fetchProfilePic } from "../../api/userAPIs";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useEffect, useState } from "react";
 
 export function UserMenu() {
 
     const history = useHistory();
 
     const userName = useSelector((state: RootState) => state.user.username);
+    // const [isLoadedPic, setIsLoadedPic] = useState<boolean>(false);
 
-    const { data: icon, isLoading, refetch } = useQuery({
+    const { data: icon, isLoading, refetch, remove } = useQuery({
         queryKey: ["icon"],
         queryFn: fetchProfilePic,
-    });  // rename data to foods
+    });
+
+    // useEffect(() => {
+    //     console.log('icon: ', icon);
+    //     if (isLoading) {
+    //         setIsLoadedPic(true);
+    //     }
+    //     console.log('isLoadedPic: ', isLoadedPic);
+    // }, [isLoading]);
 
     const onProfile = () => {
         history.push("/user-profile");
@@ -76,7 +86,7 @@ export function UserMenu() {
                 </IonRow>
 
                 <IonRow>
-                    <IonCol><Logout /></IonCol>
+                    <IonCol><Logout remove={remove} /></IonCol>
                 </IonRow>
 
             </IonGrid>

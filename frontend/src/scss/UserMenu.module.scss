@@ -11,8 +11,9 @@
 
 .icon {
     width: 11rem;
-    height: auto;
+    height: 11rem;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .button {
@@ -61,6 +62,7 @@
     h2 {
         display: inline-block;
     }
+
     p {
         display: inline-block;
         text-align: right;
@@ -73,9 +75,11 @@
 .width_30 {
     width: 30%;
 }
+
 .width_50 {
     width: 50%;
 }
+
 .width_70 {
     width: 70%;
 }

@@ -10,7 +10,14 @@ export class SubscriptionsService {
   async findAll() {
 
     const data = await this.prisma.subPlans.findMany({
-      
+      select:{
+        id: true,
+        name: true,
+        unlimited: true,
+        credits: true,
+        fee: true,
+        duration: true
+      }
     })
     console.log('in services', data)
     return data;

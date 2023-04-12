@@ -20,7 +20,7 @@ export function ChangePassword() {
     const [newPassword, setNewPassword] = useState("");
 
     const checkPassword = useMutation(
-        async (inputPassword: string) =>
+        (inputPassword: string) =>
             validatePassword(inputPassword),
         {
             onError() {
@@ -38,7 +38,7 @@ export function ChangePassword() {
     )
 
     const changePassword = useMutation(
-        async (newPassword: string) =>
+        (newPassword: string) =>
             updatePassword(newPassword),
         {
             onSuccess: () => {

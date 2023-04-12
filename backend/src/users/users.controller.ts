@@ -48,6 +48,8 @@ export class UsersController {
 
   @Post('signup')
   async signup(@Body() createUserDto: CreateUserDto) {
+    
+    console.log('test');
 
     // check if email has been registered
     const foundUser = await this.usersService.findByEmail(createUserDto.email);

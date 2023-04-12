@@ -1,5 +1,3 @@
-import { FormEvent } from "react";
-
 const controllerName = "users";
 
 interface SignUpDetails {
@@ -35,6 +33,8 @@ export async function userSignup(signupDetails: SignUpDetails) {
         },
         body: JSON.stringify(signupDetails)
     })
+    console.log(3);
+    console.log(res.ok);
     if (res.ok) {
         const result = await res.json();
         return result;
