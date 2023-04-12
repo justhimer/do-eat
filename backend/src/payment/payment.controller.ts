@@ -78,7 +78,7 @@ export class PaymentController {
         quantity:1,
         
       }],
-      success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
+      success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/home-tab`,
       cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
     })
     
