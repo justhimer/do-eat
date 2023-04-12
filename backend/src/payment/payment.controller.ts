@@ -8,6 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { SubscriptionsService } from 'src/subscriptions/subscriptions.service';
 import bodyParser from 'body-parser';
+import { UsersService } from 'src/users/users.service';
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -18,6 +19,7 @@ export class PaymentController {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
     private readonly paymentService: PaymentService,
+    private readonly usersService: UsersService,
     @Inject(STRIPE_CLIENT) private stripe: Stripe
     ) {}
 
@@ -48,11 +50,10 @@ export class PaymentController {
   }
   }
 
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   @Post('web/session/:product')
   async create(@Request() req, @Param('product', ParseIntPipe) product : number) {
-
-    // const id = req.id
+    const id = req.id
     const subscriptionData = await this.subscriptionsService.findOne(product)
     const subscribedProduced = {
             currency:"hkd",
@@ -62,13 +63,14 @@ export class PaymentController {
             },
             unit_amount_decimal: String(subscriptionData.fee*100)
     }
+    const foundEmail = await this.usersService.returnEmail(id)
 
     const session = await this.stripe.checkout.sessions.create({
-      customer_email: 'test@gmail.com' ,
+      customer_email: foundEmail ,
       payment_method_types: ['card'],
       mode: 'payment',
       metadata: {
-        user_id: 1,
+        user_id: id,
         product: product
       },
       line_items: [

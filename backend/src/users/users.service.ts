@@ -65,6 +65,17 @@ export class UsersService {
     return foundUser;
   }
 
+  async returnEmail(user_id: number){
+    const foundEmail = await this.prisma.users.findFirst({
+      where:{id:user_id}
+    })
+    if (foundEmail){
+      return foundEmail.email
+    }else{
+      return ''
+    }
+  }
+
   // async findByUsername(username: string) {
   //   const foundUser = await this.prisma.users.findFirst({
   //     where: {
