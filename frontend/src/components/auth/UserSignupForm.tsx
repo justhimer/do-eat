@@ -28,11 +28,14 @@ export function UserSignupForm() {
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [verifyPassword, setVerifyPassword] = useState<string>("");
 
     useIonViewDidLeave(() => {
         removePhoto();
         setEmail('');
         setUsername('');
+        setPassword('');
+        setVerifyPassword('');
     })
 
     const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
@@ -40,6 +43,16 @@ export function UserSignupForm() {
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
         try {
             event.preventDefault();
+
+            if (password !== verifyPassword) {
+                present({
+                    message: 'Verify Password Again',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+                return;
+            }
 
             // upload photo
             uploadingPhoto.mutate(photo);
@@ -56,7 +69,6 @@ export function UserSignupForm() {
 
     const uploadingPhoto = useMutation(
         (photo?: UserPhoto): any => {
-            console.log(1);
             let data = undefined;
             if (photo) {
                 data = uploadPhoto(photo);
@@ -65,7 +77,6 @@ export function UserSignupForm() {
         },
         {
             onSuccess: (data: UploadedPhoto) => {
-                console.log(2);
                 let iconUrl: string | undefined = undefined;
                 if (data) {
                     iconUrl = data.accessPath;
@@ -77,7 +88,6 @@ export function UserSignupForm() {
                     password: password,
                     icon: iconUrl
                 }
-                console.log(signupDetails);
                 signingUp.mutate(signupDetails);
             }
         }
@@ -87,7 +97,6 @@ export function UserSignupForm() {
         (signupDetails: SignupDetails) => userSignup(signupDetails),
         {
             onSuccess: (data) => {
-                console.log(4);
                 if (data) {
                     dispatch(gymAction.logout());
                     dispatch(userAction.login(data));
@@ -239,24 +248,17 @@ export function UserSignupForm() {
                             label="Verify Password"
                             labelPlacement="floating"
                             helperText="Enter your password again"
-                            onIonInput={(event) => setPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
                             onIonBlur={() => markTouched()}
-                            value={password}
+                            value={verifyPassword}
                         ></IonInput>
-
-                        {/* <br />
-                        <div className={UserStyle.text_center}>Profile Picture</div>
-                        <div className={UserStyle.image_container}>
-                            <img id="profile_pic" src={imgSrc} alt="" className={UserStyle.image_box} />
-                        </div>
-                        <input type="file" onChange={previewImg} /> */}
 
                         <IonButton id="open-loading" type="submit" className={UserStyle.button}>Submit</IonButton>
                     </form>
 
                 </div>
 
-                <IonLoading isOpen={uploadingPhoto.isLoading} message="Loading..." />
+                <IonLoading isOpen={uploadingPhoto.isLoading} message="Signing Up..." />
 
             </IonContent>
 

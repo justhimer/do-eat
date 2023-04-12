@@ -21,14 +21,6 @@ export function UserMenu() {
         queryFn: fetchProfilePic,
     });
 
-    // useEffect(() => {
-    //     console.log('icon: ', icon);
-    //     if (isLoading) {
-    //         setIsLoadedPic(true);
-    //     }
-    //     console.log('isLoadedPic: ', isLoadedPic);
-    // }, [isLoading]);
-
     const onProfile = () => {
         history.push("/user-profile");
     }

@@ -45,7 +45,7 @@ model Users {
   sub_plan_id        Int?                  @db.Integer
   sub_plan_start     DateTime?             @db.Timestamptz
   sub_plan_end       DateTime?             @db.Timestamptz
-  icon               String               @default("default_icon.png") @db.Text
+  icon               String?                @db.Text
   created_at         DateTime             @default(now()) @db.Timestamptz
   updated_at         DateTime             @updatedAt @db.Timestamptz
   FavouriteFoods     FavouriteFoods[]

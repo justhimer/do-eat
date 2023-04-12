@@ -22,7 +22,6 @@ export class User {
   // @MinLength(8)
   password: string;
 
-  @ApiProperty({ default: 'default-icon.jpg' })
-  @IsString()
+  @ApiProperty()
   icon?: string;
 }

@@ -55,7 +55,6 @@ async function main() {
             email: "user1@gmail.com",
             username: "user1",
             password: await hashPassword('user1'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:2,
             sub_plan_start:new Date(),
@@ -70,7 +69,6 @@ async function main() {
             email: "user2@gmail.com",
             username: "user2",
             password: await hashPassword('user2'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
             sub_plan_start:new Date(),
@@ -85,7 +83,6 @@ async function main() {
             email: "user3@gamil.com",
             username: "user3",
             password: await hashPassword('user3'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
             sub_plan_start:new Date(),
@@ -100,7 +97,6 @@ async function main() {
             email: "user4@gmail.com",
             username: "user4",
             password: await hashPassword('user4'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 
@@ -111,7 +107,6 @@ async function main() {
             email: "user5@gmail.com",
             username: "user5",
             password: await hashPassword('user5'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 
@@ -122,7 +117,6 @@ async function main() {
             email: "user6@gmail.com",
             username: "user6",
             password: await hashPassword('user6'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 

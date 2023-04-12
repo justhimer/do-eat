@@ -33,8 +33,6 @@ export async function userSignup(signupDetails: SignUpDetails) {
         },
         body: JSON.stringify(signupDetails)
     })
-    console.log(3);
-    console.log(res.ok);
     if (res.ok) {
         const result = await res.json();
         return result;
@@ -67,7 +65,11 @@ export async function fetchProfilePic() {
     });
     if (res.ok) {
         const result = await res.json();
-        return result.data;
+        if (result.data) {
+            return result.data;
+        } else {
+            return "./assets/user_image/default_user_icon.png";
+        }
     } else {
         return "./assets/user_image/default_user_icon.png";
     }
