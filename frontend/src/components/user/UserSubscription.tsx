@@ -1,5 +1,8 @@
-import { IonBackButton, IonButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar, useIonViewWillLeave } from "@ionic/react";
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
+import { useQuery } from "@tanstack/react-query";
+import { getSubscriptionPlans } from "../../api/subscriptionsAPI";
+import { SubscriptionCard } from "./SubscriptionCard";
 
 export function UserSubscription() {
 
@@ -7,6 +10,14 @@ export function UserSubscription() {
     const subPlan = 'Basic';
     const subPlanStart = '2023-03-31 14:04:52';
     const subPlanEnd = '2023-04-30 14:04:52';
+    const subscriptionPlans = useQuery({
+        queryKey: ['subscriptionPlansQuery'],
+        queryFn: getSubscriptionPlans
+    })
+
+    useIonViewWillLeave(() => {
+        subscriptionPlans.remove()
+    })
 
     return (
         <IonPage >
@@ -45,6 +56,10 @@ export function UserSubscription() {
                         </IonLabel>
                     </IonItem>
                 </IonList>
+                <IonItem>
+                        <h5>Subscription Plans:</h5>
+                </IonItem>
+                {subscriptionPlans.data && subscriptionPlans.data.length > 0 ? subscriptionPlans.data.map((plan, index) => <SubscriptionCard key={index} {...plan} />) : <h1>Loading...</h1>}
             </IonContent>
         </IonPage >
     )
