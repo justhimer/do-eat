@@ -1,9 +1,12 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonLabel, IonList } from "@ionic/react";
 import { SubscriptionPlan } from "../../api/subscriptionsAPI";
 
+export interface SubscriptionChildCard extends SubscriptionPlan{
+    clickToModal : ()=>void
+}
 
 
-export function SubscriptionCard(props: SubscriptionPlan) {
+export function SubscriptionCard(props: SubscriptionChildCard) {
 
     return (
         <>
@@ -31,7 +34,7 @@ export function SubscriptionCard(props: SubscriptionPlan) {
                         }
 
                     </IonList>
-                    <IonButton >Action 1</IonButton>
+                    <IonButton onClick={props.clickToModal}>Action 1</IonButton>
                 </IonCardContent>
 
                 
