@@ -1,14 +1,18 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSpinner } from "@ionic/react";
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
 import { fetchProfilePic } from "../../api/userAPIs";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export function UserMenu() {
 
     const history = useHistory();
+
+    const userName = useSelector((state: RootState) => state.user.username);
 
     const { data: icon, isLoading, refetch } = useQuery({
         queryKey: ["icon"],
@@ -31,11 +35,16 @@ export function UserMenu() {
         <>
 
             <div className={UserMenuStyle.icon_container}>
-                <img src={icon} alt="" className={UserMenuStyle.icon} />
+                {isLoading ? (
+                    // <img src="./assets/user_image/loading.gif" alt="" className={UserMenuStyle.icon} />
+                    <IonSpinner></IonSpinner>
+                ) : (
+                    <img src={icon} alt="" className={UserMenuStyle.icon} />
+                )}
             </div>
 
             <div className={UserStyle.title}>
-                <h2>Harry Porter</h2>
+                <h2>{userName}</h2>
             </div>
 
             <IonGrid>

@@ -20,8 +20,10 @@ export async function userLogin(email: string, password: string) {
             password: password
         })
     })
-    const result = await res.json();
-    if (res.ok) { return result }
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    }
     else { return false }
 }
 
@@ -33,8 +35,10 @@ export async function userSignup(signupDetails: SignUpDetails) {
         },
         body: JSON.stringify(signupDetails)
     })
-    const result = await res.json();
-    if (res.ok) { return result }
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    }
     else { return false }
 }
 
@@ -46,8 +50,10 @@ export async function facebookLogin(code: string) {
         },
         body: JSON.stringify({ code })
     })
-    const result = await res.json();
-    if (res.ok) { return result }
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    }
     else { return false }
 }
 
@@ -67,7 +73,7 @@ export async function fetchProfilePic() {
     }
 }
 
-export async function getUserInfo() {
+export async function fetchUserInfo() {
     console.log("getting user info at userAPI")
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
         method: "GET",
@@ -84,8 +90,8 @@ export async function getUserInfo() {
     }
 }
 
-export async function getUserSubscribed() {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/`, {
+export async function fetchUserSubscribed() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed`, {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',
@@ -97,5 +103,53 @@ export async function getUserSubscribed() {
         return result;
     } else {
         throw new Error
+    }
+}
+
+export async function updateUsername(newUsername: string) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/username`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ username: newUsername })
+    });
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    } else { return false }
+}
+
+export async function validatePassword(inputPassword: string) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ password: inputPassword })
+    });
+    if (res.ok) {
+        const result = await res.json();
+        if (!result.isMatch) {
+            throw new Error('Incorrect Password');
+        }
+    } else {
+        throw new Error('Server Error');
+    }
+}
+
+export async function updatePassword(newPassword: string) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/password`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ password: newPassword })
+    });
+    if (!res.ok) {
+        throw new Error('Server Error');
     }
 }
