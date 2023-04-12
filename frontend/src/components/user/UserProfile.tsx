@@ -38,7 +38,7 @@ export function UserProfile() {
             </IonHeader>
             <IonContent fullscreen>
                 <IonList className={UserMenuStyle.list}>
-                    <IonItem button detail={true} className={UserMenuStyle.item}>
+                    <IonItem button detail={false} className={UserMenuStyle.item}>
                         <IonLabel className={UserMenuStyle.label}>
                             <h2 className={UserMenuStyle.width_30}>Email:</h2>
                             <p className={UserMenuStyle.width_70}>{email}</p>

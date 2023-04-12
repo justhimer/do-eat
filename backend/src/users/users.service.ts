@@ -40,17 +40,12 @@ export class UsersService {
     return user;
   }
 
-  // async findAll(): Promise<User[]> {
-  //   return await this.prisma.users.findMany({});
-  // }
-
   async findById(id: number) {
     const foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
       },
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
 
@@ -60,19 +55,8 @@ export class UsersService {
         email: email,
       },
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
-
-  // async findByUsername(username: string) {
-  //   const foundUser = await this.prisma.users.findFirst({
-  //     where: {
-  //       username: username,
-  //     },
-  //   });
-  //   // if (!foundUser) throw new NotFoundException('User not found.');
-  //   return foundUser;
-  // }
 
   async findIsSubscribed(id: number): Promise<boolean> {
     const result = await this.prisma.users.findFirst({
@@ -83,7 +67,6 @@ export class UsersService {
         id: id,
       },
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return result.subscribed;
   }
 
@@ -166,4 +149,5 @@ export class UsersService {
       },
     });
   }
+  
 }
