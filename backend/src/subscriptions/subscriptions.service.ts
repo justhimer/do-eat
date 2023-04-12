@@ -19,7 +19,6 @@ export class SubscriptionsService {
         duration: true
       }
     })
-    console.log('in services', data)
     return data;
   }
 

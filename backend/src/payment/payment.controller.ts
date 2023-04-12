@@ -52,8 +52,8 @@ export class PaymentController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('web/session/:product')
-  async create(@Request() req, @Param('product', ParseIntPipe) product : number) {
-    const id = req.id
+  async create(@Req() req, @Param('product', ParseIntPipe) product : number) {
+    const id = req.user.id
     const subscriptionData = await this.subscriptionsService.findOne(product)
     const subscribedProduced = {
             currency:"hkd",
@@ -70,8 +70,8 @@ export class PaymentController {
       payment_method_types: ['card'],
       mode: 'payment',
       metadata: {
-        user_id: id,
-        product: product
+        user_id: `${id}`,
+        product: `${product}`
       },
       line_items: [
         { price_data:subscribedProduced,
@@ -87,6 +87,8 @@ export class PaymentController {
 
   @Post('webhook')
   async stripeWebhook(@Req() req: RawBodyRequest<Request>){
+    console.log('webhook received')
+    const metadata = req.body['data']['object']['metadata']
     const raw = req.rawBody
     const sig = req.headers['stripe-signature']
     let event;
@@ -101,13 +103,12 @@ export class PaymentController {
       // Handle the checkout.session.completed event
   if (event.type === 'checkout.session.completed') {
     // process into database
-    console.log('event.metadata: ', event.metadata)
-    const exist = this.paymentService.check(event.id)
+    const exist = await this.paymentService.check(event.id)
     //exits api if we processed event before
     if (exist){
       return //no error needed as we do not need to log repeated hooks
     }
-    const addingData = await this.paymentService.create(event.metadata.user_id,event.metadata.product,event.id)
+    const addingData = await this.paymentService.create(Number(metadata.user_id),Number(metadata.product),event.id)
     if (addingData){
       console.log('successfully created new payment record')
       return
