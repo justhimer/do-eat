@@ -49,10 +49,6 @@ export class UsersController {
   @Post('signup')
   async signup(@Body() createUserDto: CreateUserDto) {
 
-    console.log('signing up');
-
-    console.log('createUserDto: ', createUserDto);
-
     // check if email has been registered
     const foundUser = await this.usersService.findByEmail(createUserDto.email);
     if (foundUser) {
@@ -60,7 +56,6 @@ export class UsersController {
     }
 
     const newUser = await this.usersService.create(createUserDto);
-    console.log('newUser: ', newUser);
 
     // auto-login and produce in-app token
     const payload = {
@@ -186,10 +181,71 @@ export class UsersController {
     };
   }
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.usersService.create(createUserDto);
-  // }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile_pic')
+  async findProfilePic(@Request() req) {
+    const userID = req.user.id;
+    const data = await this.usersService.findProfilePic(userID);
+    return { data: data };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('username')
+  async updateUsername(@Request() req, @Body('username') newUsername: string) {
+    const userID = req.user.id;
+    const user = await this.usersService.updateUsername(userID, newUsername);
+
+    // renew in-app token
+    const payload = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('password')
+  async validatePassword(@Request() req, @Body('password') inputPassword: string) {
+    const userID = req.user.id;
+
+    // check user has input username & password
+    if (!inputPassword) {
+      throw new HttpException('Invalid Input', HttpStatus.UNAUTHORIZED);
+    }
+
+    // get user's info from userService
+    let foundUser = await this.usersService.findById(userID);
+
+    // check if password matches
+    let isPasswordValid = await checkPassword(
+      inputPassword,
+      foundUser.password
+    )
+
+    return { isMatch: isPasswordValid };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('password')
+  async updatePassword(@Request() req, @Body('password') newPassword: string) {
+    try {
+      const userID = req.user.id;
+      await this.usersService.updatePassword(userID, newPassword);
+      return {
+        msg: "Password update success"
+      };
+    } catch {
+      throw new Error('Update Password Error');
+    }
+  }
+
+
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
@@ -199,15 +255,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/is_subscribed/')
-  findIsSubscribed(@Request() req) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
+  @Get('/is_subscribed')
+  findIsSubscribed(@Request() req) {
     return this.usersService.findIsSubscribed(req.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: number,  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(id, updateUserDto);

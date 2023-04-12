@@ -8,7 +8,7 @@ import { utcToZonedTime } from 'date-fns-tz'
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { courseJoin } from "../../../api/userScheduleAPI";
-import { getUserInfo, getUserSubscribed } from "../../../api/userAPIs";
+import { fetchUserInfo, fetchUserSubscribed } from "../../../api/userAPIs";
 import NotificationStyle from "../../../scss/Notification.module.scss";
 import { GymPopup } from "../GymPopup";
 import { queryClient } from "../../..";
@@ -69,20 +69,20 @@ export function GymConfirmation() {
                 presentToast('top', "Not enough credits");
                 break;
             case 'error':
-                presentToast('top','Error')
+                presentToast('top', 'Error')
         }
     }
 
     const userData = useQuery({
         queryKey: ["userQuery"],
-        queryFn: () => getUserInfo(),
+        queryFn: () => fetchUserInfo(),
     })
     const creditData = useQuery({
         queryKey: ["creditQuery"],
         queryFn: () => fetchCredits(),
     })
 
-    useIonViewDidLeave(()=>{
+    useIonViewDidLeave(() => {
         userData.remove()
         creditData.remove()
         setPopupBoolean(false)
@@ -105,13 +105,13 @@ export function GymConfirmation() {
         return
     }
 
-    const attemptJoinCourse = async()=>{
+    const attemptJoinCourse = async () => {
         const joining = await courseJoin(selectedCourse.this_id)
-        
-        if (joining){
+
+        if (joining) {
             notify('success')
             history.push('/do-tab')
-        }else{
+        } else {
             notify('error')
         }
     }
@@ -127,7 +127,7 @@ export function GymConfirmation() {
                     <IonTitle>Do "It"</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            {popupBoolean ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.sub_plan_id}/> : <></>}
+            {popupBoolean ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.sub_plan_id} /> : <></>}
             <IonContent fullscreen>
                 <div className={ConfirmationStyle.icon_container}>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/${selectedCourse.trainer_icon}`} alt="" className={ConfirmationStyle.icon} />

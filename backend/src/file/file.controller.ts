@@ -13,8 +13,8 @@ interface File {
 }
 
 interface Photo {
-  filepath: string;  // filename.jpeg
-  webviewPath?: string;  // base64 format
+  filename: string;  // filename.jpeg
+  base64?: string;  // base64 format
 }
 
 @ApiTags('file') // to categorize in swagger
@@ -22,13 +22,13 @@ interface Photo {
 export class FileController {
   constructor(private readonly fileService: FileService) { }
 
-  // receiving photo in base64
+  // upload photo in base64 format
   @Post("/photo")
   async uploadPhoto(@Body('file') photo: Photo) {
 
     // prepare data
-    const fileName = photo.filepath;
-    const buffer = Buffer.from(photo.webviewPath, "base64");
+    const fileName = photo.filename;
+    const buffer = Buffer.from(photo.base64, "base64");
 
     try {
 
@@ -50,7 +50,7 @@ export class FileController {
     }
   }
 
-  // receiving other files
+  // upload other files
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: File) {

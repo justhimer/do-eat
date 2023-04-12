@@ -81,6 +81,7 @@ export class PaymentController {
       success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
       cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`,
     })
+    
     return {url:session.url}
   }
 

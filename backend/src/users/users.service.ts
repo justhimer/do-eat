@@ -3,7 +3,6 @@ import { PrismaService } from 'nestjs-prisma';
 import { hashPassword } from '../../utils/hash';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +18,7 @@ export class UsersService {
         icon: createUserDto.icon
       },
     });
-    return { 
+    return {
       msg: 'User created',
       data: {
         id: newUser.id,
@@ -115,6 +114,49 @@ export class UsersService {
 
     console.log("findIsUnlimited: ", result.subPlan.unlimited)
     return result.subPlan.unlimited
+  }
+
+  async findProfilePic(id: number): Promise<string> {
+    const result = await this.prisma.users.findFirst({
+      select: {
+        icon: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+    return result.icon;
+  }
+
+  async updateUsername(id: number, newUsername: string) {
+
+    const result = await this.prisma.users.update({
+      select: {
+        id: true,
+        email: true,
+        username: true,
+      },
+      where: {
+        id: id,
+      },
+      data: {
+        username: newUsername,
+      },
+    });
+
+    return result;
+  }
+
+  async updatePassword(id: number, newPassword: string) {
+    const password = await hashPassword(newPassword);
+    await this.prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: {
+        password: password,
+      },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
