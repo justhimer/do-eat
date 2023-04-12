@@ -10,7 +10,7 @@
 }
 
 .icon {
-    width: 12rem;
+    width: 11rem;
     height: auto;
     border-radius: 50%;
 }
@@ -20,6 +20,14 @@
     --background: #e5ddd1;
     --color: #3b3836;
     --box-shadow: none;
+}
+
+.top_bar_buttons {
+    ion-button {
+        --background: transparent;
+        --color: #cfc1ac;
+        --box-shadow: none;
+    }
 }
 
 .menu_list {
