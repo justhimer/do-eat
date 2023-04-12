@@ -1,11 +1,13 @@
-import aws from 'aws-sdk'
+import * as AWS from 'aws-sdk';
 
 export const uploadToS3 = async (params: {
 	Bucket: string
 	Key: string
+	// ContentType: string
 	Body: Buffer
 }): Promise<string> => {
-	const s3 = new aws.S3({
+
+	const s3 = new AWS.S3({
 		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 		region: 'ap-southeast-1'

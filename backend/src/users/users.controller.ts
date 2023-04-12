@@ -10,7 +10,9 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
-  Request
+  Request,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,12 +21,21 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { checkPassword } from 'utils/hash';
+import IncomingForm from 'formidable/Formidable';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
+import { uploadToS3 } from 'utils/aws-s3-upload';
 
 interface UserInfoWithToken {
   id: number,
   email: string,
   username: string,
   token: string
+}
+
+interface SignUpDetails {
+  email: string,
+  username: string,
+  password: string
 }
 
 @ApiTags('users') // to categorize in swagger
@@ -34,6 +45,37 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService
   ) { }
+
+  @Post('signup')
+  async signup(@Body() createUserDto: CreateUserDto) {
+
+    console.log('signing up');
+
+    console.log('createUserDto: ', createUserDto);
+
+    // check if email has been registered
+    const foundUser = await this.usersService.findByEmail(createUserDto.email);
+    if (foundUser) {
+      throw new HttpException('Email registered', HttpStatus.UNAUTHORIZED);
+    }
+
+    const newUser = await this.usersService.create(createUserDto);
+    console.log('newUser: ', newUser);
+
+    // auto-login and produce in-app token
+    const payload = {
+      id: newUser.data.id,
+      email: newUser.data.email,
+      username: newUser.data.username,
+    };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      ...payload,
+      token: token
+    };
+
+  }
 
   @Post('login')
   async emailLogin(
@@ -144,9 +186,12 @@ export class UsersController {
     };
   }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile_pic')
+  async findProfilePic(@Request() req) {
+    const userID = req.user.id;
+    const data = await this.usersService.findProfilePic(userID);
+    return { data: data };
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -157,15 +202,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/is_subscribed/:id')
-  findIsSubscribed(@Param('id', ParseIntPipe) id: number) {  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
-    return this.usersService.findIsSubscribed(id);
+  @Get('/is_subscribed/')
+  findIsSubscribed(@Request() req) {
+    return this.usersService.findIsSubscribed(req.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: number,  // if ParseIntPipe failed, ParseIntPipe will throw a BadRequestException which shall be caught
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(id, updateUserDto);

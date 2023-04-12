@@ -10,15 +10,23 @@ export class UsersService {
   constructor(private prisma: PrismaService) { }
 
   async create(createUserDto: CreateUserDto) {
-    // await this.prisma.users.create({
-    //   data: {
-    //     email: createUserDto.email,
-    //     username: createUserDto.username,
-    //     password: createUserDto.password,
-    //     icon: createUserDto.icon
-    //   },
-    // });
-    // return 'User created';
+    const password = await hashPassword(createUserDto.password);
+    const newUser = await this.prisma.users.create({
+      data: {
+        email: createUserDto.email,
+        username: createUserDto.username,
+        password: password,
+        icon: createUserDto.icon
+      },
+    });
+    return { 
+      msg: 'User created',
+      data: {
+        id: newUser.id,
+        email: newUser.email,
+        username: newUser.username
+      }
+    };
   }
 
   async createByFacebook(email: string, username: string) {
@@ -80,22 +88,34 @@ export class UsersService {
     return result.subscribed;
   }
 
-  async findIsUnlimited(id: number): Promise<boolean>{
+  async findIsUnlimited(id: number): Promise<boolean> {
     const result = await this.prisma.users.findFirst({
-      include:{
-        subPlan:{
-          select:{
-            unlimited:true
+      include: {
+        subPlan: {
+          select: {
+            unlimited: true
           }
         }
       },
       where: {
-        id:id
+        id: id
       }
     })
 
-    console.log("findIsUnlimited: " , result.subPlan.unlimited)
+    console.log("findIsUnlimited: ", result.subPlan.unlimited)
     return result.subPlan.unlimited
+  }
+
+  async findProfilePic(id:number): Promise<string> {
+    const result = await this.prisma.users.findFirst({
+      select: {
+        icon: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+    return result.icon;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

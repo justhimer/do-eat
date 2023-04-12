@@ -2,8 +2,9 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 import foodSlice from "./foodSlice";
 import gymSlice from "./gymSlice";
 import userSlice from "./userSlice";
-import userDistrictSlice from "./userDistrictSlice";
 import userGymSlice from "./userGymSlice";
+import userDateSlice from "./userDateSlice";
+import userCourseSlice from "./userCourseSlice";
 
 
 
@@ -15,8 +16,9 @@ export const store = configureStore({
         user: userSlice,
         gym: gymSlice,
         food: foodSlice,
-        userDistrict: userDistrictSlice,
-        userGym: userGymSlice
+        userDate: userDateSlice,
+        userGym: userGymSlice,
+        userCourse: userCourseSlice
     }
 });
 

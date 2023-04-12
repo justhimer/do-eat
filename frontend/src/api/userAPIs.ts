@@ -1,4 +1,13 @@
+import { FormEvent } from "react";
+
 const controllerName = "users";
+
+interface SignUpDetails {
+    email: string,
+    username: string,
+    password: string,
+    icon?: string
+}
 
 export async function userLogin(email: string, password: string) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/login`, {
@@ -10,6 +19,19 @@ export async function userLogin(email: string, password: string) {
             email: email,
             password: password
         })
+    })
+    const result = await res.json();
+    if (res.ok) { return result }
+    else { return false }
+}
+
+export async function userSignup(signupDetails: SignUpDetails) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/signup`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(signupDetails)
     })
     const result = await res.json();
     if (res.ok) { return result }
@@ -29,7 +51,24 @@ export async function facebookLogin(code: string) {
     else { return false }
 }
 
+export async function fetchProfilePic() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/profile_pic`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    if (res.ok) {
+        const result = await res.json();
+        return result.data;
+    } else {
+        return "./assets/user_image/default_user_icon.png";
+    }
+}
+
 export async function getUserInfo() {
+    console.log("getting user info at userAPI")
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
         method: "GET",
         headers: {
@@ -37,6 +76,26 @@ export async function getUserInfo() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    const result = await res.json();
-    return result;
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    } else {
+        throw new Error
+    }
+}
+
+export async function getUserSubscribed() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/is_subscribed/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    } else {
+        throw new Error
+    }
 }

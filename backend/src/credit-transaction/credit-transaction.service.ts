@@ -6,7 +6,6 @@ export class CreditTransactionService {
     constructor (private prisma: PrismaService){}
 
     async getUserCredits(id:number){
-        console.log('diu')
        const addCredit = (await this.prisma.creditTransaction.aggregate({
         _sum: {
             credit: true
@@ -17,7 +16,6 @@ export class CreditTransactionService {
             }
         }
        }))._sum.credit || 0
-       console.log("addCredit ", addCredit);
        
        const deductCredit = (await this.prisma.creditTransaction.aggregate({
         _sum: {
@@ -29,11 +27,9 @@ export class CreditTransactionService {
             }
         }
        }))._sum.credit || 0
-       console.log("deductCredit ", deductCredit);
 
        const newCredit = addCredit - deductCredit
 
-       console.log("newCredit ", newCredit);
        return newCredit
     }
 }

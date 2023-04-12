@@ -6,6 +6,7 @@ import {
   IonFabButton,
   IonIcon,
   IonLabel,
+  IonRouterLink,
   IonRouterOutlet,
   IonTab,
   IonTabBar,
@@ -48,7 +49,9 @@ import Fooddetails from './components/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserCourses } from './components/user/UserCourses';
-import { Signup } from './components/auth/Signup';
+import { UserSignupForm } from './components/auth/UserSignupForm';
+import { GymCourses } from './components/gyms/superstructure/GymCourses';
+import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
 
 setupIonicReact();
 
@@ -66,9 +69,7 @@ const App: React.FC = () => (
           <Route exact path="/home-tab">
             <HomeTab />
           </Route>
-          <Route exact path="/do-tab">
-            <DoTab />
-          </Route>
+          <Route exact path="/do-tab/" component={DoTab}/>
           <Route path="/eat-tab">
             <EatTab />
           </Route>
@@ -84,7 +85,7 @@ const App: React.FC = () => (
             <UserTab />
           </Route>
           <Route path="/signup">
-            <Signup />
+            <UserSignupForm />
           </Route>
 
           {/* user routes */}
@@ -98,6 +99,13 @@ const App: React.FC = () => (
             <UserCourses />
           </Route>
 
+          {/* gym routes */}
+          <Route exact path="/test" component={GymCourses}>
+            </Route>
+            <Route exact path="/test2" component={GymConfirmation}>
+              </Route>
+
+
           {/* food routes */}
           <Route path="/fooddetails/:id" component={Fooddetails}>
           </Route>
@@ -105,15 +113,16 @@ const App: React.FC = () => (
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom" className={TabStyle.tab_bar}>
-          <IonTabButton tab="home-tab" href="/home-tab">
+          <IonTabButton tab="home-tab" href="/home-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={storefrontOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="do-tab" href="/do-tab">
+          <IonTabButton tab="do-tab" href="/do-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
+
 
           {/* invisible button for applying QR code css */}
           <IonTabButton disabled={false}>
@@ -124,12 +133,12 @@ const App: React.FC = () => (
             </IonFab>
           </IonTabButton>
 
-          <IonTabButton tab="eat-tab" href="/eat-tab">
+          <IonTabButton tab="eat-tab" href="/eat-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="user-tab" href="/user-tab">
+          <IonTabButton tab="user-tab" href="/user-tab" nav-clear>
             <IonIcon aria-hidden="true" icon={accessibilityOutline} />
             <IonLabel>User</IonLabel>
           </IonTabButton>

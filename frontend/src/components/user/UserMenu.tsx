@@ -3,10 +3,17 @@ import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
+import { fetchProfilePic } from "../../api/userAPIs";
+import { useQuery } from "@tanstack/react-query";
 
 export function UserMenu() {
 
     const history = useHistory();
+
+    const { data: icon, isLoading, refetch } = useQuery({
+        queryKey: ["icon"],
+        queryFn: fetchProfilePic,
+    });  // rename data to foods
 
     const onProfile = () => {
         history.push("/user-profile");
@@ -24,7 +31,7 @@ export function UserMenu() {
         <>
 
             <div className={UserMenuStyle.icon_container}>
-                <img src="./assets/user_image/default_user_icon.png" alt="" className={UserMenuStyle.icon} />
+                <img src={icon} alt="" className={UserMenuStyle.icon} />
             </div>
 
             <div className={UserStyle.title}>

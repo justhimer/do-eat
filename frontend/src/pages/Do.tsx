@@ -1,9 +1,10 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonHeader, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonViewWillLeave } from '@ionic/react';
 import { DistrictList } from '../components/districts/DistrictList';
 import { SelectedGymsDisplay } from '../components/gyms/SelectedGymsDisplay';
-import { DoButton } from '../components/gyms/DoButton';
-import { useEffect, useState } from 'react';
-import { CoursesPick } from '../components/gyms/CoursesPick';
+import { useHistory } from 'react-router';
+import { useState } from 'react';
+import { GoogleMapComp } from '../components/gyms/GoogleMapComp';
+
 
 export interface DistrictListInterface {
   replaceDistrict: (districts: number[]) => void;
@@ -18,21 +19,20 @@ export interface DoButtonInterface {
   downPage: () => void
 }
 
-export interface CoursesGetInterface{
+export interface CoursesGetInterface {
   gyms: number[];
   time: string
 }
-export interface MarkedDatesInterface{
+export interface MarkedDatesInterface {
   date: Date;
   marked: boolean;
 }
 
-const DoTab: React.FC = () => {
+
+export function DoTab() {
 
   const [selectedDistrict, setSelectedDistrict] = useState([])
   const [mapView, setMapView] = useState(false)
-  const [displayPage, setDisplayPage] = useState(<IonContent ><div>Rendering...</div></IonContent>)
-  const [pageNumber, setPageNumber] = useState(1)
 
   const selectingDistrict = (e: any) => {
     if (JSON.stringify(selectedDistrict) !== JSON.stringify(e)) {
@@ -41,54 +41,45 @@ const DoTab: React.FC = () => {
     }
   }
 
-  const upPage = () => {
-    console.log("upPage")
-    setPageNumber(pageNumber + 1)
-  }
+  useIonViewWillLeave(() => {
+    setMapView(false)
+    console.log("left")
+  })
 
-  const downPage = () => {
-    console.log("downPage")
-    setPageNumber(pageNumber - 1)
-  }
+  const history = useHistory()
 
-  useEffect(() => {
-    if (pageNumber == 1) {
-      if (mapView) {
-
-      } else {
-        setDisplayPage(
-          <>
-              <DistrictList replaceDistrict={selectingDistrict} />
-              <SelectedGymsDisplay selectedDistricts={selectedDistrict} />
-          </>
-        )
-      }
-    } else if (pageNumber == 2) {
-      setDisplayPage(
-        <>
-        <CoursesPick/>
-        </>
-      )
-    } else if (pageNumber == 3) {
-      setDisplayPage(
-        <IonContent>
-          <div>Page 3</div>
-        </IonContent>
-      )
-    }
-  }, [pageNumber, selectedDistrict])
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Do</IonTitle>
+    <IonPage >
+      <IonHeader >
+        <IonToolbar >
+          <IonTitle>Do "Where"</IonTitle>
         </IonToolbar>
       </IonHeader>
-      {displayPage}
-      <DoButton page={pageNumber} upPage={() => upPage()} downPage={() => downPage()} />
-    </IonPage>
+      <IonContent fullscreen>
+        <IonSegment value="" onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
+          <IonSegmentButton value="">
+            <IonLabel>List View</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="true">
+            <IonLabel>Map View</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
+        <DistrictList replaceDistrict={selectingDistrict} />
+        {mapView? <GoogleMapComp selectedDistricts={selectedDistrict}/> : <SelectedGymsDisplay selectedDistricts={selectedDistrict}/>}
+        <IonRow>
+          <IonCol>
+            <IonButton onClick={(e) => {
+              e.preventDefault()
+              history.push('/test')
+            }}>Next</IonButton>
+          </IonCol>
+        </IonRow>
+      </IonContent>
+    </IonPage >
+
   );
 };
 
 export default DoTab;
+

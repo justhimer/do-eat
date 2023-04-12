@@ -24,19 +24,27 @@
             </intent-filter>
 
         </activity>
-
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAy_SQpiVPr38hMLZLWRqS6GHTaWtrdbm0"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" 
+        />  
         </provider>
     </application>
 
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- for camera API -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 </manifest>

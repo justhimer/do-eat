@@ -99,3 +99,7 @@ ion-datetime {
     box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
 }
 
+video {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
