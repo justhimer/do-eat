@@ -11,8 +11,26 @@ export class UserSchedulesService {
     private readonly prisma: PrismaService,
     private readonly coursesService: CoursesService,
     private readonly courseScheduleService: CourseSchedulesService
-    ) { }
+  ) { }
 
+  async findAllUserCourses(user_id: number) {
+    let courses = await this.prisma.userSchedule.findMany({
+      select: {
+        attendance_type: true,
+        course_schedule: {
+          select: {
+            id: true,
+            time: true,
+            courses: true
+          }
+        }
+      },
+      where: {
+        user_id: user_id,
+      }
+    })
+    return courses;
+  }
 
   async getRemainingSlots(exercise_id: number) {
     let quota = await this.courseScheduleService.quotaForThisCourse(exercise_id)
@@ -32,8 +50,6 @@ export class UserSchedulesService {
         course_schedule_id: exercise_id
       }
     })
-
-
     return foundUser ? true : false
   }
 
@@ -58,7 +74,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return {message:"course subscribed"}
+      return { message: "course subscribed" }
     } catch (error) {
       console.log(error);
       return error
@@ -84,7 +100,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return {message:"course subscribed"}
+      return { message: "course subscribed" }
     } catch (error) {
       console.log(error);
       return error

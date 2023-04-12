@@ -48,7 +48,7 @@ import Login from './components/auth/Login';
 import Fooddetails from './components/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
-import { UserCourses } from './components/user/UserCourses';
+import { UserSchedule } from './components/user/UserSchedule';
 import { UserSignupForm } from './components/auth/UserSignupForm';
 import { GymCourses } from './components/gyms/superstructure/GymCourses';
 import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
@@ -69,7 +69,7 @@ const App: React.FC = () => (
           <Route exact path="/home-tab">
             <HomeTab />
           </Route>
-          <Route exact path="/do-tab/" component={DoTab}/>
+          <Route exact path="/do-tab/" component={DoTab} />
           <Route path="/eat-tab">
             <EatTab />
           </Route>
@@ -96,14 +96,14 @@ const App: React.FC = () => (
             <UserSubscription />
           </Route>
           <Route path="/user-courses">
-            <UserCourses />
+            <UserSchedule />
           </Route>
 
           {/* gym routes */}
           <Route exact path="/test" component={GymCourses}>
-            </Route>
-            <Route exact path="/test2" component={GymConfirmation}>
-              </Route>
+          </Route>
+          <Route exact path="/test2" component={GymConfirmation}>
+          </Route>
 
 
           {/* food routes */}

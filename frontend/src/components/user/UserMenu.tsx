@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect, useState } from "react";
+import { fetchCredits } from "../../api/creditTransactionsAPI";
+import { fetchCalories } from "../../api/calorieTransactionAPIs";
 
 export function UserMenu() {
 
@@ -19,6 +21,16 @@ export function UserMenu() {
     const { data: icon, isLoading, refetch, remove } = useQuery({
         queryKey: ["icon"],
         queryFn: fetchProfilePic,
+    });
+
+    const { data: calories } = useQuery({
+        queryKey: ["calories"],
+        queryFn: fetchCalories,
+    });
+
+    const { data: credits } = useQuery({
+        queryKey: ["credits"],
+        queryFn: fetchCredits,
     });
 
     const onProfile = () => {
@@ -51,8 +63,8 @@ export function UserMenu() {
 
             <IonGrid>
                 <IonRow>
-                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Calories</IonButton></IonCol>
-                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Credits</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Calories: {calories}</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Credits: {credits}</IonButton></IonCol>
                 </IonRow>
 
                 <IonRow>
