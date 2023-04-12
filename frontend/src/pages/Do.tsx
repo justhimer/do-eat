@@ -57,7 +57,7 @@ export function DoTab() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonSegment value="" onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
+        <IonSegment value={mapView?"true":""} onIonChange={(e)=>{setMapView(Boolean(e.detail.value))}}>
           <IonSegmentButton value="">
             <IonLabel>List View</IonLabel>
           </IonSegmentButton>

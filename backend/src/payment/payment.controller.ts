@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, HttpCode, UseGuards, Request, ParseIntPipe, Res, Redirect, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, HttpCode, UseGuards, Request, ParseIntPipe, Res, Redirect, HttpStatus, Req, RawBodyRequest } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
@@ -7,6 +7,10 @@ import Stripe from 'stripe';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { SubscriptionsService } from 'src/subscriptions/subscriptions.service';
+import bodyParser from 'body-parser';
+
+const endpointSecret = 'whsec_45358f47d58c06865dcdc2db94ad1540ac3a893010588df8b9cc7cf68ac5abfc'
+
 
 @ApiTags('stripe_payment')
 @Controller('payment')
@@ -60,8 +64,13 @@ export class PaymentController {
     }
 
     const session = await this.stripe.checkout.sessions.create({
+      customer_email: 'test@gmail.com' ,
       payment_method_types: ['card'],
       mode: 'payment',
+      metadata: {
+        user_id: 1,
+        product: product
+      },
       line_items: [
         { price_data:subscribedProduced,
         quantity:1,
@@ -70,6 +79,7 @@ export class PaymentController {
       success_url: `${process.env.BACKEND_HOSTNAME}/payment/web/success/1`,
       cancel_url: `${process.env.BACKEND_HOSTNAME}/payment/web/fail/1`,
     })
+    console.log("session: ", session)
     return {url:session.url}
   }
 
@@ -85,6 +95,28 @@ export class PaymentController {
   failedStripe() {
 
     return {statusCode: HttpStatus.FOUND, url:`${process.env.REACT_PUBLIC_HOSTNAME}/user-subscription`}
+  }
+
+  @Post('webhook')
+  async stripeWebhook(@Req() req: RawBodyRequest<Request>){
+    const raw = req.rawBody
+    const sig = req.headers['stripe-signature']
+    let event;
+
+    try {
+      //event = verified stripe hook
+      event = this.stripe.webhooks.constructEvent(raw,sig,endpointSecret)
+    } catch (error) {
+      throw new Error(error)
+    }
+
+      // Handle the checkout.session.completed event
+  if (event.type === 'checkout.session.completed') {
+    console.log('event.metadata: ', event.metadata)
+    // process into database
+  }
+
+    return
   }
 
 }
