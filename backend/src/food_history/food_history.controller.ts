@@ -8,17 +8,17 @@ import { AuthGuard } from '@nestjs/passport';
 export class FoodHistoryController {
   constructor(private readonly foodHistoryService: FoodHistoryService) {}
 
-  @Post()
-  create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
-    return this.foodHistoryService.create(createFoodHistoryDto);
-  }
-
   @UseGuards(AuthGuard('jwt'))
   @Get()
   async findAllNotCollected(@Request() req) {
     const userID = req.user.id;
     const data = await this.foodHistoryService.findAllNotCollected(userID);
     return data;
+  }
+
+  @Post()
+  create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
+    return this.foodHistoryService.create(createFoodHistoryDto);
   }
 
   @Get(':id')

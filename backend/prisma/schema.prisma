@@ -100,7 +100,7 @@ model FoodHistory {
   gym                Gyms                 @relation(fields: [gym_id], references: [id])
   user_id            Int                  @db.Integer
   user               Users                @relation(fields: [user_id], references: [id])
-  collection_status  String               @db.Text
+  collection_status  Boolean              @db.Boolean
   created_at         DateTime             @default(now()) @db.Timestamptz
   updated_at         DateTime             @updatedAt @db.Timestamptz
   CalorieTransaction CalorieTransaction[]

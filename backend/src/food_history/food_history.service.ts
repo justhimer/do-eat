@@ -14,6 +14,7 @@ export class FoodHistoryService {
       },
       where: {
         user_id: user_id,
+        collection_status: false
       }
     })
     return `This action returns all foodHistory`;
