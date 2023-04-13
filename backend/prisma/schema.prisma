@@ -136,8 +136,8 @@ model Gyms {
   franchise_id    Int           @db.Integer
   district        Districts     @relation(fields: [district_id], references: [id])
   district_id     Int           @db.Integer
-  opening_hour    Int           @db.Integer
-  closing_hour    Int           @db.Integer
+  opening_hour    String?           @db.Text
+  closing_hour    String?           @db.Text
   no_close        Boolean       @db.Boolean
   address         String        @db.Text
   google_position Json          @db.Json

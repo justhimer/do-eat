@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, ParseIntPipe, BadRequestException, Req } from '@nestjs/common';
 import { FoodHistoryService } from './food_history.service';
 import { CreateFoodHistoryDto } from './dto/create-food_history.dto';
 import { UpdateFoodHistoryDto } from './dto/update-food_history.dto';
@@ -24,8 +24,10 @@ export class FoodHistoryController {
     return this.foodHistoryService.create(createFoodHistoryDto);
   }
 
-  @Get('gym/:gym_id')
-  async findOne(@Param('gym_id', ParseIntPipe) gym_id: number) {
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get('gym/')
+  async findOne(@Req() req) {
+    const gym_id = req.user.id
     const data = await this.foodHistoryService.findOrdersForGyms(gym_id);
     if (!isError(data)) {
       const newData = []
