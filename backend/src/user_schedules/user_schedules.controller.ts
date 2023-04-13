@@ -83,8 +83,7 @@ export class UserSchedulesController {
       const userId = req.user.id
       const userSchedule = await this.userSchedulesService.returnUserIdCourse(registeredCourse)
       if (userId == userSchedule.user_id) {
-        const courseScheduleTime = await this.courseScheduleService.getDateTime(userSchedule.course_schedule_id)
-        const courseTime = new Date(courseScheduleTime)
+        const courseTime = new Date(await this.courseScheduleService.getDateTime(userSchedule.course_schedule_id))
         const nowTime = new Date()
         const timeDifference = differenceInHours(courseTime,nowTime)
         if (timeDifference <= 24 ){
