@@ -45,6 +45,13 @@ export class UsersService {
       where: {
         id: id,
       },
+      include:{
+        subPlan:{
+          select:{
+            unlimited:true
+          }
+        }
+      }
     });
     return foundUser;
   }
@@ -95,7 +102,6 @@ export class UsersService {
       }
     })
 
-    console.log("findIsUnlimited: ", result.subPlan.unlimited)
     return result.subPlan.unlimited
   }
 

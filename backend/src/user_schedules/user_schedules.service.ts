@@ -121,9 +121,21 @@ export class UserSchedulesService {
   //#endregion
 
   async returnUserIdCourse(registered_id: number) {
-    return (await this.prisma.userSchedule.findFirst({
-      where: { id: registered_id }
-    })).user_id
+    try {
+      const data =  await this.prisma.userSchedule.findFirst({
+        where: { id: registered_id }
+      })
+      if (data){
+        return data
+      }else{
+        throw new Error('no data')
+      }
+    } catch (error) {
+      console.log('error at user_schedules.service: ', error)
+      throw new Error(error)
+    }
+    
+
   }
 
   async deleteUserFromCourse(registered_id: number) {
@@ -144,7 +156,7 @@ export class UserSchedulesService {
       return "Deleted course registration"
     } catch (error) {
       console.log(error)
-      return error
+      return new Error(error)
     }
   }
 }

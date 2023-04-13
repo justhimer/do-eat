@@ -174,4 +174,22 @@ export class CourseSchedulesService {
         })
         return data
     }
+
+    async getDateTime(courseSchedule_id:number){
+        try {
+            const data = await this.prisma.courseSchedules.findFirst({
+                select:{time:true},
+                where:{id:courseSchedule_id}
+            })
+            if (data){
+                return String(data.time)
+            }else{
+                console.log('No data at getCourseDate')
+                throw new Error('no data')
+            }
+        } catch (error) {
+            console.log('error at course_schedules.services: ', error)
+            throw new Error(error)
+        }
+    }
 }
