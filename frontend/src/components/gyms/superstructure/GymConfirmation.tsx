@@ -115,7 +115,8 @@ export function GymConfirmation() {
             notify('error')
         }
     }
-
+ // force save
+ 
 
     return (
         <IonPage >
