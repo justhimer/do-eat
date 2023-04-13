@@ -21,6 +21,8 @@ import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { CourseTypeModule } from './course_type/course_type.module';
+import { FoodHistoryModule } from './food_history/food_history.module';
+import { FoodOrderModule } from './food_order/food_order.module';
 
 
 
@@ -49,6 +51,8 @@ import { CourseTypeModule } from './course_type/course_type.module';
     PaymentModule,
     SubscriptionsModule,
     CourseTypeModule,
+    FoodHistoryModule,
+    FoodOrderModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],

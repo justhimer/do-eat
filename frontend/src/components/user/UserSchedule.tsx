@@ -1,8 +1,9 @@
-import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonDatetime, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonDatetime, IonHeader, IonList, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
 import AppStyle from '../../scss/App.module.scss'
 import { fetchCourses } from "../../api/userScheduleAPI";
 import { useQuery } from "@tanstack/react-query";
 import { UserScheduleItem } from "./UserScheduleItem";
+import { useEffect } from "react";
 
 export function UserSchedule() {
 
@@ -19,6 +20,10 @@ export function UserSchedule() {
             return schedule;
         },
     });
+
+    useIonViewWillEnter(()=>{
+        refetch();
+    },[])
 
     return (
         <IonPage >

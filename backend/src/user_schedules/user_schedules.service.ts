@@ -14,7 +14,7 @@ export class UserSchedulesService {
   ) { }
 
   async findAllUserCourses(user_id: number) {
-    let courses = await this.prisma.userSchedule.findMany({
+    const courses = await this.prisma.userSchedule.findMany({
       select: {
         attendance_type: true,
         course_schedule: {
