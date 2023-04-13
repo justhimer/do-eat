@@ -7,7 +7,7 @@ import { DistrictsService } from 'src/districts/districts.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtGymStrategy } from './strategy/jwtgym.strategy';
 
-// @Global()
+@Global()
 @Module({
   imports: [
     DistrictsModule,

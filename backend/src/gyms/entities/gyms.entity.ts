@@ -32,12 +32,12 @@ export class Gyms {
   district_id: number
 
   @ApiProperty()
-  @IsInt()
-  opening_hour: number
+  @IsString()
+  opening_hour: string
   
   @ApiProperty()
-  @IsInt()
-  closing_hour: number
+  @IsString()
+  closing_hour: string
   
   @ApiProperty()
   @IsBoolean()
