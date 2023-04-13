@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
 import { FoodOrderService } from './food_order.service';
 import { CreateFoodOrderDto } from './dto/create-food_order.dto';
 import { UpdateFoodOrderDto } from './dto/update-food_order.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('food-order')
 export class FoodOrderController {

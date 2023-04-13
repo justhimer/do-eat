@@ -9,14 +9,14 @@ import { isError } from 'lodash';
 @ApiTags('food-history')
 @Controller('food-history')
 export class FoodHistoryController {
-  constructor(private readonly foodHistoryService: FoodHistoryService) {}
+  constructor(private readonly foodHistoryService: FoodHistoryService) { }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
-  async findAllNotCollected(@Request() req) {
+  @Get('user/to_collect')
+  async findFoodsToBeCollectedForUser(@Request() req) {
     const userID = req.user.id;
-    const data = await this.foodHistoryService.findAllNotCollected(userID);
-    return data;
+    const foodsToBeCollected = await this.foodHistoryService.findFoodsToBeCollectedForUser(userID);
+    return foodsToBeCollected;
   }
 
   @Post()
@@ -29,28 +29,28 @@ export class FoodHistoryController {
   async findOne(@Req() req) {
     const gym_id = req.user.id
     const data = await this.foodHistoryService.findOrdersForGyms(gym_id);
-    if (!isError(data)){
+    if (!isError(data)) {
       const newData = []
-      data.forEach(order=>{
+      data.forEach(order => {
         const foodsInOrder = []
-        order.FoodOrder.forEach(food=>{
+        order.FoodOrder.forEach(food => {
           foodsInOrder.push({
-            food_id:food.id,
-            quantity:food.quantity,
-            name:food.food.name,
-            image:food.food.image
+            food_id: food.id,
+            quantity: food.quantity,
+            name: food.food.name,
+            image: food.food.image
           })
         })
         newData.push({
-          order_id:order.id,
-          user_id:order.user_id,
+          order_id: order.id,
+          user_id: order.user_id,
           user: order.user.username,
-          collection_status:order.collection_status,
-          foodOrder:foodsInOrder
+          collection_status: order.collection_status,
+          foodOrder: foodsInOrder
         })
       })
       return newData
-    }else{
+    } else {
       throw new BadRequestException('Bad Request', { cause: new Error() })
     }
   }
