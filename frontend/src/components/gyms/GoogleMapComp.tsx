@@ -44,7 +44,7 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
         });
     };
     const clickGym = ()=>{
-      if (selectedGyms.length >= 3){
+      if (!selectedGyms.some(e=>e.name === gymPopup.name) && selectedGyms.length >= 3){
         presentToast("top")
       }else{
         dispatch((toggleGymSelection({id:gymPopup.id, name:gymPopup.name})))
@@ -119,7 +119,7 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
     {gymPopup && <IonPopover isOpen={popoverOpen} onDidDismiss={onPopover} dismissOnSelect={true}>
         <IonContent class="ion-padding">
         <h1>{gymPopup.name}</h1>
-        <IonButton onClick={clickGym}>Add</IonButton>        
+        <IonButton onClick={clickGym}>Toggle</IonButton>        
         </IonContent>
       </IonPopover>}
     </>

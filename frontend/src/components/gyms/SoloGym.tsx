@@ -26,7 +26,7 @@ export function SoloGym(props: GymCardInterface) {
         });
     };
     const clickGym = ()=>{
-      if (selectedGyms.length >= 3){
+      if (!selectedGyms.some(e=>e.name === props.name) && selectedGyms.length >= 3){
         presentToast("top")
       }else{
         dispatch((toggleGymSelection({id:props.id, name:props.name})))
