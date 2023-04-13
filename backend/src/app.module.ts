@@ -20,6 +20,7 @@ import { FileModule } from './file/file.module';
 import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { CourseTypeModule } from './course_type/course_type.module';
 import { FoodHistoryModule } from './food_history/food_history.module';
 import { FoodOrderModule } from './food_order/food_order.module';
 
@@ -49,6 +50,7 @@ import { FoodOrderModule } from './food_order/food_order.module';
     StripeModule,
     PaymentModule,
     SubscriptionsModule,
+    CourseTypeModule,
     FoodHistoryModule,
     FoodOrderModule,
   ], // forRoot() : global use

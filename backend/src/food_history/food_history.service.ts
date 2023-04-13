@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateFoodHistoryDto } from './dto/create-food_history.dto';
 import { UpdateFoodHistoryDto } from './dto/update-food_history.dto';
 import { PrismaService } from 'nestjs-prisma';
+import { error } from 'console';
 
 @Injectable()
 export class FoodHistoryService {
@@ -42,15 +43,34 @@ export class FoodHistoryService {
     return 'This action adds a new foodHistory';
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} foodHistory`;
-  }
-
-  update(id: number, updateFoodHistoryDto: UpdateFoodHistoryDto) {
-    return `This action updates a #${id} foodHistory`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} foodHistory`;
+  async findOrdersForGyms(gym_id: number){
+    try {
+      const data = await this.prisma.foodHistory.findMany({
+        include:{
+          user:{
+            select:{username:true}
+          },
+          FoodOrder:{
+            include:{
+              food:{
+                select:{
+                  name:true,
+                  image:true
+                }
+              }
+            }
+          }
+        }
+      })
+      if(data){
+        return data
+      }else{
+        console.log('Error at food_history.service: ',error);
+        throw new Error('No Data')
+      }
+    } catch (error) {
+      console.log('Error at food_history.service: ', error)
+      throw new Error(error)
+    }
   }
 }
