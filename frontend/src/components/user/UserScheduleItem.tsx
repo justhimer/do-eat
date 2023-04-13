@@ -1,17 +1,19 @@
 import { IonItem, IonThumbnail, IonLabel, IonIcon, IonChip, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonList } from "@ionic/react";
-import { calendarClear, calendarClearOutline, calendarSharp, checkboxOutline, checkboxSharp, flameOutline, flameSharp, hourglassSharp, timeSharp } from "ionicons/icons";
+import { calendarSharp } from "ionicons/icons";
 import { utcToZonedTime } from 'date-fns-tz';
 import format from "date-fns/format";
+import { useState } from "react";
 
 // css
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import { useState } from "react";
+import AppStyle from "../../scss/App.module.scss";
 
 export interface UserScheduleItemProps {
     courseName: string;
     time: string;
     duration: number;
-    calories: number;
+    gymName: string;
+    address: string;
     attendence: string;
 }
 
@@ -26,7 +28,7 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                 <IonCardHeader>
                     <IonCardTitle>{props.courseName}</IonCardTitle>
                     <IonCardSubtitle>
-                        <IonIcon icon={calendarSharp} /> 
+                        <IonIcon icon={calendarSharp} />
                         {props.time.split('T')[0]}
                         ({format(date, "E")})
                     </IonCardSubtitle>
@@ -46,73 +48,18 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                             <IonLabel>Attendence:</IonLabel>
                             <IonLabel>{props.attendence}</IonLabel>
                         </IonItem>
+                        <IonItem className={UserMenuStyle.item_last}>
+                            <IonLabel className={AppStyle.bold}>{props.gymName}</IonLabel>
+                        </IonItem>
+                        <IonItem className={UserMenuStyle.item_last}>
+                            <p>{props.address}</p>
+                        </IonItem>
                     </IonList>
                     <br />
-                    <IonButton>Cancel</IonButton>
+                    <IonButton expand="block">Cancel</IonButton>
                 </IonCardContent>
 
             </IonCard>
-
-            {/* <IonCard>
-                <IonCardHeader>
-                    <IonCardTitle>{props.courseName}</IonCardTitle>
-                    <IonCardSubtitle>
-                        <IonIcon icon={calendarSharp} />
-                        {props.time.split('T')[0]}
-                    </IonCardSubtitle>
-                </IonCardHeader>
-
-                <IonCardContent>
-                    <IonChip >
-                        <IonIcon icon={timeSharp} />
-                        <IonLabel>{props.time.split('T')[1]}</IonLabel>
-                    </IonChip>
-                    <br />
-                    <IonChip >
-                        <IonIcon icon={hourglassSharp} />
-                        <IonLabel>{props.duration} mins</IonLabel>
-                    </IonChip>
-                    <br />
-                    <IonChip >
-                        <IonIcon icon={checkboxOutline} />
-                        <IonLabel>{props.attendence}</IonLabel>
-                    </IonChip>
-                    <br />
-                    <IonChip >
-                        <IonIcon icon={flameSharp} />
-                        <IonLabel>{props.calories}</IonLabel>
-                    </IonChip>
-                </IonCardContent>
-
-                <IonButton fill="clear">Action 1</IonButton>
-                <IonButton fill="clear">Action 2</IonButton>
-            </IonCard> */}
-
-            {/* <IonLabel>{props.courseName}</IonLabel>
-            <IonChip >
-                <IonIcon icon={calendarSharp} />
-                <IonLabel>{props.time.split('T')[0]}</IonLabel>
-            </IonChip>
-            <br />
-            <IonChip >
-                <IonIcon icon={timeSharp} />
-                <IonLabel>{props.time.split('T')[1]}</IonLabel>
-            </IonChip>
-            <br />
-            <IonChip >
-                <IonIcon icon={hourglassSharp} />
-                <IonLabel>{props.duration} mins</IonLabel>
-            </IonChip>
-            <br />
-            <IonChip >
-                <IonIcon icon={checkboxOutline} />
-                <IonLabel>{props.attendence}</IonLabel>
-            </IonChip>
-            <br />
-            <IonChip >
-                <IonIcon icon={flameSharp} />
-                <IonLabel>{props.calories}</IonLabel>
-            </IonChip> */}
         </>
     )
 }

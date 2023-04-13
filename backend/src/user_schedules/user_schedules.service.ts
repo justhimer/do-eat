@@ -21,7 +21,18 @@ export class UserSchedulesService {
           select: {
             id: true,
             time: true,
-            courses: true
+            courses: {
+              select: {
+                name: true,
+                duration: true,
+                gyms : {
+                  select: {
+                    name: true,
+                    address: true
+                  }
+                }
+              }
+            }
           }
         }
       },

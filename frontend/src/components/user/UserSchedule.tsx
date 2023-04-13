@@ -8,7 +8,16 @@ export function UserSchedule() {
 
     const { data: courses, isLoading, refetch, remove } = useQuery({
         queryKey: ["courses"],
-        queryFn: fetchCourses,
+        queryFn: async () => {
+            const schedule = await fetchCourses();
+            // sorting schedule according to time
+            schedule.sort((a: any, b: any) => {
+                const timeA = Date.parse(a.course_schedule.time);
+                const timeB = Date.parse(b.course_schedule.time);
+                return timeA - timeB;
+            });
+            return schedule;
+        },
     });
 
     return (
@@ -22,18 +31,19 @@ export function UserSchedule() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                    {
-                        courses && courses.length > 0 && courses.map((course: any, index: number) => (
-                            <UserScheduleItem
-                                key={course.course_schedule.id}
-                                courseName={course.course_schedule.courses.name}
-                                time={course.course_schedule.time}
-                                duration={course.course_schedule.courses.duration}
-                                calories={course.course_schedule.courses.calorise}
-                                attendence={course.attendance_type.details}
-                            />
-                        ))
-                    }
+                {
+                    courses && courses.length > 0 && courses.map((course: any, index: number) => (
+                        <UserScheduleItem
+                            key={course.course_schedule.id}
+                            courseName={course.course_schedule.courses.name}
+                            time={course.course_schedule.time}
+                            duration={course.course_schedule.courses.duration}
+                            gymName={course.course_schedule.courses.gyms.name}
+                            address={course.course_schedule.courses.gyms.address}
+                            attendence={course.attendance_type.details}
+                        />
+                    ))
+                }
 
                 {/* <IonDatetime
                         presentation="date"
