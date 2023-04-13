@@ -3,7 +3,9 @@ import { FoodOrderService } from './food_order.service';
 import { CreateFoodOrderDto } from './dto/create-food_order.dto';
 import { UpdateFoodOrderDto } from './dto/update-food_order.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('food-order')
 @Controller('food-order')
 export class FoodOrderController {
   constructor(private readonly foodOrderService: FoodOrderService) {}
