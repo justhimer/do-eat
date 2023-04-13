@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonRouter, useIonToast, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonRouter, useIonToast, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
 import ConfirmationStyle from '../../../scss/GymConfirm.module.scss'
 import { cardOutline, flameOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ export interface GymPopupInterface {
     time: string;
     costs: number;
     credits: number;
-    subPlan: number;
+    subPlan: boolean;
     dismiss: () => void;
     join: () => void;
 
@@ -90,7 +90,6 @@ export function GymConfirmation() {
 
 
     const containerClick = async () => {
-        console.log("loadedUser", userData.data, "loading ", userData.isLoading, "PREVIOUS DATA ", userData.isPreviousData)
         if (!userData.isLoading && !userData.isError && userData.data) {
             if (!userData.isLoading && !userData.isError && userData.data.sub_plan_id) {
                 setPopupBoolean(true)
@@ -115,8 +114,7 @@ export function GymConfirmation() {
             notify('error')
         }
     }
- // force save
- 
+
 
     return (
         <IonPage >
@@ -128,8 +126,22 @@ export function GymConfirmation() {
                     <IonTitle>Do "It"</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            {popupBoolean ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.sub_plan_id} /> : <></>}
             <IonContent fullscreen>
+                
+                <IonModal isOpen={popupBoolean}>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonTitle>Modal</IonTitle>
+                            <IonButtons slot="end">
+                                <IonButton onClick={() => setPopupBoolean(false)}>Close</IonButton>
+                            </IonButtons>
+                        </IonToolbar>
+                    </IonHeader>
+                    <IonContent className="ion-padding">
+                    {userData.data && userData.data.subscribed ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.subPlan.unlimited} /> : <h5>Loading</h5>}
+                    </IonContent>
+                </IonModal>
+
                 <div className={ConfirmationStyle.icon_container}>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/${selectedCourse.trainer_icon}`} alt="" className={ConfirmationStyle.icon} />
                 </div>

@@ -49,6 +49,13 @@ export class UsersService {
       where: {
         id: id,
       },
+      include:{
+        subPlan:{
+          select:{
+            unlimited:true
+          }
+        }
+      }
     });
     // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
@@ -112,7 +119,6 @@ export class UsersService {
       }
     })
 
-    console.log("findIsUnlimited: ", result.subPlan.unlimited)
     return result.subPlan.unlimited
   }
 

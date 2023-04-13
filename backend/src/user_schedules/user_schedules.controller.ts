@@ -27,7 +27,6 @@ export class UserSchedulesController {
     @Post('join/:course/')
     async join(@Param('course', ParseIntPipe) course: number, @Request() req) {
       const id = req.user.id
-      console.log('register to course')
       try {
         // check to see if already registered to course
       if (await this.userSchedulesService.findUserinCourse(id, course)) {

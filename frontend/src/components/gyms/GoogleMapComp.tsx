@@ -91,9 +91,6 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
 
     await newMap.setOnMarkerClickListener(async (marker)=>{
     const index = markers.indexOf(marker.markerId)
-    console.log("marker: ",marker)
-    console.log("index: ",index)
-    console.log("available gyms: ", availableGyms)
     setGymPopup(availableGyms[index])
     onPopover()
     })
