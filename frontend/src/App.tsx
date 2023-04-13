@@ -48,10 +48,11 @@ import Login from './components/auth/Login';
 import Fooddetails from './components/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
-import { UserSchedule } from './components/user/UserSchedule';
+import { UserScheduleList } from './components/user/UserScheduleList';
 import { UserSignupForm } from './components/auth/UserSignupForm';
 import { GymCourses } from './components/gyms/superstructure/GymCourses';
 import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
+import { UserOrderList } from './components/user/UserOrderList';
 
 setupIonicReact();
 
@@ -96,7 +97,10 @@ const App: React.FC = () => (
             <UserSubscription />
           </Route>
           <Route path="/user-courses">
-            <UserSchedule />
+            <UserScheduleList />
+          </Route>
+          <Route path="/user-orders">
+            <UserOrderList />
           </Route>
 
           {/* gym routes */}

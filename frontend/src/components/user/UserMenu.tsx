@@ -47,6 +47,10 @@ export function UserMenu() {
         history.push("/user-courses");
     }
 
+    const onOrderedFoods = () => {
+        history.push("/user-orders");
+    }
+
     return (
         <>
 
@@ -81,7 +85,7 @@ export function UserMenu() {
                             <IonItem button detail={true} className={UserMenuStyle.item} onClick={onBookedCourses}>
                                 <IonLabel>Booked Courses</IonLabel>
                             </IonItem>
-                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onOrderedFoods}>
                                 <IonLabel>Ordered Foods</IonLabel>
                             </IonItem>
                             <IonItem button detail={true} className={UserMenuStyle.item_last}>
