@@ -28,7 +28,16 @@ export class GymsService {
 
     async allGyms() {
         let data = await this.prisma.gyms.findMany({
-            include: {
+            select: {
+                id:true,
+                name:true,
+                franchise_id:true,
+                district_id:true,
+                opening_hour:true,
+                closing_hour:true,
+                no_close:true,
+                address:true,
+                google_position:true,
                 district: {
                     select: {
                         name: true
@@ -39,7 +48,8 @@ export class GymsService {
                         name: true
                     }
                 }
-            }
+            },
+
         })
         return data
     }
@@ -57,7 +67,16 @@ export class GymsService {
             where: {
                 district_id: { in: districts }
             },
-            include: {
+            select: {
+                id:true,
+                name:true,
+                franchise_id:true,
+                district_id:true,
+                opening_hour:true,
+                closing_hour:true,
+                no_close:true,
+                address:true,
+                google_position:true,
                 district: {
                     select: {
                         name: true
