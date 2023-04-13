@@ -15,8 +15,11 @@ export class CourseSchedulesService {
         })).quota
     }
 
-    async allCourses() {
-
+    async getSchedulesOfCourses(course_id:number) {
+        await this.prisma.courseSchedules.findMany({
+            where:{course_id: course_id},
+            orderBy:{time:'desc'}
+        })
     }
 
     async someCourses(listGyms: Array<number>) {
@@ -174,6 +177,7 @@ export class CourseSchedulesService {
         })
         return data
     }
+
 
     async getDateTime(courseSchedule_id:number){
         try {

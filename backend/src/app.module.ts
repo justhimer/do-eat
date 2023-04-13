@@ -20,6 +20,7 @@ import { FileModule } from './file/file.module';
 import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { CourseTypeModule } from './course_type/course_type.module';
 
 
 
@@ -47,6 +48,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     StripeModule,
     PaymentModule,
     SubscriptionsModule,
+    CourseTypeModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
