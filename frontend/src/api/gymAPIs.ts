@@ -16,6 +16,21 @@ export async function gymLogin(username: string, password: string) {
     else { return false }
 }
 
+export async function fetchGymInfo() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    } else {
+        return false;
+    }
+}
 
 export async function gymAll() {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/district/all`, {

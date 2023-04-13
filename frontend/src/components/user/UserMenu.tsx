@@ -1,6 +1,4 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSpinner } from "@ionic/react";
-import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import UserStyle from '../../scss/User.module.scss';
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
 import { fetchProfilePic } from "../../api/userAPIs";
@@ -10,6 +8,10 @@ import { RootState } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { fetchCredits } from "../../api/creditTransactionsAPI";
 import { fetchCalories } from "../../api/calorieTransactionAPIs";
+
+// css
+import UserMenuStyle from "../../scss/UserMenu.module.scss";
+import UserStyle from '../../scss/User.module.scss';
 
 export function UserMenu() {
 

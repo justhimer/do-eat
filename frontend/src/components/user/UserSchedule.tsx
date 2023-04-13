@@ -22,30 +22,20 @@ export function UserSchedule() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                    <IonCard>
-                        <IonCardHeader>
-                            <IonCardTitle>Card Title</IonCardTitle>
-                            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                        </IonCardHeader>
-                        <IonCardContent>
-                            <IonList>
-                                {
-                                    courses && courses.length > 0 && courses.map((course: any, index: number) => (
-                                        <UserScheduleItem
-                                            key={course.course_schedule.id}
-                                            courseName={course.course_schedule.courses.name}
-                                            time={course.course_schedule.time}
-                                            duration={course.course_schedule.courses.duration}
-                                            calories={course.course_schedule.courses.calorise}
-                                            attendence={course.attendance_type.details}
-                                        />
-                                    ))
-                                }
-                            </IonList>
-                        </IonCardContent>
-                    </IonCard>
+                    {
+                        courses && courses.length > 0 && courses.map((course: any, index: number) => (
+                            <UserScheduleItem
+                                key={course.course_schedule.id}
+                                courseName={course.course_schedule.courses.name}
+                                time={course.course_schedule.time}
+                                duration={course.course_schedule.courses.duration}
+                                calories={course.course_schedule.courses.calorise}
+                                attendence={course.attendance_type.details}
+                            />
+                        ))
+                    }
 
-                    {/* <IonDatetime
+                {/* <IonDatetime
                         presentation="date"
                         value="2023-01-01"
                         highlightedDates={[

@@ -76,7 +76,6 @@ export async function fetchProfilePic() {
 }
 
 export async function fetchUserInfo() {
-    console.log("getting user info at userAPI")
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}`, {
         method: "GET",
         headers: {
@@ -88,7 +87,7 @@ export async function fetchUserInfo() {
         const result = await res.json();
         return result;
     } else {
-        throw new Error
+        return false;
     }
 }
 

@@ -18,20 +18,16 @@ interface Token {
 
 const isLoggedIn = () => {
     const token = localStorage.getItem("token");
-    // if (!!token) {
-    //     const decoded = jwt_decode(token);
-    //     console.log(decoded);
-    // }
     return !!token
 }
 
 const getUserInfo = () => {
-    const token = localStorage.getItem("token");
     let data = {
         id: 0,
         email: "",
         username: "",
     }
+    const token = localStorage.getItem("token");
     if (!!token) {
         const decoded = jwt_decode<Token>(token);
         return {

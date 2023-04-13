@@ -245,8 +245,6 @@ export class UsersController {
     }
   }
 
-
-
   @UseGuards(AuthGuard('jwt'))
   @Get()
   findById(@Request() req) {
