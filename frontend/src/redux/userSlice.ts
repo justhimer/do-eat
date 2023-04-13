@@ -28,6 +28,8 @@ const getUserInfo = () => {
         username: "",
     }
     const token = localStorage.getItem("token");
+    console.log(token);
+    
     if (!!token) {
         const decoded = jwt_decode<Token>(token);
         return {

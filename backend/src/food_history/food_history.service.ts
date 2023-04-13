@@ -8,18 +8,36 @@ export class FoodHistoryService {
   constructor(private prisma: PrismaService) { }
 
   async findAllNotCollected(user_id: number) {
-    const foods = await this.prisma.foodHistory.findMany({
-      select: {
-        
+    const foodsToBeCollected = await this.prisma.foodHistory.findMany({
+      include: {
+        FoodOrder: {
+          select: {
+            quantity: true,
+            food: {
+              select: {
+                name: true
+              }
+            },
+          }
+        },
+        gym: {
+          select: {
+            address: true,
+            no_close: true,
+            opening_hour: true,
+            closing_hour: true,
+            google_position: true
+          }
+        }
       },
       where: {
         user_id: user_id,
         collection_status: false
       }
     })
-    return `This action returns all foodHistory`;
+    return foodsToBeCollected;
   }
-  
+
   create(createFoodHistoryDto: CreateFoodHistoryDto) {
     return 'This action adds a new foodHistory';
   }

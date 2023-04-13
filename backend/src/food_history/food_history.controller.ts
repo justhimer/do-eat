@@ -3,17 +3,19 @@ import { FoodHistoryService } from './food_history.service';
 import { CreateFoodHistoryDto } from './dto/create-food_history.dto';
 import { UpdateFoodHistoryDto } from './dto/update-food_history.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('food-history')
 @Controller('food-history')
 export class FoodHistoryController {
   constructor(private readonly foodHistoryService: FoodHistoryService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
+  @Get('collect')
   async findAllNotCollected(@Request() req) {
     const userID = req.user.id;
-    const data = await this.foodHistoryService.findAllNotCollected(userID);
-    return data;
+    const foodsToBeCollected = await this.foodHistoryService.findAllNotCollected(userID);
+    return foodsToBeCollected;
   }
 
   @Post()
