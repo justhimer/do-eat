@@ -10,9 +10,7 @@ export class FoodHistoryService {
   async findAllNotCollected(user_id: number) {
     const foods = await this.prisma.foodHistory.findMany({
       select: {
-        food: {
-          
-        }
+        
       },
       where: {
         user_id: user_id,

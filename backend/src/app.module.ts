@@ -21,6 +21,7 @@ import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { FoodHistoryModule } from './food_history/food_history.module';
+import { FoodOrderModule } from './food_order/food_order.module';
 
 
 
@@ -49,6 +50,7 @@ import { FoodHistoryModule } from './food_history/food_history.module';
     PaymentModule,
     SubscriptionsModule,
     FoodHistoryModule,
+    FoodOrderModule,
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
