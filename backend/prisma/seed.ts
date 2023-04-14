@@ -55,10 +55,10 @@ async function main() {
             email: "user1@gmail.com",
             username: "user1",
             password: await hashPassword('user1'),
-            subscribed:true,
-            sub_plan_id:2,
-            sub_plan_start:new Date(),
-            sub_plan_end:new Date(Date.now()+2592000000)
+            subscribed: true,
+            sub_plan_id: 2,
+            sub_plan_start: new Date(),
+            sub_plan_end: new Date(Date.now() + 2592000000)
         }
     })
 
@@ -69,10 +69,10 @@ async function main() {
             email: "user2@gmail.com",
             username: "user2",
             password: await hashPassword('user2'),
-            subscribed:true,
-            sub_plan_id:1,
-            sub_plan_start:new Date(),
-            sub_plan_end:new Date(Date.now()+2592000000)
+            subscribed: true,
+            sub_plan_id: 1,
+            sub_plan_start: new Date(),
+            sub_plan_end: new Date(Date.now() + 2592000000)
         }
     })
 
@@ -83,10 +83,10 @@ async function main() {
             email: "user3@gamil.com",
             username: "user3",
             password: await hashPassword('user3'),
-            subscribed:true,
-            sub_plan_id:1,
-            sub_plan_start:new Date(),
-            sub_plan_end:new Date(Date.now()+2592000000)
+            subscribed: true,
+            sub_plan_id: 1,
+            sub_plan_start: new Date(),
+            sub_plan_end: new Date(Date.now() + 2592000000)
         }
     })
 
@@ -703,7 +703,7 @@ async function main() {
     //     },
     // })
 
-    
+
 
 
     const districts1 = await prisma.districts.upsert({
@@ -788,10 +788,10 @@ async function main() {
             closing_hour: "23:00",
             no_close: false,
             address: "Shop 101, 1/F, 1-3 Paterson Street, Causeway Bay, Hong Kong",
-            google_position: {lat:22.27847,lng:114.18320},
+            google_position: { lat: 22.27847, lng: 114.18320 },
             franchise_id: franchise1.id,
             district_id: districts1.id,
-        } 
+        }
     })
 
     const gym2 = await prisma.gyms.upsert({
@@ -805,7 +805,7 @@ async function main() {
             closing_hour: "23:00",
             no_close: false,
             address: "Shop 1001, 10/F, 27-29 Paterson Street, Central, Hong Kong",
-            google_position: {lat: 22.286163428803967,lng: 114.15916750054413},
+            google_position: { lat: 22.286163428803967, lng: 114.15916750054413 },
             franchise_id: franchise1.id,
             district_id: district2.id,
         }
@@ -822,10 +822,10 @@ async function main() {
             closing_hour: "23:00",
             no_close: false,
             address: "Shop 101, 1/F, 39 Hinnessy Road,Wan Chai, Hong Kong",
-            google_position: {lat: 22.278287400747722, lng: 114.16885263948282},
+            google_position: { lat: 22.278287400747722, lng: 114.16885263948282 },
             franchise_id: franchise1.id,
             district_id: district3.id,
-        } 
+        }
     })
 
     const gym4 = await prisma.gyms.upsert({
@@ -839,10 +839,10 @@ async function main() {
             closing_hour: "23:00",
             no_close: false,
             address: "Shop 501, 5/F, 1-3 Star Road, Tsim Sha Tsui, Hong Kong",
-            google_position: {lat: 22.29421531793089, lng: 114.17532064270728},
+            google_position: { lat: 22.29421531793089, lng: 114.17532064270728 },
             franchise_id: franchise1.id,
             district_id: district4.id,
-        } 
+        }
     })
 
     const gym5 = await prisma.gyms.upsert({
@@ -856,10 +856,10 @@ async function main() {
             closing_hour: "23:00",
             no_close: false,
             address: "Shop 301, 3/F, 11-15 Neton Road, Monk Kok, Hong Kong",
-            google_position: {lat: 22.318871736905805, lng: 114.1685881394834},
+            google_position: { lat: 22.318871736905805, lng: 114.1685881394834 },
             franchise_id: franchise1.id,
             district_id: district5.id,
-        } 
+        }
     })
 
     const gym6 = await prisma.gyms.upsert({
@@ -871,10 +871,10 @@ async function main() {
             password: await hashPassword('247cwb'),
             no_close: true,
             address: "Shop 101, 1/F, 1-3 LeaGarden, Causeway Bay, Hong Kong",
-            google_position: {lat: 22.28020809554962, lng:114.1822722244828},
+            google_position: { lat: 22.28020809554962, lng: 114.1822722244828 },
             franchise_id: franchise2.id,
             district_id: districts1.id,
-        } 
+        }
     })
 
     const trainers1 = await prisma.trainers.upsert({
@@ -988,22 +988,22 @@ async function main() {
             calories: 200,
             default_trainer_id: trainers2.id,
             default_quota: 20,
-            courseSchedules:{
-                createMany:{
-                    data:[
+            courseSchedules: {
+                createMany: {
+                    data: [
                         {
-                            trainer_id:trainers2.id,
-                            quota:20,
+                            trainer_id: trainers2.id,
+                            quota: 20,
                             time: new Date('2023-04-13T09:00:00+08:00')
                         },
                         {
-                            trainer_id:trainers2.id,
-                            quota:20,
+                            trainer_id: trainers2.id,
+                            quota: 20,
                             time: new Date('2023-04-13T17:00:00+08:00')
                         },
                         {
-                            trainer_id:trainers2.id,
-                            quota:20,
+                            trainer_id: trainers2.id,
+                            quota: 20,
                             time: new Date('2023-04-15T09:00:00+08:00')
                         }
                     ]
@@ -1025,7 +1025,7 @@ async function main() {
             calories: 300,
             default_trainer_id: trainers2.id,
             default_quota: 20,
-            
+
         },
     })
 
@@ -1042,7 +1042,7 @@ async function main() {
             calories: 400,
             default_trainer_id: trainers2.id,
             default_quota: 20,
-            
+
         },
     })
 
@@ -1059,7 +1059,7 @@ async function main() {
             calories: 200,
             default_trainer_id: trainers4.id,
             default_quota: 20,
-            
+
         },
     })
 
@@ -1076,22 +1076,22 @@ async function main() {
             calories: 300,
             default_trainer_id: trainers4.id,
             default_quota: 20,
-            courseSchedules:{
-                createMany:{
-                    data:[
+            courseSchedules: {
+                createMany: {
+                    data: [
                         {
-                            trainer_id:trainers4.id,
-                            quota:20,
+                            trainer_id: trainers4.id,
+                            quota: 20,
                             time: new Date('2023-04-14T09:00:00+08:00')
                         },
                         {
-                            trainer_id:trainers4.id,
-                            quota:20,
+                            trainer_id: trainers4.id,
+                            quota: 20,
                             time: new Date('2023-04-14T17:00:00+08:00')
                         },
                         {
-                            trainer_id:trainers2.id,
-                            quota:20,
+                            trainer_id: trainers2.id,
+                            quota: 20,
                             time: new Date('2023-04-15T09:00:00+08:00')
                         }
                     ]
@@ -1212,35 +1212,35 @@ async function main() {
         },
     })
     const creditTransactionAdd = await prisma.creditTransactionType.create({
-        data:{
-            name:"add",
-    }
+        data: {
+            name: "add",
+        }
     })
 
     const creditTransactionMinus = await prisma.creditTransactionType.create({
-        data:{
-            name:"minus"
+        data: {
+            name: "minus"
         }
     })
 
     const creditTransaction = await prisma.creditTransaction.create({
-        data:{
+        data: {
             credit: 10000,
             credit_transaction_type_id: creditTransactionAdd.id,
-            user_id:user2.id,
-            details:"test add"
+            user_id: user2.id,
+            details: "test add"
         }
     })
 
     const calorieTransactionAdd = await prisma.calorieTransactionType.create({
-        data:{
-            name:"add",
+        data: {
+            name: "add",
         }
     })
 
     const calorieTransactionMinus = await prisma.calorieTransactionType.create({
-        data:{
-            name:"minus"
+        data: {
+            name: "minus"
         }
     })
 

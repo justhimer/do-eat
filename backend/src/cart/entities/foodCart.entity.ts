@@ -12,12 +12,12 @@ export class FoodCart {
 
     @ApiProperty()
     @IsInt()
-    food_id: string;
+    food_id: number;
 
 
     @ApiProperty()
     @IsInt()
-    quantity: string;
+    quantity: number;
 
 
 }

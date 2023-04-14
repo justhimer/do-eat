@@ -6,7 +6,7 @@ export async function fetchAddItem(item: {
 }) {
     console.log(item);
 
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/addItem`, {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
         method: "POST",
         body: JSON.stringify(item),
         headers: {

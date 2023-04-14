@@ -11,17 +11,17 @@ export class FoodCartService {
         return this.prisma.foodCart.create({
             data: {
                 user_id: user_id,
-                food_id: parseInt(createFoodCartDto.food_id),
-                quantity: parseInt(createFoodCartDto.quantity)
+                food_id: createFoodCartDto.food_id,
+                quantity: createFoodCartDto.quantity
             }
-
         });
     }
 
-    async findOne(id: number): Promise<FoodCart | null> {
-        return this.prisma.foodCart.findUnique({
+    async findOne(food_id: number, user_id: number): Promise<FoodCart | null> {
+        return this.prisma.foodCart.findFirst({
             where: {
-                id,
+                food_id: food_id,
+                user_id: user_id
             },
             include: {
                 users: true,
@@ -51,8 +51,8 @@ export class FoodCartService {
             where: { id: user_id },
             data: {
                 user_id: user_id,
-                food_id: parseInt(updateFoodCartDto.food_id),
-                quantity: parseInt(updateFoodCartDto.quantity)
+                food_id: updateFoodCartDto.food_id,
+                quantity: updateFoodCartDto.quantity
             }
         });
     }

@@ -20,14 +20,19 @@ export class FoodCartController {
     }
 
     @UseGuards(AuthGuard("jwt"))
-    @Post(':addItem')
-    test(@Request() req: any, @Body() createFoodCartDto: any) {
-        console.log(createFoodCartDto);
+    @Post()
+    async addtoCart(@Request() req: any, @Body() createFoodCartDto: any) {
+        console.log('createFoodCartDto: ', createFoodCartDto);
 
         const userId = req.user.id;
-        this.foodCartService.create(createFoodCartDto, userId);
-
         console.log(userId);
+
+        // make sure db do not has the food
+        const foundFood = await this.foodCartService.findOne(createFoodCartDto.food_id, userId);
+        if (foundFood) { return { message: 'already added' } }
+
+        // then add to db
+        await this.foodCartService.create(createFoodCartDto, userId);
 
         console.log('added');
         return { message: 'added' }
@@ -49,13 +54,10 @@ export class FoodCartController {
 
 
 
-
-
-
-    @Get('id')
-    findone(@Param('id') id: number) {
-        return this.foodCartService.findOne(+id);
-    }
+    // @Get('id')
+    // findone(@Param('id') id: number) {
+    //     return this.foodCartService.findOne(+id);
+    // }
 
     @UseGuards(AuthGuard("jwt"))
     @Post(':update')

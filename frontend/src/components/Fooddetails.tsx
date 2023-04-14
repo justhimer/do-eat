@@ -13,6 +13,7 @@ import { fetchAddItem, fetchAllCartItems } from '../api/cartAPI';
 
 export const Fooddetails = ({ match }: { match: any }) => {
 
+    const history = useHistory();
     const param = useParams<{ id: string }>()
     const id = parseInt(param.id)
     const [image, setImage] = useState('');
@@ -21,37 +22,28 @@ export const Fooddetails = ({ match }: { match: any }) => {
     const [calories, setCalories] = useState(0);
     const [allergens, setAllergens] = useState('');
 
-    const [isOpenMoal, setisOpenMoal] = useState(false);
+    // const [isOpenMoal, setisOpenMoal] = useState(false);
     // const [present, dismiss] = useIonLoading();
-    const modal = useRef<HTMLIonModalElement>(null);
-    const [count, setCount] = useState(0);
-    const [amount, setAmount] = useState(0);
+    // const modal = useRef<HTMLIonModalElement>(null);
+    // const [count, setCount] = useState(0);
+    // const [amount, setAmount] = useState(0);
 
     const { data: food } = useQuery({
         queryKey: ["food"],
         queryFn: () => fetchOneFoods(match.params.id),
     });
 
-    // const { data: cart } = useQuery({
-    //     queryKey: ["cart"],
-    //     queryFn: async () => {
+
+    // const { mutate: readCart } = useMutation({
+    //     mutationFn: async () => {
     //         const cartItems = await fetchAllCartItems()
     //         console.log('cartItems: ', cartItems);
-    //         setCount(cartItems.quantity);
     //         return cartItems;
     //     },
+    //     // onSuccess(cartItems) {
+    //     //     setCount(cartItems.quantity);
+    //     // },
     // })
-
-    const { mutate: readCart } = useMutation({
-        mutationFn: async () => {
-            const cartItems = await fetchAllCartItems()
-            console.log('cartItems: ', cartItems);
-            return cartItems;
-        },
-        onSuccess(cartItems) {
-            setCount(cartItems.quantity);
-        },
-    })
 
     useEffect(() => {
         if (food) {
@@ -63,9 +55,9 @@ export const Fooddetails = ({ match }: { match: any }) => {
         }
     }, [food]);
 
-    function dismiss() {
-        modal.current?.dismiss();
-    }
+    // function dismiss() {
+    //     modal.current?.dismiss();
+    // }
 
     const { mutate: addToCart } = useMutation({
         mutationFn: () => fetchAddItem({
@@ -73,6 +65,10 @@ export const Fooddetails = ({ match }: { match: any }) => {
             quantity: 0
         }),
     })
+
+    const onCartIcon = () => {
+        history.push('/food-cart');
+    }
 
     return (
 
@@ -84,8 +80,8 @@ export const Fooddetails = ({ match }: { match: any }) => {
                     </IonButton>
                     <IonTitle>Eat</IonTitle>
                     <IonBadge className={Fooddetailsstyle.count}>1</IonBadge>
-                    <IonIcon className={Fooddetailsstyle.icon} icon={cartOutline} slot="end" onClick={() => { setisOpenMoal(!isOpenMoal) }}></IonIcon>
-                    <IonContent class="ion-padding">
+                    <IonIcon className={Fooddetailsstyle.icon} icon={cartOutline} slot="end" onClick={onCartIcon}></IonIcon>
+                    {/* <IonContent class="ion-padding">
                         <IonModal onIonModalWillDismiss={() => { setisOpenMoal(false) }} isOpen={isOpenMoal} id="example-modal" ref={modal} >
                             <div className="wrapper">
                                 <h1>Just Eat</h1>
@@ -110,7 +106,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                                 </IonList>
                             </div>
                         </IonModal>
-                    </IonContent>
+                    </IonContent> */}
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -118,7 +114,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                 <div>
                     {/* <h1>Food Details:</h1> */}
                     <div>
-                        <img src={`./assets/foodimage/${image}`} alt='food image' />
+                        <img src={image} alt='food image' />
                     </div>
                     <div>
                         <h2>{name}</h2>
