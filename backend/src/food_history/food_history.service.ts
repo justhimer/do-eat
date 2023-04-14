@@ -23,6 +23,7 @@ export class FoodHistoryService {
         },
         gym: {
           select: {
+            name: true,
             address: true,
             no_close: true,
             opening_hour: true,
