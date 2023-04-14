@@ -7,10 +7,10 @@ import { UpdateFoodCartDto } from './dto/update-foodCart.dto';
 export class FoodCartService {
     constructor(private prisma: PrismaService) { }
 
-    async create(createFoodCartDto: CreateFoodCartDto): Promise<FoodCart> {
+    async create(createFoodCartDto: CreateFoodCartDto, user_id: number): Promise<FoodCart> {
         return this.prisma.foodCart.create({
             data: {
-                user_id: parseInt(createFoodCartDto.user_id),
+                user_id: user_id,
                 food_id: parseInt(createFoodCartDto.food_id),
                 quantity: parseInt(createFoodCartDto.quantity)
             }
@@ -36,16 +36,21 @@ export class FoodCartService {
                 user_id: userId,
             },
             include: {
-                users: true,
-                foods: true,
+                foods: {
+                    select: {
+                        name: true,
+                        calories: true,
+                        image: true
+                    }
+                },
             },
         });
     }
-    async update(id: number, updateFoodCartDto: UpdateFoodCartDto) {
+    async update(updateFoodCartDto: UpdateFoodCartDto, user_id: number) {
         return this.prisma.foodCart.update({
-            where: { id },
+            where: { id: user_id },
             data: {
-                user_id: parseInt(updateFoodCartDto.user_id),
+                user_id: user_id,
                 food_id: parseInt(updateFoodCartDto.food_id),
                 quantity: parseInt(updateFoodCartDto.quantity)
             }

@@ -6,9 +6,9 @@ export class FoodCart {
     @IsInt()
     id: number;
 
-    @ApiProperty()
-    @IsInt()
-    user_id: string;
+    // @ApiProperty()
+    // @IsInt()
+    // user_id: string;
 
     @ApiProperty()
     @IsInt()
