@@ -22,11 +22,11 @@ import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserSchedule } from './components/user/UserSchedule';
 import { UserSignupForm } from './components/auth/UserSignupForm';
-import { GymCourses } from './components/gyms/superstructure/GymCourses';
-import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
+import { GymCourses } from './components/do/superstructure/GymCourses';
+import { GymConfirmation } from './components/do/superstructure/GymConfirmation';
 import { GymsDo } from './pages/gyms/GymsDo';
 import { GymsEat } from './pages/gyms/GymsEat';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 import { useEffect } from 'react';
 
@@ -144,14 +144,20 @@ const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-com
           </Route>
 
           {/* do routes */}
-          <Route exact path="/do-what" component={GymCourses}>
+          <Route exact path="/do-what">
+            <GymCourses/>
           </Route>
-          <Route exact path="/do-it" component={GymConfirmation}>
+          <Route exact path="/do-it">
+            <GymConfirmation/>
           </Route>
 
           {/*gym CMS routes */}
-          <Route exact path="/gyms-do" component={GymsDo}></Route>
-          <Route exact path="/gyms-eat" component={GymsEat}></Route>
+          <Route exact path="/gyms-do" >
+            <GymsDo/>
+          </Route>
+          <Route exact path="/gyms-eat" >
+            <GymsEat/>
+          </Route>
 
           {/* food routes */}
           <Route path="/fooddetails/:id" component={Fooddetails}>

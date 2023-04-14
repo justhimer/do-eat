@@ -1,19 +1,21 @@
-import { IonContent, IonHeader, IonLabel, IonPage, IonSegment, IonSegmentButton, IonTitle, IonToolbar } from "@ionic/react"
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
 
 
 export function GymsDo() {
 
+    
 
     return (
         <IonPage >
             <IonHeader >
                 <IonToolbar >
-                    <IonTitle>Gyms' "Do"</IonTitle>
+                    <IonTitle>Gyms' Do</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
-                <h5>testing GymsDo</h5>
+            <IonContent fullscreen class="ion-padding">
+            <IonButton expand="block">Add courses</IonButton>
+            
             </IonContent>
         </IonPage >
-    )
+)
 }
