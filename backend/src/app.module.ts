@@ -20,6 +20,8 @@ import { FileModule } from './file/file.module';
 import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { FoodCartModule } from './cart/foodCart.module';
+
 import { CourseTypeModule } from './course_type/course_type.module';
 import { FoodHistoryModule } from './food_history/food_history.module';
 import { FoodOrderModule } from './food_order/food_order.module';
@@ -29,11 +31,11 @@ import { FoodOrderModule } from './food_order/food_order.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname,"public"),
-      serveRoot: join(__dirname,"public","images","trainers","default_trainer.png")
+      rootPath: join(__dirname, "public"),
+      serveRoot: join(__dirname, "public", "images", "trainers", "default_trainer.png")
     }),
     PrismaModule.forRoot(),
-    StripeModule.forRoot(process.env.STRIPE_API_SECRET_KEY,{apiVersion: '2022-11-15'}),
+    StripeModule.forRoot(process.env.STRIPE_API_SECRET_KEY, { apiVersion: '2022-11-15' }),
     UsersModule,
     FoodsModule,
     FoodTypesModule,
@@ -50,6 +52,7 @@ import { FoodOrderModule } from './food_order/food_order.module';
     StripeModule,
     PaymentModule,
     SubscriptionsModule,
+    FoodCartModule,
     CourseTypeModule,
     FoodHistoryModule,
     FoodOrderModule,
@@ -57,4 +60,4 @@ import { FoodOrderModule } from './food_order/food_order.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

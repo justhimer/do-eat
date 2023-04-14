@@ -41,8 +41,8 @@ export function UserOrderList() {
                             foods={order.FoodOrder}
                             address={order.gym.address}
                             no_close={order.gym.no_close}
-                            opening={order.gym.no_close? undefined : order.gym.opening_hour}
-                            closing={order.gym.no_close? undefined : order.gym.closing_hour}
+                            opening={order.gym.no_close ? undefined : order.gym.opening_hour}
+                            closing={order.gym.no_close ? undefined : order.gym.closing_hour}
                             google_position={order.gym.google_position}
                         />
                     ))

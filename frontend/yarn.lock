@@ -1094,7 +1094,7 @@
 
 "@capacitor/camera@^4.1.4":
   version "4.1.4"
-  resolved "https://registry.npmjs.org/@capacitor/camera/-/camera-4.1.4.tgz"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-4.1.4.tgz#5d019f88d1f3547b537270e35bcb96084eb48df6"
   integrity sha512-7f4n7PlnstYsdGyxc0Kc4hIyS6csFLOjXvffm7pJsuy9pSo+kfdOPdYgGg360QwbUAmA+Yv+J1ZW1eFIwgvWrQ==
 
 "@capacitor/cli@4.7.0":
@@ -1359,12 +1359,12 @@
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/core@7.0.0-rc.5":
-  version "7.0.0-rc.5"
-  resolved "https://registry.npmjs.org/@ionic/core/-/core-7.0.0-rc.5.tgz"
-  integrity sha512-c8st2bhM+mlauv2/1Xm++cZIoAXG5mEK2LA+HbO5RAUI6045k/GbXsVbpDyGI0HtrOvOq8+IyCH5i+AdwqzyWQ==
+"@ionic/core@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-7.0.1.tgz#9ca6f3fdf4d46324bb3f0092b5604bc0d9386cfc"
+  integrity sha512-RK69pJ+2e5gLM4eASR2vccPQibIz+Lsc1uHql61lV8Xghb7+usYdeSXUvmn2JL3hkbSMt6JxKCTLfQjFJc+d8Q==
   dependencies:
-    "@stencil/core" "^3.1.0"
+    "@stencil/core" "^3.2.0"
     ionicons "^7.1.0"
     tslib "^2.1.0"
 
@@ -1373,20 +1373,20 @@
   resolved "https://registry.npmjs.org/@ionic/pwa-elements/-/pwa-elements-3.1.1.tgz"
   integrity sha512-BoEX1pSrKn5dP4VQwaf8DweAmT4ynmpW+9f6oj/W1xLe54bmuXcUY07ziuZX1DLu50xHSYcO5qJ/dbYC/w6wgA==
 
-"@ionic/react-router@^7.0.0-rc.5":
-  version "7.0.0-rc.5"
-  resolved "https://registry.npmjs.org/@ionic/react-router/-/react-router-7.0.0-rc.5.tgz"
-  integrity sha512-3VBpXjFEtpXQSTQL27gpd5yWuHdbfY6k3BpBYrHH6dPX+E/sT80/Y2AMD/uayLQHVit9rrBQ0WO2O/rziVlh0w==
+"@ionic/react-router@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-7.0.1.tgz#67f9f602409b013d529b8e5e72b0804e4e93d16a"
+  integrity sha512-QvOuZjMAAK1v8YFkeDjwhVpGmzJO0V44ScVc0Pj00Jh+677Y+g3PddahBh1am2xngRj8XAxZoyk9EjK9kzAmGw==
   dependencies:
-    "@ionic/react" "7.0.0-rc.5"
+    "@ionic/react" "7.0.1"
     tslib "*"
 
-"@ionic/react@7.0.0-rc.5", "@ionic/react@^7.0.0-rc.5":
+"@ionic/react@^7.0.0-rc.5", "@ionic/react@7.0.0-rc.5":
   version "7.0.0-rc.5"
   resolved "https://registry.npmjs.org/@ionic/react/-/react-7.0.0-rc.5.tgz"
   integrity sha512-D6PWjKEyboG9yTGjJ4kw92fECd0cZXLv0suraTp7Lg8nS4BGwthTxHq+xqJePEXZqMcoCCqgFrwDpS4bCXCDkw==
   dependencies:
-    "@ionic/core" "7.0.0-rc.5"
+    "@ionic/core" "7.0.1"
     ionicons "^7.0.0"
     tslib "*"
 
@@ -1824,6 +1824,11 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@react-icons/all-files@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@react-icons/all-files/-/all-files-4.1.0.tgz#477284873a0821928224b6fc84c62d2534d6650b"
+  integrity sha512-hxBI2UOuVaI3O/BhQfhtb4kcGn9ft12RWAFVMUeNjqqhLsHvFtzIkFaptBJpFDANTKoDfdVoHTKZDlwKCACbMQ==
+
 "@reduxjs/toolkit@^1.9.3":
   version "1.9.3"
   resolved "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.9.3.tgz"
@@ -1905,10 +1910,10 @@
   resolved "https://registry.npmjs.org/@stencil/core/-/core-2.22.3.tgz"
   integrity sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==
 
-"@stencil/core@^3.1.0":
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/@stencil/core/-/core-3.2.0.tgz"
-  integrity sha512-vAZiHg4h6hZn4GP6P4w/d7qJwovW0xroitVAn/Ay0rUOeMHqMDYTX5jq0Vy/bgKactKam5WL/to50esGe6lDUQ==
+"@stencil/core@^3.2.0":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-3.2.1.tgz#50bd07f478e04a5527a35aee61deff772b056860"
+  integrity sha512-Ybm4NteQBScLq3H0JML/uqo4nWjNpZw1HAAURtR5LlRm7ptzNKO5S8EnHp3m05/uyTzeh9yLpUFHY7bxGNdYLg==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -3030,6 +3035,15 @@ axe-core@^4.6.2:
   version "4.6.3"
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.6.3.tgz"
   integrity sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==
+
+axios@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.5.tgz#e07209b39a0d11848e3e341fa087acd71dadc542"
+  integrity sha512-glL/PvG/E+xCWwV8S6nCHcrfg1exGx7vxyUIivIA1iL7BIh6bePylCfVHwp6k13ao7SATxB6imau2kqY+I67kw==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 axobject-query@^3.1.1:
   version "3.1.1"
@@ -4911,7 +4925,7 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.7.tgz"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
@@ -4946,6 +4960,15 @@ form-data@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
   integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
+form-data@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -7972,10 +7995,23 @@ proxy-addr@~2.0.7:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
 
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
+
 psl@^1.1.33:
   version "1.9.0"
   resolved "https://registry.npmjs.org/psl/-/psl-1.9.0.tgz"
   integrity sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==
+
+pullstate@^1.25.0:
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/pullstate/-/pullstate-1.25.0.tgz#f7d9c63156d9bcf5f500dfe921aeee678f2febc7"
+  integrity sha512-6SJMhK5EbDhrbyocMQOZKY3QKC5RfLcdtYD1y7wioF5dseVsdi3vmeHG3TwW4SrhQQP/WKyU/Np2X6UOhq1F6g==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    immer "^9.0.16"
 
 punycode@^2.1.0, punycode@^2.1.1:
   version "2.3.0"
@@ -8097,6 +8133,11 @@ react-hook-form@^7.43.9:
   version "7.43.9"
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.43.9.tgz"
   integrity sha512-AUDN3Pz2NSeoxQ7Hs6OhQhDr6gtF9YRuutGDwPQqhSUAHJSgGl2VeY3qN19MG0SucpjgDiuMJ4iC5T5uB+eaNQ==
+
+react-icon@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-icon/-/react-icon-1.0.0.tgz#6038598eb07fb3e64b3e7865d271f79f3559de0b"
+  integrity sha512-VzSlpBHnLanVw79mOxyq98hWDi6DlxK9qPiZ1bAK6bLurMBCaxO/jjyYUrRx9+JGLc/NbnwOmyE/W5Qglbb2QA==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
