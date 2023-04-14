@@ -16,7 +16,20 @@ export async function fetchAddItem(item: {
     })
     // console.log(res)
     const data = await res.json();
-    // console.log(data);
+    console.log(data);
+
+    return data;
+}
+
+export async function fetchGetCart() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/id`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+        }
+    })
+    const data = await res.json();
+
 
     return data;
 }

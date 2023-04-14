@@ -8,16 +8,16 @@ export class FoodCart {
 
     @ApiProperty()
     @IsInt()
-    user_id: number;
+    user_id: string;
 
     @ApiProperty()
     @IsInt()
-    food_id: number;
+    food_id: string;
 
 
     @ApiProperty()
     @IsInt()
-    quantity: number;
+    quantity: string;
 
 
 }

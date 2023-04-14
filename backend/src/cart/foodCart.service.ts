@@ -10,9 +10,9 @@ export class FoodCartService {
     async create(createFoodCartDto: CreateFoodCartDto): Promise<FoodCart> {
         return this.prisma.foodCart.create({
             data: {
-                user_id: createFoodCartDto.user_id,
-                food_id: createFoodCartDto.food_id,
-                quantity: createFoodCartDto.quantity
+                user_id: parseInt(createFoodCartDto.user_id),
+                food_id: parseInt(createFoodCartDto.food_id),
+                quantity: parseInt(createFoodCartDto.quantity)
             }
 
         });
@@ -45,9 +45,9 @@ export class FoodCartService {
         return this.prisma.foodCart.update({
             where: { id },
             data: {
-                user_id: updateFoodCartDto.user_id,
-                food_id: updateFoodCartDto.food_id,
-                quantity: updateFoodCartDto.quantity
+                user_id: parseInt(updateFoodCartDto.user_id),
+                food_id: parseInt(updateFoodCartDto.food_id),
+                quantity: parseInt(updateFoodCartDto.quantity)
             }
         });
     }

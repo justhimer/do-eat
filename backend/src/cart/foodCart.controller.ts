@@ -13,20 +13,30 @@ export class FoodCartController {
     constructor(private readonly foodCartService: FoodCartService) { }
 
     @UseGuards(AuthGuard("jwt"))
-
     @Post('addItem')
-    addItem(@Request() req, @Body() createFoodCartDto: CreateFoodCartDto) {
-        const foodid = req.body.id;
+    test(@Request() req: any, @Body() createFoodCartDto: any) {
+        console.log(createFoodCartDto);
         const userId = req.user.id;
-        const quantity = req.body.quantity;
-
-        console.log(foodid);
         console.log(userId);
-        console.log(quantity);
-        return this.foodCartService.create(createFoodCartDto);
+
+        console.log('added');
+        return { message: 'added' }
+
     }
 
-    @Get()
+    // @Post('addItem')
+    // async addItem(@Request() req, @Body() createFoodCartDto: CreateFoodCartDto) {
+    //     const foodid = req.body.id;
+    //     const userId = req.user.id;
+    //     const quantity = req.body.quantity;
+
+    //     console.log(foodid);
+    //     console.log(userId);
+    //     console.log(quantity);
+    //     return await this.foodCartService.create(createFoodCartDto);
+    // }
+
+    @Get(':id')
     findone(@Param('id') id: number) {
         return this.foodCartService.findOne(+id);
     }
@@ -36,7 +46,7 @@ export class FoodCartController {
         return this.foodCartService.findAllByUserId(+id);
     }
 
-    @Post('id')
+    @Post(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() updateFoodCartDto: UpdateFoodCartDto) {
         return this.foodCartService.update(id, updateFoodCartDto);
     }
