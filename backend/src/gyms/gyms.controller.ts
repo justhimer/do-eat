@@ -53,6 +53,7 @@ export class GymsController {
     const payload = {
       id: foundGym.id,
       username: foundGym.username,
+      name: foundGym.name,
       franchise_id: foundGym.franchise_id,
       district_id: foundGym.district_id,
     };

@@ -8,6 +8,14 @@ export class GymsService {
 
     async findById(id: number) {
         const foundGym = await this.prisma.gyms.findFirst({
+            include: {
+                franchise: {
+                    select: {
+                        name: true,
+                        email: true
+                    }
+                }
+            },
             where: {
                 id: id,
             },
