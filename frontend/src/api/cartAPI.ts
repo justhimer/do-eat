@@ -1,8 +1,8 @@
 import { id } from "date-fns/locale";
 
 export async function fetchAddItem(item: {
-    id: number
-    calories: number,
+    food_id: number
+    quantity: number,
 }) {
     console.log(item);
 
@@ -21,8 +21,28 @@ export async function fetchAddItem(item: {
     return data;
 }
 
-export async function fetchGetCart() {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/id`, {
+export async function fetchAllCartItems() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+        }
+    })
+    const data = await res.json();
+    console.log(data);
+
+    return data;
+}
+
+
+
+
+
+
+
+export async function updateCart() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/update`, {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',

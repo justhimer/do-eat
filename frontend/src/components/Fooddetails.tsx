@@ -8,7 +8,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchOneFoods } from '../api/foodAPIs';
 import { cartOutline } from 'ionicons/icons';
-import { fetchAddItem } from '../api/cartAPI';
+import { fetchAddItem, fetchAllCartItems } from '../api/cartAPI';
 
 
 export const Fooddetails = ({ match }: { match: any }) => {
@@ -23,11 +23,35 @@ export const Fooddetails = ({ match }: { match: any }) => {
 
     const [isOpenMoal, setisOpenMoal] = useState(false);
     // const [present, dismiss] = useIonLoading();
+    const modal = useRef<HTMLIonModalElement>(null);
+    const [count, setCount] = useState(0);
+    const [amount, setAmount] = useState(0);
 
-    const { data: food, isLoading, refetch } = useQuery({
+    const { data: food } = useQuery({
         queryKey: ["food"],
         queryFn: () => fetchOneFoods(match.params.id),
     });
+
+    // const { data: cart } = useQuery({
+    //     queryKey: ["cart"],
+    //     queryFn: async () => {
+    //         const cartItems = await fetchAllCartItems()
+    //         console.log('cartItems: ', cartItems);
+    //         setCount(cartItems.quantity);
+    //         return cartItems;
+    //     },
+    // })
+
+    const { mutate: readCart } = useMutation({
+        mutationFn: async () => {
+            const cartItems = await fetchAllCartItems()
+            console.log('cartItems: ', cartItems);
+            return cartItems;
+        },
+        onSuccess(cartItems) {
+            setCount(cartItems.quantity);
+        },
+    })
 
     useEffect(() => {
         if (food) {
@@ -39,18 +63,14 @@ export const Fooddetails = ({ match }: { match: any }) => {
         }
     }, [food]);
 
-    const modal = useRef<HTMLIonModalElement>(null);
-    const [count, setCount] = useState(0);
-    const [amount, setAmount] = useState(0);
-
     function dismiss() {
         modal.current?.dismiss();
     }
 
     const { mutate: addToCart } = useMutation({
         mutationFn: () => fetchAddItem({
-            id,
-            calories,
+            food_id: id,
+            quantity: 0
         }),
     })
 
