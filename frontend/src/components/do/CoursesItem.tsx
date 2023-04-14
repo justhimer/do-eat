@@ -30,7 +30,7 @@ export function CoursesItem(props: CoursesInterface) {
     const changeData = ()=>{
 
         dispatch(changeSelectedCourse(props))
-        history.push('/test2')
+        history.push('/do-it')
     }
 
 
@@ -52,7 +52,7 @@ export function CoursesItem(props: CoursesInterface) {
                 <div className={courseStyle.cardTopChips}>
                     <IonChip >
                         <IonIcon icon={flameOutline} />
-                        <IonLabel>{props.calorise}</IonLabel>
+                        <IonLabel>{props.calories}</IonLabel>
                     </IonChip>
                     <IonChip>
                         <IonIcon icon={cardOutline} />

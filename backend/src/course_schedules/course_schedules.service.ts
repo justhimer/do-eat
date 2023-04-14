@@ -3,6 +3,8 @@ import { addDays } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import { PrismaService } from 'nestjs-prisma';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
+import { CreateCourseSchedulesDTO } from './dto/CreateCourseSchedules.dto';
+import { UpdateCourseSchedulesDTO } from './dto/UpdateCourseSchedules.dto';
 
 @Injectable()
 export class CourseSchedulesService {
@@ -54,6 +56,7 @@ export class CourseSchedulesService {
         return (quota - filledSlots)
       }
 
+      // used in front end do-tab to get the courses available on the day
     async someCoursesTimed(listGyms: Array<number>,time: string) {
         
         const data = await this.prisma.courseSchedules.findMany({
@@ -113,7 +116,7 @@ export class CourseSchedulesService {
                         },
                         name:true,
                         credits:true,
-                        calorise:true,
+                        calories:true,
                         duration:true
                     }
                 }
@@ -136,7 +139,7 @@ export class CourseSchedulesService {
                           level:elem.courses.intensity.level,
                           quota:elem.quota,
                           time:elem.time,
-                          calorise:elem.courses.calorise,
+                          calories:elem.courses.calories,
                           credits:elem.courses.credits,
                           franchise:elem.courses.gyms.franchise.name,
                           gym:elem.courses.gyms.name,
@@ -152,6 +155,7 @@ export class CourseSchedulesService {
           }
     }
 
+    // for use in frontend do-tab horizontal date picker
     async getDatesWithCourses(listGyms: Array<number>){
         const data = await this.prisma.courseSchedules.findMany({
             select: {
@@ -178,7 +182,7 @@ export class CourseSchedulesService {
         return data
     }
 
-
+    // used in userSchedule cancel course, to check if there is at least 24 hour difference between now and course start
     async getDateTime(courseSchedule_id:number){
         try {
             const data = await this.prisma.courseSchedules.findFirst({
@@ -190,6 +194,54 @@ export class CourseSchedulesService {
             }else{
                 console.log('No data at getCourseDate')
                 throw new Error('no data')
+            }
+        } catch (error) {
+            console.log('error at course_schedules.services: ', error)
+            throw new Error(error)
+        }
+    }
+
+    // for gyms to create a new timeslot from course
+    async createNewCourseTime(body: CreateCourseSchedulesDTO){
+        try {
+            const data = await this.prisma.courseSchedules.create({
+                data:{
+                    course_id: body.course_id,
+                    trainer_id: body.trainer_id,
+                    quota: body.quota,
+                    time: body.time 
+                }
+            })
+            if (data){
+                return data
+            }else{
+                console.log('error at course_schedules.services: ')
+                throw new Error()
+            }
+        } catch (error) {
+            console.log('error at course_schedules.services: ', error)
+            throw new Error(error)
+        }
+    }
+
+    // for gyms to edit a new timeslot from course
+    async updateCourseTime(body: UpdateCourseSchedulesDTO){
+        try {
+            const data = await this.prisma.courseSchedules.update({
+                data:{
+                    course_id: body.course_id,
+                    trainer_id: body.trainer_id,
+                    quota: body.quota,
+                    time: body.time 
+                },where : {
+                    id : body.id
+                }
+            })
+            if (data){
+                return data
+            }else{
+                console.log('error at course_schedules.services: ')
+                throw new Error()
             }
         } catch (error) {
             console.log('error at course_schedules.services: ', error)

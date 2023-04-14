@@ -185,7 +185,7 @@ model Courses {
   intensity          Intensities       @relation(fields: [intensity_id], references: [id])
   course_type_id     Int               @db.Integer
   course_type        CourseTypes       @relation(fields: [course_type_id], references: [id])
-  calorise           Int               @db.Integer
+  calories           Int               @db.Integer
   duration           Int               @db.Integer
   default_quota      Int               @db.Integer
   default_trainer_id Int               @db.Integer

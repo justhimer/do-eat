@@ -17,7 +17,7 @@ export function GymCourses() {
                     <IonNavLink routerDirection="back" slot="start">
                         <IonBackButton></IonBackButton>
                     </IonNavLink>
-                    <IonTitle>Do "When"</IonTitle>
+                    <IonTitle>Do "What"</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

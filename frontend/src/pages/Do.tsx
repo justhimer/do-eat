@@ -1,9 +1,9 @@
 import { IonButton, IonCol, IonContent, IonHeader, IonLabel, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonViewWillLeave } from '@ionic/react';
 import { DistrictList } from '../components/districts/DistrictList';
-import { SelectedGymsDisplay } from '../components/gyms/SelectedGymsDisplay';
+import { SelectedGymsDisplay } from '../components/do/SelectedGymsDisplay';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
-import { GoogleMapComp } from '../components/gyms/GoogleMapComp';
+import { GoogleMapComp } from '../components/do/GoogleMapComp';
 
 
 export interface DistrictListInterface {
@@ -70,7 +70,7 @@ export function DoTab() {
           <IonCol>
             <IonButton onClick={(e) => {
               e.preventDefault()
-              history.push('/test')
+              history.push('/do-what')
             }}>Next</IonButton>
           </IonCol>
         </IonRow>

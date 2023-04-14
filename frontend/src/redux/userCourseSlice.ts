@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface CoursesInterface {
     this_id: number;
     filled: number;
-    calorise: number;
+    calories: number;
     course_id: number;
     course_type_id: number;
     course_type_name: string;
@@ -22,7 +22,7 @@ export interface CoursesInterface {
 const initialState: CoursesInterface = {
     this_id: NaN,
     filled: NaN,
-    calorise: NaN,
+    calories: NaN,
     course_id: NaN,
     course_type_id: NaN,
     course_type_name: "",
@@ -45,7 +45,7 @@ const userCourseSlice = createSlice({
         changeSelectedCourse: (state, action: PayloadAction<CoursesInterface>) => {
             state.this_id =action.payload.this_id
             state.filled = action.payload.filled
-            state.calorise = action.payload.calorise
+            state.calories = action.payload.calories
             state.course_id = action.payload.course_id
             state.course_type_id = action.payload.course_type_id
             state.course_type_name = action.payload.course_type_name
@@ -64,7 +64,7 @@ const userCourseSlice = createSlice({
             return Object.assign(state, {
                 this_id: NaN,
                 filled: NaN,
-                calorise: NaN,
+                calories: NaN,
                 course_id: NaN,
                 course_type_id: NaN,
                 course_type_name: "",

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Put, ParseIntPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Courses } from '@prisma/client';
+import { Course } from './entities/course.entity';
 
 @ApiTags('courses') // to categorize in swagger
 @Controller('courses')
@@ -26,6 +27,18 @@ export class CoursesController {
   async getCoursesInGym(@Req() req){
     const gym_id = req.user.id
     return await this.coursesService.allCoursesInGym(gym_id)
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Post('gyms/course')
+  async createCourse(@Req() req, @Body() body : CreateCourseDto){
+    return await this.coursesService.createCourse(body)  
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Put('gyms/course')
+  async updateCourse(@Req() req, @Body() body:Course){
+    return await this.coursesService.updateCourseInfo(body)
   }
 
 }
