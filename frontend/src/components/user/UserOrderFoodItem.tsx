@@ -1,7 +1,7 @@
 import { IonItem, IonThumbnail, IonLabel } from "@ionic/react";
 
 // css
-import UserMenuStyle from '../../scss/App.module.scss';
+import UserMenuStyle from '../../scss/UserMenu.module.scss';
 
 export interface UserOrderFoodItemProps {
     name: string;
