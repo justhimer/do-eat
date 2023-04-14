@@ -29,13 +29,21 @@ export function UserOrderList() {
                     <IonButton slot="start">
                         <IonBackButton default-href="/"></IonBackButton>
                     </IonButton>
-                    <IonTitle>Booked Courses</IonTitle>
+                    <IonTitle>Ordered Foods</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 {
-                    orders && orders.length > 0 && orders.map((order: any, index: number) => (
-                        <UserOrderItem />
+                    orders && orders.length > 0 && orders.map((order: any) => (
+                        <UserOrderItem
+                            key={order.id}
+                            foods={order.FoodOrder}
+                            address={order.gym.address}
+                            no_close={order.gym.no_close}
+                            opening={order.gym.no_close? order.gym.opening_hour : undefined}
+                            closing={order.gym.no_close? order.gym.closing_hour : undefined}
+                            google_position={order.gym.google_position}
+                        />
                     ))
                 }
             </IonContent>

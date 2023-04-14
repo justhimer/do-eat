@@ -1,18 +1,23 @@
 import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonThumbnail, IonLabel } from "@ionic/react";
 
 export interface UserOrderItemProps {
-    created_at: string;
     foods: {
-        name: string,
-        quantity: number
+        quantity: number,
+        food: {
+            name: string,
+        }
     }[],
     address: string;
     no_close: boolean;
-    
-
+    opening: string | undefined;
+    closing: string | undefined;
+    google_position: {
+        lat: number,
+        lng: number
+    }
 }
 
-export function UserOrderItem() {
+export function UserOrderItem(props: UserOrderItemProps) {
     return (
         <IonCard>
             <IonCardHeader>
