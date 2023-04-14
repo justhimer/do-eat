@@ -5,16 +5,17 @@ import { UserOrderItem } from "./UserOrderItem";
 
 export function UserOrderList() {
     const { data: orders, isLoading, refetch, remove } = useQuery({
-        queryKey: ["courses"],
+        queryKey: ["user_orders"],
         queryFn: async () => {
-            const foods = await fetchFoodsToBeCollectedForUser();
+            const orders = await fetchFoodsToBeCollectedForUser();
             // sorting according to created_at
-            foods.sort((a: any, b: any) => {
+            orders.sort((a: any, b: any) => {
                 const timeA = Date.parse(a.created_at);
                 const timeB = Date.parse(b.created_at);
                 return timeA - timeB;
             });
-            return foods;
+            console.log(orders);
+            return orders;
         },
     });
 
@@ -40,8 +41,8 @@ export function UserOrderList() {
                             foods={order.FoodOrder}
                             address={order.gym.address}
                             no_close={order.gym.no_close}
-                            opening={order.gym.no_close? order.gym.opening_hour : undefined}
-                            closing={order.gym.no_close? order.gym.closing_hour : undefined}
+                            opening={order.gym.no_close? undefined : order.gym.opening_hour}
+                            closing={order.gym.no_close? undefined : order.gym.closing_hour}
                             google_position={order.gym.google_position}
                         />
                     ))
