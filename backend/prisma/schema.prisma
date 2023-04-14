@@ -10,38 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model SubPlansTransactions {
+  id           Int      @id @default(autoincrement())
+  event_id     String   @db.VarChar(250)
+  user_id      Int      @db.Integer
+  sub_plans_id Int      @db.Integer
+  created_at   DateTime @default(now()) @db.Timestamptz
+  updated_at   DateTime @updatedAt @db.Timestamptz
+  user         Users    @relation(fields: [user_id], references: [id])
+  subPlan      SubPlans @relation(fields: [sub_plans_id], references: [id])
+}
+
 model SubPlans {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique @db.Text
-  unlimited  Boolean  @db.Boolean
-  credits    Int      @db.Integer
-  fee        Int      @db.Integer
-  duration   Int      @db.Integer
-  created_at DateTime @default(now()) @db.Timestamptz
-  updated_at DateTime @updatedAt @db.Timestamptz
-  users       Users[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique @db.Text
+  unlimited            Boolean                @db.Boolean
+  credits              Int                    @db.Integer
+  fee                  Int                    @db.Integer
+  duration             Int                    @db.Integer
+  created_at           DateTime               @default(now()) @db.Timestamptz
+  updated_at           DateTime               @updatedAt @db.Timestamptz
+  users                Users[]
+  subPlansTransactions SubPlansTransactions[]
 }
 
 model Users {
-  id                 Int                  @id @default(autoincrement())
-  email              String               @unique @db.Text
-  username           String?              @db.VarChar(255)
-  password           String               @db.Text
-  subscribed         Boolean              @db.Boolean @default(false)
-  subPlan            SubPlans?             @relation(fields: [sub_plan_id],references: [id])
-  sub_plan_id        Int?                  @db.Integer
-  sub_plan_start     DateTime?             @db.Timestamptz
-  sub_plan_end       DateTime?             @db.Timestamptz
-  icon               String               @default("default_icon.png") @db.Text
-  created_at         DateTime             @default(now()) @db.Timestamptz
-  updated_at         DateTime             @updatedAt @db.Timestamptz
-  FavouriteFoods     FavouriteFoods[]
-  FavouriteCourse    FavouriteCourse[]
-  FoodCart           FoodCart[]
-  FoodHistory        FoodHistory[]
-  UserSchedule       UserSchedule[]
-  CalorieTransaction CalorieTransaction[]
-  CreditTransaction  CreditTransaction[]
+  id                  Int                    @id @default(autoincrement())
+  email               String                 @unique @db.Text
+  username            String?                @db.VarChar(255)
+  password            String                 @db.Text
+  subscribed          Boolean                @default(false) @db.Boolean
+  subPlan             SubPlans?              @relation(fields: [sub_plan_id], references: [id])
+  sub_plan_id         Int?                   @db.Integer
+  sub_plan_start      DateTime?              @db.Timestamptz
+  sub_plan_end        DateTime?              @db.Timestamptz
+  icon                String?                @db.Text
+  created_at          DateTime               @default(now()) @db.Timestamptz
+  updated_at          DateTime               @updatedAt @db.Timestamptz
+  FavouriteFoods      FavouriteFoods[]
+  FavouriteCourse     FavouriteCourse[]
+  FoodCart            FoodCart[]
+  FoodHistory         FoodHistory[]
+  UserSchedule        UserSchedule[]
+  CalorieTransaction  CalorieTransaction[]
+  CreditTransaction   CreditTransaction[]
+  subPlanTransactions SubPlansTransactions[]
 }
 
 model FoodTypes {
@@ -67,7 +80,18 @@ model Foods {
   updated_at     DateTime         @updatedAt @db.Timestamptz
   FavouriteFoods FavouriteFoods[]
   FoodCart       FoodCart[]
-  FoodHistory    FoodHistory[]
+  FoodOrder      FoodOrder[]
+}
+
+model FoodOrder {
+  id              Int         @id @default(autoincrement())
+  food_history_id Int         @db.Integer
+  food_history    FoodHistory @relation(fields: [food_history_id], references: [id])
+  food_id         Int         @db.Integer
+  food            Foods       @relation(fields: [food_id], references: [id])
+  quantity        Int         @db.Integer
+  created_at      DateTime    @default(now()) @db.Timestamptz
+  updated_at      DateTime    @updatedAt @db.Timestamptz
 }
 
 model FoodHistory {
@@ -76,12 +100,11 @@ model FoodHistory {
   gym                Gyms                 @relation(fields: [gym_id], references: [id])
   user_id            Int                  @db.Integer
   user               Users                @relation(fields: [user_id], references: [id])
-  food_id            Int                  @db.Integer
-  food               Foods                @relation(fields: [food_id], references: [id])
-  collection_status  String               @db.Text
+  collection_status  Boolean              @db.Boolean
   created_at         DateTime             @default(now()) @db.Timestamptz
   updated_at         DateTime             @updatedAt @db.Timestamptz
   CalorieTransaction CalorieTransaction[]
+  FoodOrder          FoodOrder[]
 }
 
 model Districts {
@@ -113,8 +136,8 @@ model Gyms {
   franchise_id    Int           @db.Integer
   district        Districts     @relation(fields: [district_id], references: [id])
   district_id     Int           @db.Integer
-  opening_hour    Int           @db.Integer
-  closing_hour    Int           @db.Integer
+  opening_hour    String?           @db.Text
+  closing_hour    String?           @db.Text
   no_close        Boolean       @db.Boolean
   address         String        @db.Text
   google_position Json          @db.Json
@@ -155,14 +178,14 @@ model CourseTypes {
 model Courses {
   id                 Int               @id @default(autoincrement())
   gym_id             Int               @db.Integer
-  gyms               Gyms              @relation(fields: [gym_id],references: [id])
+  gyms               Gyms              @relation(fields: [gym_id], references: [id])
   name               String            @unique @db.Text
   credits            Int               @db.Integer
   intensity_id       Int               @db.Integer
   intensity          Intensities       @relation(fields: [intensity_id], references: [id])
   course_type_id     Int               @db.Integer
   course_type        CourseTypes       @relation(fields: [course_type_id], references: [id])
-  calorise           Int               @db.Integer
+  calories           Int               @db.Integer
   duration           Int               @db.Integer
   default_quota      Int               @db.Integer
   default_trainer_id Int               @db.Integer
@@ -173,16 +196,16 @@ model Courses {
 }
 
 model CourseSchedules {
-  id         Int      @id @default(autoincrement())
-  course_id  Int      @db.Integer
-  courses    Courses  @relation(fields: [course_id], references: [id])
-  trainer_id Int      @db.Integer
-  quota      Int      @db.Integer
-  trainers   Trainers @relation(fields: [trainer_id], references: [id])
-  time       DateTime @db.Timestamptz
+  id           Int            @id @default(autoincrement())
+  course_id    Int            @db.Integer
+  courses      Courses        @relation(fields: [course_id], references: [id])
+  trainer_id   Int            @db.Integer
+  quota        Int            @db.Integer
+  trainers     Trainers       @relation(fields: [trainer_id], references: [id])
+  time         DateTime       @db.Timestamptz
   userSchedule UserSchedule[]
-  created_at DateTime @default(now()) @db.Timestamptz
-  updated_at DateTime @updatedAt @db.Timestamptz
+  created_at   DateTime       @default(now()) @db.Timestamptz
+  updated_at   DateTime       @updatedAt @db.Timestamptz
 }
 
 model FavouriteCourse {
@@ -206,8 +229,8 @@ model CreditTransaction {
   id                         Int                   @id @default(autoincrement())
   user_id                    Int                   @db.Integer
   user                       Users                 @relation(fields: [user_id], references: [id])
-  user_schedule_id           Int?                   @db.Integer
-  user_schedule              UserSchedule?          @relation(fields: [user_schedule_id], references: [id])
+  user_schedule_id           Int?                  @db.Integer
+  user_schedule              UserSchedule?         @relation(fields: [user_schedule_id], references: [id])
   credit                     Int                   @db.Integer
   details                    String                @db.Text
   credit_transaction_type    CreditTransactionType @relation(fields: [credit_transaction_type_id], references: [id])
@@ -227,7 +250,7 @@ model UserSchedule {
   user_id            Int                 @db.Integer
   user               Users               @relation(fields: [user_id], references: [id])
   course_schedule_id Int                 @db.Integer
-  course_schedule CourseSchedules @relation(fields: [course_schedule_id],references: [id])
+  course_schedule    CourseSchedules     @relation(fields: [course_schedule_id], references: [id])
   attendance_type_id Int                 @db.Integer
   attendance_type    AttendanceTypes     @relation(fields: [attendance_type_id], references: [id])
   created_at         DateTime            @default(now()) @db.Timestamptz

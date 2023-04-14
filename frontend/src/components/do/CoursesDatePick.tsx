@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { getDatesWithCourses } from "../../api/coursesApi";
 import { addDays } from "date-fns";
 import dateStyles from "../DatePicker/DatePicker.module.scss"
 import { DateView } from "../DatePicker/Dateview";
+import { getDatesWithCourses } from "../../api/coursesSchedulesAPI";
 
 
 export function CoursesDatePick() {

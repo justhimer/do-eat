@@ -3,9 +3,7 @@ import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCa
 import { GymPopupInterface } from './superstructure/GymConfirmation';
 
 export function GymPopup(props: GymPopupInterface) {
-    console.log("credits: ",props.credits)
     return (
-        <div id="popup-Container" className={GymStyle.popup}>
             <IonCard>
                 <div onClick={props.dismiss}></div>
                 <IonCardHeader>
@@ -23,11 +21,11 @@ export function GymPopup(props: GymPopupInterface) {
                         <IonCol>{props.time}</IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol>Costs {props.subPlan==2? "(VIP)": null }</IonCol>
-                        <IonCol>{props.subPlan==2? 0 : props.costs}</IonCol>
+                        <IonCol>Costs {props.subPlan? "(VIP)": null }</IonCol>
+                        <IonCol>{props.subPlan? 0 : props.costs}</IonCol>
                     </IonRow>
                     {
-                        props.subPlan==2?
+                        props.subPlan?
                             <>
                             </>
                         :
@@ -48,7 +46,7 @@ export function GymPopup(props: GymPopupInterface) {
 
                 <IonButton fill="clear" onClick={props.join}>Confirm Register</IonButton>
             </IonCard>
-        </div>
+
     )
 
     // <div id="popup-Container" className={GymStyle.popup}>

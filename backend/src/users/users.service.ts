@@ -3,7 +3,6 @@ import { PrismaService } from 'nestjs-prisma';
 import { hashPassword } from '../../utils/hash';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +18,7 @@ export class UsersService {
         icon: createUserDto.icon
       },
     });
-    return { 
+    return {
       msg: 'User created',
       data: {
         id: newUser.id,
@@ -41,17 +40,19 @@ export class UsersService {
     return user;
   }
 
-  // async findAll(): Promise<User[]> {
-  //   return await this.prisma.users.findMany({});
-  // }
-
   async findById(id: number) {
     const foundUser = await this.prisma.users.findFirst({
       where: {
         id: id,
       },
+      include:{
+        subPlan:{
+          select:{
+            unlimited:true
+          }
+        }
+      }
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
 
@@ -61,19 +62,19 @@ export class UsersService {
         email: email,
       },
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return foundUser;
   }
 
-  // async findByUsername(username: string) {
-  //   const foundUser = await this.prisma.users.findFirst({
-  //     where: {
-  //       username: username,
-  //     },
-  //   });
-  //   // if (!foundUser) throw new NotFoundException('User not found.');
-  //   return foundUser;
-  // }
+  async returnEmail(user_id: number) {
+    const foundEmail = await this.prisma.users.findFirst({
+      where: { id: user_id }
+    })
+    if (foundEmail) {
+      return foundEmail.email
+    } else {
+      return ''
+    }
+  }
 
   async findIsSubscribed(id: number): Promise<boolean> {
     const result = await this.prisma.users.findFirst({
@@ -84,7 +85,6 @@ export class UsersService {
         id: id,
       },
     });
-    // if (!foundUser) throw new NotFoundException('User not found.');
     return result.subscribed;
   }
 
@@ -102,11 +102,10 @@ export class UsersService {
       }
     })
 
-    console.log("findIsUnlimited: ", result.subPlan.unlimited)
     return result.subPlan.unlimited
   }
 
-  async findProfilePic(id:number): Promise<string> {
+  async findProfilePic(id: number): Promise<string> {
     const result = await this.prisma.users.findFirst({
       select: {
         icon: true,
@@ -116,6 +115,37 @@ export class UsersService {
       },
     });
     return result.icon;
+  }
+
+  async updateUsername(id: number, newUsername: string) {
+
+    const result = await this.prisma.users.update({
+      select: {
+        id: true,
+        email: true,
+        username: true,
+      },
+      where: {
+        id: id,
+      },
+      data: {
+        username: newUsername,
+      },
+    });
+
+    return result;
+  }
+
+  async updatePassword(id: number, newPassword: string) {
+    const password = await hashPassword(newPassword);
+    await this.prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: {
+        password: password,
+      },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -136,4 +166,5 @@ export class UsersService {
       },
     });
   }
+
 }

@@ -1,15 +1,23 @@
-import { IonActionSheet, IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
+import { IonActionSheet, IonBackButton, IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonTitle, IonToolbar, useIonToast, useIonViewDidLeave } from "@ionic/react";
 import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { uploadPhoto } from "../../api/fileAPIs";
+import { UploadedPhoto, uploadPhoto } from "../../api/fileAPIs";
 import { userSignup } from "../../api/userAPIs";
-import { usePhotoGallery } from "../../hooks/usePhotoGallery";
+import { UserPhoto, usePhotoGallery } from "../../hooks/usePhotoGallery";
 import { gymAction } from "../../redux/gymSlice";
 import { userAction } from "../../redux/userSlice";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import { TakeProfilePic } from "../user/TakeProfilePic";
+import { useMutation } from "@tanstack/react-query";
+
+interface SignupDetails {
+    email: string;
+    username: string;
+    password: string;
+    icon?: string;
+}
 
 export function UserSignupForm() {
 
@@ -20,7 +28,15 @@ export function UserSignupForm() {
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [image, setImage] = useState<string | undefined>(undefined);
+    const [verifyPassword, setVerifyPassword] = useState<string>("");
+
+    useIonViewDidLeave(() => {
+        removePhoto();
+        setEmail('');
+        setUsername('');
+        setPassword('');
+        setVerifyPassword('');
+    })
 
     const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
 
@@ -28,44 +44,18 @@ export function UserSignupForm() {
         try {
             event.preventDefault();
 
-            let iconUrl: string | undefined = undefined;
+            if (password !== verifyPassword) {
+                present({
+                    message: 'Verify Password Again',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+                return;
+            }
 
             // upload photo
-            if (photo) {
-                const uploadedPhoto = await uploadPhoto(photo);
-                if (uploadedPhoto) {
-                    iconUrl = uploadedPhoto.accessPath;
-                }
-            }
-
-            // create account
-            const signupDetails = {
-                email: email,
-                username: username,
-                password: password,
-                icon: iconUrl
-            }
-            const data = await userSignup(signupDetails);
-
-            // auto-login
-            if (data) {
-                dispatch(gymAction.logout());
-                dispatch(userAction.login(data));
-                present({
-                    message: 'User Login Success',
-                    duration: 1500,
-                    position: "top",
-                    cssClass: NotificationStyle.ionicToast,
-                });
-                history.push("/user-tab");
-            } else {
-                present({
-                    message: 'User Login Failed',
-                    duration: 1500,
-                    position: "top",
-                    cssClass: NotificationStyle.ionicToast,
-                });
-            }
+            uploadingPhoto.mutate(photo);
 
         } catch {
             present({
@@ -75,8 +65,59 @@ export function UserSignupForm() {
                 cssClass: NotificationStyle.ionicToast,
             });
         }
-
     }
+
+    const uploadingPhoto = useMutation(
+        (photo?: UserPhoto): any => {
+            let data = undefined;
+            if (photo) {
+                data = uploadPhoto(photo);
+            }
+            return data;
+        },
+        {
+            onSuccess: (data: UploadedPhoto) => {
+                let iconUrl: string | undefined = undefined;
+                if (data) {
+                    iconUrl = data.accessPath;
+                }
+                // create account
+                const signupDetails = {
+                    email: email,
+                    username: username,
+                    password: password,
+                    icon: iconUrl
+                }
+                signingUp.mutate(signupDetails);
+            }
+        }
+    )
+
+    const signingUp = useMutation(
+        (signupDetails: SignupDetails) => userSignup(signupDetails),
+        {
+            onSuccess: (data) => {
+                if (data) {
+                    dispatch(gymAction.logout());
+                    dispatch(userAction.login(data));
+                    present({
+                        message: 'User Login Success',
+                        duration: 1500,
+                        position: "top",
+                        cssClass: NotificationStyle.ionicToast,
+                    });
+                    history.push("/user-tab");
+                } else {
+                    present({
+                        message: 'User Login Failed',
+                        duration: 1500,
+                        position: "top",
+                        cssClass: NotificationStyle.ionicToast,
+                    });
+                }
+            }
+        }
+    )
 
     /*************************************/
     /*** ionic 7 input component start ***/
@@ -174,6 +215,7 @@ export function UserSignupForm() {
                             errorText="Invalid email"
                             onIonInput={(event) => { validate(event); setEmail(`${event.detail.value!}`); }}
                             onIonBlur={() => markTouched()}
+                            value={email}
                         ></IonInput>
 
                         <IonInput
@@ -184,6 +226,7 @@ export function UserSignupForm() {
                             helperText="Enter your username"
                             onIonInput={(event) => setUsername(`${event.detail.value!}`)}
                             onIonBlur={() => markTouched()}
+                            value={username}
                         ></IonInput>
 
                         <IonInput
@@ -195,6 +238,7 @@ export function UserSignupForm() {
                             helperText="Enter your password"
                             onIonInput={(event) => setPassword(`${event.detail.value!}`)}
                             onIonBlur={() => markTouched()}
+                            value={password}
                         ></IonInput>
 
                         <IonInput
@@ -204,21 +248,17 @@ export function UserSignupForm() {
                             label="Verify Password"
                             labelPlacement="floating"
                             helperText="Enter your password again"
-                            onIonInput={(event) => setPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
                             onIonBlur={() => markTouched()}
+                            value={verifyPassword}
                         ></IonInput>
 
-                        {/* <br />
-                        <div className={UserStyle.text_center}>Profile Picture</div>
-                        <div className={UserStyle.image_container}>
-                            <img id="profile_pic" src={imgSrc} alt="" className={UserStyle.image_box} />
-                        </div>
-                        <input type="file" onChange={previewImg} /> */}
-
-                        <IonButton type="submit" className={UserStyle.button}>Submit</IonButton>
+                        <IonButton id="open-loading" type="submit" className={UserStyle.button}>Submit</IonButton>
                     </form>
 
                 </div>
+
+                <IonLoading isOpen={uploadingPhoto.isLoading} message="Signing Up..." />
 
             </IonContent>
 

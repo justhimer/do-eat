@@ -20,10 +20,7 @@ interface GymToken {
 
 const isLoggedIn = () => {
     const token = localStorage.getItem("gym_token");
-    // if (!!token) {
-    //     const decoded = jwt_decode(token);
-    //     console.log(decoded);
-    // }
+    console.log("gym token: ",token)
     return !!token
 }
 

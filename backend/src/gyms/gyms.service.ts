@@ -28,7 +28,16 @@ export class GymsService {
 
     async allGyms() {
         let data = await this.prisma.gyms.findMany({
-            include: {
+            select: {
+                id:true,
+                name:true,
+                franchise_id:true,
+                district_id:true,
+                opening_hour:true,
+                closing_hour:true,
+                no_close:true,
+                address:true,
+                google_position:true,
                 district: {
                     select: {
                         name: true
@@ -39,7 +48,8 @@ export class GymsService {
                         name: true
                     }
                 }
-            }
+            },
+
         })
         return data
     }
@@ -57,7 +67,16 @@ export class GymsService {
             where: {
                 district_id: { in: districts }
             },
-            include: {
+            select: {
+                id:true,
+                name:true,
+                franchise_id:true,
+                district_id:true,
+                opening_hour:true,
+                closing_hour:true,
+                no_close:true,
+                address:true,
+                google_position:true,
                 district: {
                     select: {
                         name: true
@@ -85,4 +104,22 @@ export class GymsService {
         return data
     }
 
+
+    async getFranchiseFromGymsID(gym_id:number){
+        try {
+            const data = await this.prisma.gyms.findFirst({
+                select:{franchise_id:true},
+                where:{id:gym_id}
+            })
+            if (data){
+                return  data.franchise_id
+            }else{
+                console.log('Error at gyms.service: No Data')
+            throw new Error('No Data')
+            }
+        } catch (error) {
+            console.log('Error at gyms.service: ', error)
+            throw new Error(error)
+        }
+    }
 }

@@ -16,10 +16,23 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
+/* Routing */
+import Fooddetails from './components/Fooddetails';
+import { UserProfile } from './components/user/UserProfile';
+import { UserSubscription } from './components/user/UserSubscription';
+import { UserSignupForm } from './components/auth/UserSignupForm';
+import { GymCourses } from './components/do/superstructure/GymCourses';
+import { GymConfirmation } from './components/do/superstructure/GymConfirmation';
+import { GymsDo } from './pages/gyms/GymsDo';
+import { GymsEat } from './pages/gyms/GymsEat';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
+
 import HomeTab from './pages/Home';
 import DoTab from './pages/Do';
 import EatTab from './pages/Eat';
 import UserTab from './pages/User';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -43,19 +56,47 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 /* custom SCSS modules */
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
+
 import PrivateRouter from './components/PrivateRoute';
 import Login from './components/auth/Login';
-import Fooddetails from './components/Fooddetails';
-import { UserProfile } from './components/user/UserProfile';
-import { UserSubscription } from './components/user/UserSubscription';
-import { UserCourses } from './components/user/UserCourses';
-import { UserSignupForm } from './components/auth/UserSignupForm';
-import { GymCourses } from './components/gyms/superstructure/GymCourses';
-import { GymConfirmation } from './components/gyms/superstructure/GymConfirmation';
+import { UserScheduleList } from './components/user/UserScheduleList';
+import { UserOrderList } from './components/user/UserOrderList';
+import { CourseCreate } from './components/gyms/superstructure/CourseCreate';
+import { CourseDetails } from './components/gyms/superstructure/CourseDetails';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+
+
+const App: React.FC = () => {
+
+  
+const gymLoginStatus = useSelector((state:RootState)=>state.gym.isAuthenticated)
+
+const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-component')=>{
+  if (gymLoginStatus){
+    switch (type){
+      case 'do-tab':
+        return '/gyms-do'
+      break;
+      case 'eat-tab':
+        return '/gyms-eat'
+      break;
+    }
+  }else{
+    switch (type){
+      case 'do-tab':
+        return '/do-tab'
+      break;
+      case 'eat-tab':
+        return '/eat-tab'
+      break;
+    }
+  }
+}
+
+
+  return(
   <IonApp>
     <IonReactRouter>
       <IonTabs>
@@ -69,9 +110,11 @@ const App: React.FC = () => (
           <Route exact path="/home-tab">
             <HomeTab />
           </Route>
-          <Route exact path="/do-tab/" component={DoTab}/>
+          <Route exact path="/do-tab">
+            <DoTab/>
+          </Route>
           <Route path="/eat-tab">
-            <EatTab />
+            <EatTab/>
           </Route>
           <Route path="/user-tab">
             <UserTab />
@@ -96,15 +139,33 @@ const App: React.FC = () => (
             <UserSubscription />
           </Route>
           <Route path="/user-courses">
-            <UserCourses />
+            <UserScheduleList />
+          </Route>
+          <Route path="/user-orders">
+            <UserOrderList />
           </Route>
 
-          {/* gym routes */}
-          <Route exact path="/test" component={GymCourses}>
-            </Route>
-            <Route exact path="/test2" component={GymConfirmation}>
-              </Route>
+          {/* do routes */}
+          <Route exact path="/do-what">
+            <GymCourses/>
+          </Route>
+          <Route exact path="/do-it">
+            <GymConfirmation/>
+          </Route>
 
+          {/*gym CMS routes */}
+          <Route exact path="/gyms-do" >
+            <GymsDo/>
+          </Route>
+          <Route exact path='/gyms-do/create'>
+            <CourseCreate/>
+          </Route>
+          <Route exact path='gyms-do/details'>
+            <CourseDetails/>
+          </Route>
+          <Route exact path="/gyms-eat" >
+            <GymsEat/>
+          </Route>
 
           {/* food routes */}
           <Route path="/fooddetails/:id" component={Fooddetails}>
@@ -118,7 +179,7 @@ const App: React.FC = () => (
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="do-tab" href="/do-tab" nav-clear>
+          <IonTabButton tab="do-tab" href={navigationSwitch('do-tab')} nav-clear>
             <IonIcon aria-hidden="true" icon={barbellOutline} />
             <IonLabel>Do</IonLabel>
           </IonTabButton>
@@ -133,7 +194,7 @@ const App: React.FC = () => (
             </IonFab>
           </IonTabButton>
 
-          <IonTabButton tab="eat-tab" href="/eat-tab" nav-clear>
+          <IonTabButton tab="eat-tab" href={navigationSwitch('eat-tab')} nav-clear>
             <IonIcon aria-hidden="true" icon={fastFoodOutline} />
             <IonLabel>Eat</IonLabel>
           </IonTabButton>
@@ -156,6 +217,6 @@ const App: React.FC = () => (
 
     </IonReactRouter>
   </IonApp>
-);
+)};
 
 export default App;

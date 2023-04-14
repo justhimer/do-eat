@@ -55,7 +55,6 @@ async function main() {
             email: "user1@gmail.com",
             username: "user1",
             password: await hashPassword('user1'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:2,
             sub_plan_start:new Date(),
@@ -70,7 +69,6 @@ async function main() {
             email: "user2@gmail.com",
             username: "user2",
             password: await hashPassword('user2'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
             sub_plan_start:new Date(),
@@ -85,7 +83,6 @@ async function main() {
             email: "user3@gamil.com",
             username: "user3",
             password: await hashPassword('user3'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             subscribed:true,
             sub_plan_id:1,
             sub_plan_start:new Date(),
@@ -100,7 +97,6 @@ async function main() {
             email: "user4@gmail.com",
             username: "user4",
             password: await hashPassword('user4'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 
@@ -111,7 +107,6 @@ async function main() {
             email: "user5@gmail.com",
             username: "user5",
             password: await hashPassword('user5'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 
@@ -122,7 +117,6 @@ async function main() {
             email: "user6@gmail.com",
             username: "user6",
             password: await hashPassword('user6'),
-            icon: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         }
     })
 
@@ -790,8 +784,8 @@ async function main() {
             name: "PureFitness Causeway Bay",
             username: "pure_cwb",
             password: await hashPassword('pfcwb'),
-            opening_hour: 1000,
-            closing_hour: 2300,
+            opening_hour: "10:00",
+            closing_hour: "23:00",
             no_close: false,
             address: "Shop 101, 1/F, 1-3 Paterson Street, Causeway Bay, Hong Kong",
             google_position: {lat:22.27847,lng:114.18320},
@@ -807,8 +801,8 @@ async function main() {
             name: "PureFitness Central",
             username: "pure_central",
             password: await hashPassword('pfcentral'),
-            opening_hour: 1000,
-            closing_hour: 2300,
+            opening_hour: "10:00",
+            closing_hour: "23:00",
             no_close: false,
             address: "Shop 1001, 10/F, 27-29 Paterson Street, Central, Hong Kong",
             google_position: {lat: 22.286163428803967,lng: 114.15916750054413},
@@ -824,8 +818,8 @@ async function main() {
             name: "PureFitness Wan Chai",
             username: "pure_wc",
             password: await hashPassword('pfwc'),
-            opening_hour: 1000,
-            closing_hour: 2300,
+            opening_hour: "10:00",
+            closing_hour: "23:00",
             no_close: false,
             address: "Shop 101, 1/F, 39 Hinnessy Road,Wan Chai, Hong Kong",
             google_position: {lat: 22.278287400747722, lng: 114.16885263948282},
@@ -841,8 +835,8 @@ async function main() {
             name: "PureFitness Tsim Sha Tsui",
             username: "pure_tst",
             password: await hashPassword('pftst'),
-            opening_hour: 1000,
-            closing_hour: 2300,
+            opening_hour: "10:00",
+            closing_hour: "23:00",
             no_close: false,
             address: "Shop 501, 5/F, 1-3 Star Road, Tsim Sha Tsui, Hong Kong",
             google_position: {lat: 22.29421531793089, lng: 114.17532064270728},
@@ -858,8 +852,8 @@ async function main() {
             name: "PureFitness Monk Kok",
             username: "pure_mk",
             password: await hashPassword('pfmk'),
-            opening_hour: 1000,
-            closing_hour: 2300,
+            opening_hour: "10:00",
+            closing_hour: "23:00",
             no_close: false,
             address: "Shop 301, 3/F, 11-15 Neton Road, Monk Kok, Hong Kong",
             google_position: {lat: 22.318871736905805, lng: 114.1685881394834},
@@ -875,8 +869,6 @@ async function main() {
             name: "24/7 Fitness Causeway Bay",
             username: "247_cwb",
             password: await hashPassword('247cwb'),
-            opening_hour: 1000,
-            closing_hour: 2000,
             no_close: true,
             address: "Shop 101, 1/F, 1-3 LeaGarden, Causeway Bay, Hong Kong",
             google_position: {lat: 22.28020809554962, lng:114.1822722244828},
@@ -993,7 +985,7 @@ async function main() {
             gym_id: gym1.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calorise: 200,
+            calories: 200,
             default_trainer_id: trainers2.id,
             default_quota: 20,
             courseSchedules:{
@@ -1002,17 +994,17 @@ async function main() {
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-09T09:00:00+08:00')
+                            time: new Date('2023-04-13T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-09T17:00:00+08:00')
+                            time: new Date('2023-04-13T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-11T09:00:00+08:00')
+                            time: new Date('2023-04-15T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1030,7 +1022,7 @@ async function main() {
             gym_id: gym1.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calorise: 300,
+            calories: 300,
             default_trainer_id: trainers2.id,
             default_quota: 20,
             
@@ -1047,7 +1039,7 @@ async function main() {
             gym_id: gym2.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calorise: 400,
+            calories: 400,
             default_trainer_id: trainers2.id,
             default_quota: 20,
             
@@ -1064,7 +1056,7 @@ async function main() {
             gym_id: gym1.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calorise: 200,
+            calories: 200,
             default_trainer_id: trainers4.id,
             default_quota: 20,
             
@@ -1081,7 +1073,7 @@ async function main() {
             gym_id: gym4.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calorise: 300,
+            calories: 300,
             default_trainer_id: trainers4.id,
             default_quota: 20,
             courseSchedules:{
@@ -1090,17 +1082,17 @@ async function main() {
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date('2023-04-09T09:00:00+08:00')
+                            time: new Date('2023-04-14T09:00:00+08:00')
                         },
                         {
                             trainer_id:trainers4.id,
                             quota:20,
-                            time: new Date('2023-04-09T17:00:00+08:00')
+                            time: new Date('2023-04-14T17:00:00+08:00')
                         },
                         {
                             trainer_id:trainers2.id,
                             quota:20,
-                            time: new Date('2023-04-11T09:00:00+08:00')
+                            time: new Date('2023-04-15T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1118,7 +1110,7 @@ async function main() {
             gym_id: gym5.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calorise: 400,
+            calories: 400,
             default_trainer_id: trainers4.id,
             default_quota: 20,
         },
@@ -1134,7 +1126,7 @@ async function main() {
             gym_id: gym2.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calorise: 200,
+            calories: 200,
             default_trainer_id: trainers5.id,
             default_quota: 20,
         },
@@ -1150,7 +1142,7 @@ async function main() {
             gym_id: gym3.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calorise: 300,
+            calories: 300,
             default_trainer_id: trainers5.id,
             default_quota: 20,
         },
@@ -1166,7 +1158,7 @@ async function main() {
             gym_id: gym6.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calorise: 400,
+            calories: 400,
             default_trainer_id: trainers5.id,
             default_quota: 20,
         },
@@ -1182,7 +1174,7 @@ async function main() {
             gym_id: gym2.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calorise: 200,
+            calories: 200,
             default_trainer_id: trainers6.id,
             default_quota: 20,
         },
@@ -1198,7 +1190,7 @@ async function main() {
             gym_id: gym3.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calorise: 300,
+            calories: 300,
             default_trainer_id: trainers6.id,
             default_quota: 20,
         },
@@ -1214,7 +1206,7 @@ async function main() {
             gym_id: gym6.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calorise: 400,
+            calories: 400,
             default_trainer_id: trainers6.id,
             default_quota: 20,
         },

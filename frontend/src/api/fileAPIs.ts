@@ -5,7 +5,7 @@ interface Photo {
     webviewPath?: string;  // contain base64 format
 }
 
-interface UploadedPhoto {
+export interface UploadedPhoto {
     filenName: string,
     accessPath: string
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, UseGuards, Request } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
@@ -63,6 +63,13 @@ export class GymsController {
       token: token
     };
 
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get()
+  findById(@Request() req) {
+    const userID = req.user.id;
+    return this.gymsService.findById(userID);
   }
 
   @Get('/users/district/all')

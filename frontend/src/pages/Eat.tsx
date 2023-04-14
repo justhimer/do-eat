@@ -3,7 +3,7 @@ import { FoodList } from '../components/FoodList';
 import AppStyle from '../scss/App.module.scss';
 import { cartOutline } from 'ionicons/icons';
 
-const EatTab: React.FC = () => {
+function EatTab(){
   return (
     <IonPage>
       <IonHeader>

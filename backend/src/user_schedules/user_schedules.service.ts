@@ -11,8 +11,37 @@ export class UserSchedulesService {
     private readonly prisma: PrismaService,
     private readonly coursesService: CoursesService,
     private readonly courseScheduleService: CourseSchedulesService
-    ) { }
+  ) { }
 
+  async findAllUserCourses(user_id: number) {
+    const courses = await this.prisma.userSchedule.findMany({
+      select: {
+        attendance_type: true,
+        course_schedule: {
+          select: {
+            id: true,
+            time: true,
+            courses: {
+              select: {
+                name: true,
+                duration: true,
+                gyms : {
+                  select: {
+                    name: true,
+                    address: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      where: {
+        user_id: user_id,
+      }
+    })
+    return courses;
+  }
 
   async getRemainingSlots(exercise_id: number) {
     let quota = await this.courseScheduleService.quotaForThisCourse(exercise_id)
@@ -32,8 +61,6 @@ export class UserSchedulesService {
         course_schedule_id: exercise_id
       }
     })
-
-
     return foundUser ? true : false
   }
 
@@ -58,7 +85,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return {message:"course subscribed"}
+      return { message: "course subscribed" }
     } catch (error) {
       console.log(error);
       return error
@@ -84,7 +111,7 @@ export class UserSchedulesService {
       })
 
       await this.prisma.$transaction([addToCourse])
-      return {message:"course subscribed"}
+      return { message: "course subscribed" }
     } catch (error) {
       console.log(error);
       return error
@@ -94,9 +121,21 @@ export class UserSchedulesService {
   //#endregion
 
   async returnUserIdCourse(registered_id: number) {
-    return (await this.prisma.userSchedule.findFirst({
-      where: { id: registered_id }
-    })).user_id
+    try {
+      const data =  await this.prisma.userSchedule.findFirst({
+        where: { id: registered_id }
+      })
+      if (data){
+        return data
+      }else{
+        throw new Error('no data')
+      }
+    } catch (error) {
+      console.log('error at user_schedules.service: ', error)
+      throw new Error(error)
+    }
+    
+
   }
 
   async deleteUserFromCourse(registered_id: number) {
@@ -117,7 +156,7 @@ export class UserSchedulesService {
       return "Deleted course registration"
     } catch (error) {
       console.log(error)
-      return error
+      return new Error(error)
     }
   }
 }

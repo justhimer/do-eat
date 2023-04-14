@@ -6,7 +6,9 @@ import { userAction } from "../../redux/userSlice";
 import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 
-export function Logout() {
+export function Logout({ remove: removeCache }: {
+    remove: () => void
+}) {
 
     // toast
     const [present] = useIonToast();
@@ -24,6 +26,7 @@ export function Logout() {
     const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated);
 
     function logout() {
+        removeCache();
         if (isUserLoggedIn) {
             dispatch(userAction.logout());
             presentToast('top');

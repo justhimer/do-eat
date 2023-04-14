@@ -8,12 +8,14 @@ import { CoursesModule } from 'src/courses/courses.module';
 import { CreditTransactionService } from 'src/credit-transaction/credit-transaction.service';
 import { UsersService } from 'src/users/users.service';
 import { CoursesService } from 'src/courses/courses.service';
+import { CourseSchedulesModule } from 'src/course_schedules/course_schedules.module';
+import { CourseSchedulesService } from 'src/course_schedules/course_schedules.service';
 
 @Global()
 @Module({
-  imports:[CreditTransactionModule,UsersModule,CoursesModule],
+  imports:[CreditTransactionModule,UsersModule,CoursesModule,CourseSchedulesModule],
   controllers: [UserSchedulesController],
-  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService],
+  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService,CourseSchedulesService],
   exports: [UserSchedulesService]
 })
 export class UserSchedulesModule {}

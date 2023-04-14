@@ -1,19 +1,39 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow } from "@ionic/react";
-import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import UserStyle from '../../scss/User.module.scss';
+import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSpinner } from "@ionic/react";
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
 import { fetchProfilePic } from "../../api/userAPIs";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useEffect, useState } from "react";
+import { fetchCredits } from "../../api/creditTransactionsAPI";
+import { fetchCalories } from "../../api/calorieTransactionAPIs";
+
+// css
+import UserMenuStyle from "../../scss/UserMenu.module.scss";
+import UserStyle from '../../scss/User.module.scss';
 
 export function UserMenu() {
 
     const history = useHistory();
 
-    const { data: icon, isLoading, refetch } = useQuery({
+    const userName = useSelector((state: RootState) => state.user.username);
+    // const [isLoadedPic, setIsLoadedPic] = useState<boolean>(false);
+
+    const { data: icon, isLoading, refetch, remove } = useQuery({
         queryKey: ["icon"],
         queryFn: fetchProfilePic,
-    });  // rename data to foods
+    });
+
+    const { data: calories } = useQuery({
+        queryKey: ["calories"],
+        queryFn: fetchCalories,
+    });
+
+    const { data: credits } = useQuery({
+        queryKey: ["credits"],
+        queryFn: fetchCredits,
+    });
 
     const onProfile = () => {
         history.push("/user-profile");
@@ -27,21 +47,30 @@ export function UserMenu() {
         history.push("/user-courses");
     }
 
+    const onOrderedFoods = () => {
+        history.push("/user-orders");
+    }
+
     return (
         <>
 
             <div className={UserMenuStyle.icon_container}>
-                <img src={icon} alt="" className={UserMenuStyle.icon} />
+                {isLoading ? (
+                    // <img src="./assets/user_image/loading.gif" alt="" className={UserMenuStyle.icon} />
+                    <IonSpinner></IonSpinner>
+                ) : (
+                    <img src={icon} alt="" className={UserMenuStyle.icon} />
+                )}
             </div>
 
             <div className={UserStyle.title}>
-                <h2>Harry Porter</h2>
+                <h2>{userName}</h2>
             </div>
 
             <IonGrid>
                 <IonRow>
-                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Calories</IonButton></IonCol>
-                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>My Credits</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Calories: {calories}</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Credits: {credits}</IonButton></IonCol>
                 </IonRow>
 
                 <IonRow>
@@ -56,7 +85,7 @@ export function UserMenu() {
                             <IonItem button detail={true} className={UserMenuStyle.item} onClick={onBookedCourses}>
                                 <IonLabel>Booked Courses</IonLabel>
                             </IonItem>
-                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onOrderedFoods}>
                                 <IonLabel>Ordered Foods</IonLabel>
                             </IonItem>
                             <IonItem button detail={true} className={UserMenuStyle.item_last}>
@@ -67,7 +96,7 @@ export function UserMenu() {
                 </IonRow>
 
                 <IonRow>
-                    <IonCol><Logout /></IonCol>
+                    <IonCol><Logout remove={remove} /></IonCol>
                 </IonRow>
 
             </IonGrid>
