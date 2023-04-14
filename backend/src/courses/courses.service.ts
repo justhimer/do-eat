@@ -57,7 +57,7 @@ export class CoursesService {
             intensity_level: course.intensity.level,
             course_type_id: course.course_type_id,
             course_type_name: course.course_type.name,
-            calorise: course.calorise,
+            calories: course.calories,
             duration: course.duration,
             default_quota: course.default_quota,
             default_trainer_id: course.default_trainer_id,
@@ -84,7 +84,7 @@ export class CoursesService {
         credits: courseDetails.credits,
         intensity_id: courseDetails.intensity_id,
         course_type_id: courseDetails.course_type_id,
-        calorise: courseDetails.calories,
+        calories: courseDetails.calories,
         duration: courseDetails.duration,
         default_quota: courseDetails.default_quota,
         default_trainer_id: courseDetails.default_trainer_id
@@ -99,7 +99,7 @@ export class CoursesService {
         credits: courseDetails.credits,
         intensity_id: courseDetails.intensity_id,
         course_type_id: courseDetails.course_type_id,
-        calorise: courseDetails.calories,
+        calories: courseDetails.calories,
         duration: courseDetails.duration,
         default_quota: courseDetails.default_quota,
         default_trainer_id: courseDetails.default_trainer_id

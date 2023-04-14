@@ -7,10 +7,11 @@ import NotificationStyle from "../../scss/Notification.module.scss"
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { cardOutline, flameOutline } from "ionicons/icons";
+import { gymCourseData } from "../../pages/gyms/GymsDo";
 
 
 
-export function CourseListItem() {
+export function CourseListItem(props: gymCourseData) {
 
     const [present] = useIonToast();
     const presentToast = (position: 'top' | 'middle' | 'bottom') => {

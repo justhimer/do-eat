@@ -60,6 +60,8 @@ import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 import PrivateRouter from './components/PrivateRoute';
 import Login from './components/auth/Login';
+import { CourseCreate } from './components/gyms/superstructure/CourseCreate';
+import { CourseDetails } from './components/gyms/superstructure/CourseDetails';
 
 setupIonicReact();
 
@@ -69,10 +71,6 @@ const App: React.FC = () => {
 
   
 const gymLoginStatus = useSelector((state:RootState)=>state.gym.isAuthenticated)
-
-useEffect(()=>{
-  console.log("gymLoginStatus: ",gymLoginStatus)
-},[])
 
 const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-component')=>{
   if (gymLoginStatus){
@@ -154,6 +152,12 @@ const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-com
           {/*gym CMS routes */}
           <Route exact path="/gyms-do" >
             <GymsDo/>
+          </Route>
+          <Route exact path='/gyms-do/create'>
+            <CourseCreate/>
+          </Route>
+          <Route exact path='gyms-do/details'>
+            <CourseDetails/>
           </Route>
           <Route exact path="/gyms-eat" >
             <GymsEat/>

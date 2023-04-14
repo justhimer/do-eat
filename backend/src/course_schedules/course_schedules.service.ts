@@ -116,7 +116,7 @@ export class CourseSchedulesService {
                         },
                         name:true,
                         credits:true,
-                        calorise:true,
+                        calories:true,
                         duration:true
                     }
                 }
@@ -139,7 +139,7 @@ export class CourseSchedulesService {
                           level:elem.courses.intensity.level,
                           quota:elem.quota,
                           time:elem.time,
-                          calorise:elem.courses.calorise,
+                          calories:elem.courses.calories,
                           credits:elem.courses.credits,
                           franchise:elem.courses.gyms.franchise.name,
                           gym:elem.courses.gyms.name,

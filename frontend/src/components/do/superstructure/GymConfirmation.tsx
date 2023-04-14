@@ -154,7 +154,7 @@ export function GymConfirmation() {
                     <IonRow>
                         <IonCol><IonCard className={ConfirmationStyle.button}>
 
-                            <IonCardTitle>  {selectedCourse.calorise} <IonIcon icon={flameOutline} /></IonCardTitle>
+                            <IonCardTitle>  {selectedCourse.calories} <IonIcon icon={flameOutline} /></IonCardTitle>
                         </IonCard></IonCol>
                         <IonCol><IonCard className={ConfirmationStyle.button}>
 

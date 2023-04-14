@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {  useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCoursesOnDate } from "../../api/coursesApi";
+import { getCoursesOnDate } from "../../api/coursesSchedulesAPI";
 import { CoursesInterface } from "../../redux/userCourseSlice";
 
 
