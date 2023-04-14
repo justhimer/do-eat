@@ -70,7 +70,7 @@ export function DoTab() {
           <IonCol>
             <IonButton onClick={(e) => {
               e.preventDefault()
-              history.push('/test')
+              history.push('/do-what')
             }}>Next</IonButton>
           </IonCol>
         </IonRow>

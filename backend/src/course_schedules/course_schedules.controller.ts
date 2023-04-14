@@ -7,6 +7,7 @@ import { format, isSameDay } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
 import * as _ from 'lodash'
+import { CourseSchedulesGymDto } from './dto/CourseScheduleGym.dto';
 
 
 @ApiTags('coursesSchedules') // to categorize in swagger
@@ -26,7 +27,7 @@ export class CourseSchedulesController {
   }
 
   @Post('users/onDay')
-  async coursesOnDay(@Body() body: DatesWithCoursesDto){
+  async coursesOnDay(@Body() body: CourseSchedulesGymDto){
     const data =  await this.courseSchedulesService.someCoursesTimed(body.gyms,body.time)
     return data
   }

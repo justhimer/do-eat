@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { FoodList } from '../components/FoodList';
 import AppStyle from '../scss/App.module.scss';
 
-const EatTab: React.FC = () => {
+function EatTab(){
   return (
     <IonPage>
       <IonHeader>
