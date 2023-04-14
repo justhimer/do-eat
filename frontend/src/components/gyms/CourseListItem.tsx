@@ -1,5 +1,6 @@
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonLabel, useIonToast } from "@ionic/react";
 import courseStyle from '../../scss/GymCourses.module.scss'
+import confirmationStyle from '../../scss/GymConfirm.module.scss'
 import {
     format,
 } from "date-fns";
@@ -7,55 +8,53 @@ import NotificationStyle from "../../scss/Notification.module.scss"
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { cardOutline, flameOutline } from "ionicons/icons";
-import { gymCourseData } from "../../pages/gyms/GymsDo";
+import { gymCourseData } from "../../api/coursesApi";
+import { GymCourses } from "../do/superstructure/GymCourses";
+import { sendGymCourse } from "../../redux/gymCourseSlice";
+
 
 
 
 export function CourseListItem(props: gymCourseData) {
-
-    const [present] = useIonToast();
-    const presentToast = (position: 'top' | 'middle' | 'bottom') => {
-        present({
-            message: 'Course is full!',
-            duration: 1500,
-            position: position,
-            cssClass: NotificationStyle.ionicToast,
-        });
-    };
-    const notify = () => {
-        presentToast('top');
-    }
+    
     const history = useHistory()
     const dispatch = useDispatch()
     
     const changeData = ()=>{
-
-        history.push('/do-it')
+        dispatch(sendGymCourse(props))
+        history.push('/details-course')
     }
 
 
     return <>
-        <IonCard className={courseStyle.filledCourse}>
+        <IonCard class='ion-padding' onClick={()=>changeData()}>
             <div className={courseStyle.cardSplitter}>
                 <div className={courseStyle.cardLeftComponent}>
+                    <IonCardSubtitle>Default trainer:</IonCardSubtitle>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/default_trainer.png`} className={courseStyle.cardThumbnail}></img>
-                    <IonCardTitle>Trainer Name</IonCardTitle>
+                    <IonCardTitle>{props.trainer_name}</IonCardTitle>
                 </div>
                 <div className={courseStyle.cardContent}>
                     <IonCardHeader>
-                        <IonCardTitle>Name</IonCardTitle>
-                        <IonCardSubtitle>test</IonCardSubtitle>
-                        <IonCardSubtitle>{format(new Date(), "p")} | duration min</IonCardSubtitle>
+                        <IonCardTitle>{props.name}</IonCardTitle>
+                        <IonCardSubtitle>Course: {props.course_type_name}</IonCardSubtitle>
+                        <IonCardSubtitle>Duration: {props.duration} min</IonCardSubtitle>
+                        <IonCardSubtitle>Default quota: {props.default_quota} min</IonCardSubtitle>
                     </IonCardHeader>
                 </div>
-                <div className={courseStyle.cardTopChips}>
+                <div className={courseStyle.cardTopRightChips}>
                     <IonChip >
                         <IonIcon icon={flameOutline} />
-                        <IonLabel>test</IonLabel>
+                        <IonLabel>{props.calories}</IonLabel>
                     </IonChip>
                     <IonChip>
                         <IonIcon icon={cardOutline} />
-                        <IonLabel>test</IonLabel>
+                        <IonLabel>{props.credits}</IonLabel>
+                    </IonChip>
+                </div>
+                <div className={courseStyle.cardBottomChips}>
+                    <IonChip className={confirmationStyle[props.intensity_level]}>
+                        <IonLabel>{props.intensity_level} Intensity</IonLabel>
                     </IonChip>
                 </div>
             </div>

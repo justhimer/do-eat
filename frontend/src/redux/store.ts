@@ -5,6 +5,7 @@ import userSlice from "./userSlice";
 import userGymSlice from "./userGymSlice";
 import userDateSlice from "./userDateSlice";
 import userCourseSlice from "./userCourseSlice";
+import gymCourseSlice from "./gymCourseSlice";
 
 
 
@@ -18,7 +19,8 @@ export const store = configureStore({
         food: foodSlice,
         userDate: userDateSlice,
         userGym: userGymSlice,
-        userCourse: userCourseSlice
+        userCourse: userCourseSlice,
+        gymCourse: gymCourseSlice
     }
 });
 

@@ -1,15 +1,23 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonContent, IonHeader, IonNavLink, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 export function CourseDetails() {
-
-    return <IonPage >
-        <IonHeader >
-            <IonToolbar >
-                <IonTitle>Course Details</IonTitle>
-            </IonToolbar>
-        </IonHeader>
-        <IonContent fullscreen>
-            <h5>Course details</h5>
-        </IonContent>
-    </IonPage >
+    const gymData = useSelector((state:RootState)=>state.gymCourse)
+    console.log(gymData)
+    return (
+        <IonPage >
+            <IonHeader >
+                <IonToolbar >
+                    <IonNavLink routerDirection="back" slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonNavLink>
+                    <IonTitle>Gyms' "What"</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
+                
+            </IonContent>
+        </IonPage >
+    )
 }

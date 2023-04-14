@@ -5,10 +5,11 @@ import {
     format,
 } from "date-fns";
 import NotificationStyle from "../../scss/Notification.module.scss";
-import { CoursesInterface, changeSelectedCourse} from "../../redux/userCourseSlice";
+import { CoursesInterface, changeSelectedCourse } from "../../redux/userCourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useHistory } from "react-router";
+import confirmationStyle from '../../scss/GymConfirm.module.scss'
 
 export function CoursesItem(props: CoursesInterface) {
     const filled = props.filled < props.quota
@@ -26,8 +27,8 @@ export function CoursesItem(props: CoursesInterface) {
     }
     const history = useHistory()
     const dispatch = useDispatch()
-    
-    const changeData = ()=>{
+
+    const changeData = () => {
 
         dispatch(changeSelectedCourse(props))
         history.push('/do-it')
@@ -35,7 +36,8 @@ export function CoursesItem(props: CoursesInterface) {
 
 
     return <>
-        <IonCard id={`course_${props.course_id}`} onClick={filled ? changeData : notify} className={`${!filled ? courseStyle.filledCourse : null}`}>
+
+        <IonCard id={`course_${props.course_id}`} onClick={filled ? changeData : notify} className={`${!filled ? courseStyle.filledCourse : null}`} class="ion-padding">
             <div className={courseStyle.cardSplitter}>
                 <div className={courseStyle.cardLeftComponent}>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/default_trainer.png`} className={courseStyle.cardThumbnail}></img>
@@ -49,7 +51,7 @@ export function CoursesItem(props: CoursesInterface) {
                         <IonCardSubtitle>{format(new Date(props.time), "p")} | {props.duration} min</IonCardSubtitle>
                     </IonCardHeader>
                 </div>
-                <div className={courseStyle.cardTopChips}>
+                <div className={courseStyle.cardTopRightChips}>
                     <IonChip >
                         <IonIcon icon={flameOutline} />
                         <IonLabel>{props.calories}</IonLabel>
@@ -59,14 +61,19 @@ export function CoursesItem(props: CoursesInterface) {
                         <IonLabel>{props.credits}</IonLabel>
                     </IonChip>
                 </div>
-                {filled ?
-                    <IonChip className={courseStyle.cardBottomChips}>
+                <div className={courseStyle.cardBottomChips}>
+                    <IonChip className={confirmationStyle[props.level]}>
+                        <IonLabel>{props.level} Intensity</IonLabel>
+                    </IonChip>
+                    {filled ?
+                    <IonChip>
                         <IonLabel>Slots Left: {props.quota - props.filled}</IonLabel>
                     </IonChip>
                     : <IonChip className={courseStyle.cardBottomChips}><IonLabel>Filled</IonLabel></IonChip>
                 }
+                </div>
             </div>
-            
+
         </IonCard>
     </>
 }

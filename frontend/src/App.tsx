@@ -157,10 +157,10 @@ const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-com
           <Route exact path="/gyms-do" >
             <GymsDo/>
           </Route>
-          <Route exact path='/gyms-do/create'>
+          <Route exact path='/create-course'>
             <CourseCreate/>
           </Route>
-          <Route exact path='gyms-do/details'>
+          <Route exact path='/details-course'>
             <CourseDetails/>
           </Route>
           <Route exact path="/gyms-eat" >
