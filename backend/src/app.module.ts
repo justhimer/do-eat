@@ -20,17 +20,19 @@ import { FileModule } from './file/file.module';
 import { StripeModule } from './stripe/stripe.module';
 import { PaymentModule } from './payment/payment.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { FoodCartModule } from './cart/foodCart.module';
+
 
 
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname,"public"),
-      serveRoot: join(__dirname,"public","images","trainers","default_trainer.png")
+      rootPath: join(__dirname, "public"),
+      serveRoot: join(__dirname, "public", "images", "trainers", "default_trainer.png")
     }),
     PrismaModule.forRoot(),
-    StripeModule.forRoot(process.env.STRIPE_API_SECRET_KEY,{apiVersion: '2022-11-15'}),
+    StripeModule.forRoot(process.env.STRIPE_API_SECRET_KEY, { apiVersion: '2022-11-15' }),
     UsersModule,
     FoodsModule,
     FoodTypesModule,
@@ -47,8 +49,9 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     StripeModule,
     PaymentModule,
     SubscriptionsModule,
+    FoodCartModule
   ], // forRoot() : global use
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
