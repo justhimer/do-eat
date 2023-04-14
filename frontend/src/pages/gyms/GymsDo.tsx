@@ -1,6 +1,6 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewDidLeave, useIonViewWillEnter } from "@ionic/react"
 import { useQuery } from "@tanstack/react-query"
-import { getCoursesforGym } from "../../api/coursesAPI"
+import { getCoursesforGym } from "../../api/coursesApi"
 import { useEffect, useState } from "react"
 import { CourseListItem } from "../../components/gyms/CourseListItem"
 
