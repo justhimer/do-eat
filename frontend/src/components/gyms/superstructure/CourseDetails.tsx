@@ -1,13 +1,30 @@
-import { IonBackButton, IonButton, IonCard, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonCard, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonViewDidLeave, useIonViewWillEnter } from "@ionic/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import ConfirmationStyle from '../../../scss/GymConfirm.module.scss'
 import { cardOutline, flameOutline } from "ionicons/icons";
 import { format } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { ScheduleInterface, fetchGymSoloCourseSchedule } from "../../../api/coursesSchedulesAPI";
+import { ScheduleListItem } from "../ScheduleListItem";
+
 
 export function CourseDetails() {
     const selectedCourse = useSelector((state: RootState) => state.gymCourse)
-    console.log(selectedCourse)
+    const courseSchedules = useQuery({
+        queryKey: ['scheduleQuery'],
+        queryFn: () => fetchGymSoloCourseSchedule(selectedCourse.course_id)
+    })
+
+    useIonViewWillEnter(() => {
+        courseSchedules.refetch()
+    })
+
+    useIonViewDidLeave(() => {
+        courseSchedules.remove()
+    })
+
+
     return (
         <IonPage >
             <IonHeader >
@@ -60,9 +77,11 @@ export function CourseDetails() {
                     </IonRow>
 
                     <IonRow>
-                        <IonCol><IonButton className={ConfirmationStyle.bigButton} >Register Now</IonButton></IonCol>
+                        <IonCol><IonButton className={ConfirmationStyle.bigButton} >Add Timeslot</IonButton></IonCol>
                     </IonRow>
                 </IonGrid>
+
+                {courseSchedules.data && courseSchedules.data.length > 0 ? courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot}/>) : <h5>No schedule set for course</h5>}
             </IonContent>
         </IonPage >
     )

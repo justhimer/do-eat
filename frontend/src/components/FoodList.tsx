@@ -19,7 +19,8 @@ export function FoodList() {
 
     return (
         <div>
-            <div className={AppStyle.title}>Food List</div>
+            <div className={AppStyle.title} >Food List  </div>
+
             {
                 foods && foods.length > 0 && foods.map((food: any, index: number) => (
                     <FoodItem

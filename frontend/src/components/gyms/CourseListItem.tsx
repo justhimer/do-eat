@@ -1,15 +1,10 @@
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonLabel, useIonToast } from "@ionic/react";
 import courseStyle from '../../scss/GymCourses.module.scss'
 import confirmationStyle from '../../scss/GymConfirm.module.scss'
-import {
-    format,
-} from "date-fns";
-import NotificationStyle from "../../scss/Notification.module.scss"
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { cardOutline, flameOutline } from "ionicons/icons";
 import { gymCourseData } from "../../api/coursesApi";
-import { GymCourses } from "../do/superstructure/GymCourses";
 import { sendGymCourse } from "../../redux/gymCourseSlice";
 
 

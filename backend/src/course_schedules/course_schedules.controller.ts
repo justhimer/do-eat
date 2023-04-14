@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { CourseSchedulesService } from './course_schedules.service';
 import { DatesWithCoursesDto } from './dto/DatesWithCourses.dto';
@@ -6,7 +6,6 @@ import { CourseSchedules } from './entities/CourseSchedules.entities';
 import { format, isSameDay } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
-import * as _ from 'lodash'
 import { CourseSchedulesGymDto } from './dto/CourseScheduleGym.dto';
 
 
@@ -36,10 +35,12 @@ export class CourseSchedulesController {
   @Post('dateTime/:id')
   async courseDateTime(@Param('id',ParseIntPipe) courseSchedule_id:number ){
     const data = await this.courseSchedulesService.getDateTime(courseSchedule_id)
-    console.log('courseSchedule dateTime: ', data)
-    console.log('courseSchedule dateTime type: ', typeof data)
     return data
   }
 
+  @Get('gym/course/schedule/:course_id')
+  async gymSoloCourseSchedule(@Param('course_id',ParseIntPipe) course_id, @Req() req): Promise<any[] | Error>{
+    return await this.courseSchedulesService.getAllScheduleForGymCourse(course_id)
+  }
 
 }
