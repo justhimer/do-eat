@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ScheduleInterface, fetchGymSoloCourseSchedule } from "../../../api/coursesSchedulesAPI";
 import { ScheduleListItem } from "../ScheduleListItem";
 import { useHistory } from "react-router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { UserPhoto, usePhotoGallery } from "../../../hooks/usePhotoGallery";
 import NotificationStyle from "../../../scss/Notification.module.scss";
 import { UploadedPhoto, uploadPhoto } from "../../../api/fileAPIs";
@@ -18,11 +18,16 @@ import { userAction } from "../../../redux/userSlice";
 import { TakeProfilePic } from "../../user/TakeProfilePic";
 import UserStyle from '../../../scss/User.module.scss';
 import { fetchTrainers } from "../../../api/trainerAPI";
+import { resetGymCourse } from "../../../redux/gymCourseSlice";
+import '../../../scss/gymCourseDetail.scss'
+import { getCourseType } from "../../../api/courseTypeAPI";
 
 
 
 export function CourseDetails() {
 
+    const [test, setTest] = useState(NaN)
+    const [trainerValue, setTrainerValue] = useState(0)
     const selectedCourse = useSelector((state: RootState) => state.gymCourse)
     const courseSchedules = useQuery({
         queryKey: ['scheduleQuery'],
@@ -32,8 +37,13 @@ export function CourseDetails() {
         queryKey: ['trainerQuery'],
         queryFn: () => fetchTrainers()
     })
+    const courseTypeList = useQuery({
+        queryKey:['courseTypeQuery'],
+        queryFn: ()=> getCourseType()
+    })
 
     useIonViewWillEnter(() => {
+        console.log(selectedCourse)
         courseSchedules.refetch()
         trainerList.refetch()
     })
@@ -41,9 +51,16 @@ export function CourseDetails() {
     useIonViewDidLeave(() => {
         courseSchedules.remove()
         trainerList.remove()
+        setTrainerValue(0)
+        dispatch(resetGymCourse())
     })
+    useEffect(() => {
+        setTrainerValue(selectedCourse.default_trainer_id)
+        console.log("trainerValue: ", trainerValue)
+    }, [courseSchedules.data])
 
-    //justin's work
+
+    //#region justin's work 
 
     const [present] = useIonToast();
     const history = useHistory();
@@ -165,6 +182,7 @@ export function CourseDetails() {
     /*** ionic 7 input component end ***/
     /***********************************/
 
+    //#endregion
     return (
         <IonPage >
             <IonHeader >
@@ -212,9 +230,12 @@ export function CourseDetails() {
                                 }
                             ]}
                         />
-                        {trainerList.data && trainerList.data.length>0? <IonRadioGroup value={String(selectedCourse.default_trainer_id)} >
-                            {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={String(trainer.id)}>{trainer.id} {trainer.name}</IonRadio>)}
-                        </IonRadioGroup> : <></>}
+                        {trainerList.data && trainerList.data.length > 0 ?
+                            <IonRadioGroup value={selectedCourse.default_trainer_id} name="trainer_choice">
+                                {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={trainer.id} labelPlacement="end">{trainer.name}</IonRadio>)}
+                            </IonRadioGroup>
+                            : <></>
+                        }
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
@@ -249,15 +270,12 @@ export function CourseDetails() {
                             value={verifyPassword}
                         ></IonInput>
 
-                        <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                            fill="solid"
-                            label="Course type"
-                            labelPlacement="floating"
-                            onIonInput={(event) => setUsername(`${event.detail.value!}`)}
-                            onIonBlur={() => markTouched()}
-                            value={username}
-                        ></IonInput>
+                        {courseTypeList.data && courseTypeList.data.length > 0 ?
+                            <IonRadioGroup value={selectedCourse.course_type_id} name="course_type_choice">
+                                {courseTypeList.data.map((type: any, index: number) => <IonRadio key={index} value={type.id} labelPlacement="end">{type.name}</IonRadio>)}
+                            </IonRadioGroup>
+                            : <></>
+                        }
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}

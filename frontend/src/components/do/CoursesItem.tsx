@@ -14,7 +14,6 @@ import confirmationStyle from '../../scss/GymConfirm.module.scss'
 export function CoursesItem(props: CoursesInterface) {
     const filled = props.filled >= props.quota
     const passed = isPast(new Date(props.time))
-    console.log(props.name, " ", props.time," ", passed)
     const [present] = useIonToast();
     const presentToast = (position: 'top' | 'middle' | 'bottom' ,message:string) => {
         present({

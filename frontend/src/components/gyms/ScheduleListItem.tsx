@@ -15,7 +15,6 @@ export function ScheduleListItem(props:ScheduleInterface) {
             return 'ion-padding'
         }
     }
-    console.log(props.time, passedTime)
     const isoDateTime = formatISO(new Date(props.time))
     return (<>
         <IonCard className={greyScaleControl(passedTime)}>
