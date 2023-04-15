@@ -1,6 +1,8 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+// css
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import AppStyle from '../../scss/App.module.scss';
+
+// library
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useRef } from "react";

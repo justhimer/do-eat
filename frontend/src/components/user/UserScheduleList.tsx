@@ -38,7 +38,9 @@ export function UserScheduleList() {
                     courses && courses.length > 0 && courses.map((course: any, index: number) => (
                         <UserScheduleItem
                             key={course.course_schedule.id}
+                            classID={course.course_schedule.id}
                             courseName={course.course_schedule.courses.name}
+                            courseType={course.course_schedule.courses.course_type.name}
                             time={course.course_schedule.time}
                             duration={course.course_schedule.courses.duration}
                             gymName={course.course_schedule.courses.gyms.name}

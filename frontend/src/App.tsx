@@ -57,13 +57,16 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 
-import PrivateRouter from './components/PrivateRoute';
+import { GymPrivateRouter } from './components/private_routes/GymPrivateRoute';
 import Login from './components/auth/Login';
 import { UserScheduleList } from './components/user/UserScheduleList';
 import { UserOrderList } from './components/user/UserOrderList';
 import { CourseCreate } from './components/gyms/superstructure/CourseCreate';
 import { CourseDetails } from './components/gyms/superstructure/CourseDetails';
 import { ShoppingCart } from './components/ShoppingCart/cart';
+import { GymProfile } from './components/gym_user/GymProfile';
+import { GymScheduleList } from './components/gym_user/GymScheduleList';
+import { GymOrderList } from './components/gym_user/GymOrderList';
 
 setupIonicReact();
 
@@ -74,7 +77,7 @@ const App: React.FC = () => {
 
   const gymLoginStatus = useSelector((state: RootState) => state.gym.isAuthenticated)
 
-  const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-component') => {
+  const navigationSwitch = (type: 'do-tab' | 'eat-tab') => {
     if (gymLoginStatus) {
       switch (type) {
         case 'do-tab':
@@ -146,6 +149,14 @@ const App: React.FC = () => {
               <UserOrderList />
             </Route>
 
+            {/* gym user routes */}
+            <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile/>} />}>
+            </Route>
+            <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList/>} />}>
+            </Route>
+            <Route path="/gym-food-orders" component={() => <GymPrivateRouter component={<GymOrderList/>} />}>
+            </Route>
+
             {/* do routes */}
             <Route exact path="/do-what">
               <GymCourses />
@@ -154,19 +165,19 @@ const App: React.FC = () => {
               <GymConfirmation />
             </Route>
 
-            {/*gym CMS routes */}
-            <Route exact path="/gyms-do" >
-              <GymsDo />
-            </Route>
-            <Route exact path='/gyms-do/create'>
-              <CourseCreate />
-            </Route>
-            <Route exact path='gyms-do/details'>
-              <CourseDetails />
-            </Route>
-            <Route exact path="/gyms-eat" >
-              <GymsEat />
-            </Route>
+          {/*gym CMS routes */}
+          <Route exact path="/gyms-do" >
+            <GymsDo/>
+          </Route>
+          <Route exact path='/create-course'>
+            <CourseCreate/>
+          </Route>
+          <Route exact path='/details-course'>
+            <CourseDetails/>
+          </Route>
+          <Route exact path="/gyms-eat" >
+            <GymsEat/>
+          </Route>
 
             {/* food routes */}
             <Route path="/fooddetails/:id" component={Fooddetails}>

@@ -751,7 +751,7 @@ async function main() {
         update: {},
         create: {
             name: "PureFitness",
-            email: "purefitness@gmail",
+            email: "purefitness@gmail.com",
             telephone: "12345678",
         },
     })
@@ -761,7 +761,7 @@ async function main() {
         update: {},
         create: {
             name: "24/7Fitness",
-            email: "247fitness@gmail",
+            email: "247fitness@gmail.com",
             telephone: "23456789",
         },
     })
@@ -771,7 +771,7 @@ async function main() {
         update: {},
         create: {
             name: "SnapFitness",
-            email: "Snapfitness@gmail",
+            email: "Snapfitness@gmail.com",
             telephone: "34567890",
         },
     })
@@ -895,7 +895,7 @@ async function main() {
             name: "Ceci Lee",
             icon: "default_trainer.png",
             certifications: " 200 Hour RYT Arcata, California 2022, Certified Strength and Conditioning Specialist® (CSCS®) 2022, NASM Certified Personal Trainer 2022",
-            franchise_id: franchise2.id,
+            franchise_id: franchise1.id,
         },
     })
 
@@ -906,7 +906,7 @@ async function main() {
             name: "James Chou",
             icon: "default_trainer.png",
             certifications: "Fitness Kickboxing Instructor Certification ,NSCA Certified Personal Trainer®(NSCA-CPT®), Tactical Strength & Conditioning Facilitator®(TSAC-F®)",
-            franchise_id: franchise3.id,
+            franchise_id: franchise1.id,
         },
     })
 
@@ -922,10 +922,10 @@ async function main() {
     })
 
     const trainers5 = await prisma.trainers.upsert({
-        where: { name: "Angela" },
+        where: { name: "Angela Ming" },
         update: {},
         create: {
-            name: "Angela",
+            name: "Angela Ming",
             icon: "default_trainer.png",
             certifications: "Total Body Tabata™ HIIT Instructor ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise2.id,
@@ -933,13 +933,13 @@ async function main() {
     })
 
     const trainers6 = await prisma.trainers.upsert({
-        where: { name: "Jason" },
+        where: { name: "Jason Wong" },
         update: {},
         create: {
-            name: "Jason",
+            name: "Jason Wong",
             icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
             certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
-            franchise_id: franchise3.id,
+            franchise_id: franchise2.id,
         },
     })
 
@@ -994,17 +994,17 @@ async function main() {
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-13T09:00:00+08:00')
+                            time: new Date('2023-04-16T09:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-13T17:00:00+08:00')
+                            time: new Date('2023-04-16T17:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-15T09:00:00+08:00')
+                            time: new Date('2023-04-17T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1082,17 +1082,17 @@ async function main() {
                         {
                             trainer_id: trainers4.id,
                             quota: 20,
-                            time: new Date('2023-04-14T09:00:00+08:00')
+                            time: new Date('2023-04-20T09:00:00+08:00')
                         },
                         {
                             trainer_id: trainers4.id,
                             quota: 20,
-                            time: new Date('2023-04-14T17:00:00+08:00')
+                            time: new Date('2023-04-20T17:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-15T09:00:00+08:00')
+                            time: new Date('2023-04-22T09:00:00+08:00')
                         }
                     ]
                 }

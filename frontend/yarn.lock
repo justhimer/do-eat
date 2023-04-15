@@ -1381,10 +1381,10 @@
     "@ionic/react" "7.0.1"
     tslib "*"
 
-"@ionic/react@7.0.1", "@ionic/react@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.0.1.tgz#80c5f9e21e5d07dc98207bcc4f6c727d6c5d1438"
-  integrity sha512-qgNdaVLgk8Jy68SmFtGWTcOah2gP+HymSgEoHebVRDoap6nuLzObeRspgH/ocFFkLKW+jO8vZfZud25r7QcQQA==
+"@ionic/react@^7.0.0-rc.5", "@ionic/react@7.0.0-rc.5":
+  version "7.0.0-rc.5"
+  resolved "https://registry.npmjs.org/@ionic/react/-/react-7.0.0-rc.5.tgz"
+  integrity sha512-D6PWjKEyboG9yTGjJ4kw92fECd0cZXLv0suraTp7Lg8nS4BGwthTxHq+xqJePEXZqMcoCCqgFrwDpS4bCXCDkw==
   dependencies:
     "@ionic/core" "7.0.1"
     ionicons "^7.0.0"

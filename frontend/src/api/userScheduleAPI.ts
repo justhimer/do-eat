@@ -38,3 +38,16 @@ export async function fetchCourses() {
     }
 
 }
+
+export async function fetchCourseRemainingSlots(courseID: number) {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/remaining/${courseID}`);
+
+    if (res.ok) {
+        const result = await res.json()
+        return result;
+    } else {
+        throw new Error('Server Error');
+    }
+
+}

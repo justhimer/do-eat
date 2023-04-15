@@ -19,6 +19,14 @@ export class FoodHistoryController {
     return foodsToBeCollected;
   }
 
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get('gym/orders')
+  async findFoodOrdersForGym(@Request() req) {
+    const gymID = req.user.id;
+    const foodOrders = await this.foodHistoryService.findFoodOrdersForGym(gymID);
+    return foodOrders;
+  }
+
   @Post()
   create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
     return this.foodHistoryService.create(createFoodHistoryDto);

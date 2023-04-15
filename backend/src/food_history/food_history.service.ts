@@ -8,6 +8,28 @@ import { error } from 'console';
 export class FoodHistoryService {
   constructor(private prisma: PrismaService) { }
 
+  async findFoodOrdersForGym(gym_id: number) {
+    const orders = await this.prisma.foodHistory.findMany({
+      include: {
+        FoodOrder: {
+          select: {
+            quantity: true,
+            food: {
+              select: {
+                name: true
+              }
+            },
+          }
+        },
+      },
+      where: {
+        gym_id: gym_id,
+        collection_status: false
+      }
+    })
+    return orders;
+  }
+
   async findFoodsToBeCollectedForUser(user_id: number) {
     const foodsToBeCollected = await this.prisma.foodHistory.findMany({
       include: {
@@ -23,6 +45,7 @@ export class FoodHistoryService {
         },
         gym: {
           select: {
+            name: true,
             address: true,
             no_close: true,
             opening_hour: true,

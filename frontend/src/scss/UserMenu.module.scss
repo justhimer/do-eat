@@ -16,6 +16,12 @@
     object-fit: cover;
 }
 
+.icon_square {
+    width: 11rem;
+    height: 11rem;
+    object-fit: cover;
+}
+
 .button {
     height: 3rem;
     --background: #e5ddd1;
@@ -86,4 +92,15 @@
 
 .width_70 {
     width: 70%;
+}
+
+.width_70_right {
+    width: 70%;
+    text-align: end;
+}
+
+.food_order_img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
 }

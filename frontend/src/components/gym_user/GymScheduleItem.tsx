@@ -1,28 +1,30 @@
-import { IonItem, IonThumbnail, IonLabel, IonIcon, IonChip, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonList } from "@ionic/react";
-import { calendarSharp, locationOutline } from "ionicons/icons";
-import { utcToZonedTime } from 'date-fns-tz';
-import format from "date-fns/format";
-import { useState } from "react";
-
 // css
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import AppStyle from "../../scss/App.module.scss";
 import courseStyle from '../../scss/GymCourses.module.scss'
 
-export interface UserScheduleItemProps {
+// library
+import { IonCard, IonCardHeader, IonCardTitle, IonChip, IonCardSubtitle, IonIcon, IonCardContent, IonList, IonItem, IonLabel, IonButton } from "@ionic/react";
+import { format } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
+import { barbellOutline, calendarSharp, qrCode } from "ionicons/icons";
+import { useState } from "react";
+
+export interface GymScheduleItemProps {
     classID: number
     courseName: string;
-    courseType: string;
     time: string;
     duration: number;
-    gymName: string;
-    address: string;
-    attendence: string;
+    trainerName: string;
+    quota: number
+    filledSlot: number;
+    courseType: string;
+    // intensityID: number;
+    // intensityLevel: string;
 }
 
-export function UserScheduleItem(props: UserScheduleItemProps) {
+export function GymScheduleItem(props: GymScheduleItemProps) {
 
-    const [date, setDate] = useState<Date>(utcToZonedTime(new Date(props.time), "Asia/Hong_Kong"))
+    const [date, setDate] = useState<Date>(utcToZonedTime(new Date(props.time), "Asia/Hong_Kong"));
 
     return (
         <>
@@ -36,13 +38,7 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                     </div>
                     <IonCardTitle>{props.courseName}</IonCardTitle>
                     <IonCardSubtitle>Class #{props.classID}</IonCardSubtitle>
-                    {/* <IonCardSubtitle>
-                        <IonIcon icon={calendarSharp} />
-                        {props.time.split('T')[0]}
-                        ({format(date, "E")})
-                    </IonCardSubtitle> */}
                 </IonCardHeader>
-
                 <IonCardContent>
                     <IonList>
                         <IonItem className={UserMenuStyle.item}>
@@ -58,20 +54,19 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                             <IonLabel>{props.duration} mins</IonLabel>
                         </IonItem>
                         <IonItem className={UserMenuStyle.item}>
-                            <IonLabel>Attendence:</IonLabel>
-                            <IonLabel>{props.attendence}</IonLabel>
+                            <IonLabel>Trainer:</IonLabel>
+                            <IonLabel>{props.trainerName}</IonLabel>
                         </IonItem>
                         <IonItem className={UserMenuStyle.item_last}>
-                            <IonLabel className={AppStyle.bold}>{props.gymName}</IonLabel>
-                        </IonItem>
-                        <IonItem className={UserMenuStyle.item_last}>
-                            <IonIcon icon={locationOutline} />
-                            <IonLabel></IonLabel>
-                            <p>{props.address}</p>
+                            <IonLabel>Attendee:</IonLabel>
+                            <IonLabel>{props.filledSlot} / {props.quota}</IonLabel>
                         </IonItem>
                     </IonList>
                     <br />
-                    <IonButton expand="block">Cancel</IonButton>
+                    <IonButton expand="block">
+                        <IonIcon icon={qrCode}></IonIcon>
+                        Take Attendence
+                    </IonButton>
                 </IonCardContent>
 
             </IonCard>
