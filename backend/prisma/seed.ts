@@ -968,10 +968,10 @@ async function main() {
     })
 
     const courseTypes4 = await prisma.courseTypes.upsert({
-        where: { name: "BOXONG" },
+        where: { name: "Boxing" },
         update: {},
         create: {
-            name: "BOXONG",
+            name: "Boxing",
         },
     })
 

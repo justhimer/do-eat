@@ -18,9 +18,11 @@ import { userAction } from "../../../redux/userSlice";
 import { TakeProfilePic } from "../../user/TakeProfilePic";
 import UserStyle from '../../../scss/User.module.scss';
 import { fetchTrainers } from "../../../api/trainerAPI";
-import { resetGymCourse } from "../../../redux/gymCourseSlice";
+import { resetGymCourse, sendGymCourse } from "../../../redux/gymCourseSlice";
 import '../../../scss/gymCourseDetail.scss'
 import { getCourseType } from "../../../api/courseTypeAPI";
+import { gymCourseData, gymCourseUpload, updateCourseDetail } from "../../../api/coursesApi";
+import { getIntensityLevel } from "../../../api/intensityAPI";
 
 
 
@@ -38,12 +40,15 @@ export function CourseDetails() {
         queryFn: () => fetchTrainers()
     })
     const courseTypeList = useQuery({
-        queryKey:['courseTypeQuery'],
-        queryFn: ()=> getCourseType()
+        queryKey: ['courseTypeQuery'],
+        queryFn: () => getCourseType()
+    })
+    const intensityLevelList = useQuery({
+        queryKey: ['intensityQuery'],
+        queryFn: () => getIntensityLevel()
     })
 
     useIonViewWillEnter(() => {
-        console.log(selectedCourse)
         courseSchedules.refetch()
         trainerList.refetch()
     })
@@ -56,7 +61,6 @@ export function CourseDetails() {
     })
     useEffect(() => {
         setTrainerValue(selectedCourse.default_trainer_id)
-        console.log("trainerValue: ", trainerValue)
     }, [courseSchedules.data])
 
 
@@ -74,16 +78,26 @@ export function CourseDetails() {
 
     const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
 
-    async function handleSignup(event: FormEvent<HTMLFormElement>) {
+    async function handleSignup(event: any) {
         try {
             event.preventDefault();
-            
-            // upload photo
-            uploadingPhoto.mutate(photo);
-
+            const prepData: gymCourseUpload = {
+                id: selectedCourse.course_id,
+                intensity_id: Number(event.target.intensity_choice.value),
+                course_type_id: Number(event.target.course_type_choice.value),
+                gym_id: selectedCourse.gym_id,
+                name: courseName,
+                credits: courseCredits,
+                calories: courseCalories,
+                duration: courseDuration,
+                default_quota: courseQuota,
+                default_trainer_id: Number(event.target.trainer_choice.value),
+            }
+            console.log(prepData)
+            updateDetails.mutate(prepData)
         } catch {
             present({
-                message: 'User Sign Up Failed',
+                message: 'Course Update Failed',
                 duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
@@ -91,51 +105,15 @@ export function CourseDetails() {
         }
     }
 
-    const uploadingPhoto = useMutation(
-        (photo?: UserPhoto): any => {
-            let data = undefined;
-            if (photo) {
-                data = uploadPhoto(photo);
-            }
-            return data;
-        },
-        {
-            onSuccess: (data: UploadedPhoto) => {
-                let iconUrl: string | undefined = undefined;
-                if (data) {
-                    iconUrl = data.accessPath;
-                }
-                // create account
-                const signupDetails = {
-                    icon: iconUrl
-                }
-                signingUp.mutate(signupDetails);
-            }
-        }
-    )
-
-    const signingUp = useMutation(
-        (signupDetails: any) => userSignup(signupDetails),
+    const updateDetails = useMutation(
+        (updateData: gymCourseUpload) => updateCourseDetail(updateData),
         {
             onSuccess: (data) => {
-                if (data) {
-                    dispatch(gymAction.logout());
-                    dispatch(userAction.login(data));
-                    present({
-                        message: 'User Login Success',
-                        duration: 1500,
-                        position: "top",
-                        cssClass: NotificationStyle.ionicToast,
-                    });
-                    history.push("/user-tab");
-                } else {
-                    present({
-                        message: 'User Login Failed',
-                        duration: 1500,
-                        position: "top",
-                        cssClass: NotificationStyle.ionicToast,
-                    });
-                }
+                dispatch(sendGymCourse(data as gymCourseData))
+                console.log('success')
+            },
+            onError:(error)=>{
+                throw new Error(String(error))
             }
         }
     )
@@ -230,6 +208,13 @@ export function CourseDetails() {
                             onIonBlur={() => markTouched()}
                             value={courseName}
                         ></IonInput>
+
+                        {intensityLevelList.data && intensityLevelList.data.length > 0 ?
+                            <IonRadioGroup value={selectedCourse.intensity_id} name="intensity_choice">
+                                {intensityLevelList.data.map((intensity: any, index: number) => <IonRadio key={index} value={intensity.id} labelPlacement="end">{intensity.level}</IonRadio>)}
+                            </IonRadioGroup>
+                            : <></>
+                        }
 
                         <IonInput
                             className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Put, ParseIntPipe, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Courses } from '@prisma/client';
 import { Course } from './entities/course.entity';
+import { isError } from 'lodash';
 
 @ApiTags('courses') // to categorize in swagger
 @Controller('courses')
@@ -38,7 +39,12 @@ export class CoursesController {
   @UseGuards(AuthGuard('jwt_gym'))
   @Put('gyms/course')
   async updateCourse(@Req() req, @Body() body:Course){
-    return await this.coursesService.updateCourseInfo(body)
+    const data = await this.coursesService.updateCourseInfo(body)
+    if (!isError(data)){
+      return data
+    }else{
+      throw new HttpException('Update Error', HttpStatus.BAD_REQUEST)
+    }
   }
 
 }
