@@ -776,6 +776,90 @@ async function main() {
         },
     })
 
+    const foodData = [
+        {foods_id: food1.id,
+            quantity: 10
+        },
+        {foods_id: food2.id,
+            quantity: 10
+        },
+        {foods_id: food3.id,
+            quantity: 10
+        },
+        {foods_id: food4.id,
+            quantity: 10
+        },
+        {foods_id: food5.id,
+            quantity: 10
+        },
+        {foods_id: food6.id,
+            quantity: 10
+        },
+        {foods_id: food7.id,
+            quantity: 10
+        },
+        {foods_id: food8.id,
+            quantity: 10
+        },
+        {foods_id: food9.id,
+            quantity: 10
+        },
+        {foods_id: food10.id,
+            quantity: 10
+        },
+        {foods_id: food11.id,
+            quantity: 10
+        },
+        {foods_id: food12.id,
+            quantity: 10
+        },{foods_id: food13.id,
+            quantity: 10
+        },{foods_id: food14.id,
+            quantity: 10
+        },{foods_id: food15.id,
+            quantity: 10
+        },{foods_id: food16.id,
+            quantity: 10
+        },{foods_id: food17.id,
+            quantity: 10
+        },{foods_id: food18.id,
+            quantity: 10
+        },{foods_id: food19.id,
+            quantity: 10
+        },{foods_id: food20.id,
+            quantity: 10
+        },{foods_id: food21.id,
+            quantity: 10
+        },{foods_id: food22.id,
+            quantity: 10
+        },{foods_id: food23.id,
+            quantity: 10
+        },{foods_id: food24.id,
+            quantity: 10
+        },{foods_id: food25.id,
+            quantity: 10
+        },{foods_id: food26.id,
+            quantity: 10
+        },{foods_id: food27.id,
+            quantity: 10
+        },{foods_id: food28.id,
+            quantity: 10
+        },{foods_id: food29.id,
+            quantity: 10
+        },{foods_id: food30.id,
+            quantity: 10
+        },{foods_id: food31.id,
+            quantity: 10
+        },{foods_id: food32.id,
+            quantity: 10
+        },{foods_id: food33.id,
+            quantity: 10
+        },{foods_id: food34.id,
+            quantity: 10
+        },{foods_id: food35.id,
+            quantity: 10
+        }
+    ]
 
     const gym1 = await prisma.gyms.upsert({
         where: { username: "pure_cwb" },
@@ -791,6 +875,11 @@ async function main() {
             google_position: { lat: 22.27847, lng: 114.18320 },
             franchise_id: franchise1.id,
             district_id: districts1.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 
@@ -808,6 +897,11 @@ async function main() {
             google_position: { lat: 22.286163428803967, lng: 114.15916750054413 },
             franchise_id: franchise1.id,
             district_id: district2.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 
@@ -825,6 +919,11 @@ async function main() {
             google_position: { lat: 22.278287400747722, lng: 114.16885263948282 },
             franchise_id: franchise1.id,
             district_id: district3.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 
@@ -842,6 +941,11 @@ async function main() {
             google_position: { lat: 22.29421531793089, lng: 114.17532064270728 },
             franchise_id: franchise1.id,
             district_id: district4.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 
@@ -859,6 +963,11 @@ async function main() {
             google_position: { lat: 22.318871736905805, lng: 114.1685881394834 },
             franchise_id: franchise1.id,
             district_id: district5.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 
@@ -874,6 +983,11 @@ async function main() {
             google_position: { lat: 22.28020809554962, lng: 114.1822722244828 },
             franchise_id: franchise2.id,
             district_id: districts1.id,
+            GymFoodStock: {
+                createMany:{
+                    data: foodData
+                }
+            }
         }
     })
 

@@ -81,6 +81,7 @@ model Foods {
   FavouriteFoods FavouriteFoods[]
   FoodCart       FoodCart[]
   FoodOrder      FoodOrder[]
+  GymFoodStock    GymFoodStock[]
 }
 
 model FoodOrder {
@@ -145,6 +146,7 @@ model Gyms {
   updated_at      DateTime      @updatedAt @db.Timestamptz
   FoodHistory     FoodHistory[]
   courses         Courses[]
+  GymFoodStock    GymFoodStock[]
 }
 
 model Trainers {
@@ -299,4 +301,15 @@ model FoodCart {
   quantity   Int      @db.Integer
   updated_at DateTime @updatedAt @db.Timestamptz
   created_at DateTime @default(now()) @db.Timestamptz
+}
+
+model GymFoodStock{
+  id Int @id @default(autoincrement())
+  gyms_id Int @db.Integer
+  foods_id Int @db.Integer
+  quantity Int @db.Integer
+  updated_at DateTime @updatedAt @db.Timestamptz
+  created_at DateTime @default(now()) @db.Timestamptz
+  gyms Gyms @relation(fields: [gyms_id],references: [id])
+  foods Foods @relation(fields: [foods_id],references: [id])
 }
