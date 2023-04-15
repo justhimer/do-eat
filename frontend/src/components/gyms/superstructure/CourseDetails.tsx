@@ -66,33 +66,18 @@ export function CourseDetails() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [verifyPassword, setVerifyPassword] = useState<string>("");
-
-    useIonViewDidLeave(() => {
-        removePhoto();
-        setUsername('');
-        setPassword('');
-        setVerifyPassword('');
-    })
+    const [courseName, setCourseName] = useState<string>(selectedCourse.name);
+    const [courseCalories, setCourseCalories] = useState<number>(selectedCourse.calories);
+    const [courseCredits, setCourseCredits] = useState<number>(selectedCourse.credits);
+    const [courseQuota, setCourseQuota] = useState<number>(selectedCourse.default_quota);
+    const [courseDuration, setCourseDuration] = useState<number>(selectedCourse.duration)
 
     const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
 
     async function handleSignup(event: FormEvent<HTMLFormElement>) {
         try {
             event.preventDefault();
-
-            if (password !== verifyPassword) {
-                present({
-                    message: 'Verify Password Again',
-                    duration: 1500,
-                    position: "top",
-                    cssClass: NotificationStyle.ionicToast,
-                });
-                return;
-            }
-
+            
             // upload photo
             uploadingPhoto.mutate(photo);
 
@@ -122,8 +107,6 @@ export function CourseDetails() {
                 }
                 // create account
                 const signupDetails = {
-                    username: username,
-                    password: password,
                     icon: iconUrl
                 }
                 signingUp.mutate(signupDetails);
@@ -243,9 +226,9 @@ export function CourseDetails() {
                             fill="solid"
                             label="Name"
                             labelPlacement="floating"
-                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setCourseName(String(event.detail.value))}
                             onIonBlur={() => markTouched()}
-                            value={verifyPassword}
+                            value={courseName}
                         ></IonInput>
 
                         <IonInput
@@ -254,9 +237,9 @@ export function CourseDetails() {
                             fill="solid"
                             label="Calories"
                             labelPlacement="floating"
-                            onIonInput={(event) => setPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setCourseCalories(Number(event.detail.value))}
                             onIonBlur={() => markTouched()}
-                            value={password}
+                            value={courseCalories}
                         ></IonInput>
 
                         <IonInput
@@ -265,9 +248,9 @@ export function CourseDetails() {
                             fill="solid"
                             label="Credits"
                             labelPlacement="floating"
-                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setCourseCredits(Number(event.detail.value))}
                             onIonBlur={() => markTouched()}
-                            value={verifyPassword}
+                            value={courseCredits}
                         ></IonInput>
 
                         {courseTypeList.data && courseTypeList.data.length > 0 ?
@@ -283,9 +266,9 @@ export function CourseDetails() {
                             fill="solid"
                             label="Default quota"
                             labelPlacement="floating"
-                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setCourseQuota(Number(event.detail.value))}
                             onIonBlur={() => markTouched()}
-                            value={verifyPassword}
+                            value={courseQuota}
                         ></IonInput>
 
                         <IonInput
@@ -294,9 +277,9 @@ export function CourseDetails() {
                             fill="solid"
                             label="Duration (Min)"
                             labelPlacement="floating"
-                            onIonInput={(event) => setVerifyPassword(`${event.detail.value!}`)}
+                            onIonInput={(event) => setCourseDuration(Number(event.detail.value))}
                             onIonBlur={() => markTouched()}
-                            value={verifyPassword}
+                            value={courseDuration}
                         ></IonInput>
 
                         <IonButton id="open-loading" type="submit" className={UserStyle.button}>Submit</IonButton>
