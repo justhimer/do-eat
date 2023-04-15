@@ -24,6 +24,11 @@ export class UserSchedulesService {
             courses: {
               select: {
                 name: true,
+                course_type: {
+                  select: {
+                    name: true
+                  }
+                },
                 duration: true,
                 gyms : {
                   select: {

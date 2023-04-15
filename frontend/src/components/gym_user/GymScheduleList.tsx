@@ -6,7 +6,7 @@ import { fetchCourseRemainingSlots } from "../../api/userScheduleAPI";
 
 
 export function GymScheduleList() {
-    
+
     const { data: courses, isLoading, refetch, remove } = useQuery({
         queryKey: ["gym-schedule"],
         queryFn: async () => {
@@ -42,16 +42,16 @@ export function GymScheduleList() {
                     courses && courses.length > 0 && courses.map((course: any) => (
                         <GymScheduleItem
                             key={course.id}
-                            id={course.id}
+                            classID={course.id}
                             courseName={course.courses.name}
                             time={course.time}
                             duration={course.courses.duration}
                             trainerName={course.trainers.name}
                             quota={course.quota}
                             filledSlot={course.slot}
-                            courseTypeName={course.courses.course_type.name}
-                            // intensityID={course.courses.intensity.id}
-                            // intensityLevel={course.courses.intensity.level}
+                            courseType={course.courses.course_type.name}
+                        // intensityID={course.courses.intensity.id}
+                        // intensityLevel={course.courses.intensity.level}
                         />
                     ))
                 }

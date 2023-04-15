@@ -7,9 +7,12 @@ import { useState } from "react";
 // css
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import AppStyle from "../../scss/App.module.scss";
+import courseStyle from '../../scss/GymCourses.module.scss'
 
 export interface UserScheduleItemProps {
+    classID: number
     courseName: string;
+    courseType: string;
     time: string;
     duration: number;
     gymName: string;
@@ -26,16 +29,26 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
 
             <IonCard>
                 <IonCardHeader>
+                    <div className={courseStyle.cardTopChips}>
+                        <IonChip >
+                            <IonLabel>{props.courseType}</IonLabel>
+                        </IonChip>
+                    </div>
                     <IonCardTitle>{props.courseName}</IonCardTitle>
-                    <IonCardSubtitle>
+                    <IonCardSubtitle>Class #{props.classID}</IonCardSubtitle>
+                    {/* <IonCardSubtitle>
                         <IonIcon icon={calendarSharp} />
                         {props.time.split('T')[0]}
                         ({format(date, "E")})
-                    </IonCardSubtitle>
+                    </IonCardSubtitle> */}
                 </IonCardHeader>
 
                 <IonCardContent>
                     <IonList>
+                        <IonItem className={UserMenuStyle.item}>
+                            <IonLabel>Date:</IonLabel>
+                            <IonLabel>{format(date, "dd MMM yyyy, E")}</IonLabel>
+                        </IonItem>
                         <IonItem className={UserMenuStyle.item}>
                             <IonLabel>Start at:</IonLabel>
                             <IonLabel>{format(date, "hh:mm aaa")}</IonLabel>

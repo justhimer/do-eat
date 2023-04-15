@@ -10,14 +10,14 @@ import { barbellOutline, calendarSharp, qrCode } from "ionicons/icons";
 import { useState } from "react";
 
 export interface GymScheduleItemProps {
-    id: number
+    classID: number
     courseName: string;
     time: string;
     duration: number;
     trainerName: string;
     quota: number
     filledSlot: number;
-    courseTypeName: string;
+    courseType: string;
     // intensityID: number;
     // intensityLevel: string;
 }
@@ -30,20 +30,14 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
         <>
 
             <IonCard>
-                <div className={courseStyle.cardTopChips}>
-                    <IonChip >
-                        <IonLabel>{props.courseTypeName}</IonLabel>
-                    </IonChip>
-                </div>
                 <IonCardHeader>
-                    <IonCardTitle>
-                        {props.courseName}
-                    </IonCardTitle>
-                    {/* <IonCardSubtitle>
-                        <IonIcon icon={calendarSharp} />
-                        <span></span> {format(date, "dd MMM yyyy, E")}
-                    </IonCardSubtitle> */}
-                    <IonCardSubtitle>Class #{props.id}</IonCardSubtitle>
+                    <div className={courseStyle.cardTopChips}>
+                        <IonChip >
+                            <IonLabel>{props.courseType}</IonLabel>
+                        </IonChip>
+                    </div>
+                    <IonCardTitle>{props.courseName}</IonCardTitle>
+                    <IonCardSubtitle>Class #{props.classID}</IonCardSubtitle>
                 </IonCardHeader>
                 <IonCardContent>
                     <IonList>
