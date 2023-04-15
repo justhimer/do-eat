@@ -22,6 +22,10 @@ export function GymMenu() {
         history.push("/gym-coming-courses");
     }
 
+    const onFoodOrders = () => {
+        history.push("/gym-food-orders");
+    }
+
     return (
         <>
             <div className={UserMenuStyle.icon_container}>
@@ -47,7 +51,7 @@ export function GymMenu() {
                             <IonItem button detail={true} className={UserMenuStyle.item} onClick={onCourses}>
                                 <IonLabel>Coming Courses</IonLabel>
                             </IonItem>
-                            <IonItem button detail={true} className={UserMenuStyle.item_last}>
+                            <IonItem button detail={true} className={UserMenuStyle.item_last} onClick={onFoodOrders}>
                                 <IonLabel>Food Orders</IonLabel>
                             </IonItem>
                             {/* <IonItem button detail={true} className={UserMenuStyle.item}>

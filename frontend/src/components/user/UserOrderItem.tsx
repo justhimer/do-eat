@@ -1,5 +1,5 @@
 import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonThumbnail, IonLabel, IonIcon, IonChip } from "@ionic/react";
-import { UserOrderFoodItem } from "./UserOrderFoodItem";
+import { UserOrderItemFood } from "./UserOrderItemFood";
 
 // css
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
@@ -37,14 +37,14 @@ export function UserOrderItem(props: UserOrderItemProps) {
                 </IonCardSubtitle>
                 <IonCardSubtitle>
                     <IonIcon icon={receiptSharp} />
-                    <span></span> receipt: #{props.id}
+                    <span></span> ticket #{props.id}
                 </IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent>
                 <IonList>
                     {
                         props.foods && props.foods.length > 0 && props.foods.map((food: OrderedFood, index: number) => (
-                            <UserOrderFoodItem
+                            <UserOrderItemFood
                                 key={index}
                                 name={food.food.name}
                                 quantity={food.quantity}

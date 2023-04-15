@@ -1,20 +1,21 @@
+import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchFoodsToBeCollectedForUser } from "../../api/foodHistoryAPIs";
-import { IonBackButton, IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
-import { UserOrderItem } from "./UserOrderItem";
+import { fetchFoodsOrdersForGym } from "../../api/foodHistoryAPIs";
+import { GymOrderItem } from "./GymOrderItem";
 
-export function UserOrderList() {
+
+export function GymOrderList() {
     const { data: orders, isLoading, refetch, remove } = useQuery({
-        queryKey: ["user_orders"],
+        queryKey: ["gym_orders"],
         queryFn: async () => {
-            const orders = await fetchFoodsToBeCollectedForUser();
+            const orders = await fetchFoodsOrdersForGym();
             // sorting according to created_at
             orders.sort((a: any, b: any) => {
                 const timeA = Date.parse(a.created_at);
                 const timeB = Date.parse(b.created_at);
                 return timeA - timeB;
             });
-            // console.log(orders);
+            console.log(orders);
             return orders;
         },
     });
@@ -30,22 +31,17 @@ export function UserOrderList() {
                     <IonButton slot="start">
                         <IonBackButton default-href="/"></IonBackButton>
                     </IonButton>
-                    <IonTitle>Ordered Foods</IonTitle>
+                    <IonTitle>Food Orders</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 {
                     orders && orders.length > 0 && orders.map((order: any) => (
-                        <UserOrderItem
+                        <GymOrderItem
                             key={order.id}
                             id={order.id}
-                            shop_name={order.gym.name}
                             foods={order.FoodOrder}
-                            address={order.gym.address}
-                            no_close={order.gym.no_close}
-                            opening={order.gym.no_close ? undefined : order.gym.opening_hour}
-                            closing={order.gym.no_close ? undefined : order.gym.closing_hour}
-                            google_position={order.gym.google_position}
+                            orderReceivedAt={order.created_at}
                         />
                     ))
                 }
