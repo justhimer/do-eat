@@ -212,7 +212,7 @@ export function CourseDetails() {
                                 }
                             ]}
                         />
-                        {trainerList.data ? <IonRadioGroup onSelect={(e)=>{console.log(e.detail.value)}} value={String(selectedCourse.default_trainer_id)} >
+                        {trainerList.data && trainerList.data.length>0? <IonRadioGroup value={String(selectedCourse.default_trainer_id)} >
                             {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={String(trainer.id)}>{trainer.id} {trainer.name}</IonRadio>)}
                         </IonRadioGroup> : <></>}
 
