@@ -47,7 +47,6 @@ export async function getCoursesforGym(): Promise<gymCourseData[]> {
 }
 
 export async function updateCourseDetail(uploadData:gymCourseUpload) {
-    console.log("uploadData: ", uploadData)
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gyms/course`, {
             method: 'PUT',
             headers: {
@@ -59,5 +58,24 @@ export async function updateCourseDetail(uploadData:gymCourseUpload) {
         if (res.ok){
             const result = await res.json()
             return result
+        }else{
+            throw new Error()
         }
+}
+
+export async function createCourseDetail(uploadData:gymCourseUpload){
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gyms/course`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        },
+        body: JSON.stringify(uploadData)
+    })
+    if (res.ok){
+        const result = await res.json()
+        return result
+    }else{
+        throw new Error()
+    }
 }
