@@ -9,7 +9,12 @@ export class CourseTypeService {
 
   async allCourseType(){
     try {
-      const data = await this.prisma.courseTypes.findMany()
+      const data = await this.prisma.courseTypes.findMany({
+        select:{
+          id:true,
+          name:true
+        }
+      })
       if (data){
         return data
       }else{

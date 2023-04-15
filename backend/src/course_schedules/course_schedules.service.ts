@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { addDays } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import { PrismaService } from 'nestjs-prisma';
@@ -294,5 +294,47 @@ export class CourseSchedulesService {
         }
     }
 
-
+    async getAllScheduleForGymCourse(course_id: number) {
+        try {
+            const data = await this.prisma.courseSchedules.findMany({
+                select: {
+                    id:true,
+                    course_id: true,
+                    trainer_id: true,
+                    quota: true,
+                    time: true,
+                    trainers: {
+                        select: {
+                            name: true,
+                        }
+                    }
+                },
+                where: {
+                    course_id: course_id
+                },orderBy:{
+                    time:'desc'
+                }
+            })
+            if (data.length > 0) {
+                const newData = []
+                data.forEach(timeslot => {
+                    newData.push({
+                        schedule_id: timeslot.id,
+                        course_id: timeslot.course_id,
+                        trainer_id: timeslot.trainer_id,
+                        quota: timeslot.quota,
+                        time: timeslot.time,
+                        trainer_name: timeslot.trainers.name,
+                    })
+                })
+                return newData
+            } else {
+                console.log('error at course_schedules.services: ')
+                throw new HttpException('test', HttpStatus.BAD_REQUEST)
+            }
+        } catch (error) {
+            console.log('error at course_schedules.services: ', error)
+            throw new Error(error)
+        }
+    }
 }

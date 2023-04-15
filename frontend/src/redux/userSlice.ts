@@ -18,7 +18,7 @@ interface Token {
 
 const isLoggedIn = () => {
     const token = localStorage.getItem("token");
-    console.log("user token: ",token)
+    //console.log("user token: ",token)
     return !!token
 }
 

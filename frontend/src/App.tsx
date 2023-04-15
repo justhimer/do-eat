@@ -77,7 +77,7 @@ const App: React.FC = () => {
 
   const gymLoginStatus = useSelector((state: RootState) => state.gym.isAuthenticated)
 
-  const navigationSwitch = (type: 'do-tab' | 'eat-tab' | 'do-component' | 'eat-component') => {
+  const navigationSwitch = (type: 'do-tab' | 'eat-tab') => {
     if (gymLoginStatus) {
       switch (type) {
         case 'do-tab':
@@ -165,19 +165,19 @@ const App: React.FC = () => {
               <GymConfirmation />
             </Route>
 
-            {/*gym CMS routes */}
-            <Route exact path="/gyms-do" >
-              <GymsDo />
-            </Route>
-            <Route exact path='/gyms-do/create'>
-              <CourseCreate />
-            </Route>
-            <Route exact path='gyms-do/details'>
-              <CourseDetails />
-            </Route>
-            <Route exact path="/gyms-eat" >
-              <GymsEat />
-            </Route>
+          {/*gym CMS routes */}
+          <Route exact path="/gyms-do" >
+            <GymsDo/>
+          </Route>
+          <Route exact path='/create-course'>
+            <CourseCreate/>
+          </Route>
+          <Route exact path='/details-course'>
+            <CourseDetails/>
+          </Route>
+          <Route exact path="/gyms-eat" >
+            <GymsEat/>
+          </Route>
 
             {/* food routes */}
             <Route path="/fooddetails/:id" component={Fooddetails}>
