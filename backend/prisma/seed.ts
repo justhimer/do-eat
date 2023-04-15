@@ -751,7 +751,7 @@ async function main() {
         update: {},
         create: {
             name: "PureFitness",
-            email: "purefitness@gmail",
+            email: "purefitness@gmail.com",
             telephone: "12345678",
         },
     })
@@ -761,7 +761,7 @@ async function main() {
         update: {},
         create: {
             name: "24/7Fitness",
-            email: "247fitness@gmail",
+            email: "247fitness@gmail.com",
             telephone: "23456789",
         },
     })
@@ -771,7 +771,7 @@ async function main() {
         update: {},
         create: {
             name: "SnapFitness",
-            email: "Snapfitness@gmail",
+            email: "Snapfitness@gmail.com",
             telephone: "34567890",
         },
     })

@@ -1,16 +1,15 @@
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 
-export default function PrivateRouter({ component: Component }: any) {
+export function UserPrivateRouter({ component: Component }: any) {
     const isUserLoggedIn = useSelector(((state: RootState) => state.user.isAuthenticated));
-    const isGymLoggedIn = useSelector(((state: RootState) => state.gym.isAuthenticated));
 
     const render = () => {
-        if (isUserLoggedIn || isGymLoggedIn) {
+        if (isUserLoggedIn) {
             return <Route render={() => Component}></Route>
         } else {
-            return <Redirect to={"/login"} />
+            return <Redirect to={"/user-tab"} />
         }
     }
     return render()

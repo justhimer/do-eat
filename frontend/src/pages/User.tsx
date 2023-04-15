@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { userAction } from '../redux/userSlice';
 import { fetchGymInfo } from '../api/gymAPIs';
 import { gymAction } from '../redux/gymSlice';
+import { GymMenu } from '../components/gym_user/GymMenu';
 
 const UserTab: React.FC = () => {
 
@@ -44,7 +45,7 @@ const UserTab: React.FC = () => {
       <IonContent fullscreen className={AppStyle.hero}>
         {!isUserLoggedIn && !isGymLoggedIn ? (<Login />) : (<></>)}
         {isUserLoggedIn ? (<UserMenu />) : (<></>)}
-        {isGymLoggedIn ? (<Logout remove={() => { }} />) : (<></>)}
+        {isGymLoggedIn ? (<GymMenu/>) : (<></>)}
       </IonContent>
 
     </IonPage>

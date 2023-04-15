@@ -57,13 +57,15 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 import TabStyle from "./scss/TabBar.module.scss";
 import "./scss/RootChanges.scss"
 
-import PrivateRouter from './components/PrivateRoute';
+import { GymPrivateRouter } from './components/private_routes/GymPrivateRoute';
 import Login from './components/auth/Login';
 import { UserScheduleList } from './components/user/UserScheduleList';
 import { UserOrderList } from './components/user/UserOrderList';
 import { CourseCreate } from './components/gyms/superstructure/CourseCreate';
 import { CourseDetails } from './components/gyms/superstructure/CourseDetails';
 import { ShoppingCart } from './components/ShoppingCart/cart';
+import { GymProfile } from './components/gym_user/GymProfile';
+import { GymScheduleList } from './components/gym_user/GymScheduleList';
 
 setupIonicReact();
 
@@ -144,6 +146,12 @@ const App: React.FC = () => {
             </Route>
             <Route path="/user-orders">
               <UserOrderList />
+            </Route>
+
+            {/* gym user routes */}
+            <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile/>} />}>
+            </Route>
+            <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList/>} />}>
             </Route>
 
             {/* do routes */}

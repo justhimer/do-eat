@@ -1,5 +1,5 @@
 import { IonItem, IonThumbnail, IonLabel, IonIcon, IonChip, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonList } from "@ionic/react";
-import { calendarSharp } from "ionicons/icons";
+import { calendarSharp, locationOutline } from "ionicons/icons";
 import { utcToZonedTime } from 'date-fns-tz';
 import format from "date-fns/format";
 import { useState } from "react";
@@ -52,6 +52,8 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                             <IonLabel className={AppStyle.bold}>{props.gymName}</IonLabel>
                         </IonItem>
                         <IonItem className={UserMenuStyle.item_last}>
+                            <IonIcon icon={locationOutline} />
+                            <IonLabel></IonLabel>
                             <p>{props.address}</p>
                         </IonItem>
                     </IonList>

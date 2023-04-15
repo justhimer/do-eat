@@ -5,6 +5,7 @@ export interface GymSliceState {
     isAuthenticated: boolean;
     id: number;
     username: string;
+    name: string;
     franchise_id: number,
     district_id: number,
 }
@@ -12,6 +13,7 @@ export interface GymSliceState {
 interface GymToken {
     id?: number,
     username?: string,
+    name?: string,
     franchise_id?: number,
     district_id?: number,
     iat?: number,
@@ -29,6 +31,7 @@ const getGymInfo = () => {
     let data = {
         id: 0,
         username: "",
+        name: "",
         franchise_id: 0,
         district_id: 0,
     }
@@ -37,6 +40,7 @@ const getGymInfo = () => {
         return {
             id: decoded.id,
             username: decoded.username,
+            name: decoded.name,
             franchise_id: decoded.franchise_id,
             district_id: decoded.district_id,
         }
@@ -53,6 +57,7 @@ const gymSlice = createSlice({
         isAuthenticated: isLoggedIn(),
         id: getGymInfo().id,
         username: getGymInfo().username,
+        name: getGymInfo().name,
         franchise_id: getGymInfo().franchise_id,
         district_id: getGymInfo().district_id,
     } as GymSliceState,
@@ -65,6 +70,7 @@ const gymSlice = createSlice({
             state.isAuthenticated = true;
             state.id = payload.id;
             state.username = payload.username;
+            state.name = payload.name;
             state.franchise_id = payload.franchise_id;
             state.district_id = payload.district_id;
 
@@ -75,6 +81,7 @@ const gymSlice = createSlice({
             state.isAuthenticated = false;
             state.id = 0;
             state.username = "";
+            state.name="";
             state.franchise_id = 0;
             state.district_id = 0;
 

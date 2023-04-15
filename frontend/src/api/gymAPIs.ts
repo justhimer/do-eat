@@ -21,7 +21,7 @@ export async function fetchGymInfo() {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
         },
     });
     if (res.ok) {

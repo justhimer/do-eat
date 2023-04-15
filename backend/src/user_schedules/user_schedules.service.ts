@@ -54,6 +54,16 @@ export class UserSchedulesService {
     return (quota - filledSlots)
   }
 
+  async getFilledSlots(exercise_id: number) {
+
+    let filledSlots = (await this.prisma.userSchedule.aggregate({
+      _count: { course_schedule_id: true },
+      where: { course_schedule_id: exercise_id }
+    }))._count.course_schedule_id
+
+    return filledSlots;
+  }
+
   async findUserinCourse(user_id: number, exercise_id: number): Promise<boolean> {
     let foundUser = await this.prisma.userSchedule.findFirst({
       where: {

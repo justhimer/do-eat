@@ -17,13 +17,6 @@ export function UserOrderFoodItem(props: UserOrderFoodItemProps) {
             <p className={UserMenuStyle.width_70}>{props.name}</p>
             <IonLabel className={UserMenuStyle.right}>x {props.quantity}</IonLabel>
         </IonItem>
-
-        {/* <IonItem lines="none">
-            <IonThumbnail slot="start">
-                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </IonThumbnail>
-            <IonLabel>Item</IonLabel>
-        </IonItem> */}
     </>
     )
 

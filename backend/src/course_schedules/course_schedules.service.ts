@@ -17,6 +17,13 @@ export class CourseSchedulesService {
         })).quota
     }
 
+    async getSchedulesOfCourses(course_id: number) {
+        await this.prisma.courseSchedules.findMany({
+            where: { course_id: course_id },
+            orderBy: { time: 'desc' }
+        })
+    }
+
     async someCourses(listGyms: Array<number>) {
         return await this.prisma.courseSchedules.findMany({
 
@@ -47,6 +54,51 @@ export class CourseSchedulesService {
         }))._count.course_schedule_id
 
         return (quota - filledSlots)
+    }
+
+    async findCoursesInNext24Hours(gym_id: number) {
+        const now = new Date();
+        // console.log('gte: ', zonedTimeToUtc(now, "Asia/Hong_Kong"));
+        // console.log('lt: ', addDays(zonedTimeToUtc(now, "Asia/Hong_Kong"), 1));
+        const data = await this.prisma.courseSchedules.findMany({
+            orderBy: [
+                { time: 'asc' }
+            ],
+            where: {
+                AND: [
+                    {
+                        courses: {
+                            gym_id: gym_id
+                        }
+                    },
+                    {
+                        time: {
+                            gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
+                            lt: addDays(zonedTimeToUtc(now, "Asia/Hong_Kong"), 1)
+                        }
+                    }
+                ]
+            },
+            include: {
+                trainers: true,
+                courses: {
+                    include: {
+                        // intensity: {
+                        //     select: {
+                        //         id: true,
+                        //         level: true
+                        //     }
+                        // },
+                        course_type: {
+                            select: {
+                                name: true
+                            }
+                        },
+                    }
+                }
+            }
+        })
+        return data;
     }
 
     // used in front end do-tab to get the courses available on the day

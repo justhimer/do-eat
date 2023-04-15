@@ -38,6 +38,8 @@ export function UserOrderList() {
                     orders && orders.length > 0 && orders.map((order: any) => (
                         <UserOrderItem
                             key={order.id}
+                            id={order.id}
+                            shop_name={order.gym.name}
                             foods={order.FoodOrder}
                             address={order.gym.address}
                             no_close={order.gym.no_close}
