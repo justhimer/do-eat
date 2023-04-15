@@ -65,6 +65,7 @@ import { CourseCreate } from './components/gyms/superstructure/CourseCreate';
 import { CourseDetails } from './components/gyms/superstructure/CourseDetails';
 import { ShoppingCart } from './components/ShoppingCart/cart';
 import { GymProfile } from './components/gym_user/GymProfile';
+import { GymScheduleList } from './components/gym_user/GymScheduleList';
 
 setupIonicReact();
 
@@ -149,6 +150,8 @@ const App: React.FC = () => {
 
             {/* gym user routes */}
             <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile/>} />}>
+            </Route>
+            <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList/>} />}>
             </Route>
 
             {/* do routes */}

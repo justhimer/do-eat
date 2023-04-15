@@ -69,8 +69,8 @@ export class GymsController {
   @UseGuards(AuthGuard('jwt_gym'))
   @Get()
   findById(@Request() req) {
-    const userID = req.user.id;
-    return this.gymsService.findById(userID);
+    const gymID = req.user.id;
+    return this.gymsService.findById(gymID);
   }
 
   @Get('/users/district/all')
