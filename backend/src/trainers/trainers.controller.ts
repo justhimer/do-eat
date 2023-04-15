@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { TrainersService } from './trainers.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GymsService } from 'src/gyms/gyms.service';
 import { CreateTrainersDTO } from './dto/create-trainers.dto';
 import { Trainers } from './entities/trainers.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { isError } from 'lodash';
 
 @ApiTags('trainers')
 @Controller('trainers')
@@ -17,8 +18,16 @@ export class TrainersController {
   @Get('all')
   async getFranchiseTrainers (@Req() req){
     const gym_id = req.user.id
+    console.log('gym_id: ', gym_id)
     const franchise = await this.gymsService.getFranchiseFromGymsID(gym_id)
-    return await this.trainersService.getAllFromFranchise(franchise)
+    console.log('franchise: ', franchise)
+    const data = await this.trainersService.getAllFromFranchise(franchise)
+    if (!isError(data)){
+      console.log('data: ', data)
+      return data
+    }else{
+      throw new BadRequestException('Bad Request', { cause: new Error() })
+    }
   }
 
   @UseGuards(AuthGuard('jwt_gym'))

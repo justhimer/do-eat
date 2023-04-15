@@ -895,7 +895,7 @@ async function main() {
             name: "Ceci Lee",
             icon: "default_trainer.png",
             certifications: " 200 Hour RYT Arcata, California 2022, Certified Strength and Conditioning Specialist® (CSCS®) 2022, NASM Certified Personal Trainer 2022",
-            franchise_id: franchise2.id,
+            franchise_id: franchise1.id,
         },
     })
 
@@ -906,7 +906,7 @@ async function main() {
             name: "James Chou",
             icon: "default_trainer.png",
             certifications: "Fitness Kickboxing Instructor Certification ,NSCA Certified Personal Trainer®(NSCA-CPT®), Tactical Strength & Conditioning Facilitator®(TSAC-F®)",
-            franchise_id: franchise3.id,
+            franchise_id: franchise1.id,
         },
     })
 
@@ -922,10 +922,10 @@ async function main() {
     })
 
     const trainers5 = await prisma.trainers.upsert({
-        where: { name: "Angela" },
+        where: { name: "Angela Ming" },
         update: {},
         create: {
-            name: "Angela",
+            name: "Angela Ming",
             icon: "default_trainer.png",
             certifications: "Total Body Tabata™ HIIT Instructor ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise2.id,
@@ -933,13 +933,13 @@ async function main() {
     })
 
     const trainers6 = await prisma.trainers.upsert({
-        where: { name: "Jason" },
+        where: { name: "Jason Wong" },
         update: {},
         create: {
-            name: "Jason",
+            name: "Jason Wong",
             icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
             certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
-            franchise_id: franchise3.id,
+            franchise_id: franchise2.id,
         },
     })
 

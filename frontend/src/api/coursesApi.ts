@@ -1,20 +1,20 @@
 const controllerName = "courses"
 
 export interface gymCourseData{
-    calories: number;
+    calories: number; 
     course_id: number;
     course_type_id: number;
-    course_type_name: string;
-    credits: number;
-    default_quota: number;
+    course_type_name: string; 
+    credits: number; 
+    default_quota: number; 
     default_trainer_id: number;
-    duration: number;
+    duration: number; 
     gym_id: number;
     intensity_id: number;
     intensity_level: string;
-    name: string;
+    name: string; 
     trainer_icon: string;
-    trainer_name: string;
+    trainer_name: string; 
     }
 
 export async function getCoursesforGym() :Promise<gymCourseData[]>{
