@@ -33,7 +33,8 @@ export class CoursesController {
   @UseGuards(AuthGuard('jwt_gym'))
   @Post('gyms/course')
   async createCourse(@Req() req, @Body() body : CreateCourseDto){
-    return await this.coursesService.createCourse(body)  
+    const gym_id = req.user.id
+    return await this.coursesService.createCourse(body ,gym_id)  
   }
 
   @UseGuards(AuthGuard('jwt_gym'))

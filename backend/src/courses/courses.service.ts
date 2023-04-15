@@ -80,10 +80,10 @@ export class CoursesService {
     }
   }
 
-  async createCourse(courseDetails: CreateCourseDto) {
+  async createCourse(courseDetails: CreateCourseDto , gym_id:number) {
     return await this.prisma.courses.create({
       data: {
-        gym_id: courseDetails.gym_id,
+        gym_id: gym_id,
         name: courseDetails.name,
         credits: courseDetails.credits,
         intensity_id: courseDetails.intensity_id,

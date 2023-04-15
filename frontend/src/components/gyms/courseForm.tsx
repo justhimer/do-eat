@@ -1,20 +1,22 @@
-import { IonButton, IonInput, IonRadio, IonRadioGroup, useIonToast } from "@ionic/react";
+import { IonButton, IonInput, IonRadio, IonRadioGroup, useIonToast, useIonViewDidLeave } from "@ionic/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createCourseDetail, gymCourseData, gymCourseUpload, updateCourseDetail } from "../../api/coursesApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { sendGymCourse } from "../../redux/gymCourseSlice";
+import { resetGymCourse, sendGymCourse } from "../../redux/gymCourseSlice";
 import NotificationStyle from "../../scss/Notification.module.scss"
 import UserStyle from "../../scss/User.module.scss"
 import { RootState } from "../../redux/store";
 import { getCourseType } from "../../api/courseTypeAPI";
 import { getIntensityLevel } from "../../api/intensityAPI";
 import { fetchTrainers } from "../../api/trainerAPI";
+import { useHistory } from "react-router";
 
 
 
 export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
 
+    const history = useHistory()
     const mode = props.mode
     const selectedCourse = useSelector((state: RootState) => state.gymCourse);
     const trainerList = useQuery({
@@ -31,9 +33,19 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
     })
 
 
+
     const defaultPhotoPath = "./assets/user_image/default_user_icon.png";
     const [present] = useIonToast();
     const dispatch = useDispatch();
+
+    useIonViewDidLeave(() => {
+        dispatch(resetGymCourse())
+        setCourseName(selectedCourse.name);
+        setCourseCalories(selectedCourse.calories);
+        setCourseCredits(selectedCourse.credits);
+        setCourseQuota(selectedCourse.default_quota);
+        setCourseDuration(selectedCourse.duration)
+    })
 
     const [courseName, setCourseName] = useState<string>(selectedCourse.name);
     const [courseCalories, setCourseCalories] = useState<number>(selectedCourse.calories);
@@ -52,13 +64,14 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
             credits: Number(courseCredits),
             calories: Number(courseCalories),
             duration: Number(courseDuration),
-            default_quota: courseQuota,
+            default_quota: Number(courseQuota),
             default_trainer_id: Number(event.target.trainer_choice.value),
         }
         if(mode == 'PUT'){
             updateDetails.mutate(prepData)
         }else if (mode=='POST'){
             createDetails.mutate(prepData)
+            history.push('/gyms-do')
         }
     }
 
@@ -91,6 +104,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
         (createData : gymCourseUpload)=>createCourseDetail(createData),
         {
             onSuccess: (data)=>{
+                
                 present({
                     message: 'Course Created',
                     duration: 1500,
@@ -127,7 +141,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
         <div className={UserStyle.form}>
 
             <div className={UserStyle.title}>
-                <h2>Sign Up</h2>
+                <h2>Course Details</h2>
             </div>
 
             <form onSubmit={handleSignup}>

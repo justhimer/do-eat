@@ -1,15 +1,19 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonContent, IonHeader, IonNavLink, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { CourseForm } from "../courseForm";
 
 export function CourseCreate() {
 
     return <IonPage >
         <IonHeader >
-            <IonToolbar >
-                <IonTitle>Course Details</IonTitle>
-            </IonToolbar>
-        </IonHeader>
+                <IonToolbar >
+                    <IonNavLink routerDirection="back" slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonNavLink>
+                    <IonTitle>"What's" Up</IonTitle>
+                </IonToolbar>
+            </IonHeader>
         <IonContent fullscreen>
-            <h5>Course details</h5>
+            <CourseForm mode='POST' />
         </IonContent>
     </IonPage >
 }
