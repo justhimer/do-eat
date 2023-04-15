@@ -52,7 +52,7 @@ export function CoursesItem(props: CoursesInterface) {
 
     return <>
 
-        <IonCard id={`course_${props.course_id}`} onClick={filled && !passed? changeData : notify} className={classSwitch()}>
+        <IonCard id={`course_${props.course_id}`} onClick={changeData} className={classSwitch()}>
             <div className={courseStyle.cardSplitter}>
                 <div className={courseStyle.cardLeftComponent}>
                     <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/default_trainer.png`} className={courseStyle.cardThumbnail}></img>
