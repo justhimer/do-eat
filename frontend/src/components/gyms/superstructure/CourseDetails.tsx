@@ -79,30 +79,20 @@ export function CourseDetails() {
     const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
 
     async function handleSignup(event: any) {
-        try {
-            event.preventDefault();
+        event.preventDefault();
             const prepData: gymCourseUpload = {
                 id: selectedCourse.course_id,
                 intensity_id: Number(event.target.intensity_choice.value),
                 course_type_id: Number(event.target.course_type_choice.value),
                 gym_id: selectedCourse.gym_id,
                 name: courseName,
-                credits: courseCredits,
-                calories: courseCalories,
-                duration: courseDuration,
+                credits: Number(courseCredits),
+                calories: Number(courseCalories),
+                duration: Number(courseDuration),
                 default_quota: courseQuota,
                 default_trainer_id: Number(event.target.trainer_choice.value),
             }
-            console.log(prepData)
             updateDetails.mutate(prepData)
-        } catch {
-            present({
-                message: 'Course Update Failed',
-                duration: 1500,
-                position: "top",
-                cssClass: NotificationStyle.ionicToast,
-            });
-        }
     }
 
     const updateDetails = useMutation(
@@ -110,10 +100,22 @@ export function CourseDetails() {
         {
             onSuccess: (data) => {
                 dispatch(sendGymCourse(data as gymCourseData))
-                console.log('success')
+                present({
+                    message: 'Course Update Successful',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
             },
             onError:(error)=>{
+                present({
+                    message: 'Course Update Failed',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
                 throw new Error(String(error))
+                
             }
         }
     )
@@ -204,7 +206,7 @@ export function CourseDetails() {
                             fill="solid"
                             label="Name"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseName(String(event.detail.value))}
+                            onIonInput={(event) => setCourseName(event.target.value as string)}
                             onIonBlur={() => markTouched()}
                             value={courseName}
                         ></IonInput>
@@ -222,7 +224,7 @@ export function CourseDetails() {
                             fill="solid"
                             label="Calories"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseCalories(Number(event.detail.value))}
+                            onIonInput={(event) => setCourseCalories(event.detail.value as number)}
                             onIonBlur={() => markTouched()}
                             value={courseCalories}
                         ></IonInput>
@@ -233,7 +235,7 @@ export function CourseDetails() {
                             fill="solid"
                             label="Credits"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseCredits(Number(event.detail.value))}
+                            onIonInput={(event) => setCourseCredits(event.detail.value as number)}
                             onIonBlur={() => markTouched()}
                             value={courseCredits}
                         ></IonInput>
@@ -251,7 +253,7 @@ export function CourseDetails() {
                             fill="solid"
                             label="Default quota"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseQuota(Number(event.detail.value))}
+                            onIonInput={(event) => setCourseQuota(event.detail.value as number)}
                             onIonBlur={() => markTouched()}
                             value={courseQuota}
                         ></IonInput>
@@ -262,7 +264,7 @@ export function CourseDetails() {
                             fill="solid"
                             label="Duration (Min)"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseDuration(Number(event.detail.value))}
+                            onIonInput={(event) => setCourseDuration(event.detail.value as number)}
                             onIonBlur={() => markTouched()}
                             value={courseDuration}
                         ></IonInput>

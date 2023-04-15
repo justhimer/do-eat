@@ -47,6 +47,7 @@ export async function getCoursesforGym(): Promise<gymCourseData[]> {
 }
 
 export async function updateCourseDetail(uploadData:gymCourseUpload) {
+    console.log("uploadData: ", uploadData)
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gyms/course`, {
             method: 'PUT',
             headers: {

@@ -43,7 +43,7 @@ export class CoursesController {
     if (!isError(data)){
       return data
     }else{
-      throw new HttpException('Update Error', HttpStatus.BAD_REQUEST)
+      return new HttpException('Update Error', HttpStatus.BAD_REQUEST)
     }
   }
 

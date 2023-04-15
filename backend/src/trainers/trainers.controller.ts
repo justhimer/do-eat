@@ -18,12 +18,9 @@ export class TrainersController {
   @Get('all')
   async getFranchiseTrainers (@Req() req){
     const gym_id = req.user.id
-    console.log('gym_id: ', gym_id)
     const franchise = await this.gymsService.getFranchiseFromGymsID(gym_id)
-    console.log('franchise: ', franchise)
     const data = await this.trainersService.getAllFromFranchise(franchise)
     if (!isError(data)){
-      console.log('data: ', data)
       return data
     }else{
       throw new BadRequestException('Bad Request', { cause: new Error() })

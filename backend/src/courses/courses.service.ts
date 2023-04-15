@@ -45,6 +45,8 @@ export class CoursesService {
           }
         }, where: {
           gym_id: gym_id
+        }, orderBy: {
+          id: 'desc'
         }
       })
       if (data) {
@@ -95,58 +97,61 @@ export class CoursesService {
   }
 
   async updateCourseInfo(courseDetails: Course) {
-    const data = await this.prisma.courses.update({
-      data: {
-        name: courseDetails.name,
-        credits: courseDetails.credits,
-        intensity_id: courseDetails.intensity_id,
-        course_type_id: courseDetails.course_type_id,
-        calories: courseDetails.calories,
-        duration: courseDetails.duration,
-        default_quota: courseDetails.default_quota,
-        default_trainer_id: courseDetails.default_trainer_id
-      },
-      where: { id: courseDetails.id },
-      include: {
-        course_type: {
-          select: {
-            name: true
-          }
+    try {
+      const data = await this.prisma.courses.update({
+        data: {
+          name: courseDetails.name,
+          credits: courseDetails.credits,
+          intensity_id: courseDetails.intensity_id,
+          course_type_id: courseDetails.course_type_id,
+          calories: courseDetails.calories,
+          duration: courseDetails.duration,
+          default_quota: courseDetails.default_quota,
+          default_trainer_id: courseDetails.default_trainer_id
         },
-        intensity: {
-          select: {
-            level: true
-          }
-        },
-        trainers: {
-          select: {
-            name: true,
-            icon: true
+        where: { id: courseDetails.id },
+        include: {
+          course_type: {
+            select: {
+              name: true
+            }
+          },
+          intensity: {
+            select: {
+              level: true
+            }
+          },
+          trainers: {
+            select: {
+              name: true,
+              icon: true
+            }
           }
         }
+      })
+      if (data) {
+        const resData = {
+          calories: data.calories,
+          course_id: data.id,
+          course_type_id: data.course_type_id,
+          course_type_name: data.course_type.name,
+          credits: data.credits,
+          default_quota: data.default_quota,
+          default_trainer_id: data.default_trainer_id,
+          duration: data.duration,
+          gym_id: data.gym_id,
+          intensity_id: data.intensity_id,
+          intensity_level: data.intensity.level,
+          name: data.name,
+          trainer_icon: data.trainers.icon,
+          trainer_name: data.name
+        }
+        return resData
       }
-    })
-if(data){
-  const resData = {
-    calories: data.calories,
-    course_id: data.id,
-    course_type_id: data.course_type_id,
-    course_type_name: data.course_type.name,
-    credits: data.credits,
-    default_quota: data.default_quota,
-    default_trainer_id: data.default_trainer_id,
-    duration: data.duration,
-    gym_id: data.gym_id,
-    intensity_id: data.intensity_id,
-    intensity_level: data.intensity.level,
-    name: data.name,
-    trainer_icon: data.trainers.icon,
-    trainer_name: data.name
-  }
-  return resData
-}else{
-  throw new Error()
-}
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
 
   }
 

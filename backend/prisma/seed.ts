@@ -975,10 +975,8 @@ async function main() {
         },
     })
 
-    const course1 = await prisma.courses.upsert({
-        where: { name: "Yoga Beginner" },
-        update: {},
-        create: {
+    const course1 = await prisma.courses.create({
+            data: {
             name: "Yoga Beginner",
             credits: 1,
             course_type_id: courseTypes1.id,
@@ -1012,10 +1010,8 @@ async function main() {
         },
     })
 
-    const course2 = await prisma.courses.upsert({
-        where: { name: "Yoga Intermediate" },
-        update: {},
-        create: {
+    const course2 = await prisma.courses.create({
+        data: {
             name: "Yoga Intermediate",
             credits: 2,
             course_type_id: courseTypes1.id,
@@ -1029,10 +1025,8 @@ async function main() {
         },
     })
 
-    const course3 = await prisma.courses.upsert({
-        where: { name: "Yoga Advanced" },
-        update: {},
-        create: {
+    const course3 = await prisma.courses.create({
+        data: {
             name: "Yoga Advanced",
             credits: 3,
             course_type_id: courseTypes1.id,
@@ -1046,10 +1040,8 @@ async function main() {
         },
     })
 
-    const course4 = await prisma.courses.upsert({
-        where: { name: "Pilates Beginner" },
-        update: {},
-        create: {
+    const course4 = await prisma.courses.create({
+        data: {
             name: "Pilates Beginner",
             credits: 1,
             course_type_id: courseTypes2.id,
@@ -1063,10 +1055,8 @@ async function main() {
         },
     })
 
-    const course5 = await prisma.courses.upsert({
-        where: { name: "Pilates Intermediate" },
-        update: {},
-        create: {
+    const course5 = await prisma.courses.create({
+        data: {
             name: "Pilates Intermediate",
             credits: 2,
             course_type_id: courseTypes2.id,
@@ -1100,10 +1090,8 @@ async function main() {
         },
     })
 
-    const course6 = await prisma.courses.upsert({
-        where: { name: "Pilates Advanced" },
-        update: {},
-        create: {
+    const course6 = await prisma.courses.create({
+        data: {
             name: "Pilates Advanced",
             credits: 3,
             course_type_id: courseTypes2.id,
@@ -1116,10 +1104,8 @@ async function main() {
         },
     })
 
-    const course7 = await prisma.courses.upsert({
-        where: { name: "HIIT Beginner" },
-        update: {},
-        create: {
+    const course7 = await prisma.courses.create({
+        data: {
             name: "HIIT Beginner",
             credits: 1,
             course_type_id: courseTypes3.id,
@@ -1132,10 +1118,8 @@ async function main() {
         },
     })
 
-    const course8 = await prisma.courses.upsert({
-        where: { name: "HIIT Intermediate" },
-        update: {},
-        create: {
+    const course8 = await prisma.courses.create({
+        data: {
             name: "HIIT Intermediate",
             credits: 2,
             course_type_id: courseTypes3.id,
@@ -1148,10 +1132,8 @@ async function main() {
         },
     })
 
-    const course9 = await prisma.courses.upsert({
-        where: { name: "HIIT Advanced" },
-        update: {},
-        create: {
+    const course9 = await prisma.courses.create({
+        data: {
             name: "HIIT Advanced",
             credits: 3,
             course_type_id: courseTypes3.id,
@@ -1164,10 +1146,8 @@ async function main() {
         },
     })
 
-    const course10 = await prisma.courses.upsert({
-        where: { name: "Boxing Beginner" },
-        update: {},
-        create: {
+    const course10 = await prisma.courses.create({
+        data: {
             name: "Boxing Beginner",
             credits: 1,
             course_type_id: courseTypes4.id,
@@ -1180,10 +1160,8 @@ async function main() {
         },
     })
 
-    const course11 = await prisma.courses.upsert({
-        where: { name: "Boxing Intermediate" },
-        update: {},
-        create: {
+    const course11 = await prisma.courses.create({
+        data: {
             name: "Boxing Intermediate",
             credits: 2,
             course_type_id: courseTypes4.id,
@@ -1196,10 +1174,8 @@ async function main() {
         },
     })
 
-    const course12 = await prisma.courses.upsert({
-        where: { name: "Boxing Advanced" },
-        update: {},
-        create: {
+    const course12 = await prisma.courses.create({
+        data: {
             name: "Boxing Advanced",
             credits: 3,
             course_type_id: courseTypes4.id,

@@ -179,7 +179,7 @@ model Courses {
   id                 Int               @id @default(autoincrement())
   gym_id             Int               @db.Integer
   gyms               Gyms              @relation(fields: [gym_id], references: [id])
-  name               String            @unique @db.Text
+  name               String            @db.Text
   credits            Int               @db.Integer
   intensity_id       Int               @db.Integer
   intensity          Intensities       @relation(fields: [intensity_id], references: [id])
