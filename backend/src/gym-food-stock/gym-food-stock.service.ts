@@ -9,12 +9,37 @@ export class GymFoodStockService {
   async findAllForGym(gym_id:number) {
     try {
       const data = await this.prisma.gymFoodStock.findMany({
-        where:{gyms_id:gym_id}
+        where:{gyms_id:gym_id},
+        select:{
+          id:true,
+          gyms_id:true,
+          foods_id:true,
+          quantity:true,
+          foods:{
+            select:{
+              name:true,
+              image:true
+            }
+          }
+        }
       })
       if(data.length<=0){
         return new Error()
       }else{
-        return data
+        const newData = []
+        data.forEach(elem=>{
+          newData.push(
+            {
+              stock_id:elem.id,
+              gym_id:elem.gyms_id,
+              foods_id:elem.foods_id,
+              food_name:elem.foods.name,
+              food_image:elem.foods.image,
+              quantity:elem.quantity
+            }
+          )
+        })
+        return newData
       }
     } catch (error) {
       
