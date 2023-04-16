@@ -22,7 +22,7 @@ interface GymToken {
 
 const isLoggedIn = () => {
     const token = localStorage.getItem("gym_token");
-    //console.log("gym token: ",token)
+    console.log("gym token: ",token)
     return !!token
 }
 

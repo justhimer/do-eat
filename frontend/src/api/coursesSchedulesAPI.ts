@@ -1,13 +1,13 @@
 const controllerName = "coursesSchedules"
 
-export interface ScheduleCreate{
+export interface ScheduleCreate {
     course_id: number,
     quota: number,
     time: string,
     trainer_id: number,
 }
 
-export interface ScheduleInterface extends ScheduleCreate{
+export interface ScheduleInterface extends ScheduleCreate {
     schedule_id: number,
     trainer_name: string;
 }
@@ -39,7 +39,7 @@ export async function getCoursesOnDate(time: string, gyms: number[]) {
 }
 
 
-export async function fetchGymSoloCourseSchedule(course_id:number) :Promise<ScheduleInterface[]>{
+export async function fetchGymSoloCourseSchedule(course_id: number): Promise<ScheduleInterface[]> {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/course/schedule/${course_id}`, {
         method: "GET",
         headers: {
@@ -48,15 +48,14 @@ export async function fetchGymSoloCourseSchedule(course_id:number) :Promise<Sche
         },
     });
     const result = await res.json()
-    if (res.ok){
+    if (res.ok) {
         return result
-    }else{
+    } else {
         throw new Error(result)
     }
-
 }
-export async function fetchCoursesInNext24Hours() {
 
+export async function fetchCoursesInNext24Hours() {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/24hrs`, {
         method: 'GET',
         headers: {
@@ -68,21 +67,45 @@ export async function fetchCoursesInNext24Hours() {
     return result
 }
 
-export async function createCourseSchedule(reqData:ScheduleCreate){
-    console.log("reqData: ",JSON.stringify(reqData))
+export async function fetchComingCourse() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/coming`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        }
+    })
+    const result = await res.json();
+    return result
+}
+
+export async function gymTakeAttendance(user_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/take_attendance`, {
+        method: 'UPDATE',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        }
+    })
+    const result = await res.json();
+    return result
+}
+
+export async function createCourseSchedule(reqData: ScheduleCreate) {
+    console.log("reqData: ", JSON.stringify(reqData))
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/create/courseSchedule`, {
         method: "POST",
         headers: {
             "Content-Type": 'application/json',
             "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
-        },body: JSON.stringify(reqData)
+        }, body: JSON.stringify(reqData)
     });
     const result = await res.json()
-    if (res.ok){
+    if (res.ok) {
         return result
-    }else{
+    } else {
         throw new Error(result)
     }
-    
+
 }
 

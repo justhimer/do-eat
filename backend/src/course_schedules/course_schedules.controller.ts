@@ -30,6 +30,14 @@ export class CourseSchedulesController {
     return courses;
   }
 
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get('gym/coming')
+  async findComingCourse(@Request() req) {
+    const gymID = req.user.id;
+    const course = await this.courseSchedulesService.findComingtCourse(gymID);
+    return course;
+  }
+
   @Post('users/dates')
   async datesWithCourses(@Body() body: DatesWithCoursesDto) {
     const unprocessedData = await this.courseSchedulesService.getDatesWithCourses(body.gyms)
