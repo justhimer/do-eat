@@ -32,7 +32,7 @@ import { GymCourses } from './components/do/superstructure/GymCourses';
 import { GymConfirmation } from './components/do/superstructure/GymConfirmation';
 import { GymsDo } from './pages/gyms/GymsDo';
 import { GymsEat } from './pages/gyms/GymsEat';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
 import HomeTab from './pages/Home';
@@ -80,20 +80,47 @@ import { GymScheduleList } from './components/gym_user/GymScheduleList';
 import { GymOrderList } from './components/gym_user/GymOrderList';
 import { useRef } from 'react';
 import { UserQR } from './components/qr/UserQR';
+import { GymQR } from './components/qr/GymQR';
+import { useQuery } from '@tanstack/react-query';
+import { fetchGymInfo } from './api/gymAPIs';
+import { fetchUserInfo } from './api/userAPIs';
+import { gymAction } from './redux/gymSlice';
+import { userAction } from './redux/userSlice';
 
 setupIonicReact();
-
-
 
 const App: React.FC = () => {
 
   const userID = useSelector((state: RootState) => state.user.id);
   const gymID = useSelector((state: RootState) => state.gym.id);
 
-  const gymLoginStatus = useSelector((state: RootState) => state.gym.isAuthenticated)
+  const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+  const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated)
 
+  // auto logout in case of inconsistance between token and database
+  const dispatch = useDispatch();
+  const { data } = useQuery({
+    queryKey: ["logged_in"],
+    queryFn: async () => {
+      if (isUserLoggedIn) {
+        const user = await fetchUserInfo();
+        if (!user) {
+          dispatch(userAction.logout());
+        }
+      }
+      if (isGymLoggedIn) {
+        const gym = await fetchGymInfo();
+        if (!gym) {
+          dispatch(gymAction.logout());
+        }
+      }
+      return {};
+    },
+  });
+
+  // switch tabs between user and gym
   const navigationSwitch = (type: 'do-tab' | 'eat-tab') => {
-    if (gymLoginStatus) {
+    if (isGymLoggedIn) {
       switch (type) {
         case 'do-tab':
           return '/gyms-do'
@@ -247,7 +274,8 @@ const App: React.FC = () => {
       </IonReactRouter>
 
       {/* QR Code Models */}
-      {userID ?<UserQR/> : <></>}
+      {userID && <UserQR/>}
+      {gymID && <GymQR/>}
 
     </IonApp>
   )

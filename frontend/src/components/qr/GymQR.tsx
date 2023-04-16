@@ -1,37 +1,51 @@
-import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent } from '@ionic/react';
-import { useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import AppStyle from '../../scss/App.module.scss';
+import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonNote, IonRow } from '@ionic/react';
+import { useRef, useState } from 'react';
+import QrReader from "react-qr-reader";
 
-import QRCode from 'react-qr-code';
-// import { BarcodeScanner } from "@ionic-native/barcode-scanner";
-
-export function UserQR() {
+export function GymQR() {
 
     const modal = useRef<HTMLIonModalElement>(null);
-    const userID = useSelector((state: RootState) => state.user.id);
 
-    // const [ QRData, setQRData ] = useState(false);
+    const [QRData, setQRData] = useState(false);
 
-    // const start = async () => {
-    //   const data = await BarcodeScanner.scan();
-    //   setQRData(data);
-    // }
+    function handleScan(data: any) {
+        if (data) {
+            setQRData(data);
+        }
+    }
+
+    function handleError(err: any) {
+        console.log(err);
+    }
 
     return (
-        // <IonModal ref={modal} trigger="open-qr">
-        //     <IonHeader>
-        //         <IonToolbar>
-        //             <IonTitle>QR Code</IonTitle>
-        //             <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
-        //         </IonToolbar>
-        //     </IonHeader>
-        //     <IonContent className="ion-padding">
-        //         <div className={AppStyle.qr_container}>
-        //             <QRCode value={`${userID}`} />
-        //         </div>
-        //     </IonContent>
-        // </IonModal>
+        <IonModal ref={modal} trigger="open-qr">
+
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>QR Code</IonTitle>
+                    <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                </IonToolbar>
+            </IonHeader>
+
+            <IonContent className="ion-padding">
+
+                <IonGrid className="ion-padding-top ion-margin-top">
+                    <IonRow className="ion-justify-content-center ion-text-center animate__animated animate__lightSpeedInLeft animate__faster">
+                        <IonCol size="12">
+
+                            <QrReader
+                                delay={500}
+                                onError={handleError}
+                                onScan={handleScan}
+                                style={{ width: "100%", height: "100%" }}
+                            />
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
+
+            </IonContent>
+
+        </IonModal>
     )
 }
