@@ -79,6 +79,7 @@ import { GymProfile } from './components/gym_user/GymProfile';
 import { GymScheduleList } from './components/gym_user/GymScheduleList';
 import { GymOrderList } from './components/gym_user/GymOrderList';
 import { useRef } from 'react';
+import { UserQR } from './components/qr/UserQR';
 
 setupIonicReact();
 
@@ -87,6 +88,7 @@ setupIonicReact();
 const App: React.FC = () => {
 
   const userID = useSelector((state: RootState) => state.user.id);
+  const gymID = useSelector((state: RootState) => state.gym.id);
 
   const gymLoginStatus = useSelector((state: RootState) => state.gym.isAuthenticated)
 
@@ -111,8 +113,6 @@ const App: React.FC = () => {
       }
     }
   }
-
-  const modal = useRef<HTMLIonModalElement>(null);
 
   return (
     <IonApp>
@@ -239,34 +239,15 @@ const App: React.FC = () => {
         </IonTabs>
 
         {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
-        <IonFabButton className={TabStyle.button} translucent={true}>
-          <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-        </IonFabButton>
-      </IonFab> */}
+              <IonFabButton className={TabStyle.button} translucent={true}>
+                <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+              </IonFabButton>
+            </IonFab> */}
 
       </IonReactRouter>
 
-      {
-        userID ?
-          (
-            <IonModal ref={modal} trigger="open-qr">
-              <IonHeader>
-                <IonToolbar>
-                  {/* <IonButtons slot="start">
-                <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
-              </IonButtons> */}
-                  <IonTitle>QR Code</IonTitle>
-                  <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
-                </IonToolbar>
-              </IonHeader>
-              <IonContent className="ion-padding">
-                <div className={AppStyle.qr_container}>
-                  <QRCode value={`${userID}`} />
-                </div>
-              </IonContent>
-            </IonModal>
-          ) : <></>
-      }
+      {/* QR Code Models */}
+      {userID ?<UserQR/> : <></>}
 
     </IonApp>
   )
