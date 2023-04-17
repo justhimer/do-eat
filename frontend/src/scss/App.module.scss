@@ -24,6 +24,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ion-card {
+    width: 20rem;
+    height: 20rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 }
 
 .bold {

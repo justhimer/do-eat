@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useHistory } from 'react-router-dom';
 import {
   IonApp,
   IonButton,
@@ -86,16 +86,20 @@ import { fetchGymInfo } from './api/gymAPIs';
 import { fetchUserInfo } from './api/userAPIs';
 import { gymAction } from './redux/gymSlice';
 import { userAction } from './redux/userSlice';
+import { QR } from './components/qr/QR';
+import { UserPrivateRouter } from './components/private_routes/UserPrivateRoute';
 
 setupIonicReact();
 
 const App: React.FC = () => {
 
-  const userID = useSelector((state: RootState) => state.user.id);
-  const gymID = useSelector((state: RootState) => state.gym.id);
+  // const userID = useSelector((state: RootState) => state.user.id);
+  // const gymID = useSelector((state: RootState) => state.gym.id);
 
   const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
   const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated)
+
+  const history = useHistory();
 
   // auto logout in case of inconsistance between token and database
   const dispatch = useDispatch();
@@ -128,6 +132,9 @@ const App: React.FC = () => {
         case 'eat-tab':
           return '/gyms-eat'
           break;
+        // case 'qr':
+        //   return '/gym-qr';
+        //   break;
       }
     } else {
       switch (type) {
@@ -137,9 +144,24 @@ const App: React.FC = () => {
         case 'eat-tab':
           return '/eat-tab'
           break;
+        // case 'qr':
+        //   return '/user-qr';
+        //   break;
       }
     }
   }
+
+  // const handleQR = () => {
+  //   if (isGymLoggedIn || isUserLoggedIn) {
+  //     return navigationSwitch('qr');
+  //   }
+  // }
+
+  // const onQR = () => {
+  //   if (isUserLoggedIn || isGymLoggedIn) {
+  //     history.push("/qr");
+  //   }
+  // }
 
   return (
     <IonApp>
@@ -158,11 +180,20 @@ const App: React.FC = () => {
             <Route exact path="/do-tab">
               <DoTab />
             </Route>
+            {/* <Route exact path="/qr">
+              <QR />
+            </Route> */}
             <Route path="/eat-tab">
               <EatTab />
             </Route>
             <Route path="/user-tab">
               <UserTab />
+            </Route>
+
+            {/* QR routes */}
+            <Route path="/user-qr" component={() => <UserPrivateRouter component={<UserQR />} />}>
+            </Route>
+            <Route path="/gym-qr" component={() => <GymPrivateRouter component={<GymQR />} />}>
             </Route>
 
             {/* auth routes */}
@@ -244,9 +275,24 @@ const App: React.FC = () => {
             {/* invisible button for applying QR code css */}
             <IonTabButton disabled={false}>
               <IonFab horizontal="center" className={TabStyle.reposition}>
-                <IonFabButton id="open-qr" className={TabStyle.button} translucent={true}>
-                  <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-                </IonFabButton>
+                {
+                  isUserLoggedIn &&
+                  <IonFabButton href="user-qr" className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
+                {
+                  isGymLoggedIn &&
+                  <IonFabButton href="gym-qr" className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
+                {
+                  !isGymLoggedIn && !isUserLoggedIn &&
+                  <IonFabButton className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
               </IonFab>
             </IonTabButton>
 
@@ -274,8 +320,8 @@ const App: React.FC = () => {
       </IonReactRouter>
 
       {/* QR Code Models */}
-      {userID && <UserQR/>}
-      {gymID && <GymQR/>}
+      {/* {userID && <UserQR/>}
+      {gymID && <GymQR/>} */}
 
     </IonApp>
   )

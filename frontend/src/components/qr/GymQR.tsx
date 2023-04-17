@@ -2,7 +2,7 @@ import NotificationStyle from "../../scss/Notification.module.scss";
 import UserStyle from '../../scss/User.module.scss';
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
 
-import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonNote, IonRow, useIonToast, IonLabel, IonSegment, IonSegmentButton, IonChip, IonItem } from '@ionic/react';
+import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonNote, IonRow, useIonToast, IonLabel, IonSegment, IonSegmentButton, IonChip, IonItem, IonPage } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import QrReader from "react-qr-reader";
 import { fetchComingCourse } from "../../api/coursesSchedulesAPI";
@@ -52,11 +52,11 @@ export function GymQR() {
     }, [QRData]);
 
     const takeFood = useMutation(
-        (QRData:string) => gymFoodTaken({
+        (QRData: string) => gymFoodTaken({
             user_id: parseInt(QRData)
         }),
         {
-            onSuccess: ()=>{
+            onSuccess: () => {
                 console.log('food taken');
                 present({
                     message: 'Food taken',
@@ -69,12 +69,12 @@ export function GymQR() {
     )
 
     const takeAttendance = useMutation(
-        (QRData:string) => gymTakeAttendance({
-            course_schedule_id: course.id, 
+        (QRData: string) => gymTakeAttendance({
+            course_schedule_id: course.id,
             user_id: parseInt(QRData)
         }),
         {
-            onSuccess: ()=>{
+            onSuccess: () => {
                 present({
                     message: 'Attendance taken',
                     duration: 1500,
@@ -86,17 +86,14 @@ export function GymQR() {
     )
 
     return (
-        <IonModal ref={modal} trigger="open-qr">
-
+        <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>QR Code</IonTitle>
-                    <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                    {/* <IonBackButton default-href="/"></IonBackButton> */}
                 </IonToolbar>
             </IonHeader>
-
             <IonContent className="ion-padding">
-
                 <IonSegment
                     value={scanFor}
                     className={UserStyle.segment}
@@ -109,7 +106,6 @@ export function GymQR() {
                         <IonLabel>Course</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
-
 
                 <IonItem className={UserMenuStyle.item_last}>
                     {scanFor === 'food' && (
@@ -152,7 +148,6 @@ export function GymQR() {
                 </IonGrid>
 
             </IonContent>
-
-        </IonModal>
+        </IonPage>
     )
 }
