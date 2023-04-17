@@ -90,8 +90,8 @@ export function GymConfirmation() {
 
 
     const containerClick = async () => {
-        if (!userData.isLoading && !userData.isError && userData.data) {
-            if (!userData.isLoading && !userData.isError && userData.data.sub_plan_id) {
+        if (userData.data) {
+            if (userData.data.sub_plan_id) {
                 setPopupBoolean(true)
             } else {
                 notify('notSub')

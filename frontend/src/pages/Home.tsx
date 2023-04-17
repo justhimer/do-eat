@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { Logo } from '../components/Logo';
 import AppStyle from '../scss/App.module.scss';
 import { InfiniteLooper } from '../components/InfiniteLooper';
@@ -96,18 +96,14 @@ const HomeTab: React.FC = () => {
             <IonIcon icon={fastFood}></IonIcon>
             </div>
           </InfiniteLooper>
-
+          
           <animated.div
-            onClick={()=>{history.push('/user-tab')}}
+            
             style={{
-              width: 80,
-              height: 80,
-              background: '#ff6d6d',
-              borderRadius: 8,
               ...springs,
             }}
           >
-            test
+            <IonButton onClick={()=>{history.push('/user-tab')}}>Start Your Journey Now!</IonButton>
           </animated.div>
 
       </IonContent>

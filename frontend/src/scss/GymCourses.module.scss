@@ -1,66 +1,140 @@
-.courseContainer{
+.courseContainer {
     height: auto;
     min-height: 60vh;
 }
-.courseList{
+
+.courseList {
     height: auto;
 }
 
-.itemContainer{
+.itemContainer {
     height: auto;
     min-height: 3vh;
 }
-.cardSplitter{
+
+.cardSplitter {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
-.cardLeftComponent{
+
+.cardLeftComponent {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 30%;
     text-align: center;
 }
-.cardThumbnail{
+
+.cardThumbnail {
     max-height: inherit;
     height: auto;
     width: auto;
     object-fit: contain;
     border-radius: 100%;
 }
-.cardContent{
+
+.cardContent {
     width: 70%;
     display: flex;
     justify-content: center;
 }
-.cardTopRightChips{
+
+.cardTopRightChips {
     position: absolute;
     z-index: 3;
     top: 5px;
     right: 2px;
 }
-.cardTopLeftChips{
+
+.cardTopLeftChips {
     position: absolute;
     z-index: 3;
     top: -10px;
     left: 2px;
 }
-.cardBottomChips{
+
+.cardBottomChips {
     position: absolute;
     z-index: 3;
     bottom: 5px;
     right: 2px;
 }
-.filledCourse{
+
+.filledCourse {
     filter: grayscale(1);
 
 }
-.bottomButtons{
+
+.bottomButtons {
     margin-top: auto;
     position: relative;
     bottom: 0;
     padding: 1vh 0;
+}
+
+// Properties used for Do-Tab segment button
+.doWhere_segment {
+    ion-segment-button {
+        --background: ;
+        --background-checked: ;
+        --border-color: ;
+        --border-radius: 5px;
+        --border-style: ;
+        --border-width: ;
+        --color: #615c59;
+        --color-checked: #e74c3c;
+        --indicator-color: #e74c3c;
+        --indicator-height: 4px;
+    }
+
+    /* Material Design styles */
+    ion-segment-button.md {}
+
+    /* iOS styles */
+    ion-segment-button.ios {}
+}
+
+.soloGym {
+
+    margin-bottom: 4px;
+    outline: 5px dashed blue;
+
+    img {
+        object-fit: cover;
+        width: inherit;
+        height: auto;
+    }
+
+
+    ion-label {
+        color: #e74c3c !important;
+        font-weight: bold;
+    }
+
+    ion-card-subtitle {
+        color: #615c59;
+    }
+
+}
+// .soloGym::after {
+//     content: "";
+//     background: black;
+//     position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//     height: 5px;
+    
+// }
+
+.selectedGymsDisplay_card {
+    ion-card-header {
+        border-bottom: 1px solid #615c59;
+    }
+
+    ion-card-content {
+        margin-top: 1rem;
+    }
 }

@@ -996,7 +996,7 @@ async function main() {
         update: {},
         create: {
             name: "John Chan",
-            icon: "default_trainer.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/Alex-Ko.jpg",
             certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise1.id,
         },
@@ -1007,7 +1007,7 @@ async function main() {
         update: {},
         create: {
             name: "Ceci Lee",
-            icon: "default_trainer.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/Jessica-Yau.jpg",
             certifications: " 200 Hour RYT Arcata, California 2022, Certified Strength and Conditioning Specialist® (CSCS®) 2022, NASM Certified Personal Trainer 2022",
             franchise_id: franchise1.id,
         },
@@ -1018,7 +1018,7 @@ async function main() {
         update: {},
         create: {
             name: "James Chou",
-            icon: "default_trainer.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/bio_Alvin.jpg",
             certifications: "Fitness Kickboxing Instructor Certification ,NSCA Certified Personal Trainer®(NSCA-CPT®), Tactical Strength & Conditioning Facilitator®(TSAC-F®)",
             franchise_id: franchise1.id,
         },
@@ -1029,7 +1029,7 @@ async function main() {
         update: {},
         create: {
             name: "Cindy Chan",
-            icon: "default_trainer.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/bio_vera.jpg",
             certifications: "Myths and Science of Pilates Breathing , Pilates Touch ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise1.id,
         },
@@ -1040,7 +1040,7 @@ async function main() {
         update: {},
         create: {
             name: "Angela Ming",
-            icon: "default_trainer.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/Web-Bio.jpg",
             certifications: "Total Body Tabata™ HIIT Instructor ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise2.id,
         },
@@ -1051,7 +1051,7 @@ async function main() {
         update: {},
         create: {
             name: "Jason Wong",
-            icon: "wSkMImX2aXzltRkVcHHzAgyQ10RwAA0ua7vdodVZ95o.png",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/bio_Alex.jpg",
             certifications: "Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise2.id,
         },

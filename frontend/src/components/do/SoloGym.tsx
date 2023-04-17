@@ -1,8 +1,14 @@
+// Ionic Component
 import { IonThumbnail,IonItem,IonLabel,IonCardSubtitle, IonContent, useIonToast } from '@ionic/react';
-import { SelectedGymInterface, toggleGymSelection } from '../../redux/userGymSlice';
+
+// State Management
+import { toggleGymSelection } from '../../redux/userGymSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+
+// Custom Component
 import NotificationStyle from "../../scss/Notification.module.scss"
+import GymCourseStyle from '../../scss/GymCourses.module.scss'
 
 interface GymCardInterface {
     district: string;
@@ -35,14 +41,14 @@ export function SoloGym(props: GymCardInterface) {
 
 
     return (
-        <IonItem onClick={clickGym}>
+        <IonItem onClick={clickGym} lines='none' className={GymCourseStyle.soloGym}>
             <IonThumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+              <img src='./assets/gym_image/default_gym_icon.png' />
             </IonThumbnail>
-            <IonContent>
+            <div>
               <IonLabel>{props.name}</IonLabel>
               <IonCardSubtitle>{props.district}</IonCardSubtitle>
-            </IonContent>
+            </div>
           </IonItem>
     )
 }

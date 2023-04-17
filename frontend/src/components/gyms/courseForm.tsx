@@ -45,27 +45,33 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
         setCourseCredits(selectedCourse.credits);
         setCourseQuota(selectedCourse.default_quota);
         setCourseDuration(selectedCourse.duration)
+       setCourseTrainer(selectedCourse.default_trainer_id)
+        setCourseIntensity(selectedCourse.intensity_id);
+        setCourseType(selectedCourse.course_type_id)
     })
 
     const [courseName, setCourseName] = useState<string>(selectedCourse.name);
     const [courseCalories, setCourseCalories] = useState<number>(selectedCourse.calories);
     const [courseCredits, setCourseCredits] = useState<number>(selectedCourse.credits);
     const [courseQuota, setCourseQuota] = useState<number>(selectedCourse.default_quota);
-    const [courseDuration, setCourseDuration] = useState<number>(selectedCourse.duration)
+    const [courseDuration, setCourseDuration] = useState<number>(selectedCourse.duration);
+    const [courseTrainer,setCourseTrainer] = useState<number>(selectedCourse.default_trainer_id)
+    const [courseIntensity, setCourseIntensity] =useState<number>(selectedCourse.intensity_id);
+    const [courseType , setCourseType] = useState<number>(selectedCourse.course_type_id)
 
     async function handleSignup(event: any) {
         event.preventDefault();
         const prepData: gymCourseUpload = {
             id: selectedCourse.course_id,
-            intensity_id: Number(event.target.intensity_choice.value),
-            course_type_id: Number(event.target.course_type_choice.value),
+            intensity_id: Number(courseIntensity),
+            course_type_id: Number(courseType),
             gym_id: selectedCourse.gym_id,
             name: courseName,
             credits: Number(courseCredits),
             calories: Number(courseCalories),
             duration: Number(courseDuration),
             default_quota: Number(courseQuota),
-            default_trainer_id: Number(event.target.trainer_choice.value),
+            default_trainer_id: Number(courseTrainer),
         }
         if(mode == 'PUT'){
             updateDetails.mutate(prepData)
@@ -148,13 +154,13 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
 
                 <div className={UserStyle.image_container}>
                     <img
-                        src={defaultPhotoPath} //change to image src later
+                        src={selectedCourse.trainer_icon} //change to image src later
                         className={UserStyle.image_box}
                         id="change_profile_pic" />
                 </div>
 
                 {trainerList.data && trainerList.data.length > 0 ?
-                    <IonRadioGroup value={selectedCourse.default_trainer_id} name="trainer_choice">
+                    <IonRadioGroup value={courseTrainer} name="trainer_choice" onIonChange={(e)=>{setCourseTrainer(e.detail.value)}}>
                         {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={trainer.id} labelPlacement="end">{trainer.name}</IonRadio>)}
                     </IonRadioGroup>
                     : <></>
@@ -172,7 +178,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                 ></IonInput>
 
                 {intensityLevelList.data && intensityLevelList.data.length > 0 ?
-                    <IonRadioGroup value={selectedCourse.intensity_id} name="intensity_choice">
+                    <IonRadioGroup value={courseIntensity} name="intensity_choice" onIonChange={(e)=>{setCourseIntensity(e.detail.value)}}>
                         {intensityLevelList.data.map((intensity: any, index: number) => <IonRadio key={index} value={intensity.id} labelPlacement="end">{intensity.level}</IonRadio>)}
                     </IonRadioGroup>
                     : <></>
@@ -201,7 +207,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                 ></IonInput>
 
                 {courseTypeList.data && courseTypeList.data.length > 0 ?
-                    <IonRadioGroup value={selectedCourse.course_type_id} name="course_type_choice">
+                    <IonRadioGroup value={courseType} name="course_type_choice" onIonChange={(e)=>{setCourseType(e.detail.value)}}>
                         {courseTypeList.data.map((type: any, index: number) => <IonRadio key={index} value={type.id} labelPlacement="end">{type.name}</IonRadio>)}
                     </IonRadioGroup>
                     : <></>

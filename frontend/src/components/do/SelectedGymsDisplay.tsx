@@ -1,14 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
-import AppStyle from '../../scss/App.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { gymAll, gymSome } from '../../api/gymAPIs';
+// CSS Styling
+import GymCourseStyle from '../../scss/GymCourses.module.scss';
+
+
+// Custom Components
 import { SoloGym } from './SoloGym';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonChip, useIonToast } from '@ionic/react';
-import { GymChip, GymChipInterface } from './GymChip';
+import { GymChip} from './GymChip';
+
+
+// Ionic Components
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent} from '@ionic/react';
+
+// State Management
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+// Interfaces
+import { RootState } from '../../redux/store';
 import { SelectedGymInterface } from '../../redux/userGymSlice';
 import { SelectedGymDisplayInterface } from '../../pages/Do';
-import { useEffect, useState } from 'react';
+
+// API
+import { gymAll, gymSome } from '../../api/gymAPIs';
 
 export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
 
@@ -40,7 +53,7 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
                     selectedGyms.map((i: SelectedGymInterface, index) => (
                         <GymChip key={index} id={i.id} name={i.name} />
                     ))}
-        <IonCard>
+        <IonCard className={GymCourseStyle.selectedGymsDisplay_card}>
             <IonCardHeader>
                 <IonCardTitle>Available Gyms</IonCardTitle>
                 <IonCardSubtitle>Selected Locations: {selectedGyms.length+"/3"}</IonCardSubtitle>
