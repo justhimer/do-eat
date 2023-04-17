@@ -13,7 +13,8 @@ export interface CartItemProps {
 
 export function CartItem(props: CartItemProps) {
 
-    const [count, setCount] = useState(props.quantity);
+    // const [count, setCount] = useState(props.quantity);
+    const [count, setCount] = useState(0);
 
     return (<>
         <IonItem className={UserMenuStyle.item_last}>

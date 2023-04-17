@@ -141,9 +141,7 @@ export function ShoppingCart() {
     )
 
 
-    function cancel() {
 
-    }
 
     // useEffect(() => {
     //     if (cartFoods) {
@@ -202,8 +200,6 @@ export function ShoppingCart() {
                         </IonSelect>
                         <IonButton onClick={() => onSave.mutate}>Save Cart</IonButton>
                         <IonButton onClick={onCheckout}>Checkout</IonButton>
-                        <IonButton onClick={cancel}>Cancel</IonButton>
-
                     </IonCardContent>
                 </IonCard>
             </IonContent>
