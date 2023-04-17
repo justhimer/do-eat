@@ -8,6 +8,7 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
 import { CourseSchedulesGymDto } from './dto/CourseScheduleGym.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateCourseSchedulesDTO } from './dto/CreateCourseSchedules.dto';
 
 
 @ApiTags('coursesSchedules') // to categorize in swagger
@@ -56,6 +57,18 @@ export class CourseSchedulesController {
   @Get('gym/course/schedule/:course_id')
   async gymSoloCourseSchedule(@Param('course_id',ParseIntPipe) course_id, @Req() req): Promise<any[] | Error>{
     return await this.courseSchedulesService.getAllScheduleForGymCourse(course_id)
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Post('gym/create/courseSchedule')
+  async createSchedule(@Body() body: CreateCourseSchedulesDTO){
+    try {
+      console.log('create course schedule')
+      return await this.courseSchedulesService.createNewCourseTime(body)
+    } catch (error) {
+      throw new Error(error)
+    }
+
   }
 
 }

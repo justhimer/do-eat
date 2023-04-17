@@ -2,6 +2,7 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIon
 import { useQuery } from "@tanstack/react-query"
 import { getCoursesforGym, gymCourseData } from "../../api/coursesApi"
 import { CourseListItem } from "../../components/gyms/CourseListItem"
+import { useHistory } from "react-router"
 
 
 
@@ -21,6 +22,11 @@ export function GymsDo() {
     useIonViewDidLeave(()=>{
         courses.remove()
     })
+    const history = useHistory()
+    
+    const createCourse = ()=>{
+        history.push('/create-course')
+    }
 
 
     
@@ -33,7 +39,7 @@ export function GymsDo() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen class="ion-padding">
-            <IonButton expand="block">Add courses</IonButton>
+            <IonButton expand="block" onClick={createCourse}>Add courses</IonButton>
             {courses.data? courses.data.map((course: gymCourseData,index :number)=><CourseListItem key={index} {...course}/>) : <></>}
             </IonContent>
         </IonPage >

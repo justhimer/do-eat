@@ -329,11 +329,9 @@ export class CourseSchedulesService {
                 })
                 return newData
             } else {
-                console.log('error at course_schedules.services: ')
-                throw new HttpException('test', HttpStatus.BAD_REQUEST)
+                return new Error
             }
         } catch (error) {
-            console.log('error at course_schedules.services: ', error)
             throw new Error(error)
         }
     }

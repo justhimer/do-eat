@@ -33,7 +33,7 @@ const gymCourseSlice = createSlice({
                 credits: action.payload.credits,
                 default_quota: action.payload.default_quota,
                 default_trainer_id: action.payload.default_trainer_id,
-                duration: action.payload.gym_id,
+                duration: action.payload.duration,
                 gym_id: action.payload.gym_id,
                 intensity_id: action.payload.intensity_id,
                 intensity_level: action.payload.intensity_level,

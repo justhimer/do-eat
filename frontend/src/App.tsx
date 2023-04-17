@@ -2,16 +2,23 @@ import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonButton,
+  IonButtons,
+  IonContent,
   IonFab,
   IonFabButton,
+  IonHeader,
   IonIcon,
+  IonItem,
   IonLabel,
+  IonModal,
   IonRouterLink,
   IonRouterOutlet,
   IonTab,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonTitle,
+  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -25,13 +32,16 @@ import { GymCourses } from './components/do/superstructure/GymCourses';
 import { GymConfirmation } from './components/do/superstructure/GymConfirmation';
 import { GymsDo } from './pages/gyms/GymsDo';
 import { GymsEat } from './pages/gyms/GymsEat';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
 import HomeTab from './pages/Home';
 import DoTab from './pages/Do';
 import EatTab from './pages/Eat';
 import UserTab from './pages/User';
+
+/* for QR code */
+import QRCode from "react-qr-code";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -55,6 +65,7 @@ import { FacebookCallback } from './components/auth/FacebookCallback';
 
 /* custom SCSS modules */
 import TabStyle from "./scss/TabBar.module.scss";
+import AppStyle from './scss/App.module.scss';
 import "./scss/RootChanges.scss"
 
 import { GymPrivateRouter } from './components/private_routes/GymPrivateRoute';
@@ -67,18 +78,49 @@ import { ShoppingCart } from './components/ShoppingCart/cart';
 import { GymProfile } from './components/gym_user/GymProfile';
 import { GymScheduleList } from './components/gym_user/GymScheduleList';
 import { GymOrderList } from './components/gym_user/GymOrderList';
+import { useRef } from 'react';
+import { UserQR } from './components/qr/UserQR';
+import { GymQR } from './components/qr/GymQR';
+import { useQuery } from '@tanstack/react-query';
+import { fetchGymInfo } from './api/gymAPIs';
+import { fetchUserInfo } from './api/userAPIs';
+import { gymAction } from './redux/gymSlice';
+import { userAction } from './redux/userSlice';
 
 setupIonicReact();
 
-
-
 const App: React.FC = () => {
 
+  const userID = useSelector((state: RootState) => state.user.id);
+  const gymID = useSelector((state: RootState) => state.gym.id);
 
-  const gymLoginStatus = useSelector((state: RootState) => state.gym.isAuthenticated)
+  const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+  const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated)
 
+  // auto logout in case of inconsistance between token and database
+  const dispatch = useDispatch();
+  const { data } = useQuery({
+    queryKey: ["logged_in"],
+    queryFn: async () => {
+      if (isUserLoggedIn) {
+        const user = await fetchUserInfo();
+        if (!user) {
+          dispatch(userAction.logout());
+        }
+      }
+      if (isGymLoggedIn) {
+        const gym = await fetchGymInfo();
+        if (!gym) {
+          dispatch(gymAction.logout());
+        }
+      }
+      return {};
+    },
+  });
+
+  // switch tabs between user and gym
   const navigationSwitch = (type: 'do-tab' | 'eat-tab') => {
-    if (gymLoginStatus) {
+    if (isGymLoggedIn) {
       switch (type) {
         case 'do-tab':
           return '/gyms-do'
@@ -98,7 +140,6 @@ const App: React.FC = () => {
       }
     }
   }
-
 
   return (
     <IonApp>
@@ -150,11 +191,11 @@ const App: React.FC = () => {
             </Route>
 
             {/* gym user routes */}
-            <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile/>} />}>
+            <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile />} />}>
             </Route>
-            <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList/>} />}>
+            <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList />} />}>
             </Route>
-            <Route path="/gym-food-orders" component={() => <GymPrivateRouter component={<GymOrderList/>} />}>
+            <Route path="/gym-food-orders" component={() => <GymPrivateRouter component={<GymOrderList />} />}>
             </Route>
 
             {/* do routes */}
@@ -165,19 +206,19 @@ const App: React.FC = () => {
               <GymConfirmation />
             </Route>
 
-          {/*gym CMS routes */}
-          <Route exact path="/gyms-do" >
-            <GymsDo/>
-          </Route>
-          <Route exact path='/create-course'>
-            <CourseCreate/>
-          </Route>
-          <Route exact path='/details-course'>
-            <CourseDetails/>
-          </Route>
-          <Route exact path="/gyms-eat" >
-            <GymsEat/>
-          </Route>
+            {/*gym CMS routes */}
+            <Route exact path="/gyms-do" >
+              <GymsDo />
+            </Route>
+            <Route exact path='/create-course'>
+              <CourseCreate />
+            </Route>
+            <Route exact path='/details-course'>
+              <CourseDetails />
+            </Route>
+            <Route exact path="/gyms-eat" >
+              <GymsEat />
+            </Route>
 
             {/* food routes */}
             <Route path="/fooddetails/:id" component={Fooddetails}>
@@ -203,7 +244,7 @@ const App: React.FC = () => {
             {/* invisible button for applying QR code css */}
             <IonTabButton disabled={false}>
               <IonFab horizontal="center" className={TabStyle.reposition}>
-                <IonFabButton className={TabStyle.button} translucent={true}>
+                <IonFabButton id="open-qr" className={TabStyle.button} translucent={true}>
                   <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
                 </IonFabButton>
               </IonFab>
@@ -225,12 +266,17 @@ const App: React.FC = () => {
         </IonTabs>
 
         {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
-        <IonFabButton className={TabStyle.button} translucent={true}>
-          <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-        </IonFabButton>
-      </IonFab> */}
+              <IonFabButton className={TabStyle.button} translucent={true}>
+                <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+              </IonFabButton>
+            </IonFab> */}
 
       </IonReactRouter>
+
+      {/* QR Code Models */}
+      {userID && <UserQR/>}
+      {gymID && <GymQR/>}
+
     </IonApp>
   )
 };

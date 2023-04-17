@@ -1,11 +1,14 @@
 const controllerName = "coursesSchedules"
 
-export interface ScheduleInterface {
+export interface ScheduleCreate{
     course_id: number,
     quota: number,
-    schedule_id: number,
     time: string,
     trainer_id: number,
+}
+
+export interface ScheduleInterface extends ScheduleCreate{
+    schedule_id: number,
     trainer_name: string;
 }
 
@@ -65,4 +68,21 @@ export async function fetchCoursesInNext24Hours() {
     return result
 }
 
+export async function createCourseSchedule(reqData:ScheduleCreate){
+    console.log("reqData: ",JSON.stringify(reqData))
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/create/courseSchedule`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        },body: JSON.stringify(reqData)
+    });
+    const result = await res.json()
+    if (res.ok){
+        return result
+    }else{
+        throw new Error(result)
+    }
+    
+}
 

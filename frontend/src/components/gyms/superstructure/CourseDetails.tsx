@@ -1,171 +1,89 @@
-import { IonActionSheet, IonBackButton, IonButton, IonCard, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRadio, IonRadioGroup, IonRow, IonTitle, IonToolbar, useIonToast, useIonViewDidLeave, useIonViewWillEnter } from "@ionic/react";
-import { useDispatch, useSelector } from "react-redux";
+import { IonBackButton, IonButton, IonButtons, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonModal, IonNavLink, IonPage, IonRadio, IonRadioGroup, IonTitle, IonToolbar, useIonToast, useIonViewDidLeave, useIonViewWillEnter } from "@ionic/react";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import ConfirmationStyle from '../../../scss/GymConfirm.module.scss'
-import { cardOutline, flameOutline } from "ionicons/icons";
-import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ScheduleInterface, fetchGymSoloCourseSchedule } from "../../../api/coursesSchedulesAPI";
+import { ScheduleCreate, ScheduleInterface, createCourseSchedule, fetchGymSoloCourseSchedule } from "../../../api/coursesSchedulesAPI";
 import { ScheduleListItem } from "../ScheduleListItem";
-import { useHistory } from "react-router";
-import { FormEvent, useEffect, useState } from "react";
-import { UserPhoto, usePhotoGallery } from "../../../hooks/usePhotoGallery";
-import NotificationStyle from "../../../scss/Notification.module.scss";
-import { UploadedPhoto, uploadPhoto } from "../../../api/fileAPIs";
-import { userSignup } from "../../../api/userAPIs";
-import { gymAction } from "../../../redux/gymSlice";
-import { userAction } from "../../../redux/userSlice";
-import { TakeProfilePic } from "../../user/TakeProfilePic";
-import UserStyle from '../../../scss/User.module.scss';
-import { fetchTrainers } from "../../../api/trainerAPI";
-import { resetGymCourse } from "../../../redux/gymCourseSlice";
+import NotificationStyle from "../../../scss/Notification.module.scss"
+
 import '../../../scss/gymCourseDetail.scss'
-import { getCourseType } from "../../../api/courseTypeAPI";
+
+import { CourseForm } from "../courseForm";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
+import { useRef, useState } from "react";
+import { addDays, formatISO } from "date-fns";
+import { fetchTrainers } from "../../../api/trainerAPI";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 
 
 export function CourseDetails() {
-
-    const [test, setTest] = useState(NaN)
-    const [trainerValue, setTrainerValue] = useState(0)
+    const [present] = useIonToast();
     const selectedCourse = useSelector((state: RootState) => state.gymCourse)
+    const [slotTime, setSlotTime] = useState<string>(formatISO(new Date()))
+    const [slotTrainer, setSlotTrainer] = useState<number>(selectedCourse.default_trainer_id)
+    const [slotQuota, setSlotQuota] = useState<number>(selectedCourse.default_quota)
     const courseSchedules = useQuery({
         queryKey: ['scheduleQuery'],
         queryFn: () => fetchGymSoloCourseSchedule(selectedCourse.course_id)
     })
+
     const trainerList = useQuery({
         queryKey: ['trainerQuery'],
         queryFn: () => fetchTrainers()
     })
-    const courseTypeList = useQuery({
-        queryKey:['courseTypeQuery'],
-        queryFn: ()=> getCourseType()
-    })
 
     useIonViewWillEnter(() => {
-        console.log(selectedCourse)
         courseSchedules.refetch()
-        trainerList.refetch()
     })
 
     useIonViewDidLeave(() => {
         courseSchedules.remove()
-        trainerList.remove()
-        setTrainerValue(0)
-        dispatch(resetGymCourse())
     })
-    useEffect(() => {
-        setTrainerValue(selectedCourse.default_trainer_id)
-        console.log("trainerValue: ", trainerValue)
-    }, [courseSchedules.data])
 
+    const scheduleCreator = useMutation((createData: ScheduleCreate) => createCourseSchedule(createData),
+        {
+            onSuccess: (data) => {
+                courseSchedules.refetch()
+                present({
+                    message: 'Timeslot Created',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+                setSlotTime(formatISO(new Date()))
+                setSlotTrainer(selectedCourse.default_trainer_id)
+                setSlotQuota(selectedCourse.default_quota)
+            },
+            onError: (error) => {
+                present({
+                    message: 'Timeslot Creation Failed',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+                throw new Error(String(error))
+            }
+        })
+    const modal = useRef<HTMLIonModalElement>(null);
+    const input = useRef<HTMLIonInputElement>(null);
 
-    //#region justin's work 
+    function confirm() {
+        modal.current?.dismiss(input.current?.value, 'confirm');
+    }
 
-    const [present] = useIonToast();
-    const history = useHistory();
-    const dispatch = useDispatch();
-
-    const [courseName, setCourseName] = useState<string>(selectedCourse.name);
-    const [courseCalories, setCourseCalories] = useState<number>(selectedCourse.calories);
-    const [courseCredits, setCourseCredits] = useState<number>(selectedCourse.credits);
-    const [courseQuota, setCourseQuota] = useState<number>(selectedCourse.default_quota);
-    const [courseDuration, setCourseDuration] = useState<number>(selectedCourse.duration)
-
-    const { photo, takePhoto, choosePhoto, removePhoto } = usePhotoGallery();
-
-    async function handleSignup(event: FormEvent<HTMLFormElement>) {
-        try {
-            event.preventDefault();
-            
-            // upload photo
-            uploadingPhoto.mutate(photo);
-
-        } catch {
-            present({
-                message: 'User Sign Up Failed',
-                duration: 1500,
-                position: "top",
-                cssClass: NotificationStyle.ionicToast,
-            });
+    function onWillDismiss(e: CustomEvent<OverlayEventDetail>) {
+        if (e.detail.role === 'confirm') {
+            const reqData:ScheduleCreate = {
+                course_id: selectedCourse.course_id,
+                quota: Number(slotQuota),
+                time: formatISO(zonedTimeToUtc(slotTime,'Asia/Hong_Kong')),
+                trainer_id: slotTrainer,
+            }
+            scheduleCreator.mutate(reqData)
         }
     }
 
-    const uploadingPhoto = useMutation(
-        (photo?: UserPhoto): any => {
-            let data = undefined;
-            if (photo) {
-                data = uploadPhoto(photo);
-            }
-            return data;
-        },
-        {
-            onSuccess: (data: UploadedPhoto) => {
-                let iconUrl: string | undefined = undefined;
-                if (data) {
-                    iconUrl = data.accessPath;
-                }
-                // create account
-                const signupDetails = {
-                    icon: iconUrl
-                }
-                signingUp.mutate(signupDetails);
-            }
-        }
-    )
-
-    const signingUp = useMutation(
-        (signupDetails: any) => userSignup(signupDetails),
-        {
-            onSuccess: (data) => {
-                if (data) {
-                    dispatch(gymAction.logout());
-                    dispatch(userAction.login(data));
-                    present({
-                        message: 'User Login Success',
-                        duration: 1500,
-                        position: "top",
-                        cssClass: NotificationStyle.ionicToast,
-                    });
-                    history.push("/user-tab");
-                } else {
-                    present({
-                        message: 'User Login Failed',
-                        duration: 1500,
-                        position: "top",
-                        cssClass: NotificationStyle.ionicToast,
-                    });
-                }
-            }
-        }
-    )
-
-    /*************************************/
-    /*** ionic 7 input component start ***/
-    /*************************************/
-
-    const [isTouched, setIsTouched] = useState(false);
-    const [isValid, setIsValid] = useState<boolean>();
-
-
-    const validate = (ev: Event) => {
-        const value = (ev.target as HTMLInputElement).value;
-
-        setIsValid(undefined);
-
-        if (value === '') return;
-
-    };
-
-    const markTouched = () => {
-        setIsTouched(true);
-    };
-
-    /***********************************/
-    /*** ionic 7 input component end ***/
-    /***********************************/
-
-    //#endregion
     return (
         <IonPage >
             <IonHeader >
@@ -177,116 +95,45 @@ export function CourseDetails() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <div className={UserStyle.form}>
-
-                    <div className={UserStyle.title}>
-                        <h2>Sign Up</h2>
-                    </div>
-
-                    <form onSubmit={handleSignup}>
-
-                        {/* profile pic */}
-                        <TakeProfilePic photo={photo} />
-                        {/* <input type="file" src="" onChange={(e) => setImage(e.target.value)} /> */}
-                        <IonActionSheet
-                            trigger="change_profile_pic"
-                            header="Actions"
-                            buttons={[
-                                {
-                                    text: 'Take Photo',
-                                    handler: () => takePhoto(),
-                                },
-                                {
-                                    text: 'Choose from Album',
-                                    handler: () => choosePhoto(),
-                                },
-                                {
-                                    text: 'Remove Photo',
-                                    handler: () => removePhoto(),
-                                },
-                                {
-                                    text: 'Cancel',
-                                    role: 'cancel',
-                                    data: {
-                                        action: 'cancel'
-                                    }
-                                }
-                            ]}
-                        />
+                <IonModal ref={modal} trigger="open-modal" onWillDismiss={(e) => onWillDismiss(e)}>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonButtons slot="start">
+                                <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                            </IonButtons>
+                            <IonTitle>Add Timeslot</IonTitle>
+                            <IonButtons slot="end">
+                                <IonButton strong={true} onClick={() => confirm()}>
+                                    Confirm
+                                </IonButton>
+                            </IonButtons>
+                        </IonToolbar>
+                    </IonHeader>
+                    <IonContent className="ion-padding">
+                        <IonDatetime id='select-time'
+                            min={formatISO(addDays(new Date(), -1))}
+                            max={formatISO(addDays(new Date(), 14))}
+                            locale="en-HK"
+                            onIonChange={(e) => { setSlotTime(e.detail.value as string) }}
+                        ></IonDatetime>
                         {trainerList.data && trainerList.data.length > 0 ?
-                            <IonRadioGroup value={selectedCourse.default_trainer_id} name="trainer_choice">
+                            <IonRadioGroup value={slotTrainer} name="trainer_choice" onIonChange={(e) => setSlotTrainer(e.detail.value)}>
                                 {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={trainer.id} labelPlacement="end">{trainer.name}</IonRadio>)}
                             </IonRadioGroup>
                             : <></>
                         }
-
                         <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                            type="text"
-                            fill="solid"
-                            label="Name"
-                            labelPlacement="floating"
-                            onIonInput={(event) => setCourseName(String(event.detail.value))}
-                            onIonBlur={() => markTouched()}
-                            value={courseName}
-                        ></IonInput>
-
-                        <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
                             type="number"
                             fill="solid"
-                            label="Calories"
+                            label="Quota"
                             labelPlacement="floating"
-                            onIonInput={(event) => setCourseCalories(Number(event.detail.value))}
-                            onIonBlur={() => markTouched()}
-                            value={courseCalories}
+                            onIonInput={(e) => setSlotQuota(e.detail.value as number) }
+                            value={slotQuota}
                         ></IonInput>
-
-                        <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                            type="number"
-                            fill="solid"
-                            label="Credits"
-                            labelPlacement="floating"
-                            onIonInput={(event) => setCourseCredits(Number(event.detail.value))}
-                            onIonBlur={() => markTouched()}
-                            value={courseCredits}
-                        ></IonInput>
-
-                        {courseTypeList.data && courseTypeList.data.length > 0 ?
-                            <IonRadioGroup value={selectedCourse.course_type_id} name="course_type_choice">
-                                {courseTypeList.data.map((type: any, index: number) => <IonRadio key={index} value={type.id} labelPlacement="end">{type.name}</IonRadio>)}
-                            </IonRadioGroup>
-                            : <></>
-                        }
-
-                        <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                            type="number"
-                            fill="solid"
-                            label="Default quota"
-                            labelPlacement="floating"
-                            onIonInput={(event) => setCourseQuota(Number(event.detail.value))}
-                            onIonBlur={() => markTouched()}
-                            value={courseQuota}
-                        ></IonInput>
-
-                        <IonInput
-                            className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-                            type="number"
-                            fill="solid"
-                            label="Duration (Min)"
-                            labelPlacement="floating"
-                            onIonInput={(event) => setCourseDuration(Number(event.detail.value))}
-                            onIonBlur={() => markTouched()}
-                            value={courseDuration}
-                        ></IonInput>
-
-                        <IonButton id="open-loading" type="submit" className={UserStyle.button}>Submit</IonButton>
-                    </form>
-
-                </div>
-                <IonButton expand="block">Add Timeslot </IonButton>
+                    </IonContent>
+                </IonModal>
+                <CourseForm mode='PUT' />
+                <IonButton expand="block" id="open-modal">Add Timeslot </IonButton>
                 {courseSchedules.data && courseSchedules.data.length > 0 ? courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot} />) : <h5>No schedule set for course</h5>}
             </IonContent>
         </IonPage >
