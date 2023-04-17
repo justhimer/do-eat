@@ -11,12 +11,12 @@ export function GymScheduleList() {
         queryKey: ["gym-schedule"],
         queryFn: async () => {
             const courses = await fetchCoursesInNext24Hours();
-            console.log('courses: ', courses);
+            // console.log('courses: ', courses);
 
             // sorting schedule according to time
             courses.sort((a: any, b: any) => {
-                const timeA = Date.parse(a.course_schedule.time);
-                const timeB = Date.parse(b.course_schedule.time);
+                const timeA = Date.parse(a.time);
+                const timeB = Date.parse(b.time);
                 return timeA - timeB;
             });
             return courses;

@@ -7,8 +7,15 @@ import { PrismaService } from 'nestjs-prisma';
 export class FoodOrderService {
   constructor(private prisma: PrismaService) { }
 
-  create(createFoodOrderDto: CreateFoodOrderDto) {
-    return 'This action adds a new foodOrder';
+  async createOrder(createFoodOrderDto: CreateFoodOrderDto) {
+    const createdOrder = await this.prisma.foodOrder.create({
+      data: {
+        food_id: createFoodOrderDto.food_id,
+        quantity: createFoodOrderDto.quantity,
+        food_history_id: createFoodOrderDto.food_history_id,
+      },
+    });
+    return createdOrder;
   }
 
   findAll() {

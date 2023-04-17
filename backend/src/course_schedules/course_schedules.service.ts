@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { addDays } from 'date-fns';
+import { addDays, addHours, addMinutes } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import { PrismaService } from 'nestjs-prisma';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
@@ -54,6 +54,39 @@ export class CourseSchedulesService {
         }))._count.course_schedule_id
 
         return (quota - filledSlots)
+    }
+
+    async findComingtCourse(gym_id: number) {
+        const now = new Date();
+        const data = await this.prisma.courseSchedules.findMany({
+            where: {
+                AND: [
+                    {
+                        courses: {
+                            gym_id: gym_id
+                        }
+                    },
+                    {
+                        time: {
+                            gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
+                            lt: addDays(zonedTimeToUtc(now, "Asia/Hong_Kong"), 1)
+                        }
+                    }
+                ]
+            },
+            select: {
+                id: true,
+                courses: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
+            orderBy: [
+                { time: 'asc' }
+            ],
+        })
+        return data[0];
     }
 
     async findCoursesInNext24Hours(gym_id: number) {

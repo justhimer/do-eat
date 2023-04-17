@@ -62,8 +62,43 @@ export class FoodHistoryService {
     return foodsToBeCollected;
   }
 
-  create(createFoodHistoryDto: CreateFoodHistoryDto) {
-    return 'This action adds a new foodHistory';
+  async findFoodsCollectedByUser(user_id: number) {
+    const foodsCollected = await this.prisma.foodHistory.findMany({
+      include: {
+        FoodOrder: {
+          select: {
+            quantity: true,
+            food: {
+              select: {
+                name: true,
+              }
+            },
+          }
+        },
+        gym: {
+          select: {
+            name: true,
+            // address: true,
+          }
+        }
+      },
+      where: {
+        user_id: user_id,
+        collection_status: true
+      }
+    })
+    return foodsCollected;
+  }
+
+  async createHistory(createFoodHistoryDto: CreateFoodHistoryDto) {
+    const data = await this.prisma.foodHistory.create({
+      data: {
+        gym_id: createFoodHistoryDto.gym_id,
+        user_id: createFoodHistoryDto.user_id,
+        collection_status: createFoodHistoryDto.collection_status,
+      }
+    })
+    return data;
   }
 
   async findOrdersForGyms(gym_id: number) {
@@ -94,6 +129,35 @@ export class FoodHistoryService {
     } catch (error) {
       console.log('Error at food_history.service: ', error)
       throw new Error(error)
+    }
+  }
+
+  async takenFood(user_id: number, gym_id: number) {
+    try {
+
+      const foodHistoryIDs = await this.prisma.foodHistory.findMany({
+        select: {
+          id: true
+        },
+        where: {
+          user_id: user_id,
+          gym_id: gym_id
+        }
+      })
+
+      for (let foodHistoryID of foodHistoryIDs) {
+        await this.prisma.foodHistory.update({
+          where: {
+            id: foodHistoryID.id
+          },
+          data: {
+            collection_status: true
+          }
+        });
+      }
+
+    } catch (error) {
+      return new Error(error)
     }
   }
 }

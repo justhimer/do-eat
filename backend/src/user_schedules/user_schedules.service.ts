@@ -13,6 +13,25 @@ export class UserSchedulesService {
     private readonly courseScheduleService: CourseSchedulesService
   ) { }
 
+  async findUniqueUserScheduleID(user_id: number, course_schedule_id: number, gym_id: number) {
+    const user_schedule_id = await this.prisma.userSchedule.findFirst({
+      select: {
+        id: true
+      },
+      where: {
+        user_id: user_id,
+        course_schedule_id: course_schedule_id,
+        course_schedule: {
+          courses: {
+            gym_id: gym_id
+          }
+        }
+      }
+    })
+    return user_schedule_id.id;
+  }
+
+
   async findAllUserCourses(user_id: number) {
     const courses = await this.prisma.userSchedule.findMany({
       select: {
@@ -30,7 +49,7 @@ export class UserSchedulesService {
                   }
                 },
                 duration: true,
-                gyms : {
+                gyms: {
                   select: {
                     name: true,
                     address: true
@@ -137,19 +156,19 @@ export class UserSchedulesService {
 
   async returnUserIdCourse(registered_id: number) {
     try {
-      const data =  await this.prisma.userSchedule.findFirst({
+      const data = await this.prisma.userSchedule.findFirst({
         where: { id: registered_id }
       })
-      if (data){
+      if (data) {
         return data
-      }else{
+      } else {
         throw new Error('no data')
       }
     } catch (error) {
       console.log('error at user_schedules.service: ', error)
       throw new Error(error)
     }
-    
+
 
   }
 
@@ -171,6 +190,21 @@ export class UserSchedulesService {
       return "Deleted course registration"
     } catch (error) {
       console.log(error)
+      return new Error(error)
+    }
+  }
+
+  async takeAttendance(user_schedule_id: number) {
+    try {
+      return await this.prisma.userSchedule.update({
+        where: {
+          id: user_schedule_id
+        },
+        data: {
+          attendance_type_id: 2
+        }
+      });
+    } catch (error) {
       return new Error(error)
     }
   }

@@ -62,7 +62,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
     const { mutate: addToCart } = useMutation({
         mutationFn: () => fetchAddItem({
             food_id: id,
-            quantity: 0
+            quantity: 1
         }),
     })
 
@@ -79,7 +79,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                         <IonBackButton default-href="/"></IonBackButton>
                     </IonButton>
                     <IonTitle>Eat</IonTitle>
-                    <IonBadge className={Fooddetailsstyle.count}>1</IonBadge>
+                    {/* <IonBadge className={Fooddetailsstyle.count}>1</IonBadge> */}
                     <IonIcon className={Fooddetailsstyle.icon} icon={cartOutline} slot="end" onClick={onCartIcon}></IonIcon>
                     {/* <IonContent class="ion-padding">
                         <IonModal onIonModalWillDismiss={() => { setisOpenMoal(false) }} isOpen={isOpenMoal} id="example-modal" ref={modal} >
