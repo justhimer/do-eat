@@ -1,20 +1,33 @@
+// Ionic Component
 import { IonButton, IonInput, IonRadio, IonRadioGroup, useIonToast, useIonViewDidLeave } from "@ionic/react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createCourseDetail, gymCourseData, gymCourseUpload, updateCourseDetail } from "../../api/coursesApi";
+
+// State Management
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { resetGymCourse, sendGymCourse } from "../../redux/gymCourseSlice";
-import NotificationStyle from "../../scss/Notification.module.scss"
-import UserStyle from "../../scss/User.module.scss"
 import { RootState } from "../../redux/store";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+
+// API
 import { getCourseType } from "../../api/courseTypeAPI";
 import { getIntensityLevel } from "../../api/intensityAPI";
 import { fetchTrainers } from "../../api/trainerAPI";
+import { createCourseDetail, gymCourseData, gymCourseUpload, updateCourseDetail } from "../../api/coursesApi";
+
+
+
+// Routing
 import { useHistory } from "react-router";
 
+// CSS
+import NotificationStyle from "../../scss/Notification.module.scss"
+import UserStyle from "../../scss/User.module.scss"
+import GymCourseStyle from "../../scss/GymCourses.module.scss"
 
 
-export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
+
+export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
 
     const history = useHistory()
     const mode = props.mode
@@ -45,7 +58,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
         setCourseCredits(selectedCourse.credits);
         setCourseQuota(selectedCourse.default_quota);
         setCourseDuration(selectedCourse.duration)
-       setCourseTrainer(selectedCourse.default_trainer_id)
+        setCourseTrainer(selectedCourse.default_trainer_id)
         setCourseIntensity(selectedCourse.intensity_id);
         setCourseType(selectedCourse.course_type_id)
     })
@@ -55,9 +68,9 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
     const [courseCredits, setCourseCredits] = useState<number>(selectedCourse.credits);
     const [courseQuota, setCourseQuota] = useState<number>(selectedCourse.default_quota);
     const [courseDuration, setCourseDuration] = useState<number>(selectedCourse.duration);
-    const [courseTrainer,setCourseTrainer] = useState<number>(selectedCourse.default_trainer_id)
-    const [courseIntensity, setCourseIntensity] =useState<number>(selectedCourse.intensity_id);
-    const [courseType , setCourseType] = useState<number>(selectedCourse.course_type_id)
+    const [courseTrainer, setCourseTrainer] = useState<number>(selectedCourse.default_trainer_id)
+    const [courseIntensity, setCourseIntensity] = useState<number>(selectedCourse.intensity_id);
+    const [courseType, setCourseType] = useState<number>(selectedCourse.course_type_id)
 
     async function handleSignup(event: any) {
         event.preventDefault();
@@ -73,9 +86,9 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
             default_quota: Number(courseQuota),
             default_trainer_id: Number(courseTrainer),
         }
-        if(mode == 'PUT'){
+        if (mode == 'PUT') {
             updateDetails.mutate(prepData)
-        }else if (mode=='POST'){
+        } else if (mode == 'POST') {
             createDetails.mutate(prepData)
             history.push('/gyms-do')
         }
@@ -107,10 +120,10 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
     )
 
     const createDetails = useMutation(
-        (createData : gymCourseUpload)=>createCourseDetail(createData),
+        (createData: gymCourseUpload) => createCourseDetail(createData),
         {
-            onSuccess: (data)=>{
-                
+            onSuccess: (data) => {
+
                 present({
                     message: 'Course Created',
                     duration: 1500,
@@ -118,7 +131,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                     cssClass: NotificationStyle.ionicToast,
                 });
             },
-            onError:(error)=>{
+            onError: (error) => {
                 present({
                     message: 'Course Creation Failed',
                     duration: 1500,
@@ -128,7 +141,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                 throw new Error(String(error))
             }
         }
-    
+
     )
 
     /*************************************/
@@ -144,7 +157,7 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
 
 
     return <>
-        <div className={UserStyle.form}>
+        <div className={GymCourseStyle.regForm + ' ion-padding'}>
 
             <div className={UserStyle.title}>
                 <h2>Course Details</h2>
@@ -159,13 +172,15 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                         id="change_profile_pic" />
                 </div>
 
+                <h5>Trainer</h5>
+
                 {trainerList.data && trainerList.data.length > 0 ?
-                    <IonRadioGroup value={courseTrainer} name="trainer_choice" onIonChange={(e)=>{setCourseTrainer(e.detail.value)}}>
+                    <IonRadioGroup value={courseTrainer} name="trainer_choice" onIonChange={(e) => { setCourseTrainer(e.detail.value) }}>
                         {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={trainer.id} labelPlacement="end">{trainer.name}</IonRadio>)}
                     </IonRadioGroup>
                     : <></>
                 }
-
+                <h5>Course Details</h5>
                 <IonInput
                     className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
                     type="text"
@@ -176,13 +191,6 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
 
                     value={courseName}
                 ></IonInput>
-
-                {intensityLevelList.data && intensityLevelList.data.length > 0 ?
-                    <IonRadioGroup value={courseIntensity} name="intensity_choice" onIonChange={(e)=>{setCourseIntensity(e.detail.value)}}>
-                        {intensityLevelList.data.map((intensity: any, index: number) => <IonRadio key={index} value={intensity.id} labelPlacement="end">{intensity.level}</IonRadio>)}
-                    </IonRadioGroup>
-                    : <></>
-                }
 
                 <IonInput
                     className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
@@ -206,12 +214,6 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                     value={courseCredits}
                 ></IonInput>
 
-                {courseTypeList.data && courseTypeList.data.length > 0 ?
-                    <IonRadioGroup value={courseType} name="course_type_choice" onIonChange={(e)=>{setCourseType(e.detail.value)}}>
-                        {courseTypeList.data.map((type: any, index: number) => <IonRadio key={index} value={type.id} labelPlacement="end">{type.name}</IonRadio>)}
-                    </IonRadioGroup>
-                    : <></>
-                }
 
                 <IonInput
                     className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
@@ -235,7 +237,23 @@ export function CourseForm(props: {mode:'PUT' | 'POST'} ) {
                     value={courseDuration}
                 ></IonInput>
 
-                <IonButton id="open-loading" type="submit" className={UserStyle.button}>Submit</IonButton>
+                <h5>Intensity</h5>
+                {intensityLevelList.data && intensityLevelList.data.length > 0 ?
+                    <IonRadioGroup value={courseIntensity} name="intensity_choice" onIonChange={(e) => { setCourseIntensity(e.detail.value) }}>
+                        {intensityLevelList.data.map((intensity: any, index: number) => <IonRadio key={index} value={intensity.id} labelPlacement="end">{intensity.level}</IonRadio>)}
+                    </IonRadioGroup>
+                    : <></>
+                }
+
+                <h5>Course Type</h5>
+                {courseTypeList.data && courseTypeList.data.length > 0 ?
+                    <IonRadioGroup value={courseType} name="course_type_choice" onIonChange={(e) => { setCourseType(e.detail.value) }}>
+                        {courseTypeList.data.map((type: any, index: number) => <IonRadio key={index} value={type.id} labelPlacement="end">{type.name}</IonRadio>)}
+                    </IonRadioGroup>
+                    : <></>
+                }
+
+                <IonButton id="open-loading" type="submit" className={UserStyle.button}>{mode == 'POST' ? 'Submit' : 'Update'}</IonButton>
             </form>
 
         </div>

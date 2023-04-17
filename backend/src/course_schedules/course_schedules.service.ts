@@ -368,4 +368,46 @@ export class CourseSchedulesService {
             throw new Error(error)
         }
     }
+
+
+    async deleteCourseSchedule(schedule_id:number){
+        try {
+            const data = await this.prisma.userSchedule.findMany({
+                where:{
+                    course_schedule_id:schedule_id
+                },
+                select:{
+                    id:true
+                }
+            })
+            const userSchedule = []
+            data.forEach((elem)=>{
+                userSchedule.push(elem.id)
+            })
+            const deleteTransaction = this.prisma.creditTransaction.deleteMany({
+                where:{
+                    user_schedule_id:{
+                        in: userSchedule
+                    }
+                }
+            })
+            const deleteUserSchedule = this.prisma.userSchedule.deleteMany({
+                where:{
+                    course_schedule_id:schedule_id
+                }
+            })
+            const deleteCourseSchedule = this.prisma.courseSchedules.delete({
+                where:{
+                    id:schedule_id
+                }
+            })
+            const operation = await this.prisma.$transaction([
+                deleteTransaction,deleteUserSchedule,deleteCourseSchedule
+            ])
+            return {message: "successfully deleted"}
+        } catch (error) {
+            return new Error()
+        }
+        
+    }
 }

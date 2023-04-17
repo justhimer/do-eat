@@ -48,7 +48,7 @@ export function CoursesPick(){
     //#endregion
 
     const noCourse = (
-        <div className='testing'>
+        <div className='noCourse'>
             <h6 className="title">No Courses Today</h6>
             <img src={`./assets/no_course/Yoga.png`}/>
             <h5>Please select other dates or other gym combinations</h5>

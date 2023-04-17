@@ -27,10 +27,13 @@ export function GymsEat() {
                         {
                             foodStock.data ? foodStock.data.map((elem:any,index:any)=><IonItem key={index}>
                                 <IonThumbnail slot="start">
-                                    <img src={elem.food_image} />
+                                    <img src={`./assets/foodimage/${elem.food_image}`} />
                                 </IonThumbnail>
-                                <IonLabel>{elem.food_name}</IonLabel><br/>
+                                <div>
+                                <IonLabel>{elem.food_name}</IonLabel>
                                 <IonLabel>{elem.quantity} remaining</IonLabel>
+                                </div>
+                                
                             </IonItem>)
                                 
                                 : <></>

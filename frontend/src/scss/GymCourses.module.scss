@@ -173,7 +173,7 @@
     min-height: 60vh;
 
 
-    .testing {
+    .noCourse {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -194,5 +194,23 @@
         color: #3b3836;
         font-size: 2rem;
         text-align: center;
+    }
+}
+
+.gymDoButton{
+    margin-bottom: 2rem ;
+}
+
+.regForm{
+    color: #3b3836;
+
+    ion-radio-group{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+    }
+
+    h5{
+        font-weight: bold;
     }
 }
