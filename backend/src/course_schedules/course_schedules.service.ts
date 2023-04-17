@@ -58,7 +58,7 @@ export class CourseSchedulesService {
 
     async findComingtCourse(gym_id: number) {
         const now = new Date();
-        const data = await this.prisma.courseSchedules.findFirst({
+        const data = await this.prisma.courseSchedules.findMany({
             where: {
                 AND: [
                     {
@@ -81,9 +81,12 @@ export class CourseSchedulesService {
                         name: true
                     }
                 }
-            }
+            },
+            orderBy: [
+                { time: 'asc' }
+            ],
         })
-        return data;
+        return data[0];
     }
 
     async findCoursesInNext24Hours(gym_id: number) {

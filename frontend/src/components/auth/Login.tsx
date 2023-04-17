@@ -1,6 +1,7 @@
+import UserStyle from '../../scss/User.module.scss';
+
 import { IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
 import { useState } from 'react';
-import UserStyle from '../../scss/User.module.scss';
 import { Logo } from '../Logo';
 import { UserLoginForm } from './UserLoginForm';
 import { GymLoginForm } from './GymLoginForm';

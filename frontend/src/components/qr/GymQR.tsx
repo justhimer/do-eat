@@ -5,8 +5,9 @@ import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonNote, IonRow, useIonToast, IonLabel, IonSegment, IonSegmentButton, IonChip, IonItem } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import QrReader from "react-qr-reader";
-import { fetchComingCourse, gymTakeAttendance } from "../../api/coursesSchedulesAPI";
+import { fetchComingCourse } from "../../api/coursesSchedulesAPI";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { gymTakeAttendance } from "../../api/userScheduleAPI";
 
 export function GymQR() {
 
@@ -38,18 +39,25 @@ export function GymQR() {
     }
 
     useEffect(() => {
-        console.log(QRData);
+        console.log('QRData: ', QRData);
+        if (scanFor === 'course') {
+            takeAttendance.mutate(QRData);
+            setQRData("");
+        }
         if (scanFor === 'food') {
-            takeAttendance.mutate(QRData)
+            setQRData("");
         }
     }, [QRData])
 
     const takeAttendance = useMutation(
-        (QRData:string) => gymTakeAttendance(parseInt(QRData)),
+        (QRData:string) => gymTakeAttendance({
+            course_schedule_id: course.id, 
+            user_id: parseInt(QRData)
+        }),
         {
             onSuccess: ()=>{
                 present({
-                    message: 'Food has been taken',
+                    message: 'Attendance taken',
                     duration: 1500,
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,

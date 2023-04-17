@@ -1,9 +1,15 @@
-import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonDatetime, IonHeader, IonList, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
+import UserStyle from '../../scss/User.module.scss';
+
+import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonDatetime, IonHeader, IonLabel, IonList, IonPage, IonRefresher, IonRefresherContent, IonSegment, IonSegmentButton, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter } from "@ionic/react";
 import { fetchCourses } from "../../api/userScheduleAPI";
 import { useQuery } from "@tanstack/react-query";
 import { UserScheduleItem } from "./UserScheduleItem";
+import { useState } from 'react';
 
 export function UserScheduleList() {
+
+    const defaultCheckWhat = "coming";
+    const [checkWhat, setCheckWhat] = useState<string>(defaultCheckWhat);
 
     const { data: courses, isLoading, refetch, remove } = useQuery({
         queryKey: ["courses"],
@@ -19,9 +25,19 @@ export function UserScheduleList() {
         },
     });
 
-    useIonViewWillEnter(() => {
-        refetch();
-    }, [])
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetch().then(()=>{
+            event.detail.complete();
+        })
+        // setTimeout(() => {
+        //   // Any calls to load data go here
+        //   event.detail.complete();
+        // }, 2000);
+      }
+
+    // useIonViewWillEnter(() => {
+    //     refetch();
+    // }, [])
 
     return (
         <IonPage >
@@ -34,6 +50,24 @@ export function UserScheduleList() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
+                <IonSegment
+                    value={checkWhat}
+                    className={UserStyle.segment}
+                    onIonChange={(e) => { setCheckWhat(e.detail.value!); }}
+                >
+                    <IonSegmentButton value="coming">
+                        <IonLabel>Coming</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value="history">
+                        <IonLabel>History</IonLabel>
+                    </IonSegmentButton>
+                </IonSegment>
+
                 {
                     courses && courses.length > 0 && courses.map((course: any, index: number) => (
                         <UserScheduleItem

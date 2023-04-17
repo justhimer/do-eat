@@ -1,5 +1,10 @@
 const controllerName = "userSchedules";
 
+export interface TakeAttendanceData {
+    course_schedule_id: number,
+    user_id: number
+}
+
 export async function courseJoin(course: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/join/${course}`, {
         method: 'POST',
@@ -50,4 +55,17 @@ export async function fetchCourseRemainingSlots(courseID: number) {
         throw new Error('Server Error');
     }
 
+}
+
+export async function gymTakeAttendance(takeAttendanceData: TakeAttendanceData) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/take_attendance`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        },
+        body: JSON.stringify(takeAttendanceData)
+    })
+    const result = await res.json();
+    return result
 }

@@ -79,18 +79,6 @@ export async function fetchComingCourse() {
     return result
 }
 
-export async function gymTakeAttendance(user_id: number) {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/take_attendance`, {
-        method: 'UPDATE',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
-        }
-    })
-    const result = await res.json();
-    return result
-}
-
 export async function createCourseSchedule(reqData: ScheduleCreate) {
     console.log("reqData: ", JSON.stringify(reqData))
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/create/courseSchedule`, {
