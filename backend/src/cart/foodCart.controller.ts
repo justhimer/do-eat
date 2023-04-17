@@ -14,9 +14,12 @@ export class FoodCartController {
 
     @UseGuards(AuthGuard("jwt"))
     @Get()
-    findAllByUserId(@Request() req: any) {
+    async findAllByUserId(@Request() req: any) {
         const userId = req.user.id;
-        return this.foodCartService.findAllByUserId(userId);
+        const data = await this.foodCartService.findAllByUserId(userId);
+
+        console.log("data: ", data)
+        return data
     }
 
     @UseGuards(AuthGuard("jwt"))
@@ -66,5 +69,14 @@ export class FoodCartController {
         return this.foodCartService.update(updateFoodCartDto, userId);
     }
 
-
+    @UseGuards(AuthGuard("jwt"))
+    @Delete(':id')
+    async delete(@Request() req: any, @Param('id', ParseIntPipe) id: number) {
+        try {
+            console.log('deleting ', id)
+            return await this.foodCartService.deleteCart(id);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

@@ -22,7 +22,7 @@ export function FoodList() {
             <div className={AppStyle.title} >Food List  </div>
 
             {
-                foods && foods.length > 0 && foods.map((food: any, index: number) => (
+                foods && foods.length > 0 ? foods.map((food: any, index: number) => (
                     <FoodItem
                         key={index}
                         id={food.id}
@@ -31,7 +31,11 @@ export function FoodList() {
                         image={food.image}
                         calories={food.calories}
                         allergens={food.calories} />
-                ))
+
+                )) :
+                    <>
+                        Error
+                    </>
             }
         </div>
 
