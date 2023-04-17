@@ -16,6 +16,7 @@ export function UserScheduleList() {
         queryKey: ["courses_pending"],
         queryFn: async () => {
             const coursesPending = await fetchCoursesPending();
+            console.log(coursesPending);
             // sorting schedule according to time
             coursesPending.sort((a: any, b: any) => {
                 const timeA = Date.parse(a.course_schedule.time);
@@ -88,8 +89,7 @@ export function UserScheduleList() {
                 </IonSegment>
 
                 {
-                    checkWhat === 'coming' && coursesPending && coursesPending.length > 0 && coursesPending.map((course: any, index: number) => {
-
+                    checkWhat === 'coming' && coursesPending && coursesPending.length > 0 && coursesPending.map((course: any, index: number) => (
                         <UserScheduleItem
                             key={course.course_schedule.id}
                             classID={course.course_schedule.id}
@@ -101,28 +101,23 @@ export function UserScheduleList() {
                             address={course.course_schedule.courses.gyms.address}
                             attendence={course.attendance_type.details}
                         />
-
-                    })
+                    ))
                 }
 
                 {
-                    checkWhat === 'history' && coursesAttendedOrAbsent && coursesAttendedOrAbsent.length > 0 && coursesAttendedOrAbsent.map((course: any, index: number) => {
-                        if (course.attendance_type.id !== 1) {
-                            return (
-                                <UserScheduleItem
-                                    key={course.course_schedule.id}
-                                    classID={course.course_schedule.id}
-                                    courseName={course.course_schedule.courses.name}
-                                    courseType={course.course_schedule.courses.course_type.name}
-                                    time={course.course_schedule.time}
-                                    duration={course.course_schedule.courses.duration}
-                                    gymName={course.course_schedule.courses.gyms.name}
-                                    address={course.course_schedule.courses.gyms.address}
-                                    attendence={course.attendance_type.details}
-                                />
-                            )
-                        }
-                    })
+                    checkWhat === 'history' && coursesAttendedOrAbsent && coursesAttendedOrAbsent.length > 0 && coursesAttendedOrAbsent.map((course: any, index: number) => (
+                        <UserScheduleItem
+                            key={course.course_schedule.id}
+                            classID={course.course_schedule.id}
+                            courseName={course.course_schedule.courses.name}
+                            courseType={course.course_schedule.courses.course_type.name}
+                            time={course.course_schedule.time}
+                            duration={course.course_schedule.courses.duration}
+                            gymName={course.course_schedule.courses.gyms.name}
+                            address={course.course_schedule.courses.gyms.address}
+                            attendence={course.attendance_type.details}
+                        />
+                    ))
                 }
 
                 {checkWhat === 'coming' && (coursesPending && coursesPending.length === 0) && <NoResult />}

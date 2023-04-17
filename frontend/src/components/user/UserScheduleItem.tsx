@@ -22,6 +22,9 @@ export interface UserScheduleItemProps {
 
 export function UserScheduleItem(props: UserScheduleItemProps) {
 
+    console.log('did');
+    
+
     const [date, setDate] = useState<Date>(utcToZonedTime(new Date(props.time), "Asia/Hong_Kong"))
 
     return (
@@ -71,7 +74,9 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
                         </IonItem>
                     </IonList>
                     <br />
-                    <IonButton expand="block">Cancel</IonButton>
+                    {
+                        props.attendence === "pending" && <IonButton expand="block">Cancel</IonButton>
+                    }
                 </IonCardContent>
 
             </IonCard>
