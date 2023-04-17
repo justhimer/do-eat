@@ -11,6 +11,7 @@ import { cartOutline } from 'ionicons/icons';
 import { fetchAddItem, fetchAllCartItems } from '../api/cartAPI';
 
 
+
 export const Fooddetails = ({ match }: { match: any }) => {
 
     const history = useHistory();
@@ -114,7 +115,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                 <div>
                     {/* <h1>Food Details:</h1> */}
                     <div>
-                        <img src={`./assets/foodimage/${food.image}`} alt='food image' />
+                        <img src={`./assets/foodimage/${food?.image}`} alt='food image' />
                     </div>
                     <div>
                         <h2>{name}</h2>
