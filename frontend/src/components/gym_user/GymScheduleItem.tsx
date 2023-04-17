@@ -8,9 +8,10 @@ import { format } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { barbellOutline, calendarSharp, qrCode } from "ionicons/icons";
 import { useState } from "react";
+import { useHistory } from "react-router";
 
 export interface GymScheduleItemProps {
-    classID: number
+    courseScheduleID: number
     courseName: string;
     time: string;
     duration: number;
@@ -26,6 +27,12 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
 
     const [date, setDate] = useState<Date>(utcToZonedTime(new Date(props.time), "Asia/Hong_Kong"));
 
+    const history = useHistory();
+
+    const onShowAttendance = () => {
+        history.push(`/gym-course-attendance/${props.courseScheduleID}`);
+    }
+
     return (
         <>
 
@@ -37,7 +44,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
                         </IonChip>
                     </div>
                     <IonCardTitle>{props.courseName}</IonCardTitle>
-                    <IonCardSubtitle>Class #{props.classID}</IonCardSubtitle>
+                    <IonCardSubtitle>Class #{props.courseScheduleID}</IonCardSubtitle>
                 </IonCardHeader>
                 <IonCardContent>
                     <IonList>
@@ -63,7 +70,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
                         </IonItem>
                     </IonList>
                     <br />
-                    <IonButton expand="block">Show Attendence</IonButton>
+                    <IonButton expand="block" onClick={onShowAttendance}>Show Attendence</IonButton>
                 </IonCardContent>
 
             </IonCard>

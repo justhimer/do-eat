@@ -20,13 +20,18 @@ export class CourseSchedulesController {
     private readonly userScheduleService: UserSchedulesService
   ) { }
 
+  @Get('course-name/:course_schedule_id')
+  async findCourseName(@Param('course_schedule_id', ParseIntPipe) course_schedule_id: number) {
+    return await this.courseSchedulesService.findCourseName(course_schedule_id);
+  }
+
   @UseGuards(AuthGuard('jwt_gym'))
   @Get('gym/24hrs')
   async findCoursesInNext24Hours(@Request() req) {
     const gymID = req.user.id;
     const courses = await this.courseSchedulesService.findCoursesInNext24Hours(gymID);
     for (let course of courses) {
-      course["slot"] = await this.userScheduleService.getFilledSlots(course.courses.id);
+      course["slot"] = await this.userScheduleService.getFilledSlots(course.id);
     }
     return courses;
   }
@@ -64,13 +69,13 @@ export class CourseSchedulesController {
   }
 
   @Get('gym/course/schedule/:course_id')
-  async gymSoloCourseSchedule(@Param('course_id',ParseIntPipe) course_id, @Req() req): Promise<any[] | Error>{
+  async gymSoloCourseSchedule(@Param('course_id', ParseIntPipe) course_id, @Req() req): Promise<any[] | Error> {
     return await this.courseSchedulesService.getAllScheduleForGymCourse(course_id)
   }
 
   @UseGuards(AuthGuard('jwt_gym'))
   @Post('gym/create/courseSchedule')
-  async createSchedule(@Body() body: CreateCourseSchedulesDTO){
+  async createSchedule(@Body() body: CreateCourseSchedulesDTO) {
     try {
       console.log('create course schedule')
       return await this.courseSchedulesService.createNewCourseTime(body)
