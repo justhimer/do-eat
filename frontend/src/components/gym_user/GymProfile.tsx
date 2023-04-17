@@ -17,7 +17,7 @@ export function GymProfile() {
         queryKey: ["gym_profile"],
         queryFn: async () => {
             const gymProfile = await fetchGymInfo();
-            console.log(gymProfile);
+            // console.log(gymProfile);
             return gymProfile;
         },
     });

@@ -12,7 +12,7 @@ export function UserScheduleList() {
     const defaultCheckWhat = "coming";
     const [checkWhat, setCheckWhat] = useState<string>(defaultCheckWhat);
 
-    const { data: coursesComing, refetch: refetchPending } = useQuery({
+    const { data: coursesComing, refetch: refetchComing } = useQuery({
         queryKey: ["courses_coming"],
         queryFn: async () => {
             const coursesComing = await fetchCoursesComing();
@@ -27,7 +27,7 @@ export function UserScheduleList() {
         },
     });
 
-    const { data: coursesHistory, refetch: refetchcoursesAttendedOrAbsent } = useQuery({
+    const { data: coursesHistory, refetch: refetchHistory } = useQuery({
         queryKey: ["courses_history"],
         queryFn: async () => {
             const coursesHistory = await fetchCoursesHistory();
@@ -43,11 +43,11 @@ export function UserScheduleList() {
 
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
         if (checkWhat === "coming") {
-            refetchPending().then(() => {
+            refetchComing().then(() => {
                 event.detail.complete();
             })
         } else {
-            refetchcoursesAttendedOrAbsent().then(() => {
+            refetchHistory().then(() => {
                 event.detail.complete();
             })
         }
@@ -92,7 +92,8 @@ export function UserScheduleList() {
                     checkWhat === 'coming' && coursesComing && coursesComing.length > 0 && coursesComing.map((course: any, index: number) => (
                         <UserScheduleItem
                             key={course.course_schedule.id}
-                            classID={course.course_schedule.id}
+                            userScheduleID={course.id}
+                            courseScheduleID={course.course_schedule.id}
                             courseName={course.course_schedule.courses.name}
                             courseType={course.course_schedule.courses.course_type.name}
                             time={course.course_schedule.time}
@@ -100,6 +101,7 @@ export function UserScheduleList() {
                             gymName={course.course_schedule.courses.gyms.name}
                             address={course.course_schedule.courses.gyms.address}
                             attendence={course.attendance_type.details}
+                            toRefetch={refetchComing}
                         />
                     ))
                 }
@@ -108,7 +110,8 @@ export function UserScheduleList() {
                     checkWhat === 'history' && coursesHistory && coursesHistory.length > 0 && coursesHistory.map((course: any, index: number) => (
                         <UserScheduleItem
                             key={course.course_schedule.id}
-                            classID={course.course_schedule.id}
+                            userScheduleID={course.id}
+                            courseScheduleID={course.course_schedule.id}
                             courseName={course.course_schedule.courses.name}
                             courseType={course.course_schedule.courses.course_type.name}
                             time={course.course_schedule.time}
@@ -116,6 +119,7 @@ export function UserScheduleList() {
                             gymName={course.course_schedule.courses.gyms.name}
                             address={course.course_schedule.courses.gyms.address}
                             attendence={course.attendance_type.details}
+                            toRefetch={() => { }}
                         />
                     ))
                 }

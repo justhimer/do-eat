@@ -99,9 +99,10 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('cancel/:registeredCourse/')
+  @Delete('cancel/:registeredCourse')
   async cancel(@Request() req, @Param('registeredCourse', ParseIntPipe) registeredCourse: number) {
-    const userId = req.user.id
+    const userId = req.user.id;
+    // console.log('registeredCourse: ', registeredCourse);
     const userSchedule = await this.userSchedulesService.returnUserIdCourse(registeredCourse)
     if (userId == userSchedule.user_id) {
       const courseTime = new Date(await this.courseScheduleService.getDateTime(userSchedule.course_schedule_id))
@@ -110,7 +111,7 @@ export class UserSchedulesController {
       if (timeDifference <= 24) {
         throw new ForbiddenException('24 hours or less until course starts', { cause: new Error() });
       } else {
-        return await this.userSchedulesService.deleteUserFromCourse(registeredCourse)
+        return {data: await this.userSchedulesService.deleteUserFromCourse(registeredCourse)}
       }
 
     } else {

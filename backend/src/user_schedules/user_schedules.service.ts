@@ -36,6 +36,7 @@ export class UserSchedulesService {
     const now = new Date();
     const courses = await this.prisma.userSchedule.findMany({
       select: {
+        id: true,
         attendance_type: true,
         course_schedule: {
           select: {
@@ -83,6 +84,7 @@ export class UserSchedulesService {
     const now = new Date();
     const courses = await this.prisma.userSchedule.findMany({
       select: {
+        id: true,
         attendance_type: true,
         course_schedule: {
           select: {
@@ -295,8 +297,9 @@ export class UserSchedulesService {
   async returnUserIdCourse(registered_id: number) {
     try {
       const data = await this.prisma.userSchedule.findFirst({
-        where: { id: registered_id }
-      })
+        where: { id: registered_id },
+      });
+      // console.log('data', data);
       if (data) {
         return data
       } else {
