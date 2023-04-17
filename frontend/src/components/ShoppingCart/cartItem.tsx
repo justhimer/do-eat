@@ -1,5 +1,7 @@
 import { IonItem, IonThumbnail, IonLabel, IonButton } from "@ionic/react";
+import { image } from "ionicons/icons";
 import { useState } from "react";
+
 
 // css
 import UserMenuStyle from '../../scss/UserMenu.module.scss';
@@ -10,7 +12,8 @@ export interface CartItemProps {
     quantity: number;
     calories: number;
     changeQuantity: (id: number, newQuantity: number) => void;
-    // image: string;
+    refetch: () => void;
+    image: string;
 }
 
 export function CartItem(props: CartItemProps) {
@@ -31,7 +34,7 @@ export function CartItem(props: CartItemProps) {
     return (<>
         <IonItem className={UserMenuStyle.item_last}>
             <IonThumbnail slot="start">
-                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                <img alt="Silhouette of mountains" src={`./assets/foodimage/${props.image}`} />
             </IonThumbnail>
             <p className={UserMenuStyle.width_70}>
                 {props.name}

@@ -61,7 +61,7 @@ export class FoodHistoryController {
             food_history_id: foodHistory.id
           });
           if (createdOrder) {
-            await this.foodCartService.delete(foodOrder.cart_id);
+            await this.foodCartService.deleteCart(foodOrder.cart_id);
           }
         }
       }
