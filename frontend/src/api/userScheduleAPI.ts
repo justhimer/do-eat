@@ -69,3 +69,21 @@ export async function gymTakeAttendance(takeAttendanceData: TakeAttendanceData) 
     const result = await res.json();
     return result
 }
+
+export async function userCancelBookedCourse(user_schedule_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/cancel/${user_schedule_id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+
+    if (res.ok) {
+        const result = await res.json()
+        return result;
+    } else {
+        throw new Error('Server Error');
+    }
+    
+}

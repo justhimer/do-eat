@@ -144,7 +144,7 @@ export function GymQR() {
                                 delay={500}
                                 onError={handleError}
                                 onScan={handleScan}
-                                style={{ width: "100%", height: "100%" }}
+                                style={{ width: "100%", height: "100%", transform: "scaleX(-1)" }}
                             />
                         </IonCol>
                     </IonRow>

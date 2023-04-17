@@ -84,7 +84,7 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('cancel/:registeredCourse/')
+  @Delete('cancel/:registeredCourse/')
   async cancel(@Request() req, @Param('registeredCourse', ParseIntPipe) registeredCourse: number) {
     const userId = req.user.id
     const userSchedule = await this.userSchedulesService.returnUserIdCourse(registeredCourse)
