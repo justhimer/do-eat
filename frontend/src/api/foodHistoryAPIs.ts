@@ -1,5 +1,9 @@
 const controllerName = "food-history";
 
+export interface FoodTakenData {
+    user_id: number
+}
+
 export interface CheckoutDeatils {
     gym_id: number;
     user_id: number;
@@ -45,6 +49,25 @@ export async function fetchFoodsToBeCollectedForUser() {
 
 }
 
+export async function fetchFoodsCollectedByUser() {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/user/collected`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+
+    if (res.ok) {
+        const result = await res.json()
+        return result;
+    } else {
+        throw new Error('Server Error');
+    }
+
+}
+
 export async function fetchFoodsOrdersForGym() {
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/orders`, {
@@ -62,4 +85,17 @@ export async function fetchFoodsOrdersForGym() {
         throw new Error('Server Error');
     }
 
+}
+
+export async function gymFoodTaken(foodTakenData: FoodTakenData) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/food_taken`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        },
+        body: JSON.stringify(foodTakenData)
+    })
+    const result = await res.json();
+    return result
 }

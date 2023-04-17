@@ -8,6 +8,7 @@ import QrReader from "react-qr-reader";
 import { fetchComingCourse } from "../../api/coursesSchedulesAPI";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { gymTakeAttendance } from "../../api/userScheduleAPI";
+import { gymFoodTaken } from "../../api/foodHistoryAPIs";
 
 export function GymQR() {
 
@@ -45,9 +46,26 @@ export function GymQR() {
             setQRData("");
         }
         if (scanFor === 'food') {
+            takeFood.mutate(QRData);
             setQRData("");
         }
-    }, [QRData])
+    }, [QRData]);
+
+    const takeFood = useMutation(
+        (QRData:string) => gymFoodTaken({
+            user_id: parseInt(QRData)
+        }),
+        {
+            onSuccess: ()=>{
+                present({
+                    message: 'Food taken',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            }
+        }
+    )
 
     const takeAttendance = useMutation(
         (QRData:string) => gymTakeAttendance({

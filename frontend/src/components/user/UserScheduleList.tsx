@@ -29,10 +29,6 @@ export function UserScheduleList() {
         refetch().then(() => {
             event.detail.complete();
         })
-        // setTimeout(() => {
-        //   // Any calls to load data go here
-        //   event.detail.complete();
-        // }, 2000);
     }
 
     // useIonViewWillEnter(() => {
@@ -49,6 +45,7 @@ export function UserScheduleList() {
                     <IonTitle>Booked Courses</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
 
                 <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
