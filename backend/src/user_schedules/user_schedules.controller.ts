@@ -33,10 +33,17 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
-  async findAll(@Request() req) {
+  @Get('pending')
+  async findAllPending(@Request() req) {
     const userId = req.user.id;
-    return await this.userSchedulesService.findAllUserCourses(userId);
+    return await this.userSchedulesService.findAllUserCoursesPending(userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('attended_or_absent')
+  async findAllAttendedOrAbsent(@Request() req) {
+    const userId = req.user.id;
+    return await this.userSchedulesService.findAllUserCoursesAttendedOrAbsent(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -114,7 +121,7 @@ export class UserSchedulesController {
     );
     const attendanceTaken = await this.userSchedulesService.takeAttendance(user_schedule_id);
     console.log('attendanceTaken: ', attendanceTaken);
-    return { 
+    return {
       msg: `User #${takeAttendanceData.user_id} has attended to class #${takeAttendanceData.course_schedule_id}`
     }
   }

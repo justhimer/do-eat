@@ -6,6 +6,7 @@ import { IonBackButton, IonButton, IonContent, IonHeader, IonLabel, IonPage, Ion
 import { UserOrderItem } from "./UserOrderItem";
 import { useState } from 'react';
 import { UserOrderTakenItem } from './UserOrderTakenItem';
+import { NoResult } from '../NoResult';
 
 export function UserOrderList() {
 
@@ -116,6 +117,9 @@ export function UserOrderList() {
                         />
                     ))
                 }
+
+                {checkWhat === 'take' && (orders && orders.length === 0) && <NoResult />}
+                {checkWhat === 'taken' && (takenOrders && takenOrders.length === 0) && <NoResult />}
 
             </IonContent>
         </IonPage >
