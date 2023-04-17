@@ -2,7 +2,7 @@ import NotificationStyle from "../../scss/Notification.module.scss";
 
 import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchAllCartItems, updateCart } from "../../api/cartAPI";
 import { UserOrderItem } from "../user/UserOrderItem";
 import { CartItem } from "./cartItem";
@@ -26,15 +26,19 @@ import { CartSelectGymItems } from "./CartSelectGymItems";
 //     }[]
 // }
 
+interface Count {
+    id: number,
+    quantity: number
+}
+
 export function ShoppingCart() {
     const [gymID, setGymID] = useState(0);
     const [food_id] = useState('');
     const [foodHistoryID] = useState('');
-    const [count, setCount] = useState(0);
+    const [counts, setCounts] = useState<Count[]>([]);
     const [amount, setAmount] = useState(0);
     const [status, setStatus] = useState('');
     const param = useParams<{ id: string }>()
-    const id = parseInt(param.id)
 
     const [present] = useIonToast();
     const user_id = useSelector((state: RootState) => state.user.id);
@@ -43,8 +47,15 @@ export function ShoppingCart() {
         queryKey: ["cart"],
         queryFn: async () => {
             const cartItems = await fetchAllCartItems()
-            console.log('cartItems: ', cartItems);
-            setCount(cartItems.quantity);
+            // console.log('cartItems: ', cartItems);
+            let newCounts = [];
+            for (let cartItem of cartItems) {
+                newCounts.push({
+                    id: cartItem.id,
+                    quantity: cartItem.quantity
+                })
+            }
+            setCounts(newCounts);
             return cartItems;
         },
     })
@@ -54,11 +65,24 @@ export function ShoppingCart() {
         queryFn: gymAll
     })
 
+    function changeQuantity(id: number, newQuantity: number) {
+        let copyCounts = counts;
+        // console.log('copyCounts before: ', copyCounts);
+        for (let count of copyCounts) {
+            // console.log('count: ', count);
+            if (count.id === id) {
+                count.quantity = newQuantity;
+            }
+        }
+        // console.log('copyCounts after: ', copyCounts);
+        setCounts(copyCounts);
+    }
+
     function onCheckout() {
         if (gymID === 0) {
             present({
                 message: "Please select a gym",
-                duration: 3000,
+                duration: 1500,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
             });
@@ -69,10 +93,16 @@ export function ShoppingCart() {
             collection_status: false,
             gym_id: gymID,
             foodOrders: cartFoods.map((cartFood: any) => {
+                let quantity = 0;
+                for (let count of counts) {
+                    if (count.id === cartFood.id) {
+                        quantity = count.quantity;
+                    }
+                }
                 return {
                     cart_id: cartFood.id,
                     food_id: cartFood.food_id,
-                    quantity: cartFood.quantity,
+                    quantity: quantity,
                 }
             })
         };
@@ -101,44 +131,24 @@ export function ShoppingCart() {
     )
 
 
-    // const oncheckout = useMutation(
+    // const onSave = useMutation(
     //     (saveOrderDetails?: SaveOrderDetails): any => {
     //         let data = undefined;
-    //         if (checkout) {
-    //             data = createOrder()
+    //         if (onSave) {
+    //             data = updateCart();
     //         }
     //         return data;
     //     },
     //     {
     //         onSuccess: (data: SaveOrderDetails) => {
-    //             const SaveOrderDetails = {
-    //                 foodID: id,
-    //                 quantity: count,
-    //                 foodHistoryID: foodHistoryID,
-    //             }
+    //             const saveOrderDetails = {
+    //                 userId: id,
+    //                 quantity: 0,
+    //                 foodId: food_id,
+    //             };
     //         }
     //     }
     // )
-
-
-    const onSave = useMutation(
-        (saveOrderDetails?: SaveOrderDetails): any => {
-            let data = undefined;
-            if (onSave) {
-                data = updateCart();
-            }
-            return data;
-        },
-        {
-            onSuccess: (data: SaveOrderDetails) => {
-                const saveOrderDetails = {
-                    userId: id,
-                    quantity: count,
-                    foodId: food_id,
-                };
-            }
-        }
-    )
 
 
     function cancel() {
@@ -174,9 +184,11 @@ export function ShoppingCart() {
                                 cartFoods && cartFoods.length > 0 && cartFoods.map((cartFood: any, index: number) => (
                                     <CartItem
                                         key={index}
+                                        id={cartFood.id}
                                         name={cartFood.foods.name}
                                         quantity={cartFood.quantity}
                                         calories={cartFood.foods.calories}
+                                        changeQuantity={changeQuantity}
                                     // image={cartFood.foods.image}
                                     />
                                 ))
@@ -193,14 +205,8 @@ export function ShoppingCart() {
                                     />
                                 ))
                             }
-                            {/* <IonSelectOption value={gymID}>PureFitness CausewayBay</IonSelectOption>
-                            <IonSelectOption value={gymID}>PureFitness Central</IonSelectOption>
-                            <IonSelectOption value={gymID}>PureFitness Wan Chai</IonSelectOption>
-                            <IonSelectOption value={gymID}>PureFitness Tsim Sha Tsui</IonSelectOption>
-                            <IonSelectOption value={gymID}>PureFitness Mong Kok</IonSelectOption>
-                            <IonSelectOption value={gymID}>247Fitness CausewayBay</IonSelectOption> */}
                         </IonSelect>
-                        <IonButton onClick={() => onSave.mutate}>Save Cart</IonButton>
+                        <IonButton >Save Cart</IonButton>
                         <IonButton onClick={onCheckout}>Checkout</IonButton>
                         <IonButton onClick={cancel}>Cancel</IonButton>
 

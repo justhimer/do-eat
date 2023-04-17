@@ -36,30 +36,29 @@ export class FoodHistoryController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
-    // try {
-    console.log('createFoodHistoryDto: ', createFoodHistoryDto);
+    try {
 
-    const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
-    console.log('foodHistory: ', foodHistory);
+      const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
 
-    if (foodHistory) {
-      for (let foodOrder of createFoodHistoryDto.foodOrders) {
-        const createdOrder = await this.foodOrderService.createOrder({
-          food_id: foodOrder.food_id,
-          quantity: foodOrder.quantity,
-          food_history_id: foodHistory.id
-        });
-        if (createdOrder) {
-          await this.foodCartService.delete(foodOrder.cart_id);
+      if (foodHistory) {
+        for (let foodOrder of createFoodHistoryDto.foodOrders) {
+          console.log('foodOrder: ', foodOrder);
+          const createdOrder = await this.foodOrderService.createOrder({
+            food_id: foodOrder.food_id,
+            quantity: foodOrder.quantity,
+            food_history_id: foodHistory.id
+          });
+          if (createdOrder) {
+            await this.foodCartService.delete(foodOrder.cart_id);
+          }
         }
       }
+
+      return { msg: 'create food history success' };
+
+    } catch (err) {
+      return new HttpException(err, HttpStatus.BAD_REQUEST);
     }
-
-    return { msg: 'create food history success' };
-
-    // } catch (err) {
-    //   return new HttpException(err, HttpStatus.BAD_REQUEST);
-    // }
   }
 
 

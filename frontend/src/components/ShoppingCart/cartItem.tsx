@@ -5,15 +5,28 @@ import { useState } from "react";
 import UserMenuStyle from '../../scss/UserMenu.module.scss';
 
 export interface CartItemProps {
+    id: number;
     name: string;
     quantity: number;
     calories: number;
+    changeQuantity: (id: number, newQuantity: number) => void;
     // image: string;
 }
 
 export function CartItem(props: CartItemProps) {
 
-    const [count, setCount] = useState(props.quantity);
+    const [newQuantity, setNewQuantity] = useState(props.quantity);
+
+    function onClickPlus() {
+        props.changeQuantity(props.id, newQuantity + 1);
+        setNewQuantity(newQuantity + 1);
+    }
+
+    function onClickMinus() {
+        if (newQuantity <= 1) { return }
+        props.changeQuantity(props.id, newQuantity - 1);
+        setNewQuantity(newQuantity - 1);
+    }
 
     return (<>
         <IonItem className={UserMenuStyle.item_last}>
@@ -25,9 +38,9 @@ export function CartItem(props: CartItemProps) {
                 <br />
                 Calories: {props.calories}
             </p>
-            <IonButton onClick={() => setCount(count - 1)}>-</IonButton>
-            <p>{count}</p>
-            <IonButton onClick={() => setCount(count + 1)}>+</IonButton>
+            <IonButton onClick={onClickMinus}>-</IonButton>
+            <p>{newQuantity}</p>
+            <IonButton onClick={onClickPlus}>+</IonButton>
         </IonItem>
     </>
     )
