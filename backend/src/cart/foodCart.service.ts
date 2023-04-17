@@ -57,10 +57,10 @@ export class FoodCartService {
         });
     }
 
-    async delete(id: number): Promise<FoodCart> {
-        return this.prisma.foodCart.delete({
+    async delete(cart_id: number) {
+        await this.prisma.foodCart.delete({
             where: {
-                id,
+                id: cart_id
             },
             include: {
                 users: true,

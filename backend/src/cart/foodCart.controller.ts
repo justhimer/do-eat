@@ -66,10 +66,5 @@ export class FoodCartController {
         return this.foodCartService.update(updateFoodCartDto, userId);
     }
 
-    @Delete(':delete')
-    delete(@Param('id') id: number) {
-        return this.foodCartService.delete(+id);
-    }
-
 
 }

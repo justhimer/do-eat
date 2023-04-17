@@ -62,8 +62,16 @@ export class FoodHistoryService {
     return foodsToBeCollected;
   }
 
-  create(createFoodHistoryDto: CreateFoodHistoryDto) {
-    return 'This action adds a new foodHistory';
+  async createHistory(createFoodHistoryDto: CreateFoodHistoryDto) {
+    console.log('createFoodHistoryDto:', createFoodHistoryDto);
+    const data = await this.prisma.foodHistory.create({
+      data: {
+        gym_id: createFoodHistoryDto.gym_id,
+        user_id: createFoodHistoryDto.user_id,
+        collection_status: createFoodHistoryDto.collection_status,
+      }
+    })
+    return data;
   }
 
   async findOrdersForGyms(gym_id: number) {

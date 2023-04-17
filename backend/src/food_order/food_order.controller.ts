@@ -4,15 +4,14 @@ import { CreateFoodOrderDto } from './dto/create-food_order.dto';
 import { UpdateFoodOrderDto } from './dto/update-food_order.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
-
-@ApiTags('food-order')
+import { FoodHistoryService } from 'src/food_history/food_history.service';
 @Controller('food-order')
 export class FoodOrderController {
-  constructor(private readonly foodOrderService: FoodOrderService) {}
+  constructor(private readonly foodOrderService: FoodOrderService) { }
 
   @Post()
   create(@Body() createFoodOrderDto: CreateFoodOrderDto) {
-    return this.foodOrderService.create(createFoodOrderDto);
+    return this.foodOrderService.createOrder(createFoodOrderDto);
   }
 
   @Get()
