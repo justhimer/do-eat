@@ -4,7 +4,7 @@ export async function fetchAddItem(item: {
     food_id: number
     quantity: number,
 }) {
-    console.log(item);
+    // console.log(item);
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
         method: "POST",
@@ -16,7 +16,7 @@ export async function fetchAddItem(item: {
     })
     // console.log(res)
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
 
     return data;
 }
@@ -30,7 +30,7 @@ export async function fetchAllCartItems() {
         }
     })
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
 
     return data;
 }

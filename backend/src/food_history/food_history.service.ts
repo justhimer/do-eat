@@ -63,7 +63,6 @@ export class FoodHistoryService {
   }
 
   async createHistory(createFoodHistoryDto: CreateFoodHistoryDto) {
-    console.log('createFoodHistoryDto:', createFoodHistoryDto);
     const data = await this.prisma.foodHistory.create({
       data: {
         gym_id: createFoodHistoryDto.gym_id,

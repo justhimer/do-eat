@@ -31,7 +31,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
 
             <IonCard>
                 <IonCardHeader>
-                    <div className={courseStyle.cardTopChips}>
+                    <div className={courseStyle.cardTopRightChips}>
                         <IonChip >
                             <IonLabel>{props.courseType}</IonLabel>
                         </IonChip>
@@ -63,10 +63,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
                         </IonItem>
                     </IonList>
                     <br />
-                    <IonButton expand="block">
-                        <IonIcon icon={qrCode}></IonIcon>
-                        Take Attendence
-                    </IonButton>
+                    <IonButton expand="block">Show Attendence</IonButton>
                 </IonCardContent>
 
             </IonCard>

@@ -62,7 +62,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
     const { mutate: addToCart } = useMutation({
         mutationFn: () => fetchAddItem({
             food_id: id,
-            quantity: 0
+            quantity: 1
         }),
     })
 

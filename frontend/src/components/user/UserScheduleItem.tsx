@@ -29,7 +29,7 @@ export function UserScheduleItem(props: UserScheduleItemProps) {
 
             <IonCard>
                 <IonCardHeader>
-                    <div className={courseStyle.cardTopChips}>
+                    <div className={courseStyle.cardTopRightChips}>
                         <IonChip >
                             <IonLabel>{props.courseType}</IonLabel>
                         </IonChip>

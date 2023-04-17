@@ -1,14 +1,15 @@
+import UserStyle from '../../scss/User.module.scss';
+
 import { IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
 import { useState } from 'react';
-import UserStyle from '../../scss/User.module.scss';
 import { Logo } from '../Logo';
 import { UserLoginForm } from './UserLoginForm';
 import { GymLoginForm } from './GymLoginForm';
 
 export function Login() {
 
-    const defaultLoginMethod = "email";
-    const [loginMethod, setLoginMethod] = useState<string>(defaultLoginMethod);
+    const defaultWhoLogin = "user";
+    const [whoLogin, setWhoLogin] = useState<string>(defaultWhoLogin);
 
     return (
         <>
@@ -23,19 +24,19 @@ export function Login() {
                 </div>
 
                 <IonSegment
-                    value={loginMethod}
+                    value={whoLogin}
                     className={UserStyle.segment}
-                    onIonChange={(e) => { setLoginMethod(e.detail.value!); }}
+                    onIonChange={(e) => { setWhoLogin(e.detail.value!); }}
                 >
-                    <IonSegmentButton value="email">
+                    <IonSegmentButton value="user">
                         <IonLabel>User</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="username">
+                    <IonSegmentButton value="gym">
                         <IonLabel>Gym</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
 
-                {loginMethod === "email" ? (<UserLoginForm />) : (<GymLoginForm />)}
+                {whoLogin === "user" ? (<UserLoginForm />) : (<GymLoginForm />)}
 
             </div>
 
