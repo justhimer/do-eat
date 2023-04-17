@@ -49,6 +49,7 @@ const HomeTab: React.FC = () => {
     handleClick()
   })
 
+  console.log("host: ", process.env.REACT_APP_API_SERVER)
   return (
     <IonPage >
       <IonHeader >
