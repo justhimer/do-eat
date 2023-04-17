@@ -77,21 +77,21 @@ export function GymProfile() {
                     <IonItem button detail={false} className={UserMenuStyle.item}>
                         <IonLabel className={UserMenuStyle.label}>
                             <h2 className={UserMenuStyle.width_70}>24 hrs Service:</h2>
-                            <p className={UserMenuStyle.width_30}>{gymProfile? (gymProfile.no_close ? 'Yes' : 'No') : ""}</p>
+                            <p className={UserMenuStyle.width_30}>{gymProfile ? (gymProfile.no_close ? 'Yes' : 'No') : ""}</p>
                         </IonLabel>
                     </IonItem>
 
                     <IonItem button detail={false} className={UserMenuStyle.item}>
                         <IonLabel className={UserMenuStyle.label}>
                             <h2 className={UserMenuStyle.width_70}>Opening Hour:</h2>
-                            <p className={UserMenuStyle.width_30}>{gymProfile? (gymProfile.opening_hour ? gymProfile.opening_hour : "N/A") : ""}</p>
+                            <p className={UserMenuStyle.width_30}>{gymProfile ? (gymProfile.opening_hour ? gymProfile.opening_hour : "N/A") : ""}</p>
                         </IonLabel>
                     </IonItem>
 
                     <IonItem button detail={false} className={UserMenuStyle.item_last}>
                         <IonLabel className={UserMenuStyle.label}>
                             <h2 className={UserMenuStyle.width_70}>Closing Hour:</h2>
-                            <p className={UserMenuStyle.width_30}>{gymProfile? (gymProfile.closing_hour ? gymProfile.closing_hour : "N/A") : ""}</p>
+                            <p className={UserMenuStyle.width_30}>{gymProfile ? (gymProfile.closing_hour ? gymProfile.closing_hour : "N/A") : ""}</p>
                         </IonLabel>
                     </IonItem>
 

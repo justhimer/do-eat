@@ -88,6 +88,7 @@ import { gymAction } from './redux/gymSlice';
 import { userAction } from './redux/userSlice';
 import { QR } from './components/qr/QR';
 import { UserPrivateRouter } from './components/private_routes/UserPrivateRoute';
+import { GymShowAttendance } from './components/gym_user/GymShowAttendance';
 
 setupIonicReact();
 
@@ -225,6 +226,8 @@ const App: React.FC = () => {
             <Route path="/gym-profile" component={() => <GymPrivateRouter component={<GymProfile />} />}>
             </Route>
             <Route path="/gym-coming-courses" component={() => <GymPrivateRouter component={<GymScheduleList />} />}>
+            </Route>
+            <Route path="/gym-course-attendance/:course_schedule_id" component={() => <GymPrivateRouter component={<GymShowAttendance />} />}>
             </Route>
             <Route path="/gym-food-orders" component={() => <GymPrivateRouter component={<GymOrderList />} />}>
             </Route>

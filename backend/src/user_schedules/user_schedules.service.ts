@@ -168,6 +168,43 @@ export class UserSchedulesService {
     }
   }
 
+  async takeAttendance(user_schedule_id: number) {
+    try {
+      return await this.prisma.userSchedule.update({
+        where: {
+          id: user_schedule_id
+        },
+        data: {
+          attendance_type_id: 2
+        }
+      });
+    } catch (error) {
+      return new Error(error)
+    }
+  }
+
+  async findAllAttendedUsers(course_schedule_id: number) {
+   return await this.prisma.userSchedule.findMany({
+      where: {
+        course_schedule_id: course_schedule_id,
+        attendance_type_id: 2
+      },
+      select: {
+        user_id: true,
+        user: {
+          select: {
+            username: true
+          }
+        },
+        attendance_type: {
+          select: {
+            details: true
+          }
+        }
+      }
+    })
+  }
+
   async getRemainingSlots(exercise_id: number) {
     let quota = await this.courseScheduleService.quotaForThisCourse(exercise_id)
 
@@ -291,21 +328,6 @@ export class UserSchedulesService {
       return "Deleted course registration"
     } catch (error) {
       console.log(error)
-      return new Error(error)
-    }
-  }
-
-  async takeAttendance(user_schedule_id: number) {
-    try {
-      return await this.prisma.userSchedule.update({
-        where: {
-          id: user_schedule_id
-        },
-        data: {
-          attendance_type_id: 2
-        }
-      });
-    } catch (error) {
       return new Error(error)
     }
   }

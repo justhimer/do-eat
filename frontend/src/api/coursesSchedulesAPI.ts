@@ -12,6 +12,17 @@ export interface ScheduleInterface extends ScheduleCreate {
     trainer_name: string;
 }
 
+export async function fetchCourseName(course_schedule_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/course-name/${course_schedule_id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+    })
+    const result = await res.json();
+    return result
+}
+
 export async function getDatesWithCourses(gyms: number[]) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/dates`, {
         method: 'POST',

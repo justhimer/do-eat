@@ -22,9 +22,6 @@ export interface UserScheduleItemProps {
 
 export function UserScheduleItem(props: UserScheduleItemProps) {
 
-    console.log('did');
-    
-
     const [date, setDate] = useState<Date>(utcToZonedTime(new Date(props.time), "Asia/Hong_Kong"))
 
     return (

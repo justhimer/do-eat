@@ -90,6 +90,18 @@ export async function gymTakeAttendance(takeAttendanceData: TakeAttendanceData) 
     return result
 }
 
+export async function gymFindAllAttendedUsers(course_schedule_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/find_attendance/${course_schedule_id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        },
+    })
+    const result = await res.json();
+    return result
+}
+
 export async function userCancelBookedCourse(user_schedule_id: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/cancel/${user_schedule_id}`, {
         method: 'DELETE',

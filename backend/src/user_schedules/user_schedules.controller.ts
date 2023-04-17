@@ -134,6 +134,13 @@ export class UserSchedulesController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get('gym/find_attendance/:course_schedule_id')
+  async findAttendedUsers(@Param('course_schedule_id', ParseIntPipe) course_schedule_id: number) {
+    const attendedUsers = await this.userSchedulesService.findAllAttendedUsers(course_schedule_id);
+    return attendedUsers;
+  }
+
 }
 
 
