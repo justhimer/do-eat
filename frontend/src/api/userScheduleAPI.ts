@@ -25,9 +25,9 @@ export async function courseJoin(course: number) {
 
 }
 
-export async function fetchCoursesAttendedOrAbsent() {
+export async function fetchCoursesHistory() {
 
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/attended_or_absent`, {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/history`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -44,9 +44,9 @@ export async function fetchCoursesAttendedOrAbsent() {
 
 }
 
-export async function fetchCoursesPending() {
+export async function fetchCoursesComing() {
 
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/pending`, {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/coming`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -105,5 +105,5 @@ export async function userCancelBookedCourse(user_schedule_id: number) {
     } else {
         throw new Error('Server Error');
     }
-    
+
 }

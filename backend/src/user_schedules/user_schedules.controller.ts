@@ -33,17 +33,25 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('pending')
-  async findAllPending(@Request() req) {
+  @Get('coming')
+  async findAllComing(@Request() req) {
     const userId = req.user.id;
-    return await this.userSchedulesService.findAllUserCoursesPending(userId);
+    return await this.userSchedulesService.findAllUserCoursesComing(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('attended_or_absent')
-  async findAllAttendedOrAbsent(@Request() req) {
+  @Get('history')
+  async findAllHistory(@Request() req) {
     const userId = req.user.id;
-    return await this.userSchedulesService.findAllUserCoursesAttendedOrAbsent(userId);
+
+    // mark not pending classes absent
+    let absentIDs = await this.userSchedulesService.findAbsentClassIDs(userId);
+    for (let absentID of absentIDs) {
+      await this.userSchedulesService.labelAbsent(absentID.id);
+    }
+
+    // get classes again
+    return await this.userSchedulesService.findAllUserCoursesHistory(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))

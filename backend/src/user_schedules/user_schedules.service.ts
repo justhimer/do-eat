@@ -4,6 +4,7 @@ import { CoursesService } from 'src/courses/courses.service';
 import { CourseSchedulesService } from 'src/course_schedules/course_schedules.service';
 import { CreateUserScheduleDto } from './dto/create-user_schedule.dto';
 import { UpdateUserScheduleDto } from './dto/update-user_schedule.dto';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 @Injectable()
 export class UserSchedulesService {
@@ -31,7 +32,8 @@ export class UserSchedulesService {
     return user_schedule_id.id;
   }
 
-  async findAllUserCoursesPending(user_id: number) {
+  async findAllUserCoursesComing(user_id: number) {
+    const now = new Date();
     const courses = await this.prisma.userSchedule.findMany({
       select: {
         attendance_type: true,
@@ -60,14 +62,25 @@ export class UserSchedulesService {
         }
       },
       where: {
-        user_id: user_id,
-        attendance_type_id: 1
+        AND: [
+          {
+            user_id: user_id
+          },
+          {
+            course_schedule: {
+              time: {
+                gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
+              }
+            }
+          }
+        ]
       }
     })
     return courses;
   }
 
-  async findAllUserCoursesAttendedOrAbsent(user_id: number) {
+  async findAllUserCoursesHistory(user_id: number) {
+    const now = new Date();
     const courses = await this.prisma.userSchedule.findMany({
       select: {
         attendance_type: true,
@@ -96,14 +109,63 @@ export class UserSchedulesService {
         }
       },
       where: {
-        user_id: user_id,
-        OR: [
-          { attendance_type_id: 2 },
-          { attendance_type_id: 3 }
+        AND: [
+          {
+            user_id: user_id
+          },
+          {
+            course_schedule: {
+              time: {
+                lt: zonedTimeToUtc(now, "Asia/Hong_Kong"),
+              }
+            }
+          }
         ]
       }
     })
     return courses;
+  }
+
+  async findAbsentClassIDs(user_id: number) {
+    const now = new Date();
+    const ids = await this.prisma.userSchedule.findMany({
+      select: {
+        id: true
+      },
+      where: {
+        AND: [
+          {
+            user_id: user_id
+          },
+          {
+            course_schedule: {
+              time: {
+                lt: zonedTimeToUtc(now, "Asia/Hong_Kong"),
+              }
+            }
+          },
+          {
+            attendance_type_id: 1
+          }
+        ]
+      }
+    })
+    return ids;
+  }
+
+  async labelAbsent(user_schedule_id: number) {
+    try {
+      return await this.prisma.userSchedule.update({
+        where: {
+          id: user_schedule_id
+        },
+        data: {
+          attendance_type_id: 3
+        }
+      });
+    } catch (error) {
+      return new Error(error)
+    }
   }
 
   async getRemainingSlots(exercise_id: number) {
@@ -247,4 +309,5 @@ export class UserSchedulesService {
       return new Error(error)
     }
   }
+
 }
