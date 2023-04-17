@@ -1,20 +1,20 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonRouter, useIonToast, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonToast, useIonViewDidLeave} from "@ionic/react";
 import ConfirmationStyle from '../../../scss/GymConfirm.module.scss'
 import { cardOutline, flameOutline } from "ionicons/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import format from "date-fns/format";
 import { utcToZonedTime } from 'date-fns-tz'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { courseJoin } from "../../../api/userScheduleAPI";
-import { fetchUserInfo, fetchUserSubscribed } from "../../../api/userAPIs";
+import { fetchUserInfo } from "../../../api/userAPIs";
 import NotificationStyle from "../../../scss/Notification.module.scss";
 import { GymPopup } from "../GymPopup";
-import { queryClient } from "../../..";
+
 import { useHistory } from "react-router";
 import { fetchCredits } from "../../../api/creditTransactionsAPI";
-import { Router } from "workbox-routing";
+
 
 
 export interface GymPopupInterface {
@@ -115,7 +115,8 @@ export function GymConfirmation() {
         }
     }
 
-
+    const modal = useRef<HTMLIonModalElement>(null);
+    
     return (
         <IonPage >
             <IonHeader >
@@ -128,18 +129,8 @@ export function GymConfirmation() {
             </IonHeader>
             <IonContent fullscreen>
                 
-                <IonModal isOpen={popupBoolean}>
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonTitle>Modal</IonTitle>
-                            <IonButtons slot="end">
-                                <IonButton onClick={() => setPopupBoolean(false)}>Close</IonButton>
-                            </IonButtons>
-                        </IonToolbar>
-                    </IonHeader>
-                    <IonContent className="ion-padding">
+                <IonModal isOpen={popupBoolean} ref={modal} className={ConfirmationStyle.confirmModal} onIonModalDidDismiss={()=>setPopupBoolean(false)}>
                     {userData.data && userData.data.subscribed ? <GymPopup name={selectedCourse.name} gym={selectedCourse.gym} date={format(date, "E, dd MMM ")} time={format(date, "hh:mm aaa")} costs={selectedCourse.credits} credits={creditData.data} dismiss={() => setPopupBoolean(false)} join={attemptJoinCourse} subPlan={userData.data.subPlan.unlimited} /> : <h5>Loading</h5>}
-                    </IonContent>
                 </IonModal>
 
                 <div className={ConfirmationStyle.icon_container}>
@@ -153,12 +144,10 @@ export function GymConfirmation() {
                 <IonGrid>
                     <IonRow>
                         <IonCol><IonCard className={ConfirmationStyle.button}>
-
-                            <IonCardTitle>  {selectedCourse.calories} <IonIcon icon={flameOutline} /></IonCardTitle>
+                            <IonCardTitle className={ConfirmationStyle.button}>  {selectedCourse.calories} <IonIcon icon={flameOutline} /></IonCardTitle>
                         </IonCard></IonCol>
                         <IonCol><IonCard className={ConfirmationStyle.button}>
-
-                            <IonCardTitle>  {selectedCourse.credits} <IonIcon icon={cardOutline} /></IonCardTitle>
+                            <IonCardTitle className={ConfirmationStyle.button}>  {selectedCourse.credits}  <IonIcon icon={cardOutline} /></IonCardTitle>
                         </IonCard></IonCol>
                     </IonRow>
 

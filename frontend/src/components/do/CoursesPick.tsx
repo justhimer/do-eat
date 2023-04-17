@@ -1,13 +1,22 @@
+// Ionic Component
 import { IonContent} from "@ionic/react";
+
+// Custom Component
 import { CoursesItem} from "./CoursesItem";
-import GymCourseStyle from '../../scss/GymCourses.module.scss'
+
+// State Management
+import { useQuery } from "@tanstack/react-query";
+import {  useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import {  useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCoursesOnDate } from "../../api/coursesSchedulesAPI";
 import { CoursesInterface } from "../../redux/userCourseSlice";
-import picture from '../../../public/assets/no_course/Yoga.png'
+
+
+// API Routing
+import { getCoursesOnDate } from "../../api/coursesSchedulesAPI";
+
+// CSS
+import GymCourseStyle from '../../scss/GymCourses.module.scss'
 
 
 
@@ -43,7 +52,6 @@ export function CoursesPick(){
             <h6 className="title">No Courses Today</h6>
             <img src={`./assets/no_course/Yoga.png`}/>
             <h5>Please select other dates or other gym combinations</h5>
-        
         </div>
     )
 
