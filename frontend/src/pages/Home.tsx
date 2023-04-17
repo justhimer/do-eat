@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { IonContent, IonGrid, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { CornerBox } from '../components/CornerBox';
-=======
 import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
->>>>>>> e3d2a0d5368c652641836a32ccc514b40fc0cdd1
 import { Logo } from '../components/Logo';
 // import { homeApp } from '../homePageDetails';
 import AppStyle from '../scss/App.module.scss';
@@ -50,7 +45,7 @@ const HomeTab: React.FC = () => {
     })
   }
 
-  useIonViewDidEnter(()=>{
+  useIonViewDidEnter(() => {
     handleClick()
   })
 
@@ -64,64 +59,59 @@ const HomeTab: React.FC = () => {
 
       <IonContent fullscreen className={AppStyle.hero}>
         <Logo />
-<<<<<<< HEAD
-        <CornerBox />
-        {/* <homeApp /> */}
-=======
         <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={"auto"}
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
-        }}
-        pagination={true}
-        className="mySwiper"
-      >
-        {slide_img.map((img, i) => {
-          return (
-            <SwiperSlide key={i}>
-              <img src={img} alt="" />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={"auto"}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          pagination={true}
+          className="mySwiper"
+        >
+          {slide_img.map((img, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <img src={img} alt="" />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
 
-          <InfiniteLooper direction="left" speed={10}>
-            <div className="contentBlock contentBlock--two">
+        <InfiniteLooper direction="left" speed={10}>
+          <div className="contentBlock contentBlock--two">
             <IonIcon icon={barbell}></IonIcon>
-            </div>
-            <div className="contentBlock contentBlock--two">
+          </div>
+          <div className="contentBlock contentBlock--two">
             <IonIcon icon={batteryCharging}></IonIcon>
-            </div>
-            <div className="contentBlock contentBlock--two">
+          </div>
+          <div className="contentBlock contentBlock--two">
             <IonIcon icon={bicycle}></IonIcon>
-            </div>
-            <div className="contentBlock contentBlock--two">
+          </div>
+          <div className="contentBlock contentBlock--two">
             <IonIcon icon={fastFood}></IonIcon>
-            </div>
-          </InfiniteLooper>
+          </div>
+        </InfiniteLooper>
 
-          <animated.div
-            onClick={()=>{history.push('/user-tab')}}
-            style={{
-              width: 80,
-              height: 80,
-              background: '#ff6d6d',
-              borderRadius: 8,
-              ...springs,
-            }}
-          >
-            test
-          </animated.div>
+        <animated.div
+          onClick={() => { history.push('/user-tab') }}
+          style={{
+            width: 80,
+            height: 80,
+            background: '#ff6d6d',
+            borderRadius: 8,
+            ...springs,
+          }}
+        >
+          test
+        </animated.div>
 
->>>>>>> e3d2a0d5368c652641836a32ccc514b40fc0cdd1
-      </IonContent>
+      </IonContent >
     </IonPage >
   );
 };
