@@ -41,11 +41,11 @@ export function GymQR() {
 
     useEffect(() => {
         console.log('QRData: ', QRData);
-        if (scanFor === 'course') {
+        if (scanFor === 'course' && QRData) {
             takeAttendance.mutate(QRData);
             setQRData("");
         }
-        if (scanFor === 'food') {
+        if (scanFor === 'food' && QRData) {
             takeFood.mutate(QRData);
             setQRData("");
         }
@@ -57,6 +57,7 @@ export function GymQR() {
         }),
         {
             onSuccess: ()=>{
+                console.log('food taken');
                 present({
                     message: 'Food taken',
                     duration: 1500,
