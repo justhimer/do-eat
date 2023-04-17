@@ -107,7 +107,18 @@ ion-datetime {
     box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
 }
 
-video {
+pwa-camera-modal-instance {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
+
+// .camera-video {
+//     video {
+//         -webkit-transform: scaleX(-1);
+//         transform: scaleX(-1);
+//     }
+// }
+
+// section {
+//     transform: scaleX(-1);
+// }

@@ -31,8 +31,7 @@ export class UserSchedulesService {
     return user_schedule_id.id;
   }
 
-
-  async findAllUserCourses(user_id: number) {
+  async findAllUserCoursesPending(user_id: number) {
     const courses = await this.prisma.userSchedule.findMany({
       select: {
         attendance_type: true,
@@ -62,6 +61,46 @@ export class UserSchedulesService {
       },
       where: {
         user_id: user_id,
+        attendance_type_id: 1
+      }
+    })
+    return courses;
+  }
+
+  async findAllUserCoursesAttendedOrAbsent(user_id: number) {
+    const courses = await this.prisma.userSchedule.findMany({
+      select: {
+        attendance_type: true,
+        course_schedule: {
+          select: {
+            id: true,
+            time: true,
+            courses: {
+              select: {
+                name: true,
+                course_type: {
+                  select: {
+                    name: true
+                  }
+                },
+                duration: true,
+                gyms: {
+                  select: {
+                    name: true,
+                    address: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      where: {
+        user_id: user_id,
+        OR: [
+          { attendance_type_id: 2 },
+          { attendance_type_id: 3 }
+        ]
       }
     })
     return courses;

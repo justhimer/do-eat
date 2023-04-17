@@ -8,6 +8,10 @@ import { isError } from 'lodash';
 import { FoodOrderService } from 'src/food_order/food_order.service';
 import { FoodCartService } from 'src/cart/foodCart.service';
 
+interface FoodTakenData {
+  user_id: number
+}
+
 @ApiTags('food-history')
 @Controller('food-history')
 export class FoodHistoryController {
@@ -22,6 +26,14 @@ export class FoodHistoryController {
   async findFoodsToBeCollectedForUser(@Request() req) {
     const userID = req.user.id;
     const foodsToBeCollected = await this.foodHistoryService.findFoodsToBeCollectedForUser(userID);
+    return foodsToBeCollected;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('user/collected')
+  async findFoodsCollectedByUser(@Request() req) {
+    const userID = req.user.id;
+    const foodsToBeCollected = await this.foodHistoryService.findFoodsCollectedByUser(userID);
     return foodsToBeCollected;
   }
 
@@ -61,12 +73,10 @@ export class FoodHistoryController {
     }
   }
 
-
-
   @UseGuards(AuthGuard('jwt_gym'))
   @Get('gym/')
   async findOne(@Req() req) {
-    const gym_id = req.user.id
+    const gym_id = req.user.id;
     const data = await this.foodHistoryService.findOrdersForGyms(gym_id);
     if (!isError(data)) {
       const newData = []
@@ -91,6 +101,19 @@ export class FoodHistoryController {
       return newData
     } else {
       throw new BadRequestException('Bad Request', { cause: new Error() })
+    }
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Patch('gym/food_taken')
+  async gymFoodTaken(@Req() req, @Body() foodTakenData: FoodTakenData) {
+    try {
+      const gym_id = req.user.id;
+      const user_id = foodTakenData.user_id;
+      await this.foodHistoryService.takenFood(user_id, gym_id);
+      return { msg: `User #${user_id} has taken all food from gym #${gym_id}` }
+    } catch (err) {
+      return new HttpException('Fail to take food', HttpStatus.BAD_REQUEST)
     }
   }
 

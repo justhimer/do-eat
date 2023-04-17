@@ -1,42 +1,60 @@
 import UserStyle from '../../scss/User.module.scss';
 
 import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonDatetime, IonHeader, IonLabel, IonList, IonPage, IonRefresher, IonRefresherContent, IonSegment, IonSegmentButton, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter } from "@ionic/react";
-import { fetchCourses } from "../../api/userScheduleAPI";
+import { fetchCoursesAttendedOrAbsent, fetchCoursesPending } from "../../api/userScheduleAPI";
 import { useQuery } from "@tanstack/react-query";
 import { UserScheduleItem } from "./UserScheduleItem";
 import { useState } from 'react';
+import { NoResult } from '../NoResult';
 
 export function UserScheduleList() {
 
     const defaultCheckWhat = "coming";
     const [checkWhat, setCheckWhat] = useState<string>(defaultCheckWhat);
 
-    const { data: courses, isLoading, refetch, remove } = useQuery({
-        queryKey: ["courses"],
+    const { data: coursesPending, refetch: refetchPending } = useQuery({
+        queryKey: ["courses_pending"],
         queryFn: async () => {
-            const schedule = await fetchCourses();
+            const coursesPending = await fetchCoursesPending();
             // sorting schedule according to time
-            schedule.sort((a: any, b: any) => {
+            coursesPending.sort((a: any, b: any) => {
                 const timeA = Date.parse(a.course_schedule.time);
                 const timeB = Date.parse(b.course_schedule.time);
                 return timeA - timeB;
             });
-            return schedule;
+            return coursesPending;
+        },
+    });
+
+    const { data: coursesAttendedOrAbsent, refetch: refetchcoursesAttendedOrAbsent } = useQuery({
+        queryKey: ["courses_attended_or_absent"],
+        queryFn: async () => {
+            const coursesAttendedOrAbsent = await fetchCoursesAttendedOrAbsent();
+            // sorting schedule according to time
+            coursesAttendedOrAbsent.sort((a: any, b: any) => {
+                const timeA = Date.parse(a.course_schedule.time);
+                const timeB = Date.parse(b.course_schedule.time);
+                return timeA - timeB;
+            });
+            return coursesAttendedOrAbsent;
         },
     });
 
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-        refetch().then(()=>{
-            event.detail.complete();
-        })
-        // setTimeout(() => {
-        //   // Any calls to load data go here
-        //   event.detail.complete();
-        // }, 2000);
-      }
+        if (checkWhat === "coming") {
+            refetchPending().then(() => {
+                event.detail.complete();
+            })
+        } else {
+            refetchcoursesAttendedOrAbsent().then(() => {
+                event.detail.complete();
+            })
+        }
+    }
 
     // useIonViewWillEnter(() => {
-    //     refetch();
+    //     refetchPending()
+    //     refetchcoursesAttendedOrAbsent()
     // }, [])
 
     return (
@@ -49,6 +67,7 @@ export function UserScheduleList() {
                     <IonTitle>Booked Courses</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
 
                 <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
@@ -69,7 +88,8 @@ export function UserScheduleList() {
                 </IonSegment>
 
                 {
-                    courses && courses.length > 0 && courses.map((course: any, index: number) => (
+                    checkWhat === 'coming' && coursesPending && coursesPending.length > 0 && coursesPending.map((course: any, index: number) => {
+
                         <UserScheduleItem
                             key={course.course_schedule.id}
                             classID={course.course_schedule.id}
@@ -81,8 +101,33 @@ export function UserScheduleList() {
                             address={course.course_schedule.courses.gyms.address}
                             attendence={course.attendance_type.details}
                         />
-                    ))
+
+                    })
                 }
+
+                {
+                    checkWhat === 'history' && coursesAttendedOrAbsent && coursesAttendedOrAbsent.length > 0 && coursesAttendedOrAbsent.map((course: any, index: number) => {
+                        if (course.attendance_type.id !== 1) {
+                            return (
+                                <UserScheduleItem
+                                    key={course.course_schedule.id}
+                                    classID={course.course_schedule.id}
+                                    courseName={course.course_schedule.courses.name}
+                                    courseType={course.course_schedule.courses.course_type.name}
+                                    time={course.course_schedule.time}
+                                    duration={course.course_schedule.courses.duration}
+                                    gymName={course.course_schedule.courses.gyms.name}
+                                    address={course.course_schedule.courses.gyms.address}
+                                    attendence={course.attendance_type.details}
+                                />
+                            )
+                        }
+                    })
+                }
+
+                {checkWhat === 'coming' && (coursesPending && coursesPending.length === 0) && <NoResult />}
+                {checkWhat === 'history' && (coursesAttendedOrAbsent && coursesAttendedOrAbsent.length === 0) && <NoResult />}
+
             </IonContent>
         </IonPage >
     )
