@@ -25,9 +25,9 @@ export async function courseJoin(course: number) {
 
 }
 
-export async function fetchCourses() {
+export async function fetchCoursesAttendedOrAbsent() {
 
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/`, {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/attended_or_absent`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -43,6 +43,26 @@ export async function fetchCourses() {
     }
 
 }
+
+export async function fetchCoursesPending() {
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/pending`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+
+    if (res.ok) {
+        const result = await res.json()
+        return result;
+    } else {
+        throw new Error('Server Error');
+    }
+
+}
+
 
 export async function fetchCourseRemainingSlots(courseID: number) {
 
@@ -68,4 +88,22 @@ export async function gymTakeAttendance(takeAttendanceData: TakeAttendanceData) 
     })
     const result = await res.json();
     return result
+}
+
+export async function userCancelBookedCourse(user_schedule_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/cancel/${user_schedule_id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+
+    if (res.ok) {
+        const result = await res.json()
+        return result;
+    } else {
+        throw new Error('Server Error');
+    }
+    
 }

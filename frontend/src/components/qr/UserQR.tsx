@@ -1,4 +1,4 @@
-import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent } from '@ionic/react';
+import { IonModal, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonPage, IonCard } from '@ionic/react';
 import { useRef } from 'react';
 import QRCode from 'react-qr-code';
 import { useSelector } from 'react-redux';
@@ -11,18 +11,38 @@ export function UserQR() {
     const userID = useSelector((state: RootState) => state.user.id);
 
     return (
-        <IonModal ref={modal} trigger="open-qr">
+
+        <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>QR Code</IonTitle>
-                    <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                    {/* <IonBackButton default-href="/"></IonBackButton> */}
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
+
                 <div className={AppStyle.qr_container}>
-                    <QRCode value={`${userID}`} />
+                    <IonCard>
+                        <QRCode value={`${userID}`} />
+                    </IonCard>
                 </div>
+
             </IonContent>
-        </IonModal>
+        </IonPage>
+
+
+        // <IonModal ref={modal} trigger="open-qr" keepContentsMounted={true}>
+        //     <IonHeader>
+        //         <IonToolbar>
+        //             <IonTitle>QR Code</IonTitle>
+        //             <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+        //         </IonToolbar>
+        //     </IonHeader>
+        //     <IonContent className="ion-padding">
+        //         <div className={AppStyle.qr_container}>
+        //             <QRCode value={`${userID}`} />
+        //         </div>
+        //     </IonContent>
+        // </IonModal>
     )
 }

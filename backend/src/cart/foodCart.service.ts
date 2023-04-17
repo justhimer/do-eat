@@ -57,13 +57,12 @@ export class FoodCartService {
         });
     }
 
-    async delete(cart_id: number) {
-        await this.prisma.foodCart.delete({
+    async deleteCart(food_id: number) {
+        return await this.prisma.foodCart.delete({
             where: {
-                id: cart_id
+                id: food_id
             },
             include: {
-                users: true,
                 foods: true,
             },
         });
