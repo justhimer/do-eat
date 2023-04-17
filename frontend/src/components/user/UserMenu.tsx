@@ -85,7 +85,7 @@ export function UserMenu() {
                             <IonItem button detail={true} className={UserMenuStyle.item} onClick={onBookedCourses}>
                                 <IonLabel>Booked Courses</IonLabel>
                             </IonItem>
-                            <IonItem button detail={true} className={UserMenuStyle.item} onClick={onOrderedFoods}>
+                            <IonItem button detail={true} className={UserMenuStyle.item_last} onClick={onOrderedFoods}>
                                 <IonLabel>Ordered Foods</IonLabel>
                             </IonItem>
                             {/* <IonItem button detail={true} className={UserMenuStyle.item_last}>
