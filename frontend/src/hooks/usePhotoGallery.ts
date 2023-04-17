@@ -21,6 +21,7 @@ export function usePhotoGallery() {
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
       quality: 100,
+      // correctOrientation: false
     });
 
     const fileName = new Date().getTime() + '.jpeg';
