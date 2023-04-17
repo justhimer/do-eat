@@ -37,13 +37,21 @@ export async function fetchAllCartItems() {
 
 
 
-
+export async function deleteCart() {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": 'application/json',
+        }
+    })
+    const data = await res.json();
+}
 
 
 
 export async function updateCart() {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/update`, {
-        method: "GET",
+        method: "POST",
         headers: {
             "Content-Type": 'application/json',
         }

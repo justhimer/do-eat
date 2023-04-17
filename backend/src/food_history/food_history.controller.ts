@@ -1,15 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, ParseIntPipe, BadRequestException, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, ParseIntPipe, BadRequestException, Req, HttpException, HttpStatus } from '@nestjs/common';
 import { FoodHistoryService } from './food_history.service';
 import { CreateFoodHistoryDto } from './dto/create-food_history.dto';
 import { UpdateFoodHistoryDto } from './dto/update-food_history.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { isError } from 'lodash';
+import { FoodOrderService } from 'src/food_order/food_order.service';
+import { FoodCartService } from 'src/cart/foodCart.service';
 
 @ApiTags('food-history')
 @Controller('food-history')
 export class FoodHistoryController {
-  constructor(private readonly foodHistoryService: FoodHistoryService) { }
+  constructor(
+    private readonly foodHistoryService: FoodHistoryService,
+    private readonly foodOrderService: FoodOrderService,
+    private readonly foodCartService: FoodCartService
+  ) { }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('user/to_collect')
@@ -27,10 +33,36 @@ export class FoodHistoryController {
     return foodOrders;
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
-    return this.foodHistoryService.create(createFoodHistoryDto);
+  async create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
+    // try {
+    console.log('createFoodHistoryDto: ', createFoodHistoryDto);
+
+    const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
+    console.log('foodHistory: ', foodHistory);
+
+    if (foodHistory) {
+      for (let foodOrder of createFoodHistoryDto.foodOrders) {
+        const createdOrder = await this.foodOrderService.createOrder({
+          food_id: foodOrder.food_id,
+          quantity: foodOrder.quantity,
+          food_history_id: foodHistory.id
+        });
+        if (createdOrder) {
+          await this.foodCartService.delete(foodOrder.cart_id);
+        }
+      }
+    }
+
+    return { msg: 'create food history success' };
+
+    // } catch (err) {
+    //   return new HttpException(err, HttpStatus.BAD_REQUEST);
+    // }
   }
+
+
 
   @UseGuards(AuthGuard('jwt_gym'))
   @Get('gym/')
