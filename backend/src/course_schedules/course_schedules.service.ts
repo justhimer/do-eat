@@ -10,6 +10,21 @@ import { UpdateCourseSchedulesDTO } from './dto/UpdateCourseSchedules.dto';
 export class CourseSchedulesService {
     constructor(private readonly prisma: PrismaService) { }
 
+    async findCourseName(course_schedule_id: number) {
+        return await this.prisma.courseSchedules.findFirst({
+          select: {
+            courses: {
+                select: {
+                    name: true
+                }
+            }
+          },
+          where: {
+            id: course_schedule_id
+          }
+        })
+      }
+
     async quotaForThisCourse(exercise_id: number) {
         return (await this.prisma.courseSchedules.findFirstOrThrow({
             select: { quota: true },
@@ -69,7 +84,7 @@ export class CourseSchedulesService {
                     {
                         time: {
                             gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
-                            lt: addDays(zonedTimeToUtc(now, "Asia/Hong_Kong"), 1)
+                            lt: addHours(zonedTimeToUtc(now, "Asia/Hong_Kong"), 2)
                         }
                     }
                 ]
