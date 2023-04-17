@@ -26,14 +26,14 @@ export function UserScheduleList() {
     });
 
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-        refetch().then(()=>{
+        refetch().then(() => {
             event.detail.complete();
         })
         // setTimeout(() => {
         //   // Any calls to load data go here
         //   event.detail.complete();
         // }, 2000);
-      }
+    }
 
     // useIonViewWillEnter(() => {
     //     refetch();
@@ -69,20 +69,46 @@ export function UserScheduleList() {
                 </IonSegment>
 
                 {
-                    courses && courses.length > 0 && courses.map((course: any, index: number) => (
-                        <UserScheduleItem
-                            key={course.course_schedule.id}
-                            classID={course.course_schedule.id}
-                            courseName={course.course_schedule.courses.name}
-                            courseType={course.course_schedule.courses.course_type.name}
-                            time={course.course_schedule.time}
-                            duration={course.course_schedule.courses.duration}
-                            gymName={course.course_schedule.courses.gyms.name}
-                            address={course.course_schedule.courses.gyms.address}
-                            attendence={course.attendance_type.details}
-                        />
-                    ))
+                    checkWhat === 'coming' && courses && courses.length > 0 && courses.map((course: any, index: number) => {
+                        if (course.attendance_type.id === 1) {
+                            return (
+                                <UserScheduleItem
+                                    key={course.course_schedule.id}
+                                    classID={course.course_schedule.id}
+                                    courseName={course.course_schedule.courses.name}
+                                    courseType={course.course_schedule.courses.course_type.name}
+                                    time={course.course_schedule.time}
+                                    duration={course.course_schedule.courses.duration}
+                                    gymName={course.course_schedule.courses.gyms.name}
+                                    address={course.course_schedule.courses.gyms.address}
+                                    attendence={course.attendance_type.details}
+                                />
+                            )
+                        }
+
+                    })
                 }
+
+                {
+                    checkWhat === 'history' && courses && courses.length > 0 && courses.map((course: any, index: number) => {
+                        if (course.attendance_type.id !== 1) {
+                            return (
+                                <UserScheduleItem
+                                    key={course.course_schedule.id}
+                                    classID={course.course_schedule.id}
+                                    courseName={course.course_schedule.courses.name}
+                                    courseType={course.course_schedule.courses.course_type.name}
+                                    time={course.course_schedule.time}
+                                    duration={course.course_schedule.courses.duration}
+                                    gymName={course.course_schedule.courses.gyms.name}
+                                    address={course.course_schedule.courses.gyms.address}
+                                    attendence={course.attendance_type.details}
+                                />
+                            )
+                        }
+                    })
+                }
+
             </IonContent>
         </IonPage >
     )
