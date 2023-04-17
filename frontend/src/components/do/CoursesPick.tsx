@@ -1,13 +1,13 @@
 import { IonContent} from "@ionic/react";
 import { CoursesItem} from "./CoursesItem";
-import courseStyle from '../../scss/GymCourses.module.scss'
+import GymCourseStyle from '../../scss/GymCourses.module.scss'
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {  useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCoursesOnDate } from "../../api/coursesSchedulesAPI";
 import { CoursesInterface } from "../../redux/userCourseSlice";
-
+import picture from '../../../public/assets/no_course/Yoga.png'
 
 
 
@@ -38,12 +38,20 @@ export function CoursesPick(){
    
     //#endregion
 
+    const noCourse = (
+        <div className='testing'>
+            <h6 className="title">No Courses Today</h6>
+            <img src={`./assets/no_course/Yoga.png`}/>
+            <h5>Please select other dates or other gym combinations</h5>
+        
+        </div>
+    )
+
     return <>
-        <IonContent className={courseStyle.courseContainer}>
+        <IonContent className={GymCourseStyle.coursePick}>
             {
-                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} {...course}/>) : <div>"No Courses Today"</div>
+                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} {...course}/>) : noCourse
             }
-            {/* <CoursesItem /> */}
         </IonContent>
     </>
 }

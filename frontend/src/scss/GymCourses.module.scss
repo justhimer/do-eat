@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 .courseContainer {
     height: auto;
     min-height: 60vh;
@@ -78,29 +80,32 @@
 // Properties used for Do-Tab segment button
 .doWhere_segment {
     ion-segment-button {
-        --background: ;
-        --background-checked: ;
-        --border-color: ;
-        --border-radius: 5px;
-        --border-style: ;
-        --border-width: ;
         --color: #615c59;
-        --color-checked: #e74c3c;
         --indicator-color: #e74c3c;
-        --indicator-height: 4px;
+        --color-checked: #e74c3c;
     }
 
     /* Material Design styles */
-    ion-segment-button.md {}
+    ion-segment-button.md {
+        --color: #615c59;
+        --color-checked: #e74c3c;
+        --indicator-height: 4px;
+    }
 
     /* iOS styles */
-    ion-segment-button.ios {}
+    ion-segment-button.ios {
+        --color: #e74c3c;
+        --color-checked: #fff;
+        --border-radius: 20px;
+    }
+
+
 }
 
 .soloGym {
 
-    margin-bottom: 4px;
-    outline: 5px dashed blue;
+    margin-bottom: 3px;
+    outline: 3px dashed #615c59;
 
     img {
         object-fit: cover;
@@ -119,22 +124,75 @@
     }
 
 }
-// .soloGym::after {
-//     content: "";
-//     background: black;
-//     position: absolute;
-//     bottom: 0;
-//     width: 100%;
-//     height: 5px;
-    
-// }
+
 
 .selectedGymsDisplay_card {
+    height: 55vh;
+
     ion-card-header {
+        height: fit-content;
         border-bottom: 1px solid #615c59;
     }
 
     ion-card-content {
+        padding: 1rem 1rem;
+        height: 84%;
+        overflow: scroll;
+        text-align: center;
+    }
+}
+
+.googleMapBoundingClient {
+    text-align: center;
+
+    capacitor-google-map {
         margin-top: 1rem;
+        display: inline-block;
+        width: 90vw;
+        height: 48vh;
+    }
+}
+
+.googleMapPopup {
+    --backdrop-opacity: 0.6;
+    --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
+    --color: white;
+    --width: 300px;
+
+    ion-content {
+        --background: #e5ddd1;
+
+        h5 {
+            color: #615c59;
+        }
+    }
+}
+
+.coursePick {
+    height: auto;
+    min-height: 60vh;
+
+
+    .testing {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    h5 {
+        font-family: 'Righteous', cursive;
+        color: #3b3836;
+        padding: 0 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    h6 {
+        font-family: 'Righteous', cursive;
+        color: #3b3836;
+        font-size: 2rem;
+        text-align: center;
     }
 }

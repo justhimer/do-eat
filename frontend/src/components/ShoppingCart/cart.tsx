@@ -10,7 +10,6 @@ import { createFoodHistory } from "../../api/foodHistoryAPIs";
 import { useParams } from "react-router-dom";
 
 import { CheckoutDeatils } from "../../api/foodHistoryAPIs";
-import { SaveOrderDetails } from "../../api/foodOrderAPI"
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { gymAll } from "../../api/gymAPIs";

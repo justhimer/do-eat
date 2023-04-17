@@ -28,6 +28,7 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
 
     const selectedGyms = useSelector((state: RootState) => state.userGym);
     const [availableGyms, setAvailableGyms] = useState([]);
+    
     const gyms = useQuery({
         queryKey: ["gymLocations",props.selectedDistricts],
         queryFn: () => {

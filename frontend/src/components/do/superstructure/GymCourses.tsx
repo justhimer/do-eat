@@ -20,7 +20,7 @@ export function GymCourses() {
                     <IonTitle>Do "What"</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent fullscreen class="ion-padding">
                 <CoursesDatePick />
                 <CoursesPick />
             </IonContent>

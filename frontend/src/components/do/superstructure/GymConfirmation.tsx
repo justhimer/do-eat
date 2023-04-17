@@ -143,7 +143,7 @@ export function GymConfirmation() {
                 </IonModal>
 
                 <div className={ConfirmationStyle.icon_container}>
-                    <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/${selectedCourse.trainer_icon}`} alt="" className={ConfirmationStyle.icon} />
+                    <img src={selectedCourse.trainer_icon} alt="" className={ConfirmationStyle.icon} />
                 </div>
 
                 <div className={ConfirmationStyle.title}>

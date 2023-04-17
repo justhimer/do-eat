@@ -14,19 +14,18 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { listOutline, mapOutline } from 'ionicons/icons';
 
+// Interfaces
 export interface DistrictListInterface {
   replaceDistrict: (districts: number[]) => void;
 }
 export interface SelectedGymDisplayInterface {
   selectedDistricts: number[];
 }
-
 export interface DoButtonInterface {
   page: number;
   upPage: () => void;
   downPage: () => void
 }
-
 export interface CoursesGetInterface {
   gyms: number[];
   time: string
@@ -39,6 +38,8 @@ export interface MarkedDatesInterface {
 
 export function DoTab() {
 
+  const history = useHistory()
+  
   const [selectedDistrict, setSelectedDistrict] = useState([])
   const [mapView, setMapView] = useState(false)
 
@@ -52,8 +53,6 @@ export function DoTab() {
   useIonViewWillLeave(() => {
     setMapView(false)
   })
-
-  const history = useHistory()
 
 
   return (
