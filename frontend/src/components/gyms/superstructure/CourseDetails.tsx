@@ -146,7 +146,8 @@ export function CourseDetails() {
 
                 <CourseForm mode='PUT' />
                 <IonButton expand="block" id="open-modal">Add Timeslot </IonButton>
-                {courseSchedules.data && courseSchedules.data.length > 0 ? courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot} refetch={()=>courseSchedules.refetch()}/>) : <div className={GymCourseStyle.coursePick}>{noCourse}</div>}
+                {courseSchedules.data && courseSchedules.data.length > 0 && courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot} refetch={()=>courseSchedules.refetch()}/>)}
+                {courseSchedules.data && courseSchedules.data.length === 0 && <div className={GymCourseStyle.coursePick}>{noCourse}</div>}
             </IonContent>
         </IonPage >
     )

@@ -58,7 +58,10 @@ export function CoursesPick(){
     return <>
         <IonContent className={GymCourseStyle.coursePick}>
             {
-                coursesOnDay && coursesOnDay.length>0 ? coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} {...course}/>) : noCourse
+                !fetchedCourses.isLoading && coursesOnDay && coursesOnDay.length>0 && coursesOnDay.map((course:CoursesInterface, index:number)=><CoursesItem key={index} {...course}/>) 
+            }
+            {
+                !fetchedCourses.isLoading && fetchedCourses.data.length === 0 && noCourse
             }
         </IonContent>
     </>
