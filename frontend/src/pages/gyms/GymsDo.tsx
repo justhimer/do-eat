@@ -31,7 +31,6 @@ export function GymsDo() {
         courses.refetch()
     })
     useIonViewDidLeave(() => {
-        courses.remove()
     })
 
     return (
@@ -43,7 +42,8 @@ export function GymsDo() {
             </IonHeader>
             <IonContent fullscreen className={GymCourseStyle.coursePick + " ion-padding"}>
                 <IonButton expand="block" onClick={createCourse} className={GymCourseStyle.gymDoButton}>Add courses</IonButton>
-                {courses.data && courses.data.length > 0 ? courses.data.map((course: gymCourseData, index: number) => <CourseListItem key={index} {...course} />) : noCourse}
+                {courses.data && courses.data.length > 0 ? courses.data.map((course: gymCourseData, index: number) => <CourseListItem key={index} {...course} />) : <></>}
+                {courses.data && courses.data.length === 0 && noCourse}
             </IonContent>
         </IonPage >
     )

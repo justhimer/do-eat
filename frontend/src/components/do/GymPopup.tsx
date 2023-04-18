@@ -1,4 +1,3 @@
-import GymStyle from '../../scss/GymConfirm.module.scss'
 import { IonBackButton, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar, useIonToast } from "@ionic/react";
 import { GymPopupInterface } from './superstructure/GymConfirmation';
 

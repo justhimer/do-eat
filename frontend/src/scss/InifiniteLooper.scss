@@ -32,30 +32,6 @@
 
 
 /* Example content styles */
-:root {  
-  --green: #59C3C3;
-  --offwhite: #EBEBEB;
-  --red: #e65a5e;
-}
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-#root {
-  flex: 1;
-  padding: 16px;
-  font-family: sans-serif;
-  color: var(--offwhite);  
-  background: linear-gradient(-45deg, #4c468b, #05031a);  
-}
-.description {
-  margin-bottom: 16px;  
-  text-align: center;
-}
 .contentBlock {
   display: flex;
   align-items: center;
@@ -64,21 +40,16 @@ body {
   margin: 10px;
   padding: 16px; 
   font-weight: 600;
+  font-size: 3rem;
   text-align: center;
   border-radius: 16px;
 }
-.contentBlock--one {  
-  width: 120px;
-  background: rgba(255, 255, 255, 0.05);    
-  font-weight: 600;
-  font-size: 18px; 
+.contentBlock-one{
+  color: #e74c3c;;
 }
-.contentBlock--one:last-of-type {
-  color: var(--green);
-  margin-right: 36px;
+.contentBlock-two{
+  color: #3b3836;;
 }
-.contentBlock--two {    
-  color: var(--green);  
-  font-size: 48px;
-  background: rgba(255, 255, 255, 0.05);  
+.special{
+  font-size: 2rem;
 }

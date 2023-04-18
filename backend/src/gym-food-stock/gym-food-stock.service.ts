@@ -18,7 +18,14 @@ export class GymFoodStockService {
           foods:{
             select:{
               name:true,
-              image:true
+              image:true,
+              calories:true,
+              food_types:{
+                select:{
+                  name:true,
+                  icon:true
+                }
+              }
             }
           }
         }
@@ -35,6 +42,9 @@ export class GymFoodStockService {
               foods_id:elem.foods_id,
               food_name:elem.foods.name,
               food_image:elem.foods.image,
+              calories: elem.foods.calories,
+              food_type_name:elem.foods.food_types.name,
+              food_type_icon:elem.foods.food_types.icon,
               quantity:elem.quantity
             }
           )

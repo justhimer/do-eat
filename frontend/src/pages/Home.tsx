@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonImg, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { Logo } from '../components/Logo';
 // import { homeApp } from '../homePageDetails';
 import AppStyle from '../scss/App.module.scss';
@@ -8,22 +8,20 @@ import '../scss/Swiper.scss'
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
-import SwiperCore, { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper";
+import SwiperCore, { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useHistory } from 'react-router';
 import { barbell, batteryCharging, bicycle, fastFood, logoIonic } from 'ionicons/icons';
-SwiperCore.use([EffectCoverflow, Pagination]);
+SwiperCore.use([EffectCoverflow,Autoplay]);
 
 const slide_img = [
-  "https://swiperjs.com/demos/images/nature-1.jpg",
-  "https://swiperjs.com/demos/images/nature-2.jpg",
-  "https://swiperjs.com/demos/images/nature-3.jpg",
-  "https://swiperjs.com/demos/images/nature-4.jpg",
-  "https://swiperjs.com/demos/images/nature-5.jpg",
-  "https://swiperjs.com/demos/images/nature-6.jpg",
-  "https://swiperjs.com/demos/images/nature-7.jpg",
-  "https://swiperjs.com/demos/images/nature-8.jpg",
-  "https://swiperjs.com/demos/images/nature-9.jpg",
+  {img:"https://img.freepik.com/premium-photo/happy-woman-eat-healthy-trains-gym_207634-7200.jpg", text:"Nutritious", color:"#e74c3c"},
+  {img:"https://img.freepik.com/free-photo/full-shot-man-sitting-yoga-mat_23-2149249473.jpg", text:"Consult", color:"#e74c3c"},
+  {img:"https://img.freepik.com/free-photo/healthy-raw-food-dumbbell-wooden-surface_23-2147882036.jpg", text:"Plan",color:"#e74c3c"},
+  {img:"https://img.freepik.com/free-photo/young-asian-woman-with-water-bottle-listening-music-podcast-headphones-during-fitness-home_1258-83729.jpg", text:"Convenient", color:"#e74c3c"},
+  {img:"https://img.freepik.com/free-photo/top-view-showing-hands-eating-healthy-lunch-with-bulgur-meat-fresh-vegetables-fruit-wooden-table-fitness-healthy-lifestyle-concept-lunchbox-top-view_2829-6077.jpg", text:"Anywhere",color:"#e74c3c"},
+  {img:"https://img.freepik.com/free-photo/full-shot-woman-with-laptop-home_23-2149249504.jpg", text:"Do Eat",color:"#e74c3c"},
+
 ];
 
 
@@ -58,10 +56,26 @@ const HomeTab: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen className={AppStyle.hero}>
+      <IonContent fullscreen className={" ion-padding"}>
         <Logo />
+        <InfiniteLooper direction="left" speed={10}>
+          <div className="contentBlock contentBlock-one">
+            <IonIcon icon={barbell}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-two">
+            <IonIcon icon={batteryCharging}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-one">
+            <IonIcon icon={bicycle}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-two special">
+            <IonIcon icon={fastFood}></IonIcon>
+            </div>
+          </InfiniteLooper>
         <Swiper
           effect={"coverflow"}
+          autoplay={{delay:5000,
+          disableOnInteraction:false}}
           grabCursor={true}
           centeredSlides={true}
           slidesPerView={"auto"}
@@ -72,41 +86,42 @@ const HomeTab: React.FC = () => {
             modifier: 1,
             slideShadows: false,
           }}
-          pagination={true}
-          className="mySwiper"
+          className={AppStyle.swiper + " swiper-button-hidden"}
         >
           {slide_img.map((img, i) => {
             return (
-              <SwiperSlide key={i}>
-                <img src={img} alt="" />
+              <SwiperSlide key={i} >
+                <img src={img.img} alt="" />
+                <p className={AppStyle.imgText} style={{color:img.color}}>{img.text}</p>
               </SwiperSlide>
             );
           })}
         </Swiper>
 
-        <InfiniteLooper direction="left" speed={10}>
-          <div className="contentBlock contentBlock--two">
-            <IonIcon icon={barbell}></IonIcon>
-          </div>
-          <div className="contentBlock contentBlock--two">
-            <IonIcon icon={batteryCharging}></IonIcon>
-          </div>
-          <div className="contentBlock contentBlock--two">
-            <IonIcon icon={bicycle}></IonIcon>
-          </div>
-          <div className="contentBlock contentBlock--two">
-            <IonIcon icon={fastFood}></IonIcon>
-            </div>
-          </InfiniteLooper>
+        
           
           <animated.div
-            
             style={{
               ...springs,
             }}
           >
             <IonButton onClick={()=>{history.push('/user-tab')}}>Start Your Journey Now!</IonButton>
           </animated.div>
+
+          <InfiniteLooper direction="right" speed={10}>
+          <div className="contentBlock contentBlock-two">
+            <IonIcon icon={barbell}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-one">
+            <IonIcon icon={batteryCharging}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-two">
+            <IonIcon icon={bicycle}></IonIcon>
+          </div>
+          <div className="contentBlock contentBlock-one special">
+            <IonIcon icon={fastFood}></IonIcon>
+            </div>
+          </InfiniteLooper>
 
       </IonContent >
     </IonPage >

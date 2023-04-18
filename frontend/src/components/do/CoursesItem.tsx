@@ -1,15 +1,22 @@
+// Ionic Component
 import { IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCard, IonChip, IonIcon, useIonToast } from "@ionic/react";
-import courseStyle from '../../scss/GymCourses.module.scss'
 import { flameOutline, cardOutline } from "ionicons/icons"
-import {
-    format, isPast,
-} from "date-fns";
-import NotificationStyle from "../../scss/Notification.module.scss";
+
+// State Management
 import { CoursesInterface, changeSelectedCourse } from "../../redux/userCourseSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch} from "react-redux";
+
+// Routing
 import { useHistory } from "react-router";
+
+// Date Formating
+import {format, isPast} from "date-fns";
+
+// CSS Style
+import courseStyle from '../../scss/GymCourses.module.scss'
+import NotificationStyle from "../../scss/Notification.module.scss";
 import confirmationStyle from '../../scss/GymConfirm.module.scss'
+
 
 export function CoursesItem(props: CoursesInterface) {
     const filled = props.filled >= props.quota
