@@ -23,7 +23,7 @@ import {
 } from '@ionic/react';
 import { useKeyboardState } from '@ionic/react-hooks/keyboard';
 import { IonReactRouter } from '@ionic/react-router';
-import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
+import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, logInOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
 /* Routing */
 import Fooddetails from './components/food/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
@@ -333,7 +333,7 @@ const App: React.FC = () => {
                 {
                   !isGymLoggedIn && !isUserLoggedIn &&
                   <IonFabButton routerLink="/user-tab" className={TabStyle.button} translucent={true}>
-                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                    <IonIcon aria-hidden="true" icon={logInOutline} style={{"font-size": "2rem" ,transform: "translateX(-2px)"}}></IonIcon>
                   </IonFabButton>
                 }
             </IonFab>
