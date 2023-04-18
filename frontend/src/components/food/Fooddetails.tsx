@@ -143,7 +143,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                         <p className={Fooddetailsstyle.padding}>{description}</p>
                         {/* <p>Calories: {calories}</p> */}
                         <IonChip outline={true} color="danger"><IonLabel>Calories: {calories}</IonLabel></IonChip>
-                        {allergens && allergens.length > 0 && <IonChip outline={true} color="danger"><IonLabel>Allergens:{allergens}</IonLabel></IonChip>}
+                        {allergens && allergens.length > 0 && <IonChip outline={true} color="danger"><IonLabel>Allergens: {allergens}</IonLabel></IonChip>}
                     </div>
                     <IonGrid>
                         <IonRow>

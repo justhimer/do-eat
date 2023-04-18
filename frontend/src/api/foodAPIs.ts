@@ -11,8 +11,6 @@ export async function fetchFoods() {
 }
 
 export async function fetchOneFoods(id: number) {
-    console.log(id);
-
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/foods/${id}`, {
         method: "GET",
         headers: {

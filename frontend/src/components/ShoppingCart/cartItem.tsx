@@ -1,4 +1,4 @@
-import { IonItem, IonThumbnail, IonLabel, IonButton } from "@ionic/react";
+import { IonItem, IonThumbnail, IonLabel, IonButton, IonChip, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteCart } from "../../api/cartAPI";
@@ -13,6 +13,7 @@ export interface CartItemProps {
     calories: number;
     image: string;
     changeQuantity: (id: number, newQuantity: number) => void;
+    changeTotalQuantity: ()=> void;
     refetch: () => void
     // image: string;
 }
@@ -20,7 +21,6 @@ export interface CartItemProps {
 export function CartItem(props: CartItemProps) {
 
     const [newQuantity, setNewQuantity] = useState(props.quantity);
-    const [counts, setCounts] = useState(0)
 
     const deletingFood = useMutation(() => deleteCart(props.id), {
         onSuccess: (data) => {
@@ -36,33 +36,43 @@ export function CartItem(props: CartItemProps) {
 
     function onClickPlus() {
         props.changeQuantity(props.id, newQuantity + 1);
+        props.changeTotalQuantity();
         setNewQuantity(newQuantity + 1);
     }
 
     function onClickMinus() {
         if (newQuantity <= 1) { return }
         props.changeQuantity(props.id, newQuantity - 1);
+        props.changeTotalQuantity();
         setNewQuantity(newQuantity - 1);
     }
 
 
 
-    return (<>
-        <IonItem className={UserMenuStyle.item_last}>
-            <IonThumbnail slot="start">
-                <img alt="food icon" src={`./assets/foodimage/${props.image}`} />
-            </IonThumbnail>
-            <p className={UserMenuStyle.width_70}>
-                {props.name}
-                <br />
-                Calories: {props.calories}
-                <IonButton onClick={() => deletingFood.mutate()}>x</IonButton>
-            </p>
-            <IonButton onClick={onClickMinus}>-</IonButton>
-            <p>{newQuantity}</p>
-            <IonButton onClick={onClickPlus}>+</IonButton>
-        </IonItem>
-    </>
+    return (
+        <>
+        <IonItemSliding>
+            <IonItem className={UserMenuStyle.item_last}>
+                <IonThumbnail slot="start">
+                    <img alt="food icon" src={`./assets/icon/food_icon.png`} className={UserMenuStyle.food_order_img} />
+                </IonThumbnail>
+                <p className={UserMenuStyle.width_70}>
+                    {props.name}
+                    <br />
+                    <IonChip outline={true} color="danger"><IonLabel>Calories: {props.calories * newQuantity}</IonLabel></IonChip>
+                </p>
+                <IonButton onClick={onClickMinus}>-</IonButton>
+                <p>{newQuantity}</p>
+                <IonButton onClick={onClickPlus}>+</IonButton>
+            </IonItem>
+
+            <IonItemOptions>
+                <IonItemOption color="danger" onClick={() => deletingFood.mutate()}>Delete</IonItemOption>
+            </IonItemOptions>
+
+        </IonItemSliding>
+        </>
+        
     )
 
 

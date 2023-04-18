@@ -77,7 +77,7 @@ export function DoTab() {
         {mapView? <GoogleMapComp selectedDistricts={selectedDistrict}/> : <SelectedGymsDisplay selectedDistricts={selectedDistrict}/>}
         <IonRow>
           <IonCol>
-            <IonButton onClick={(e) => {
+            <IonButton expand='block' onClick={(e) => {
               e.preventDefault()
               history.push('/do-what')
             }}>Next</IonButton>
