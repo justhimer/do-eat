@@ -796,86 +796,121 @@ async function main() {
     })
 
     const foodData = [
-        {foods_id: food1.id,
+        {
+            foods_id: food1.id,
             quantity: 10
         },
-        {foods_id: food2.id,
+        {
+            foods_id: food2.id,
             quantity: 10
         },
-        {foods_id: food3.id,
+        {
+            foods_id: food3.id,
             quantity: 10
         },
-        {foods_id: food4.id,
+        {
+            foods_id: food4.id,
             quantity: 10
         },
-        {foods_id: food5.id,
+        {
+            foods_id: food5.id,
             quantity: 10
         },
-        {foods_id: food6.id,
+        {
+            foods_id: food6.id,
             quantity: 10
         },
-        {foods_id: food7.id,
+        {
+            foods_id: food7.id,
             quantity: 10
         },
-        {foods_id: food8.id,
+        {
+            foods_id: food8.id,
             quantity: 10
         },
-        {foods_id: food9.id,
+        {
+            foods_id: food9.id,
             quantity: 10
         },
-        {foods_id: food10.id,
+        {
+            foods_id: food10.id,
             quantity: 10
         },
-        {foods_id: food11.id,
+        {
+            foods_id: food11.id,
             quantity: 10
         },
-        {foods_id: food12.id,
+        {
+            foods_id: food12.id,
             quantity: 10
-        },{foods_id: food13.id,
+        }, {
+            foods_id: food13.id,
             quantity: 10
-        },{foods_id: food14.id,
+        }, {
+            foods_id: food14.id,
             quantity: 10
-        },{foods_id: food15.id,
+        }, {
+            foods_id: food15.id,
             quantity: 10
-        },{foods_id: food16.id,
+        }, {
+            foods_id: food16.id,
             quantity: 10
-        },{foods_id: food17.id,
+        }, {
+            foods_id: food17.id,
             quantity: 10
-        },{foods_id: food18.id,
+        }, {
+            foods_id: food18.id,
             quantity: 10
-        },{foods_id: food19.id,
+        }, {
+            foods_id: food19.id,
             quantity: 10
-        },{foods_id: food20.id,
+        }, {
+            foods_id: food20.id,
             quantity: 10
-        },{foods_id: food21.id,
+        }, {
+            foods_id: food21.id,
             quantity: 10
-        },{foods_id: food22.id,
+        }, {
+            foods_id: food22.id,
             quantity: 10
-        },{foods_id: food23.id,
+        }, {
+            foods_id: food23.id,
             quantity: 10
-        },{foods_id: food24.id,
+        }, {
+            foods_id: food24.id,
             quantity: 10
-        },{foods_id: food25.id,
+        }, {
+            foods_id: food25.id,
             quantity: 10
-        },{foods_id: food26.id,
+        }, {
+            foods_id: food26.id,
             quantity: 10
-        },{foods_id: food27.id,
+        }, {
+            foods_id: food27.id,
             quantity: 10
-        },{foods_id: food28.id,
+        }, {
+            foods_id: food28.id,
             quantity: 10
-        },{foods_id: food29.id,
+        }, {
+            foods_id: food29.id,
             quantity: 10
-        },{foods_id: food30.id,
+        }, {
+            foods_id: food30.id,
             quantity: 10
-        },{foods_id: food31.id,
+        }, {
+            foods_id: food31.id,
             quantity: 10
-        },{foods_id: food32.id,
+        }, {
+            foods_id: food32.id,
             quantity: 10
-        },{foods_id: food33.id,
+        }, {
+            foods_id: food33.id,
             quantity: 10
-        },{foods_id: food34.id,
+        }, {
+            foods_id: food34.id,
             quantity: 10
-        },{foods_id: food35.id,
+        }, {
+            foods_id: food35.id,
             quantity: 10
         }
     ]
@@ -895,7 +930,7 @@ async function main() {
             franchise_id: franchise1.id,
             district_id: districts1.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -917,7 +952,7 @@ async function main() {
             franchise_id: franchise1.id,
             district_id: district2.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -939,7 +974,7 @@ async function main() {
             franchise_id: franchise1.id,
             district_id: district3.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -961,7 +996,7 @@ async function main() {
             franchise_id: franchise1.id,
             district_id: district4.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -983,7 +1018,7 @@ async function main() {
             franchise_id: franchise1.id,
             district_id: district5.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -1003,7 +1038,7 @@ async function main() {
             franchise_id: franchise2.id,
             district_id: districts1.id,
             GymFoodStock: {
-                createMany:{
+                createMany: {
                     data: foodData
                 }
             }
@@ -1109,7 +1144,7 @@ async function main() {
     })
 
     const course1 = await prisma.courses.create({
-            data: {
+        data: {
             name: "Yoga Beginner",
             credits: 1,
             course_type_id: courseTypes1.id,
@@ -1125,17 +1160,17 @@ async function main() {
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-16T09:00:00+08:00')
+                            time: new Date('2023-04-20T09:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-16T17:00:00+08:00')
+                            time: new Date('2023-04-21T17:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,
                             quota: 20,
-                            time: new Date('2023-04-17T09:00:00+08:00')
+                            time: new Date('2023-04-22T09:00:00+08:00')
                         }
                     ]
                 }
@@ -1169,7 +1204,27 @@ async function main() {
             calories: 400,
             default_trainer_id: trainers2.id,
             default_quota: 20,
-
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers2.id,
+                            quota: 20,
+                            time: new Date('2023-04-20T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers2.id,
+                            quota: 20,
+                            time: new Date('2023-04-21T17:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers2.id,
+                            quota: 20,
+                            time: new Date('2023-04-22T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1184,7 +1239,27 @@ async function main() {
             calories: 200,
             default_trainer_id: trainers4.id,
             default_quota: 20,
-
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 20,
+                            time: new Date('2023-04-20T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 20,
+                            time: new Date('2023-04-21T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 20,
+                            time: new Date('2023-04-25T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1248,6 +1323,27 @@ async function main() {
             calories: 200,
             default_trainer_id: trainers5.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-23T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-26T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-28T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1262,6 +1358,27 @@ async function main() {
             calories: 300,
             default_trainer_id: trainers5.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-28T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-29T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers5.id,
+                            quota: 20,
+                            time: new Date('2023-04-30T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1290,6 +1407,27 @@ async function main() {
             calories: 200,
             default_trainer_id: trainers6.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-23T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-25T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-26T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1318,6 +1456,27 @@ async function main() {
             calories: 400,
             default_trainer_id: trainers6.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-22T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-23T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 20,
+                            time: new Date('2023-04-27T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
     const creditTransactionAdd = await prisma.creditTransactionType.create({
