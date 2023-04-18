@@ -333,7 +333,7 @@ const App: React.FC = () => {
           {
             !isGymLoggedIn && !isUserLoggedIn &&
             <IonFabButton routerLink="/user-tab" className={TabStyle.button} translucent={true}>
-              <IonIcon aria-hidden="true" icon={logInOutline} style={{ "font-size": "2rem", transform: "translateX(-2px)" }}></IonIcon>
+              <IonIcon aria-hidden="true" icon={logInOutline} style={{ fontSize: "2rem", transform: "translateX(-2px)" }}></IonIcon>
             </IonFabButton>
           }
         </IonFab>
