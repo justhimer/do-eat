@@ -79,7 +79,7 @@ export function ShoppingCart() {
         if (gymID === 0) {
             present({
                 message: "Please select a gym",
-                duration: 1500,
+                duration: 1000,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
             });
@@ -119,7 +119,7 @@ export function ShoppingCart() {
                 setGymID(0);
                 present({
                     message: "Checkout Completed",
-                    duration: 3000,
+                    duration: 1000,
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
                 });

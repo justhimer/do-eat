@@ -18,6 +18,24 @@ export class FoodOrderService {
     return createdOrder;
   }
 
+  async totalCalories(food_order_id: number) {
+    const data = await this.prisma.foodOrder.findFirst({
+      where: {
+        id: food_order_id
+      },
+      select: {
+        quantity: true,
+        food: {
+          select: {
+            calories: true
+          }
+        }
+      }
+    });
+    const totalCalories = data.food.calories * data.quantity;
+    return totalCalories;
+  }
+
   findAll() {
     return `This action returns all foodOrder`;
   }

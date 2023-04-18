@@ -1,5 +1,5 @@
 // Fooddetails.tsx
-import { IonGrid, IonRow, IonCol, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonIcon, IonToast, IonModal, IonList, IonItem, IonLabel, IonAvatar, IonImg, IonBadge } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonIcon, IonToast, IonModal, IonList, IonItem, IonLabel, IonAvatar, IonImg, IonBadge, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip } from '@ionic/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FoodItemProps } from './FoodItem';
 import { IonButton } from '@ionic/react';
@@ -112,13 +112,13 @@ export const Fooddetails = ({ match }: { match: any }) => {
             </IonHeader>
             <IonContent fullscreen>
 
-                <div>
-                    {/* <h1>Food Details:</h1> */}
-                    <div>
+                {/* <IonCard>
+                    <IonCardHeader>
+                        <IonCardTitle>{name}</IonCardTitle>
+                    </IonCardHeader>
+
+                    <IonCardContent>
                         <img src={`./assets/foodimage/${food?.image}`} alt='food image' />
-                    </div>
-                    <div>
-                        <h2>{name}</h2>
                         <p>{description}</p>
                         <p>Allergens:{allergens}</p>
                         <p>Calories: {calories}</p>
@@ -130,13 +130,34 @@ export const Fooddetails = ({ match }: { match: any }) => {
                                 <IonToast trigger="Cart-toast" message="Added to Cart" duration={1000}></IonToast>
                             </IonRow>
                         </IonGrid>
+                    </IonCardContent>
+                </IonCard> */}
+
+                <div className={Fooddetailsstyle.details_container}>
+                    {/* <br /> */}
+                    <div>
+                        <img src={`./assets/foodimage/${food?.image}`} alt='food image' className={Fooddetailsstyle.image}/>
                     </div>
+                    <div>
+                        <h2 className={Fooddetailsstyle.center}>{name}</h2>
+                        <p className={Fooddetailsstyle.padding}>{description}</p>
+                        {/* <p>Calories: {calories}</p> */}
+                        <IonChip outline={true} color="danger"><IonLabel>Calories: {calories}</IonLabel></IonChip>
+                        {allergens && allergens.length > 0 && <IonChip outline={true} color="danger"><IonLabel>Allergens:{allergens}</IonLabel></IonChip>}
+                    </div>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol><IonButton id="Favourite-toast" fill="solid" expand='block'>♡</IonButton></IonCol>
+                            <IonToast trigger="Favourite-toast" message="Added to Favourite" duration={1000}></IonToast>
+                            <IonCol><IonButton id="Cart-toast" fill="solid" expand='block' onClick={() => addToCart()}>Add to Cart</IonButton></IonCol>
+                            <IonToast trigger="Cart-toast" message="Added to Cart" duration={1000}></IonToast>
+                        </IonRow>
+                    </IonGrid>
                 </div>
+
 
             </IonContent>
         </IonPage>
-
-
 
     )
 };
