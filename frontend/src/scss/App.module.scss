@@ -3,6 +3,7 @@
 .hero {
   height: auto;
   min-height: 100%;
+
 }
 
 .title {
@@ -38,4 +39,27 @@
 
 .bold {
   font-weight: bold;
+}
+
+.swiper{
+
+
+    img{
+      width: 80vw; 
+      height: 30vh; 
+      object-fit: scale-down;
+    }
+    margin-bottom: 1.5rem;
+  }
+
+.imgText{
+  font-family: 'Righteous', cursive;
+  color: #e74c3c;
+  position: absolute;
+  z-index: 999;
+  bottom: -60px;
+  left: 0px;
+  font-size: 3rem;
+  font-weight: bold;
+  padding: 10px;
 }

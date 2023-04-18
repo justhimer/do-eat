@@ -21,6 +21,7 @@ import {
   IonToolbar,
   setupIonicReact
 } from '@ionic/react';
+import { useKeyboardState } from '@ionic/react-hooks/keyboard';
 import { IonReactRouter } from '@ionic/react-router';
 import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
 /* Routing */
@@ -96,6 +97,8 @@ const App: React.FC = () => {
 
   // const userID = useSelector((state: RootState) => state.user.id);
   // const gymID = useSelector((state: RootState) => state.gym.id);
+
+  const { isOpen, keyboardHeight } = useKeyboardState();
 
   const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
   const isGymLoggedIn = useSelector((state: RootState) => state.gym.isAuthenticated)
@@ -277,7 +280,7 @@ const App: React.FC = () => {
 
             {/* invisible button for applying QR code css */}
             <IonTabButton disabled={false}>
-              <IonFab horizontal="center" className={TabStyle.reposition}>
+              {/* <IonFab horizontal="center" className={TabStyle.reposition}>
                 {
                   isUserLoggedIn &&
                   <IonFabButton href="user-qr" className={TabStyle.button} translucent={true}>
@@ -296,7 +299,7 @@ const App: React.FC = () => {
                     <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
                   </IonFabButton>
                 }
-              </IonFab>
+              </IonFab> */}
             </IonTabButton>
 
             <IonTabButton tab="eat-tab" href={navigationSwitch('eat-tab')} nav-clear>
@@ -314,11 +317,26 @@ const App: React.FC = () => {
 
         </IonTabs>
 
-        {/* <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition}>
-              <IonFabButton className={TabStyle.button} translucent={true}>
-                <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-              </IonFabButton>
-            </IonFab> */}
+        <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition} hidden={isOpen}>
+        {
+                  isUserLoggedIn &&
+                  <IonFabButton routerLink="/user-qr" className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
+                {
+                  isGymLoggedIn &&
+                  <IonFabButton routerLink="/gym-qr" className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
+                {
+                  !isGymLoggedIn && !isUserLoggedIn &&
+                  <IonFabButton routerLink="/user-tab" className={TabStyle.button} translucent={true}>
+                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+                  </IonFabButton>
+                }
+            </IonFab>
 
       </IonReactRouter>
 

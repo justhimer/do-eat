@@ -79,11 +79,6 @@
 
 // Properties used for Do-Tab segment button
 .doWhere_segment {
-    ion-segment-button {
-        --color: #615c59;
-        --indicator-color: #e74c3c;
-        --color-checked: #e74c3c;
-    }
 
     /* Material Design styles */
     ion-segment-button.md {
@@ -98,6 +93,24 @@
         --color-checked: #fff;
         --border-radius: 20px;
     }
+
+    .segment-button-checked.ios::part(native) {
+        color: #fff;
+    }
+
+    ion-segment-button {
+        --color: #615c59;
+        --indicator-color: #e74c3c;
+
+
+    }
+
+
+    .segment-button-checked.md::part(native) {
+        color: #e74c3c;
+    }
+
+
 
 
 }
@@ -197,20 +210,20 @@
     }
 }
 
-.gymDoButton{
-    margin-bottom: 2rem ;
+.gymDoButton {
+    margin-bottom: 2rem;
 }
 
-.regForm{
+.regForm {
     color: #3b3836;
 
-    ion-radio-group{
+    ion-radio-group {
         display: flex;
         flex-direction: column;
         align-items: baseline;
     }
 
-    h5{
+    h5 {
         font-weight: bold;
     }
 }

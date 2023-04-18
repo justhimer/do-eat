@@ -1373,6 +1373,11 @@
   resolved "https://registry.npmjs.org/@ionic/pwa-elements/-/pwa-elements-3.1.1.tgz"
   integrity sha512-BoEX1pSrKn5dP4VQwaf8DweAmT4ynmpW+9f6oj/W1xLe54bmuXcUY07ziuZX1DLu50xHSYcO5qJ/dbYC/w6wgA==
 
+"@ionic/react-hooks@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@ionic/react-hooks/-/react-hooks-0.0.8.tgz#3d036aaeffbb7b136ac411c896e907fb59bdbf92"
+  integrity sha512-0U9hoPByJxd4/Sdx/uad2sDYCgQmQdG0nt+UNEzkk6IF4TjNVAQPcFQ6nJIc2oiUAMjaxzoLKmG8ziamuyfZaQ==
+
 "@ionic/react-router@7":
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-7.0.2.tgz#d298c5c631f1cef59ed0f0072b1d3dc3e93abaa1"
