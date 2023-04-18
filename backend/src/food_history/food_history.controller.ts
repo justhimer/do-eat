@@ -53,24 +53,31 @@ export class FoodHistoryController {
   async create(@Body() createFoodHistoryDto: CreateFoodHistoryDto) {
     try {
 
+      // console.log('createFoodHistoryDto: ', createFoodHistoryDto);
+      
       const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
+      // console.log('foodHistory: ', foodHistory);
 
       if (foodHistory) {
         let caloriesConsumed = 0;
+        // console.log('in food history');
         for (let foodOrder of createFoodHistoryDto.foodOrders) {
-          // console.log('foodOrder: ', foodOrder);
+          // console.log('create foodOrder: ', foodOrder);
           const createdOrder = await this.foodOrderService.createOrder({
             food_id: foodOrder.food_id,
             quantity: foodOrder.quantity,
             food_history_id: foodHistory.id
           });
+          // console.log('foodOrder created: ', createdOrder);
           if (createdOrder) {
             await this.foodCartService.deleteCart(foodOrder.cart_id);
-            const calories = await this.foodOrderService.totalCalories(foodOrder.cart_id);
+            // console.log('cart deleted');
+            const calories = await this.foodOrderService.totalCalories(createdOrder.id);
+            // console.log('calories: ', calories);
             caloriesConsumed += calories;
           }
         }
-        console.log('calorieConsumed: ', caloriesConsumed);
+        // console.log('calorieConsumed: ', caloriesConsumed);
         await this.calorieTransactionService.createTransaction({
           user_id: createFoodHistoryDto.user_id,
           calorie: caloriesConsumed,
