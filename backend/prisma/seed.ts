@@ -1108,7 +1108,7 @@ async function main() {
         update: {},
         create: {
             name: "Angela Ming",
-            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/Web-Bio.jpg",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/Web-Bio42.jpg",
             certifications: "Total Body Tabata™ HIIT Instructor ,Certified Personal Trainer, PFA Personal Fitness Trainer (Level II) Certification, NASM CERTIFIED PERSONAL TRAINER COURSE",
             franchise_id: franchise2.id,
         },
