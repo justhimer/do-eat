@@ -24,7 +24,7 @@ export function GymsEat() {
         <IonPage >
             <IonHeader >
                 <IonToolbar >
-                    <IonTitle>Gyms' "Eat"</IonTitle>
+                    <IonTitle>Gyms' Eat</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

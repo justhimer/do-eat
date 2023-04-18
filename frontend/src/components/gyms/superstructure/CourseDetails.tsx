@@ -102,7 +102,7 @@ export function CourseDetails() {
                     <IonNavLink routerDirection="back" slot="start">
                         <IonBackButton></IonBackButton>
                     </IonNavLink>
-                    <IonTitle>Gyms' "What"</IonTitle>
+                    <IonTitle>Gyms' What</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
