@@ -255,7 +255,13 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/is_subscribed')
   findIsSubscribed(@Request() req) {
-    return this.usersService.findIsSubscribed(req.id);
+    return this.usersService.findIsSubscribed(req.user.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/subscription_details')
+  findSubscriptionDetails(@Request() req) {
+    return this.usersService.findSubscriptionDetails(req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
