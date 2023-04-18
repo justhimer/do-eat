@@ -11,6 +11,6 @@ export class CreditTransactionController {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   async credit(@Request() req){
-    return await this.creditTransactionService.getUserCredits(req.id)
+    return await this.creditTransactionService.getUserCredits(req.user.id)
   }
 }
