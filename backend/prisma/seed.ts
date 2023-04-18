@@ -48,6 +48,18 @@ async function main() {
     //     },
     // })
 
+    const calorieTransactionAdd = await prisma.calorieTransactionType.create({
+        data: {
+            name: "add",
+        }
+    })
+
+    const calorieTransactionMinus = await prisma.calorieTransactionType.create({
+        data: {
+            name: "minus"
+        }
+    })
+
     const user1 = await prisma.users.upsert({
         where: { email: "user1@gmail.com" },
         update: {},
@@ -59,11 +71,13 @@ async function main() {
             sub_plan_id: 2,
             sub_plan_start: new Date(),
             sub_plan_end: new Date(Date.now() + 2592000000),
-            // CalorieTransaction: {
-            //     create: {
-                    
-            //     }
-            // }
+            CalorieTransaction: {
+                create: {
+                    calorie: 1000,
+                    transaction_type_id: 1,
+                    details: "default",
+                }
+            }
         }
     })
 
@@ -1326,19 +1340,6 @@ async function main() {
             details: "test add"
         }
     })
-
-    const calorieTransactionAdd = await prisma.calorieTransactionType.create({
-        data: {
-            name: "add",
-        }
-    })
-
-    const calorieTransactionMinus = await prisma.calorieTransactionType.create({
-        data: {
-            name: "minus"
-        }
-    })
-
 
 
 }
