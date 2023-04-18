@@ -73,7 +73,7 @@ export function CoursesItem(props: CoursesInterface) {
                     <IonCardHeader>
                         <br />
                         <IonCardSubtitle>{props.franchise}</IonCardSubtitle>
-                        <IonCardTitle>{props.name}</IonCardTitle>
+                        <IonCardTitle >{props.name}</IonCardTitle>
                         <IonCardSubtitle>{props.gym}</IonCardSubtitle>
                         <IonCardSubtitle>{format(new Date(props.time), "p")} | {props.duration} min</IonCardSubtitle>
                     </IonCardHeader>
