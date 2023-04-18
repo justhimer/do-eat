@@ -26,6 +26,10 @@ ion-list {
     --ion-item-background: #cfc1ac;
 }
 
+.list-md {
+    --ion-item-background: none;
+}
+
 ion-item {
     --background: #cfc1ac;
     --color: black;
