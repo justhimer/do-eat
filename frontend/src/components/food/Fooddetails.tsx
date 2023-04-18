@@ -166,7 +166,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                     </div>
                     <IonGrid>
                         <IonRow>
-                            <IonCol><IonButton id="Favourite-toast" fill="solid" expand='block'>♡</IonButton></IonCol>
+                            {/* <IonCol><IonButton id="Favourite-toast" fill="solid" expand='block'>♡</IonButton></IonCol> */}
                             {/* <IonToast trigger="Favourite-toast" message="Added to Favourite" duration={1000}></IonToast> */}
                             <IonCol><IonButton id="Cart-toast" fill="solid" expand='block' onClick={() => addToCart()}>Add to Cart</IonButton></IonCol>
                             {/* <IonToast trigger="Cart-toast" message="Added to Cart" duration={1000}></IonToast> */}

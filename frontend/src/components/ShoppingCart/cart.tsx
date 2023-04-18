@@ -1,7 +1,7 @@
 import NotificationStyle from "../../scss/Notification.module.scss";
 import AppStyle from "../../scss/App.module.scss"
 
-import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow, useIonViewWillLeave } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { deleteCart, fetchAddItem, fetchAllCartItems, OrderDetails, updateCart } from "../../api/cartAPI";
@@ -45,14 +45,10 @@ export function ShoppingCart() {
 
     const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
-    const { data: myCalories, refetch } = useQuery({
+    const { data: myCalories, refetch: refetchMyCalories } = useQuery({
         queryKey: ["my_calories"],
         queryFn: fetchCalories,
     });
-
-    useIonViewWillEnter(() => {
-        refetchCart();
-    })
 
     const { data: cartFoods, isLoading, refetch: refetchCart } = useQuery({
         queryKey: ["cart"],
@@ -175,7 +171,7 @@ export function ShoppingCart() {
                 quantity: quantity,
             }
         })
-        console.log('newItems: ', newItems);   
+        console.log('newItems: ', newItems);
         saveCart.mutate(newItems);
     }
 
@@ -207,21 +203,10 @@ export function ShoppingCart() {
         }
     )
 
-    // const { data: orderDetails } = useQuery({
-    //     queryKey: ["cart"],
-    //     queryFn: async () => {
-    //         const orderDetails = await updateCart()
-    //         let newCounts = [];
-    //         for (let orderDetail of orderDetails) {
-    //             newCounts.push({
-    //                 id: food_id,
-    //                 quantity: orderDetail.quantity
-    //             })
-    //         }
-    //         return orderDetails;
-    //     }
-    // })
-
+    useIonViewWillLeave(() => {
+        refetchCart();
+        refetchMyCalories();
+    })
 
     return (
         <IonPage >
