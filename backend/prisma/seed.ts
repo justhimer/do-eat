@@ -121,19 +121,19 @@ async function main() {
     })
 
     const foodTypes = await prisma.foodTypes.upsert({
-        where: { name: "LowCarbs" },
+        where: { name: "Low Carbs" },
         update: {},
         create: {
-            name: "LowCarbs",
+            name: "Low Carbs",
             icon: "lowcarbs.png",
         },
     })
 
     const foodTypes2 = await prisma.foodTypes.upsert({
-        where: { name: "HighProtein" },
+        where: { name: "High Protein" },
         update: {},
         create: {
-            name: "HighProtein",
+            name: "High Protein",
             icon: "highprotein.png",
         },
     })
@@ -148,7 +148,7 @@ async function main() {
     })
 
     const foodTypes4 = await prisma.foodTypes.upsert({
-        where: { name: "WheyProtein" },
+        where: { name: "Whey Protein" },
         update: {},
         create: {
             name: "WheyProtein",

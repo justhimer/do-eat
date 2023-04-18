@@ -23,8 +23,8 @@ export class FoodTypesController {
   }
 
   @Get()
-  findAll() {
-    return this.foodTypesService.findAll();
+  async findAll() {
+    return await this.foodTypesService.findAll();
   }
 
   @Get(':id')

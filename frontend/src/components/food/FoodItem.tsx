@@ -1,5 +1,5 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol, IonList, IonItem } from '@ionic/react';
-import FoodStyle from '../scss/Food.module.scss'
+import FoodStyle from '../../scss/Food.module.scss'
 import { useHistory } from 'react-router-dom';
 export interface FoodItemProps {
     id: number;

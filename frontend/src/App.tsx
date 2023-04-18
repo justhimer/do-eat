@@ -24,7 +24,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { accessibilityOutline, barbellOutline, ellipse, fastFoodOutline, qrCode, qrCodeOutline, square, storefront, storefrontOutline, triangle } from 'ionicons/icons';
 /* Routing */
-import Fooddetails from './components/Fooddetails';
+import Fooddetails from './components/food/Fooddetails';
 import { UserProfile } from './components/user/UserProfile';
 import { UserSubscription } from './components/user/UserSubscription';
 import { UserSignupForm } from './components/auth/UserSignupForm';

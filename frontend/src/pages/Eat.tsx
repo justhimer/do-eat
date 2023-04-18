@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, } from '@ionic/react';
-import { FoodList } from '../components/FoodList';
+import { FoodList } from '../components/food/FoodList';
 import AppStyle from '../scss/App.module.scss';
 import { cartOutline } from 'ionicons/icons';
 
