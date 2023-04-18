@@ -12,6 +12,7 @@ import SwiperCore, { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useHistory } from 'react-router';
 import { barbell, batteryCharging, bicycle, fastFood, logoIonic } from 'ionicons/icons';
+import { useState } from 'react';
 SwiperCore.use([EffectCoverflow,Autoplay]);
 
 const slide_img = [
@@ -26,6 +27,9 @@ const slide_img = [
 
 
 const HomeTab: React.FC = () => {
+
+ 
+  const [halfWindow, setHalfWindow] = useState(window.innerWidth)
 
   const history = useHistory()
   const [springs, api] = useSpring(() => ({
@@ -44,8 +48,18 @@ const HomeTab: React.FC = () => {
   }
 
   useIonViewDidEnter(() => {
+    setHalfWindow(window.innerWidth)
     handleClick()
   })
+
+  const handleResize = ()=>{
+    console.log('resizing...');
+    
+    setHalfWindow(window.innerWidth)
+  }
+
+
+  window.addEventListener('resize',handleResize)
 
   console.log("host: ", process.env.REACT_APP_API_SERVER)
   return (
@@ -92,7 +106,9 @@ const HomeTab: React.FC = () => {
             return (
               <SwiperSlide key={i} >
                 <img src={img.img} alt="" />
-                <p className={AppStyle.imgText} style={{color:img.color}}>{img.text}</p>
+                <p 
+                className={halfWindow>808? AppStyle.imgTextWide : AppStyle.imgText} 
+                style={halfWindow>808? {color:img.color, left:halfWindow/4} : {color:img.color}}>{img.text}</p>
               </SwiperSlide>
             );
           })}

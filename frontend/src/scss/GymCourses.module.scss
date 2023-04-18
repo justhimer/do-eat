@@ -188,10 +188,13 @@
 
     .noCourse {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        text-align: center;
+        // align-items: center;
+        // text-align: center;
+        // width: inherit;
+        
+
     }
 
     h5 {
