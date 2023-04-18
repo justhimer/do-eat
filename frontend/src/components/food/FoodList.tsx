@@ -66,7 +66,8 @@ export function FoodList() {
                             description={food.description}
                             image={food.image}
                             calories={food.calories}
-                            allergens={food.calories} />
+                            allergens={food.calories}
+                            type={food.food_types.name} />
                     } else if (food.food_types.id === selectedFoodTypes) {
                         return <FoodItem
                             key={index}
@@ -75,7 +76,8 @@ export function FoodList() {
                             description={food.description}
                             image={food.image}
                             calories={food.calories}
-                            allergens={food.calories} />
+                            allergens={food.calories}
+                            type={food.food_types.name} />
                     }
                 })
             }

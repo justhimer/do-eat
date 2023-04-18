@@ -58,7 +58,12 @@ async function main() {
             subscribed: true,
             sub_plan_id: 2,
             sub_plan_start: new Date(),
-            sub_plan_end: new Date(Date.now() + 2592000000)
+            sub_plan_end: new Date(Date.now() + 2592000000),
+            // CalorieTransaction: {
+            //     create: {
+                    
+            //     }
+            // }
         }
     })
 

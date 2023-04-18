@@ -1,15 +1,28 @@
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, } from '@ionic/react';
+import { IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, useIonViewWillEnter, } from '@ionic/react';
 import { FoodList } from '../components/food/FoodList';
 import AppStyle from '../scss/App.module.scss';
-import { cartOutline } from 'ionicons/icons';
+import { cartOutline, flameSharp } from 'ionicons/icons';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { fetchCalories } from '../api/calorieTransactionAPIs';
 
-function EatTab(){
+function EatTab() {
+
+  const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+
+  const { data: calories, refetch } = useQuery({
+    queryKey: ["calories"],
+    queryFn: fetchCalories,
+  });
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Eat</IonTitle>
-          <IonIcon icon={cartOutline} slot="end"> </IonIcon>
+          {isUserLoggedIn && <IonLabel slot='end'> <IonIcon icon={flameSharp} /> {calories}</IonLabel>}
+          {/* <IonIcon icon={cartOutline} slot="end"> </IonIcon> */}
         </IonToolbar>
       </IonHeader>
 

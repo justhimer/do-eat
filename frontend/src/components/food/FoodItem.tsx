@@ -1,6 +1,8 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol, IonList, IonItem } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol, IonList, IonItem, IonChip, IonLabel, IonIcon } from '@ionic/react';
 import FoodStyle from '../../scss/Food.module.scss'
+import courseStyle from '../../scss/GymCourses.module.scss'
 import { useHistory } from 'react-router-dom';
+import { flameOutline, flameSharp } from 'ionicons/icons';
 export interface FoodItemProps {
     id: number;
     name: string;
@@ -8,6 +10,7 @@ export interface FoodItemProps {
     image: string;
     calories: number;
     allergens: string;
+    type: string;
 }
 
 function addPath(img: string) {
@@ -23,12 +26,20 @@ export function FoodItem(props: FoodItemProps) {
     return (
         <IonCard>
             <IonList>
+                <div className={courseStyle.cardTopRightChips}>
+                    <IonChip >
+                        <IonIcon icon={flameSharp} />
+                        <IonLabel>{props.calories}</IonLabel>
+                    </IonChip>
+                </div>
                 <IonItem onClick={() => toFoodDetails(props.id)}>
                     <img alt="food image" src={addPath(props.image)} className={FoodStyle.image} />
                     <IonCardHeader>
-                        <IonCardTitle className={FoodStyle.name || FoodStyle.calories}>{props.name} Calories:{props.calories}</IonCardTitle>
+                        <IonCardSubtitle>{props.type}</IonCardSubtitle>
+                        <IonCardSubtitle></IonCardSubtitle>
+                        <IonCardSubtitle></IonCardSubtitle>
+                        <IonCardTitle className={FoodStyle.name}>{props.name}</IonCardTitle>
                     </IonCardHeader>
-
                 </IonItem>
             </IonList>
         </IonCard >
