@@ -1,7 +1,7 @@
 import NotificationStyle from "../../scss/Notification.module.scss";
 import AppStyle from "../../scss/App.module.scss"
 
-import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow, useIonViewWillLeave } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { deleteCart, fetchAddItem, fetchAllCartItems, OrderDetails, updateCart } from "../../api/cartAPI";
@@ -45,14 +45,10 @@ export function ShoppingCart() {
 
     const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
-    const { data: myCalories, refetch } = useQuery({
+    const { data: myCalories, refetch: refetchMyCalories } = useQuery({
         queryKey: ["my_calories"],
         queryFn: fetchCalories,
     });
-
-    useIonViewWillEnter(() => {
-        refetchCart();
-    })
 
     const { data: cartFoods, isLoading, refetch: refetchCart } = useQuery({
         queryKey: ["cart"],
@@ -100,14 +96,6 @@ export function ShoppingCart() {
         }
         setTotalCalories(totalC);
     }
-
-    // useEffect(()=>{
-    //     let totalC = 0;
-    //     for (let count of counts) {
-    //         totalC += count.calorie * count.quantity;
-    //     }
-    //     setTotal(totalC);
-    // }, [counts])
 
     function onCheckout() {
         if (myCalories < totalCalories) {
@@ -160,7 +148,7 @@ export function ShoppingCart() {
                 refetchCart();
                 setGymID(0);
                 present({
-                    message: "Checkout Completed",
+                    message: "Foods Purchased",
                     duration: 1000,
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
@@ -169,78 +157,56 @@ export function ShoppingCart() {
         }
     )
 
-    const { data: orderDetails } = useQuery({
-        queryKey: ["cart"],
-        queryFn: async () => {
-            const orderDetails = await updateCart()
-            let newCounts = [];
-            for (let orderDetail of orderDetails) {
-                newCounts.push({
-                    id: food_id,
-                    quantity: orderDetail.quantity
-                })
-            }
-            return orderDetails;
-        }
-    })
-
-
-
-
     function onSave() {
-        // if (gymID === 0) {
-        //     present({
-        //         message: "Please select a gym",
-        //         duration: 1500,
-        //         position: "top",
-        //         cssClass: NotificationStyle.ionicToast,
-        //     });
-        //     return;
-        // }
-        // const orderDetails: OrderDetails = {
-        //     user_id: user_id,
-        //     food_id: food_id,
-        //     quantity: 1,
-        //     orderDetails.map((orderDetails: any) => {
-        //         let quantity = 0;
-        //         for (let count of counts) {
-        //             if (count.id === orderDetails.id) {
-        //                 quantity = count.quantity;
-        //             }
-        //         }
-        //         return {
-        //             user_id: user_id,
-        //             food_id: orderDetails.food_id,
-        //             quantity: quantity,
-        //         }
-        //     })
-        // };
-        // console.log('orderDetails: ', orderDetails);
-
-        // checkout.mutate(orderDetails);
+        const items = cartFoods;
+        const newItems = items.map((item: any) => {
+            let quantity = 0;
+            for (let count of counts) {
+                if (count.id === item.id) {
+                    quantity = count.quantity;
+                }
+            }
+            return {
+                cart_id: item.id,
+                quantity: quantity,
+            }
+        })
+        console.log('newItems: ', newItems);
+        saveCart.mutate(newItems);
     }
 
+    const saveCart = useMutation(
+        (items: {
+            cart_id: number
+            quantity: number,
+        }[]): any => {
+            const data = updateCart(items)
+            return data;
+        },
+        {
+            onSuccess: () => {
+                present({
+                    message: "Save Cart Success",
+                    duration: 1000,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            },
+            onError: () => {
+                present({
+                    message: "Save Cart Failed",
+                    duration: 1000,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            }
+        }
+    )
 
-    // const onsave = useMutation(
-    //     (orderDetails: OrderDetails): any => {
-    //         const data = deleteCart(orderDetails)
-    //         return data;
-
-    //     },
-    //     {
-    //         onSuccess: () => {
-    //             refetchCart();
-    //             setGymID(0);
-    //             present({
-    //                 message: "Save Completed",
-    //                 duration: 3000,
-    //                 position: "top",
-    //                 cssClass: NotificationStyle.ionicToast,
-    //             });
-    //         }
-    //     }
-    // )
-
+    useIonViewWillLeave(() => {
+        refetchCart();
+        refetchMyCalories();
+    })
 
     return (
         <IonPage >

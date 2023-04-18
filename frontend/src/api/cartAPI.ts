@@ -9,21 +9,41 @@ export interface OrderDetails {
 export async function fetchAddItem(item: {
     food_id: number
     quantity: number,
-
 }) {
     // console.log(item);
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
         method: "POST",
-        body: JSON.stringify(item),
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`,
             "Content-Type": 'application/json',
-        }
+        },
+        body: JSON.stringify(item),
     })
-    // console.log(res)
+    
+    if (res.ok) {
+        const data = await res.json();
+        return data;
+    } else {
+        throw new Error;
+    }
+
+}
+
+export async function updateCart(items: {
+    cart_id: number
+    quantity: number,
+}[]) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(items),
+    })
     const data = await res.json();
-    // console.log(data);
+
 
     return data;
 }
@@ -53,20 +73,5 @@ export async function deleteCart(id: number) {
         }
     })
     const data = await res.json();
-    return data;
-}
-
-
-
-export async function updateCart() {
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/cart/update`, {
-        method: "POST",
-        headers: {
-            "Content-Type": 'application/json',
-        }
-    })
-    const data = await res.json();
-
-
     return data;
 }

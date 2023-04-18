@@ -46,13 +46,17 @@ export class FoodCartService {
             },
         });
     }
-    async update(updateFoodCartDto: UpdateFoodCartDto, user_id: number) {
+    
+    async update(item: {
+        cart_id: number
+        quantity: number,
+    }) {
         return this.prisma.foodCart.update({
-            where: { id: user_id },
+            where: { 
+                id: item.cart_id
+            },
             data: {
-                user_id: user_id,
-                food_id: updateFoodCartDto.food_id,
-                quantity: updateFoodCartDto.quantity
+                quantity: item.quantity
             }
         });
     }
