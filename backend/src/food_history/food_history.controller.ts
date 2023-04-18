@@ -7,6 +7,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { isError } from 'lodash';
 import { FoodOrderService } from 'src/food_order/food_order.service';
 import { FoodCartService } from 'src/cart/foodCart.service';
+import { FoodsService } from 'src/foods/foods.service';
+import { CalorieTransactionService } from 'src/calorie-transaction/calorie-transaction.service';
 
 interface FoodTakenData {
   user_id: number
@@ -18,7 +20,8 @@ export class FoodHistoryController {
   constructor(
     private readonly foodHistoryService: FoodHistoryService,
     private readonly foodOrderService: FoodOrderService,
-    private readonly foodCartService: FoodCartService
+    private readonly foodCartService: FoodCartService,
+    private readonly calorieTransactionService: CalorieTransactionService
   ) { }
 
   @UseGuards(AuthGuard('jwt'))
@@ -53,8 +56,9 @@ export class FoodHistoryController {
       const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
 
       if (foodHistory) {
+        let caloriesConsumed = 0;
         for (let foodOrder of createFoodHistoryDto.foodOrders) {
-          console.log('foodOrder: ', foodOrder);
+          // console.log('foodOrder: ', foodOrder);
           const createdOrder = await this.foodOrderService.createOrder({
             food_id: foodOrder.food_id,
             quantity: foodOrder.quantity,
@@ -62,8 +66,17 @@ export class FoodHistoryController {
           });
           if (createdOrder) {
             await this.foodCartService.deleteCart(foodOrder.cart_id);
+            const calories = await this.foodOrderService.totalCalories(foodOrder.cart_id);
+            caloriesConsumed += calories;
           }
         }
+        console.log('calorieConsumed: ', caloriesConsumed);
+        await this.calorieTransactionService.createTransaction({
+          user_id: createFoodHistoryDto.user_id,
+          calorie: caloriesConsumed,
+          transaction_type_id: 2,  // 2 is minus
+          food_history_id: foodHistory.id
+        });
       }
 
       return { msg: 'create food history success' };

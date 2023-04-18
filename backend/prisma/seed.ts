@@ -73,7 +73,7 @@ async function main() {
             sub_plan_end: new Date(Date.now() + 2592000000),
             CalorieTransaction: {
                 create: {
-                    calorie: 1000,
+                    calorie: 5000,
                     transaction_type_id: 1,
                     details: "default",
                 }
@@ -91,7 +91,14 @@ async function main() {
             subscribed: true,
             sub_plan_id: 1,
             sub_plan_start: new Date(),
-            sub_plan_end: new Date(Date.now() + 2592000000)
+            sub_plan_end: new Date(Date.now() + 2592000000),
+            CalorieTransaction: {
+                create: {
+                    calorie: 3000,
+                    transaction_type_id: 1,
+                    details: "default",
+                }
+            }
         }
     })
 
@@ -105,7 +112,14 @@ async function main() {
             subscribed: true,
             sub_plan_id: 1,
             sub_plan_start: new Date(),
-            sub_plan_end: new Date(Date.now() + 2592000000)
+            sub_plan_end: new Date(Date.now() + 2592000000),
+            CalorieTransaction: {
+                create: {
+                    calorie: 1000,
+                    transaction_type_id: 1,
+                    details: "default",
+                }
+            }
         }
     })
 
