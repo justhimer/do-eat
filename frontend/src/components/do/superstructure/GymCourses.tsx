@@ -1,10 +1,7 @@
-import { IonBackButton, IonButton, IonCol, IonContent, IonHeader, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
-import UserMenuStyle from "../../scss/UserMenu.module.scss";
-import { useHistory } from "react-router";
+import { IonBackButton, IonContent, IonHeader, IonNavLink, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import { CoursesDatePick } from "../CoursesDatePick";
 import { CoursesPick } from "../CoursesPick";
-import { useState } from "react";
-import { CoursesInterface } from "../../../redux/userCourseSlice";
+
 
 
 export function GymCourses() {
@@ -20,7 +17,7 @@ export function GymCourses() {
                     <IonTitle>Do "What"</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent fullscreen class="ion-padding">
                 <CoursesDatePick />
                 <CoursesPick />
             </IonContent>

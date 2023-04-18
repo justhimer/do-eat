@@ -3,33 +3,36 @@ import { useQuery } from "@tanstack/react-query"
 import { getCoursesforGym, gymCourseData } from "../../api/coursesApi"
 import { CourseListItem } from "../../components/gyms/CourseListItem"
 import { useHistory } from "react-router"
-
+import GymCourseStyle from '../../scss/GymCourses.module.scss'
 
 
 
 export function GymsDo() {
 
-
-    const courses = useQuery({
-        queryKey:['coursesQuery'],
-        queryFn:()=>getCoursesforGym()
-    })
-
-
-    useIonViewWillEnter(()=>{
-        courses.refetch()
-    })
-    useIonViewDidLeave(()=>{
-        courses.remove()
-    })
     const history = useHistory()
-    
-    const createCourse = ()=>{
+    const noCourse = (
+        <div className='noCourse'>
+            <h6 className="title">No Courses Available</h6>
+            <img src={`./assets/no_course/Yoga.png`} />
+            <h5>Let's start by creating a new Course!</h5>
+        </div>
+    )
+
+    const createCourse = () => {
         history.push('/create-course')
     }
 
+    const courses = useQuery({
+        queryKey: ['coursesQuery'],
+        queryFn: () => getCoursesforGym()
+    })
 
-    
+    useIonViewWillEnter(() => {
+        courses.refetch()
+    })
+    useIonViewDidLeave(() => {
+        courses.remove()
+    })
 
     return (
         <IonPage >
@@ -38,10 +41,10 @@ export function GymsDo() {
                     <IonTitle>Gyms' Do</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen class="ion-padding">
-            <IonButton expand="block" onClick={createCourse}>Add courses</IonButton>
-            {courses.data? courses.data.map((course: gymCourseData,index :number)=><CourseListItem key={index} {...course}/>) : <></>}
+            <IonContent fullscreen className={GymCourseStyle.coursePick + " ion-padding"}>
+                <IonButton expand="block" onClick={createCourse} className={GymCourseStyle.gymDoButton}>Add courses</IonButton>
+                {courses.data && courses.data.length > 0 ? courses.data.map((course: gymCourseData, index: number) => <CourseListItem key={index} {...course} />) : noCourse}
             </IonContent>
         </IonPage >
-)
+    )
 }

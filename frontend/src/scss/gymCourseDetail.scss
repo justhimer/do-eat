@@ -3,7 +3,7 @@ ion-radio::part(container) {
     height: 30px;
     
     border-radius: 8px;
-    border: 2px solid #ddd;
+    border: 2px solid #3b3836;
   }
   
   ion-radio::part(mark) {
@@ -14,7 +14,7 @@ ion-radio::part(container) {
   }
   
   ion-radio.radio-checked::part(container) {
-    background: #6815ec;
+    background: #e74c3c;
     border-color: transparent;
   }
   

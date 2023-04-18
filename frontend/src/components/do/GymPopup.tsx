@@ -4,7 +4,7 @@ import { GymPopupInterface } from './superstructure/GymConfirmation';
 
 export function GymPopup(props: GymPopupInterface) {
     return (
-            <IonCard>
+            <IonCard class='ion-padding'>
                 <div onClick={props.dismiss}></div>
                 <IonCardHeader>
                     <IonCardTitle>{props.name}</IonCardTitle>
@@ -44,7 +44,7 @@ export function GymPopup(props: GymPopupInterface) {
                     
                 </IonGrid>
 
-                <IonButton fill="clear" onClick={props.join}>Confirm Register</IonButton>
+                <IonButton expand='block' onClick={props.join}>Confirm Register</IonButton>
             </IonCard>
 
     )

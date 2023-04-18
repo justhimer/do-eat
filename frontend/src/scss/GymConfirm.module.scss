@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 .icon_container {
@@ -27,6 +26,10 @@
     --background: #e5ddd1;
     --color: #3b3836;
     --box-shadow: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu_list {
@@ -40,26 +43,29 @@
     --background: #e5ddd1;
     --border-style: none;
 }
+
 .item {
     --background: #e5ddd1;
     --border-style: none;
     border-bottom: solid 1px #948f8d;
 }
-.itemHead{
+
+.itemHead {
     --background: #e5ddd1;
     --border-style: none;
     border-bottom: solid 1px #948f8d;
-    text-align: center;    
+    text-align: center;
 }
 
-.Low{
+.Low {
     --background: green;
 }
-.Medium{
+
+.Medium {
     --background: orange;
 }
 
-.High{
+.High {
     --background: red;
 }
 
@@ -68,7 +74,7 @@
     margin: 1.5rem 0;
 }
 
-.popup{
+.popup {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,7 +84,7 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.menu{
+.menu {
     padding: 10px;
     height: 40%;
     width: 80%;
@@ -89,14 +95,15 @@
     display: block;
 }
 
-.menuBlock{
+.menuBlock {
     padding: 10px;
     text-align: center;
     width: auto;
     min-height: 20%;
     color: black;
 }
-.menuBottom{
+
+.menuBottom {
     position: absolute;
     bottom: 0;
     padding: 10px;
@@ -104,6 +111,21 @@
     width: 100%;
     min-height: 20%;
     color: black;
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
+}
+
+.confirmModal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --background: inherit;
+    // --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+
+    ion-content {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
 }

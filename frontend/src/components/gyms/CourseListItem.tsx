@@ -26,7 +26,7 @@ export function CourseListItem(props: gymCourseData) {
             <div className={courseStyle.cardSplitter}>
                 <div className={courseStyle.cardLeftComponent}>
                     <IonCardSubtitle>Default trainer:</IonCardSubtitle>
-                    <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/default_trainer.png`} className={courseStyle.cardThumbnail}></img>
+                    <img src={props.trainer_icon} className={courseStyle.cardThumbnail}></img>
                     <IonCardTitle>{props.trainer_name}</IonCardTitle>
                 </div>
                 <div className={courseStyle.cardContent}>
@@ -34,7 +34,7 @@ export function CourseListItem(props: gymCourseData) {
                         <IonCardTitle>{props.name}</IonCardTitle>
                         <IonCardSubtitle>Course: {props.course_type_name}</IonCardSubtitle>
                         <IonCardSubtitle>Duration: {props.duration} min</IonCardSubtitle>
-                        <IonCardSubtitle>Default quota: {props.default_quota} min</IonCardSubtitle>
+                        <IonCardSubtitle>Default quota: {props.default_quota} pax</IonCardSubtitle>
                     </IonCardHeader>
                 </div>
                 <div className={courseStyle.cardTopRightChips}>

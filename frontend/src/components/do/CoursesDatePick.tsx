@@ -5,13 +5,14 @@ import { addDays } from "date-fns";
 import dateStyles from "../DatePicker/DatePicker.module.scss"
 import { DateView } from "../DatePicker/Dateview";
 import { getDatesWithCourses } from "../../api/coursesSchedulesAPI";
+import { useIonViewWillEnter } from "@ionic/react";
 
 
 export function CoursesDatePick() {
-    const color = 'rgb(54, 105, 238)';
+    const primaryColor = 'rgb(97,92,89)';
     const startDate = new Date;
-    const numOfDays = 50
-    const labelFormat="MMMM"
+    const numOfDays = 14
+    const labelFormat = "MMMM"
 
 
     //#region To Get Gyms selected by user
@@ -25,7 +26,7 @@ export function CoursesDatePick() {
     //#endregion
 
     //#region Pull Dates with courses from server 
-    const { data: dates } = useQuery({
+    const { data: dates, refetch:datesRefetch } = useQuery({
         queryKey: ["datesQuery"],
         queryFn: () => getDatesWithCourses(gymArray()),
     })
@@ -39,41 +40,42 @@ export function CoursesDatePick() {
     }
     //#endregion
 
-    const next = (event:any) => {
+    useIonViewWillEnter(()=>{
+        datesRefetch()
+    })
+
+    const next = (event: any) => {
         event.preventDefault();
         const e = document.getElementById('datePickContainer');
-        if (e){
+        if (e) {
             const width = e.getBoundingClientRect().width;
             e!.scrollLeft += width - 60;
         }
 
     };
 
-    const prev = (event:any) => {
+    const prev = (event: any) => {
         event.preventDefault();
         const e = document.getElementById('datePickContainer');
-        if (e){
+        if (e) {
             const width = e.getBoundingClientRect().width
             e!.scrollLeft -= width - 60;
         }
     };
 
-    const primaryColor = color
-    const lastDate = addDays(startDate, numOfDays || 90);
+
+    const lastDate = addDays(startDate, numOfDays);
 
     let buttonzIndex = { zIndex: 2 };
-    let buttonStyle = { background: primaryColor };
+    let buttonStyle = { background: '#e74c3c' };
 
-    return <>
-        <div className={dateStyles.Container}>
-            <DateView primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} selectDate={startDate} marked={marked()} labelFormat={labelFormat}/>
-        </div>
-        <div className={dateStyles.buttonWrapper} style={buttonzIndex}>
-            <button className={dateStyles.button} style={buttonStyle} onClick={prev}>&lt;</button>
-        </div>
-        <div className={dateStyles.buttonWrapper} style={buttonzIndex}>
-            <button className={dateStyles.button} style={buttonStyle} onClick={next}>&gt;</button>
+    return <div className={dateStyles.Container}>
+        <DateView primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} selectDate={startDate} marked={marked()} labelFormat={labelFormat} />
+        <div className={dateStyles.buttonWrapper}>
+                <button className={dateStyles.button} style={buttonStyle} onClick={prev}>&lt;</button>
+                <button className={dateStyles.button} style={buttonStyle} onClick={next}>&gt;</button>
         </div>
 
-    </>
+
+    </div>
 }

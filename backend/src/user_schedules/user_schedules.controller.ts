@@ -33,17 +33,25 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('pending')
-  async findAllPending(@Request() req) {
+  @Get('coming')
+  async findAllComing(@Request() req) {
     const userId = req.user.id;
-    return await this.userSchedulesService.findAllUserCoursesPending(userId);
+    return await this.userSchedulesService.findAllUserCoursesComing(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('attended_or_absent')
-  async findAllAttendedOrAbsent(@Request() req) {
+  @Get('history')
+  async findAllHistory(@Request() req) {
     const userId = req.user.id;
-    return await this.userSchedulesService.findAllUserCoursesAttendedOrAbsent(userId);
+
+    // mark not pending classes absent
+    let absentIDs = await this.userSchedulesService.findAbsentClassIDs(userId);
+    for (let absentID of absentIDs) {
+      await this.userSchedulesService.labelAbsent(absentID.id);
+    }
+
+    // get classes again
+    return await this.userSchedulesService.findAllUserCoursesHistory(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -91,9 +99,10 @@ export class UserSchedulesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('cancel/:registeredCourse/')
+  @Delete('cancel/:registeredCourse')
   async cancel(@Request() req, @Param('registeredCourse', ParseIntPipe) registeredCourse: number) {
-    const userId = req.user.id
+    const userId = req.user.id;
+    // console.log('registeredCourse: ', registeredCourse);
     const userSchedule = await this.userSchedulesService.returnUserIdCourse(registeredCourse)
     if (userId == userSchedule.user_id) {
       const courseTime = new Date(await this.courseScheduleService.getDateTime(userSchedule.course_schedule_id))
@@ -102,7 +111,7 @@ export class UserSchedulesController {
       if (timeDifference <= 24) {
         throw new ForbiddenException('24 hours or less until course starts', { cause: new Error() });
       } else {
-        return await this.userSchedulesService.deleteUserFromCourse(registeredCourse)
+        return {data: await this.userSchedulesService.deleteUserFromCourse(registeredCourse)}
       }
 
     } else {
@@ -124,6 +133,13 @@ export class UserSchedulesController {
     return {
       msg: `User #${takeAttendanceData.user_id} has attended to class #${takeAttendanceData.course_schedule_id}`
     }
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Get('gym/find_attendance/:course_schedule_id')
+  async findAttendedUsers(@Param('course_schedule_id', ParseIntPipe) course_schedule_id: number) {
+    const attendedUsers = await this.userSchedulesService.findAllAttendedUsers(course_schedule_id);
+    return attendedUsers;
   }
 
 }

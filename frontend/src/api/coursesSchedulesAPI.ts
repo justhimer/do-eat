@@ -12,6 +12,17 @@ export interface ScheduleInterface extends ScheduleCreate {
     trainer_name: string;
 }
 
+export async function fetchCourseName(course_schedule_id: number) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/course-name/${course_schedule_id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+    })
+    const result = await res.json();
+    return result
+}
+
 export async function getDatesWithCourses(gyms: number[]) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/users/dates`, {
         method: 'POST',
@@ -87,6 +98,24 @@ export async function createCourseSchedule(reqData: ScheduleCreate) {
             "Content-Type": 'application/json',
             "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
         }, body: JSON.stringify(reqData)
+    });
+    const result = await res.json()
+    if (res.ok) {
+        return result
+    } else {
+        throw new Error(result)
+    }
+
+}
+
+export async function deleteCourseSchedule(schedule_id:number) {
+    console.log('deleting')
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/delete/${schedule_id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('gym_token')}`
+        }
     });
     const result = await res.json()
     if (res.ok) {

@@ -10,6 +10,21 @@ import { UpdateCourseSchedulesDTO } from './dto/UpdateCourseSchedules.dto';
 export class CourseSchedulesService {
     constructor(private readonly prisma: PrismaService) { }
 
+    async findCourseName(course_schedule_id: number) {
+        return await this.prisma.courseSchedules.findFirst({
+          select: {
+            courses: {
+                select: {
+                    name: true
+                }
+            }
+          },
+          where: {
+            id: course_schedule_id
+          }
+        })
+      }
+
     async quotaForThisCourse(exercise_id: number) {
         return (await this.prisma.courseSchedules.findFirstOrThrow({
             select: { quota: true },
@@ -69,7 +84,7 @@ export class CourseSchedulesService {
                     {
                         time: {
                             gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
-                            lt: addDays(zonedTimeToUtc(now, "Asia/Hong_Kong"), 1)
+                            lt: addHours(zonedTimeToUtc(now, "Asia/Hong_Kong"), 2)
                         }
                     }
                 ]
@@ -367,5 +382,47 @@ export class CourseSchedulesService {
         } catch (error) {
             throw new Error(error)
         }
+    }
+
+
+    async deleteCourseSchedule(schedule_id:number){
+        try {
+            const data = await this.prisma.userSchedule.findMany({
+                where:{
+                    course_schedule_id:schedule_id
+                },
+                select:{
+                    id:true
+                }
+            })
+            const userSchedule = []
+            data.forEach((elem)=>{
+                userSchedule.push(elem.id)
+            })
+            const deleteTransaction = this.prisma.creditTransaction.deleteMany({
+                where:{
+                    user_schedule_id:{
+                        in: userSchedule
+                    }
+                }
+            })
+            const deleteUserSchedule = this.prisma.userSchedule.deleteMany({
+                where:{
+                    course_schedule_id:schedule_id
+                }
+            })
+            const deleteCourseSchedule = this.prisma.courseSchedules.delete({
+                where:{
+                    id:schedule_id
+                }
+            })
+            const operation = await this.prisma.$transaction([
+                deleteTransaction,deleteUserSchedule,deleteCourseSchedule
+            ])
+            return {message: "successfully deleted"}
+        } catch (error) {
+            return new Error()
+        }
+        
     }
 }

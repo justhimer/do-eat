@@ -64,6 +64,12 @@
     --border-style: none;
 }
 
+.item_top_line {
+    --background: #e5ddd1;
+    --border-style: none;
+    border-top: solid 1px #948f8d;
+}
+
 .label {
     h2 {
         display: inline-block;
