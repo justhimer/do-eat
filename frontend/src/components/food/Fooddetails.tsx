@@ -10,6 +10,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchOneFoods } from '../../api/foodAPIs';
 import { cartOutline } from 'ionicons/icons';
 import { fetchAddItem, fetchAllCartItems } from '../../api/cartAPI';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 
 
@@ -25,6 +27,8 @@ export const Fooddetails = ({ match }: { match: any }) => {
     const [allergens, setAllergens] = useState('');
 
     const [present] = useIonToast();
+
+    const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
     // const [isOpenMoal, setisOpenMoal] = useState(false);
     // const [present, dismiss] = useIonLoading();
@@ -63,7 +67,20 @@ export const Fooddetails = ({ match }: { match: any }) => {
     //     modal.current?.dismiss();
     // }
 
-    const { mutate: addToCart } = useMutation({
+    function onAddtoCart() {
+        if (!isUserLoggedIn) {
+            present({
+                message: "Please Login",
+                duration: 1000,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
+            return;
+        }
+        addToCart.mutate();
+    }
+
+    const addToCart = useMutation({
         mutationFn: () => fetchAddItem({
             food_id: id,
             quantity: 1
@@ -87,6 +104,15 @@ export const Fooddetails = ({ match }: { match: any }) => {
     })
 
     const onCartIcon = () => {
+        if (!isUserLoggedIn) {
+            present({
+                message: "Please Login",
+                duration: 1000,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
+            return;
+        }
         history.push('/food-cart');
     }
 
@@ -119,7 +145,7 @@ export const Fooddetails = ({ match }: { match: any }) => {
                         <IonRow>
                             {/* <IonCol><IonButton id="Favourite-toast" fill="solid" expand='block'>♡</IonButton></IonCol> */}
                             {/* <IonToast trigger="Favourite-toast" message="Added to Favourite" duration={1000}></IonToast> */}
-                            <IonCol><IonButton id="Cart-toast" fill="solid" expand='block' onClick={() => addToCart()}>Add to Cart</IonButton></IonCol>
+                            <IonCol><IonButton id="Cart-toast" fill="solid" expand='block' onClick={onAddtoCart}>Add to Cart</IonButton></IonCol>
                             {/* <IonToast trigger="Cart-toast" message="Added to Cart" duration={1000}></IonToast> */}
                         </IonRow>
                     </IonGrid>

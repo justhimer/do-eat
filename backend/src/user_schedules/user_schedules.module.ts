@@ -10,12 +10,13 @@ import { UsersService } from 'src/users/users.service';
 import { CoursesService } from 'src/courses/courses.service';
 import { CourseSchedulesModule } from 'src/course_schedules/course_schedules.module';
 import { CourseSchedulesService } from 'src/course_schedules/course_schedules.service';
+import { CalorieTransactionService } from 'src/calorie-transaction/calorie-transaction.service';
 
 @Global()
 @Module({
   imports:[CreditTransactionModule,UsersModule,CoursesModule,CourseSchedulesModule],
   controllers: [UserSchedulesController],
-  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService,CourseSchedulesService],
+  providers: [UserSchedulesService,PrismaService,CreditTransactionService,UsersService,CoursesService,CourseSchedulesService, CalorieTransactionService],
   exports: [UserSchedulesService]
 })
 export class UserSchedulesModule {}

@@ -14,6 +14,26 @@ export class UserSchedulesService {
     private readonly courseScheduleService: CourseSchedulesService
   ) { }
 
+  async findCalorieGain(user_schedule_id: number) {
+    const calories = await this.prisma.userSchedule.findFirst({
+      select: {
+        course_schedule: {
+          select: {
+            courses: {
+              select: {
+                calories: true
+              }
+            }
+          }
+        }
+      },
+      where: {
+        id: user_schedule_id
+      }
+    })
+    return calories.course_schedule.courses.calories;
+  }
+
   async findUniqueUserScheduleID(user_id: number, course_schedule_id: number, gym_id: number) {
     const user_schedule_id = await this.prisma.userSchedule.findFirst({
       select: {
