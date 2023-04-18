@@ -11,7 +11,7 @@ export function GymsDo() {
 
     const history = useHistory()
     const noCourse = (
-        <div className='noCourse'>
+        <div className={GymCourseStyle.noCourse}>
             <h6 className="title">No Courses Available</h6>
             <img src={`./assets/no_course/Yoga.png`} />
             <h5>Let's start by creating a new Course!</h5>

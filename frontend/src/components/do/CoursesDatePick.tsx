@@ -70,7 +70,9 @@ export function CoursesDatePick() {
     let buttonStyle = { background: '#e74c3c' };
 
     return <div className={dateStyles.Container}>
+        <div className={dateStyles.dates}>
         <DateView primaryColor={primaryColor} startDate={startDate} lastDate={lastDate} selectDate={startDate} marked={marked()} labelFormat={labelFormat} />
+        </div>
         <div className={dateStyles.buttonWrapper}>
                 <button className={dateStyles.button} style={buttonStyle} onClick={prev}>&lt;</button>
                 <button className={dateStyles.button} style={buttonStyle} onClick={next}>&gt;</button>

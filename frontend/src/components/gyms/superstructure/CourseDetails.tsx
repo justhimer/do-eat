@@ -26,7 +26,7 @@ export function CourseDetails() {
     const [slotQuota, setSlotQuota] = useState<number>(selectedCourse.default_quota)
 
     const noCourse = (
-        <div className='noCourse'>
+        <div className={GymCourseStyle.noCourse}>
             <h6 className="title">No Timeslot Available</h6>
             <img src={`./assets/no_course/Yoga.png`} />
             <h5>Let's start by creating a new Timeslot!</h5>
