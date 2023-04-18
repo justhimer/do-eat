@@ -59,7 +59,7 @@ export function DoTab() {
     <IonPage >
       <IonHeader >
         <IonToolbar >
-          <IonTitle>Do "Where"</IonTitle>
+          <IonTitle>Do Where</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className={GymCourseStyle.doWhere_segment + ' ion-padding'}>
