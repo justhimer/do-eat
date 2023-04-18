@@ -5,31 +5,49 @@ import { SubscriptionPlan, getSubscriptionPlans } from "../../api/subscriptionsA
 import { SubscriptionCard } from "./SubscriptionCard";
 import { useState } from "react";
 import { getPaymentURL } from "../../api/paymentAPI";
+import { fetchIsUserSubscribed, fetchUserSubscriptionDetails } from "../../api/userAPIs";
+import { utcToZonedTime } from "date-fns-tz";
+import { UserSubscriptionItem } from "./UserSubscriptionItem";
 
 export function UserSubscription() {
 
-    const isSubscribed = true;
-    const subPlan = 'Basic';
-    const subPlanStart = '2023-03-31 14:04:52';
-    const subPlanEnd = '2023-04-30 14:04:52';
+    const { data: isSubscribed, refetch: refetchIsSubscribed } = useQuery({
+        queryKey: ["is_subscripted"],
+        queryFn: async () => {
+            const isSubscripted = await fetchIsUserSubscribed();
+            console.log('isSubscripted: ', isSubscripted);
+            return isSubscripted;
+        },
+    });
+
+    const { data: subscriptionDetails, refetch: refetchSubscriptionDetails } = useQuery({
+        queryKey: ["subscription_details"],
+        queryFn: async () => {
+            const subscriptionDetails = await fetchUserSubscriptionDetails();
+            console.log('subscriptionDetails: ', subscriptionDetails);
+            console.log(subscriptionDetails?.subPlan.updated_at);
+
+            return subscriptionDetails;
+        },
+    });
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [modalData, setModalData] = useState<null|SubscriptionPlan>(null)
+    const [modalData, setModalData] = useState<null | SubscriptionPlan>(null)
     const subscriptionPlans = useQuery({
         queryKey: ['subscriptionPlansQuery'],
         queryFn: getSubscriptionPlans
     })
 
-    function clickToModal (plan:SubscriptionPlan){
+    function clickToModal(plan: SubscriptionPlan) {
         setModalData(plan)
         setModalOpen(true)
     }
 
-    function paymentProceed(plan_id:number){
+    function paymentProceed(plan_id: number) {
         getPaymentURL(plan_id)
     }
 
-    useIonViewWillEnter(()=>{
+    useIonViewWillEnter(() => {
         subscriptionPlans.refetch()
     })
 
@@ -67,39 +85,42 @@ export function UserSubscription() {
                             reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
                             Eaque, dicta.
                         </p>
-                        <IonButton onClick={()=>paymentProceed(modalData!.id)}>Proceed To Payment</IonButton>
+                        <IonButton onClick={() => paymentProceed(modalData!.id)}>Proceed To Payment</IonButton>
                     </IonContent>
                 </IonModal>
                 <IonList className={UserMenuStyle.list}>
-                    <IonItem button detail={true} className={UserMenuStyle.item}>
-                        <IonLabel className={UserMenuStyle.label}>
-                            <h2 className={UserMenuStyle.width_50}>Subscription:</h2>
-                            <p className={UserMenuStyle.width_50}>{isSubscribed ? 'Yes' : 'No'}</p>
-                        </IonLabel>
-                    </IonItem>
-                    <IonItem button detail={true} className={UserMenuStyle.item}>
-                        <IonLabel className={UserMenuStyle.label}>
-                            <h2 className={UserMenuStyle.width_50}>Subscription Plan:</h2>
-                            <p className={UserMenuStyle.width_50}>{subPlan}</p>
-                        </IonLabel>
-                    </IonItem>
-                    <IonItem button detail={true} className={UserMenuStyle.item}>
-                        <IonLabel className={UserMenuStyle.label}>
-                            <h2 className={UserMenuStyle.width_30}>Plan Start:</h2>
-                            <p className={UserMenuStyle.width_70}>{subPlanStart}</p>
-                        </IonLabel>
-                    </IonItem>
-                    <IonItem button detail={true} className={UserMenuStyle.item_last}>
-                        <IonLabel className={UserMenuStyle.label}>
-                            <h2 className={UserMenuStyle.width_30}>Plan End:</h2>
-                            <p className={UserMenuStyle.width_70}>{subPlanEnd}</p>
-                        </IonLabel>
-                    </IonItem>
+
+                    {
+                        isSubscribed ?
+                            <IonItem button detail={true} className={UserMenuStyle.item}>
+                                <IonLabel className={UserMenuStyle.label}>
+                                    <h2 className={UserMenuStyle.width_50}>Subscription:</h2>
+                                    <p className={UserMenuStyle.width_50}>{isSubscribed ? 'Yes' : 'No'}</p>
+                                </IonLabel>
+                            </IonItem> :
+                            <IonItem button detail={true} className={UserMenuStyle.item_last}>
+                                <IonLabel className={UserMenuStyle.label}>
+                                    <h2 className={UserMenuStyle.width_50}>Subscription:</h2>
+                                    <p className={UserMenuStyle.width_50}>{isSubscribed ? 'Yes' : 'No'}</p>
+                                </IonLabel>
+                            </IonItem>
+                    }
+
+                    {
+                        subscriptionDetails &&
+                        <UserSubscriptionItem
+                            plan_name={subscriptionDetails.subPlan.name}
+                            plan_updated_at={subscriptionDetails.subPlan.updated_at}
+                            plan_duration={subscriptionDetails.subPlan.duration}
+                        />
+                    }
+
+
                 </IonList>
                 <IonItem>
                     <h5>Subscription Plans:</h5>
                 </IonItem>
-                {subscriptionPlans.data && subscriptionPlans.data.length > 0 ? subscriptionPlans.data.map((plan, index) => <SubscriptionCard key={index} {...plan} clickToModal={()=>clickToModal(plan)} />) : <h1>Loading...</h1>}
+                {subscriptionPlans.data && subscriptionPlans.data.length > 0 ? subscriptionPlans.data.map((plan, index) => <SubscriptionCard key={index} {...plan} clickToModal={() => clickToModal(plan)} />) : <h1>Loading...</h1>}
             </IonContent>
         </IonPage >
     )

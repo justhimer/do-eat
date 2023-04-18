@@ -29,6 +29,7 @@ export class FoodsService {
         name: true,
         food_types: {
           select: {
+            id: true,
             name: true,
           },
         },

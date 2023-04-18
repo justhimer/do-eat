@@ -3,12 +3,12 @@ import { IonGrid, IonRow, IonCol, IonPage, IonHeader, IonToolbar, IonTitle, IonC
 import React, { useEffect, useRef, useState } from 'react';
 import { FoodItemProps } from './FoodItem';
 import { IonButton } from '@ionic/react';
-import Fooddetailsstyle from '../scss/Fooddetails.module.scss'
+import Fooddetailsstyle from '../../scss/Fooddetails.module.scss'
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchOneFoods } from '../api/foodAPIs';
+import { fetchOneFoods } from '../../api/foodAPIs';
 import { cartOutline } from 'ionicons/icons';
-import { fetchAddItem, fetchAllCartItems } from '../api/cartAPI';
+import { fetchAddItem, fetchAllCartItems } from '../../api/cartAPI';
 
 
 

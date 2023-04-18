@@ -45,10 +45,10 @@ export class UsersService {
       where: {
         id: id,
       },
-      include:{
-        subPlan:{
-          select:{
-            unlimited:true
+      include: {
+        subPlan: {
+          select: {
+            unlimited: true
           }
         }
       }
@@ -86,6 +86,18 @@ export class UsersService {
       },
     });
     return result.subscribed;
+  }
+
+  async findSubscriptionDetails(id: number){
+    const result = await this.prisma.users.findFirst({
+      select: {
+        subPlan: true
+      },
+      where: {
+        id: id,
+      },
+    });
+    return result;
   }
 
   async findIsUnlimited(id: number): Promise<boolean> {

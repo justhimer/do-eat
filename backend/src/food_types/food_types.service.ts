@@ -17,8 +17,14 @@ export class FoodTypesService {
     return result;
   }
 
-  findAll() {
-    return `This action returns all foodTypes`;
+  async findAll() {
+    const data = await this.prisma.foodTypes.findMany({
+      select:{
+        id: true,
+        name: true,
+      }
+    })
+    return data;
   }
 
   findOne(id: number) {
