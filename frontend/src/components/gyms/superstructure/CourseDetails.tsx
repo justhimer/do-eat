@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ScheduleCreate, ScheduleInterface, createCourseSchedule, fetchGymSoloCourseSchedule } from "../../../api/coursesSchedulesAPI";
 import { ScheduleListItem } from "../ScheduleListItem";
 import NotificationStyle from "../../../scss/Notification.module.scss"
+import GymCourseStyle from "../../../scss/GymCourses.module.scss"
 
 import '../../../scss/gymCourseDetail.scss'
 
@@ -23,6 +24,16 @@ export function CourseDetails() {
     const [slotTime, setSlotTime] = useState<string>(formatISO(new Date()))
     const [slotTrainer, setSlotTrainer] = useState<number>(selectedCourse.default_trainer_id)
     const [slotQuota, setSlotQuota] = useState<number>(selectedCourse.default_quota)
+
+    const noCourse = (
+        <div className='noCourse'>
+            <h6 className="title">No Timeslot Available</h6>
+            <img src={`./assets/no_course/Yoga.png`} />
+            <h5>Let's start by creating a new Timeslot!</h5>
+        </div>
+    )
+
+
     const courseSchedules = useQuery({
         queryKey: ['scheduleQuery'],
         queryFn: () => fetchGymSoloCourseSchedule(selectedCourse.course_id)
@@ -132,9 +143,10 @@ export function CourseDetails() {
                         ></IonInput>
                     </IonContent>
                 </IonModal>
+
                 <CourseForm mode='PUT' />
                 <IonButton expand="block" id="open-modal">Add Timeslot </IonButton>
-                {courseSchedules.data && courseSchedules.data.length > 0 ? courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot} />) : <h5>No schedule set for course</h5>}
+                {courseSchedules.data && courseSchedules.data.length > 0 ? courseSchedules.data.map((timeslot: ScheduleInterface, index: number) => <ScheduleListItem key={index} {...timeslot} refetch={()=>courseSchedules.refetch()}/>) : <div className={GymCourseStyle.coursePick}>{noCourse}</div>}
             </IonContent>
         </IonPage >
     )

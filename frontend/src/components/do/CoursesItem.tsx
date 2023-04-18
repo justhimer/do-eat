@@ -36,9 +36,13 @@ export function CoursesItem(props: CoursesInterface) {
     const dispatch = useDispatch()
 
     const changeData = () => {
-
-        dispatch(changeSelectedCourse(props))
-        history.push('/do-it')
+        if (passed){
+            notify()
+        }else{
+            dispatch(changeSelectedCourse(props))
+            history.push('/do-it')
+        }
+ 
     }
 
     const classSwitch = ()=>{
@@ -55,7 +59,7 @@ export function CoursesItem(props: CoursesInterface) {
         <IonCard id={`course_${props.course_id}`} onClick={changeData} className={classSwitch()}>
             <div className={courseStyle.cardSplitter}>
                 <div className={courseStyle.cardLeftComponent}>
-                    <img src={`${process.env.REACT_APP_API_SERVER}/file/trainers/default_trainer.png`} className={courseStyle.cardThumbnail}></img>
+                    <img src={props.trainer_icon} className={courseStyle.cardThumbnail}></img>
                     <IonCardTitle>{props.trainer_name}</IonCardTitle>
                 </div>
                 <div className={courseStyle.cardContent}>

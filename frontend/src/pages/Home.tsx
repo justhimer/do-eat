@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { Logo } from '../components/Logo';
 // import { homeApp } from '../homePageDetails';
 import AppStyle from '../scss/App.module.scss';
@@ -49,6 +49,7 @@ const HomeTab: React.FC = () => {
     handleClick()
   })
 
+  console.log("host: ", process.env.REACT_APP_API_SERVER)
   return (
     <IonPage >
       <IonHeader >
@@ -95,21 +96,17 @@ const HomeTab: React.FC = () => {
           </div>
           <div className="contentBlock contentBlock--two">
             <IonIcon icon={fastFood}></IonIcon>
-          </div>
-        </InfiniteLooper>
-
-        <animated.div
-          onClick={() => { history.push('/user-tab') }}
-          style={{
-            width: 80,
-            height: 80,
-            background: '#ff6d6d',
-            borderRadius: 8,
-            ...springs,
-          }}
-        >
-          test
-        </animated.div>
+            </div>
+          </InfiniteLooper>
+          
+          <animated.div
+            
+            style={{
+              ...springs,
+            }}
+          >
+            <IonButton onClick={()=>{history.push('/user-tab')}}>Start Your Journey Now!</IonButton>
+          </animated.div>
 
       </IonContent >
     </IonPage >

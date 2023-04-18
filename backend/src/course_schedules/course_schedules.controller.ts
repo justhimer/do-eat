@@ -1,14 +1,15 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req, Request, UseGuards } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { CourseSchedulesService } from './course_schedules.service';
 import { DatesWithCoursesDto } from './dto/DatesWithCourses.dto';
 import { CourseSchedules } from './entities/CourseSchedules.entities';
-import { format, isSameDay } from 'date-fns';
+import { differenceInDays, format, isSameDay } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { UserSchedulesService } from 'src/user_schedules/user_schedules.service';
 import { CourseSchedulesGymDto } from './dto/CourseScheduleGym.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateCourseSchedulesDTO } from './dto/CreateCourseSchedules.dto';
+import { isError } from 'lodash';
 
 
 @ApiTags('coursesSchedules') // to categorize in swagger
@@ -82,6 +83,26 @@ export class CourseSchedulesController {
       throw new Error(error)
     }
 
+  }
+
+  @UseGuards(AuthGuard('jwt_gym'))
+  @Delete('gym/delete/:schedule_id')
+  async deleteSchedule(@Req() req, @Param('schedule_id', ParseIntPipe) schedule_id){
+    console.log('received')
+    const time = await this.courseSchedulesService.getDateTime(schedule_id)
+    const test = differenceInDays(new Date(time),new Date()) 
+    console.log('test', test)
+    if (test<3){
+      throw new Error('Cannot Delete less than 3 days before')
+    }else{
+      const data = await this.courseSchedulesService.deleteCourseSchedule(schedule_id)
+      if (isError(data)){
+        throw new Error()
+      }else{
+        return data
+      }
+    }
+    
   }
 
 }

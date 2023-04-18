@@ -1,66 +1,216 @@
-.courseContainer{
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.courseContainer {
     height: auto;
     min-height: 60vh;
 }
-.courseList{
+
+.courseList {
     height: auto;
 }
 
-.itemContainer{
+.itemContainer {
     height: auto;
     min-height: 3vh;
 }
-.cardSplitter{
+
+.cardSplitter {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
-.cardLeftComponent{
+
+.cardLeftComponent {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 30%;
     text-align: center;
 }
-.cardThumbnail{
+
+.cardThumbnail {
     max-height: inherit;
     height: auto;
     width: auto;
     object-fit: contain;
     border-radius: 100%;
 }
-.cardContent{
+
+.cardContent {
     width: 70%;
     display: flex;
     justify-content: center;
 }
-.cardTopRightChips{
+
+.cardTopRightChips {
     position: absolute;
     z-index: 3;
     top: 5px;
     right: 2px;
 }
-.cardTopLeftChips{
+
+.cardTopLeftChips {
     position: absolute;
     z-index: 3;
     top: -10px;
     left: 2px;
 }
-.cardBottomChips{
+
+.cardBottomChips {
     position: absolute;
     z-index: 3;
     bottom: 5px;
     right: 2px;
 }
-.filledCourse{
+
+.filledCourse {
     filter: grayscale(1);
 
 }
-.bottomButtons{
+
+.bottomButtons {
     margin-top: auto;
     position: relative;
     bottom: 0;
     padding: 1vh 0;
+}
+
+// Properties used for Do-Tab segment button
+.doWhere_segment {
+    ion-segment-button {
+        --color: #615c59;
+        --indicator-color: #e74c3c;
+        --color-checked: #e74c3c;
+    }
+
+    /* Material Design styles */
+    ion-segment-button.md {
+        --color: #615c59;
+        --color-checked: #e74c3c;
+        --indicator-height: 4px;
+    }
+
+    /* iOS styles */
+    ion-segment-button.ios {
+        --color: #e74c3c;
+        --color-checked: #fff;
+        --border-radius: 20px;
+    }
+
+
+}
+
+.soloGym {
+
+    margin-bottom: 3px;
+    outline: 3px dashed #615c59;
+
+    img {
+        object-fit: cover;
+        width: inherit;
+        height: auto;
+    }
+
+
+    ion-label {
+        color: #e74c3c !important;
+        font-weight: bold;
+    }
+
+    ion-card-subtitle {
+        color: #615c59;
+    }
+
+}
+
+
+.selectedGymsDisplay_card {
+    height: 55vh;
+
+    ion-card-header {
+        height: fit-content;
+        border-bottom: 1px solid #615c59;
+    }
+
+    ion-card-content {
+        padding: 1rem 1rem;
+        height: 84%;
+        overflow: scroll;
+        text-align: center;
+    }
+}
+
+.googleMapBoundingClient {
+    text-align: center;
+
+    capacitor-google-map {
+        margin-top: 1rem;
+        display: inline-block;
+        width: 90vw;
+        height: 48vh;
+    }
+}
+
+.googleMapPopup {
+    --backdrop-opacity: 0.6;
+    --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
+    --color: white;
+    --width: 300px;
+
+    ion-content {
+        --background: #e5ddd1;
+
+        h5 {
+            color: #615c59;
+        }
+    }
+}
+
+.coursePick {
+    height: auto;
+    min-height: 60vh;
+
+
+    .noCourse {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    h5 {
+        font-family: 'Righteous', cursive;
+        color: #3b3836;
+        padding: 0 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    h6 {
+        font-family: 'Righteous', cursive;
+        color: #3b3836;
+        font-size: 2rem;
+        text-align: center;
+    }
+}
+
+.gymDoButton{
+    margin-bottom: 2rem ;
+}
+
+.regForm{
+    color: #3b3836;
+
+    ion-radio-group{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+    }
+
+    h5{
+        font-weight: bold;
+    }
 }

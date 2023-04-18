@@ -6,6 +6,7 @@ import {
     addMonths,
     differenceInMonths,
     format,
+    getMonth,
     isSameDay,
     lastDayOfMonth,
     startOfMonth
@@ -19,7 +20,7 @@ const DateView = ({startDate, lastDate, selectDate, primaryColor, labelFormat, m
     const dispatch = useDispatch()
     const [selectedDate, setSelectedDate] = useState(new Date(singleDate));
     const firstSection = {marginLeft: '40px'};
-    const selectedStyle = {fontWeight:"bold",width:"45px",height:"45px",borderRadius:"50%",border:`2px solid ${primaryColor}`,color:primaryColor};
+    const selectedStyle = {'font-weight':'bold', width:"50px",height:"50px",borderRadius:"50%",border:`3px solid #e5ddd1`,'background-color':'#e5ddd1' ,transform: `translateY(-10px)`};
     const labelColor = {color: primaryColor};
     const markedStyle = {color: "#8c3737", padding: "2px", fontSize: 12};
 
@@ -52,15 +53,17 @@ const DateView = ({startDate, lastDate, selectDate, primaryColor, labelFormat, m
 
         const months = [];
         let days = [];
+        const monthdif = getMonth(lastDate) - getMonth(startDate)
 
-        for (let i = 0; i <= differenceInMonths(lastDate, startDate); i++) {
+        for (let i = 0; i <= monthdif; i++) {
             let start, end;
             const month = startOfMonth(addMonths(startDate, i));
 
             start = i === 0 ? Number(format(startDate, dateFormat)) - 1 : 0;
-            end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
-
+            end = i === monthdif ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
+            console.log(`Start ${start} End ${end}`)
             for (let j = start; j < end; j++) {
+                console.log("running dates")
                 let currentDay = addDays(month, j);
                 
                 days.push(
@@ -100,19 +103,19 @@ const DateView = ({startDate, lastDate, selectDate, primaryColor, labelFormat, m
         dispatch(replaceDateSelection(format(day, "yyyy-MM-dd")))
     };
 
-    // useEffect(() => {
-    //     if (selectDate) {
-    //         if (!isSameDay(selectedDate, selectDate)) {
-    //             setSelectedDate(selectDate);
-    //             setTimeout(() => {
-    //                 let view = document.getElementById('selected');
-    //                 if (view) {
-    //                     view.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
-    //                 }
-    //             }, 20);
-    //         }
-    //     }
-    // }, [selectDate]);
+    useEffect(() => {
+        if (selectDate) {
+            if (!isSameDay(selectedDate, selectDate)) {
+                setSelectedDate(selectDate);
+                setTimeout(() => {
+                    let view = document.getElementById('selected');
+                    if (view) {
+                        view.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
+                    }
+                }, 20);
+            }
+        }
+    }, [selectDate]);
 
     return <React.Fragment>{renderDays()}</React.Fragment>
 }
