@@ -16,6 +16,10 @@ function EatTab() {
     queryFn: fetchCalories,
   });
 
+  useIonViewWillEnter(() => {
+    refetch()
+  })
+
   return (
     <IonPage>
       <IonHeader>

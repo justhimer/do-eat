@@ -1,6 +1,7 @@
 import NotificationStyle from "../../scss/Notification.module.scss";
+import AppStyle from "../../scss/App.module.scss"
 
-import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { deleteCart, fetchAddItem, fetchAllCartItems, OrderDetails, updateCart } from "../../api/cartAPI";
@@ -14,6 +15,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { gymAll } from "../../api/gymAPIs";
 import { CartSelectGymItems } from "./CartSelectGymItems";
+import { flameSharp } from "ionicons/icons";
+import { fetchCalories } from "../../api/calorieTransactionAPIs";
 
 // interface CheckoutDeatils {
 //     userId: number;
@@ -27,6 +30,7 @@ import { CartSelectGymItems } from "./CartSelectGymItems";
 
 interface Count {
     id: number,
+    calorie: number,
     quantity: number
 }
 
@@ -34,15 +38,23 @@ export function ShoppingCart() {
     const [gymID, setGymID] = useState(0);
     const [food_id] = useState(0);
     const [counts, setCounts] = useState<Count[]>([]);
+    const [totalCalories, setTotalCalories] = useState(0);
 
     const [present] = useIonToast();
     const user_id = useSelector((state: RootState) => state.user.id);
+
+    const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
+
+    const { data: myCalories, refetch } = useQuery({
+        queryKey: ["my_calories"],
+        queryFn: fetchCalories,
+    });
 
     useIonViewWillEnter(() => {
         refetchCart();
     })
 
-    const { data: cartFoods, refetch: refetchCart } = useQuery({
+    const { data: cartFoods, isLoading, refetch: refetchCart } = useQuery({
         queryKey: ["cart"],
         queryFn: async () => {
             const cartItems = await fetchAllCartItems()
@@ -51,11 +63,17 @@ export function ShoppingCart() {
             for (let cartItem of cartItems) {
                 newCounts.push({
                     id: cartItem.id,
+                    calorie: cartItem.foods.calories,
                     quantity: cartItem.quantity
                 })
             }
-            console.log('newcounts: ', newCounts)
+            // console.log('newcounts: ', newCounts)
             setCounts(newCounts);
+            let totalC = 0;
+            for (let count of newCounts) {
+                totalC += count.calorie * count.quantity;
+            }
+            setTotalCalories(totalC);
             return cartItems;
         },
     })
@@ -75,11 +93,36 @@ export function ShoppingCart() {
         setCounts(copyCounts);
     }
 
+    function changeTotalQuantity() {
+        let totalC = 0;
+        for (let count of counts) {
+            totalC += count.calorie * count.quantity;
+        }
+        setTotalCalories(totalC);
+    }
+
+    // useEffect(()=>{
+    //     let totalC = 0;
+    //     for (let count of counts) {
+    //         totalC += count.calorie * count.quantity;
+    //     }
+    //     setTotal(totalC);
+    // }, [counts])
+
     function onCheckout() {
+        if (myCalories < totalCalories) {
+            present({
+                message: "Not enough Calories",
+                duration: 1000,
+                position: "top",
+                cssClass: NotificationStyle.ionicToast,
+            });
+            return;
+        }
         if (gymID === 0) {
             present({
                 message: "Please select a gym",
-                duration: 1500,
+                duration: 1000,
                 position: "top",
                 cssClass: NotificationStyle.ionicToast,
             });
@@ -103,8 +146,7 @@ export function ShoppingCart() {
                 }
             })
         };
-        console.log('checkoutDeatils: ', checkoutDeatils);
-
+        // console.log('checkoutDeatils: ', checkoutDeatils);
         checkout.mutate(checkoutDeatils);
     }
 
@@ -119,7 +161,7 @@ export function ShoppingCart() {
                 setGymID(0);
                 present({
                     message: "Checkout Completed",
-                    duration: 3000,
+                    duration: 1000,
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
                 });
@@ -208,17 +250,17 @@ export function ShoppingCart() {
                         <IonBackButton default-href="/"></IonBackButton>
                     </IonButton>
                     <IonTitle>Cart</IonTitle>
+                    {isUserLoggedIn && <IonLabel slot='end'> <IonIcon icon={flameSharp} /> {myCalories}</IonLabel>}
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <IonCard>
                     <IonCardHeader>
-                        <IonCardTitle>Card Title</IonCardTitle>
-                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+                        <IonCardTitle>FOODS</IonCardTitle>
+                        {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
                     </IonCardHeader>
                     <IonCardContent>
                         <IonList>
-
                             {
                                 cartFoods && cartFoods.length > 0 && cartFoods.map((cartFood: any, index: number) => (
                                     <CartItem
@@ -229,26 +271,43 @@ export function ShoppingCart() {
                                         calories={cartFood.foods.calories}
                                         image={cartFood.foods.image}
                                         changeQuantity={changeQuantity}
+                                        changeTotalQuantity={changeTotalQuantity}
                                         refetch={refetchCart}
                                     // image={cartFood.foods.image}
                                     />
                                 ))
                             }
-
                         </IonList>
-                        <IonSelect aria-label="pickup-location" placeholder="Select Pickup Location" onIonChange={(event) => setGymID(parseInt(`${event.detail.value!}`))}>
-                            {
-                                gyms && gyms.length > 0 && gyms.map((gym: any, index: number) => (
-                                    <CartSelectGymItems
-                                        key={index}
-                                        gym_id={gym.id}
-                                        gym_name={gym.name}
-                                    />
-                                ))
-                            }
-                        </IonSelect>
-                        <IonButton onClick={onSave}>Save Cart</IonButton>
-                        <IonButton onClick={onCheckout}>Checkout</IonButton>
+
+                        <br />
+
+                        {
+                            cartFoods && cartFoods.length > 0 &&
+                            <div className={AppStyle.padding}>
+                                <IonLabel>Total Calories: {totalCalories}</IonLabel>
+                            </div>
+                        }
+
+                        <div className={AppStyle.padding}>
+                            <IonSelect aria-label="PICK" placeholder="Select Pickup Location"
+                                onIonChange={(event) => setGymID(parseInt(`${event.detail.value!}`))}>
+                                {
+                                    gyms && gyms.length > 0 && gyms.map((gym: any, index: number) => (
+                                        <CartSelectGymItems
+                                            key={index}
+                                            gym_id={gym.id}
+                                            gym_name={gym.name}
+                                        />
+                                    ))
+                                }
+                            </IonSelect>
+                        </div>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol><IonButton expand="block" onClick={onSave}>Save Cart</IonButton></IonCol>
+                                <IonCol><IonButton expand="block" onClick={onCheckout}>Checkout</IonButton></IonCol>
+                            </IonRow>
+                        </IonGrid>
                     </IonCardContent>
                 </IonCard>
             </IonContent>

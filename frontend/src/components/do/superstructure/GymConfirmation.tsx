@@ -124,7 +124,7 @@ export function GymConfirmation() {
                     <IonNavLink routerDirection="back" slot="start">
                         <IonBackButton></IonBackButton>
                     </IonNavLink>
-                    <IonTitle>Do "It"</IonTitle>
+                    <IonTitle>Do It</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
