@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRow, IonSpinner } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonRow, IonSpinner, RefresherEventDetail, useIonViewWillEnter } from "@ionic/react";
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
 import { fetchProfilePic } from "../../api/userAPIs";
@@ -25,12 +25,12 @@ export function UserMenu() {
         queryFn: fetchProfilePic,
     });
 
-    const { data: calories } = useQuery({
+    const { data: calories, refetch: refetchCalories } = useQuery({
         queryKey: ["calories"],
         queryFn: fetchCalories,
     });
 
-    const { data: credits } = useQuery({
+    const { data: credits, refetch: refetchCredits } = useQuery({
         queryKey: ["credits"],
         queryFn: fetchCredits,
     });
@@ -51,8 +51,25 @@ export function UserMenu() {
         history.push("/user-orders");
     }
 
+    useIonViewWillEnter(() => {
+        refetchCalories();
+        refetchCredits();
+    })
+
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetchCalories().then(() => {
+            refetchCredits().then(() => {
+                event.detail.complete();
+            });
+        });
+    }
+
     return (
         <>
+
+            <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                <IonRefresherContent></IonRefresherContent>
+            </IonRefresher>
 
             <div className={UserMenuStyle.icon_container}>
                 {isLoading ? (

@@ -11,8 +11,8 @@ function EatTab() {
 
   const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
 
-  const { data: calories, refetch } = useQuery({
-    queryKey: ["calories"],
+  const { data: userCalories, refetch, isError } = useQuery({
+    queryKey: ["eat_calories"],
     queryFn: fetchCalories,
   });
 
@@ -25,7 +25,7 @@ function EatTab() {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Eat</IonTitle>
-          {isUserLoggedIn && <IonLabel slot='end'> <IonIcon icon={flameSharp} /> {calories}</IonLabel>}
+          {userCalories && (<IonLabel slot='end'> {userCalories}</IonLabel>)}
           {/* <IonIcon icon={cartOutline} slot="end"> </IonIcon> */}
         </IonToolbar>
       </IonHeader>
@@ -36,6 +36,6 @@ function EatTab() {
 
     </IonPage>
   );
-};
+}
 
 export default EatTab;
