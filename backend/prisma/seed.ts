@@ -1,5 +1,6 @@
 import { PrismaClient, Gyms, Prisma } from "@prisma/client";
 import { hashPassword } from "../utils/hash";
+import { UserSchedule } from "src/user_schedules/entities/user_schedule.entity";
 
 const prisma = new PrismaClient();
 
@@ -1379,6 +1380,47 @@ async function main() {
             calories: 800,
             default_trainer_id: trainers4.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-02T09:00:00+08:00'),
+                        },
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-03T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-04T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-05T09:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-06T09:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-07T09:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers4.id,
+                            quota: 1,
+                            time: new Date('2023-04-08T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1387,7 +1429,7 @@ async function main() {
             name: "HIIT Beginner",
             credits: 1,
             course_type_id: courseTypes3.id,
-            gym_id: gym5.id,
+            gym_id: gym6.id,
             intensity_id: intensities1.id,
             duration: 60,
             calories: 450,
@@ -1461,8 +1503,49 @@ async function main() {
             intensity_id: intensities3.id,
             duration: 60,
             calories: 800,
-            default_trainer_id: trainers5.id,
+            default_trainer_id: trainers6.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-02T17:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-03T17:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-04T17:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-05T17:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-06T17:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-07T17:00:00+08:00')
+                        }
+                        ,{
+                            trainer_id: trainers6.id,
+                            quota: 1,
+                            time: new Date('2023-04-08T17:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1475,23 +1558,23 @@ async function main() {
             intensity_id: intensities1.id,
             duration: 60,
             calories: 450,
-            default_trainer_id: trainers6.id,
+            default_trainer_id: trainers8.id,
             default_quota: 20,
             courseSchedules: {
                 createMany: {
                     data: [
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-23T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-25T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-26T09:00:00+08:00')
                         }
@@ -1510,8 +1593,29 @@ async function main() {
             intensity_id: intensities2.id,
             duration: 60,
             calories: 600,
-            default_trainer_id: trainers6.id,
+            default_trainer_id: trainers7.id,
             default_quota: 20,
+            courseSchedules: {
+                createMany: {
+                    data: [
+                        {
+                            trainer_id: trainers7.id,
+                            quota: 20,
+                            time: new Date('2023-04-22T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers7.id,
+                            quota: 20,
+                            time: new Date('2023-04-23T09:00:00+08:00')
+                        },
+                        {
+                            trainer_id: trainers7.id,
+                            quota: 20,
+                            time: new Date('2023-04-27T09:00:00+08:00')
+                        }
+                    ]
+                }
+            }
         },
     })
 
@@ -1524,23 +1628,23 @@ async function main() {
             intensity_id: intensities3.id,
             duration: 60,
             calories: 800,
-            default_trainer_id: trainers6.id,
+            default_trainer_id: trainers8.id,
             default_quota: 20,
             courseSchedules: {
                 createMany: {
                     data: [
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-22T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-23T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers6.id,
+                            trainer_id: trainers8.id,
                             quota: 20,
                             time: new Date('2023-04-27T09:00:00+08:00')
                         }
@@ -1548,6 +1652,46 @@ async function main() {
                 }
             }
         },
+    })
+
+    const UserScheduleAddData = []
+    const calorieTransactionData = []
+    const coursesdata = await prisma.courseSchedules.findMany({
+        include:{
+            courses:{
+                select:{
+                    calories:true
+                }
+            }
+        },
+        where:{
+            OR:[
+                {course_id:course9.id},
+                {course_id:course6.id}
+            ]
+        }
+    })
+    coursesdata.map(elem=>{
+        UserScheduleAddData.push(
+            {
+                user_id: user1.id,
+                course_schedule_id:elem.id,
+                attendance_type_id: 1
+            }
+        )
+        calorieTransactionData.push(
+            {
+                user_id:user1.id,
+                calorie: elem.courses.calories,
+                transaction_type_id: calorieTransactionAdd.id,
+                details: "joined course"
+            }
+        )
+    })
+
+
+    const UserScheduleAdd = await prisma.userSchedule.createMany({
+        data: UserScheduleAddData
     })
     const creditTransactionAdd = await prisma.creditTransactionType.create({
         data: {
@@ -1570,6 +1714,9 @@ async function main() {
         }
     })
 
+    const calorieTransaction = await prisma.calorieTransaction.createMany({
+        data:calorieTransactionData
+    })
 
 }
 
