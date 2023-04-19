@@ -120,7 +120,7 @@ export function CourseDetails() {
                             </IonButtons>
                         </IonToolbar>
                     </IonHeader>
-                    <IonContent className="ion-padding">
+                    <IonContent className={GymCourseStyle.regForm + " ion-padding"}>
                         <IonDatetime id='select-time'
                             min={formatISO(addDays(new Date(), -1))}
                             max={formatISO(addDays(new Date(), 14))}
