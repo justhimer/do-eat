@@ -34,10 +34,8 @@ export function FoodList() {
     }
 
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-        refetchFoodTypes().then(() => {
-            refetchFoods().then(() => {
-                event.detail.complete();
-            })
+        refetchFoods().then(() => {
+            event.detail.complete();
         })
     }
 
