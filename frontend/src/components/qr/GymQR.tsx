@@ -57,15 +57,22 @@ export function GymQR() {
         }),
         {
             onSuccess: () => {
-                console.log('food taken');
                 present({
                     message: 'Food taken',
                     duration: 1500,
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
                 });
-            }
-        }
+            },
+            onError: () => {
+                present({
+                    message: 'No food taken',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            },
+        }, 
     )
 
     const takeAttendance = useMutation(
@@ -81,7 +88,15 @@ export function GymQR() {
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
                 });
-            }
+            },
+            onError: () => {
+                present({
+                    message: 'No attendance taken',
+                    duration: 1500,
+                    position: "top",
+                    cssClass: NotificationStyle.ionicToast,
+                });
+            },
         }
     )
 

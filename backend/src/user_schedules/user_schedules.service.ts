@@ -34,6 +34,24 @@ export class UserSchedulesService {
     return calories.course_schedule.courses.calories;
   }
 
+  async findCanUserTakeAttendance(user_id: number, course_schedule_id: number, gym_id: number) {
+    const canTakeAttendance = await this.prisma.userSchedule.findFirst({
+      select: {
+        id: true
+      },
+      where: {
+        user_id: user_id,
+        course_schedule_id: course_schedule_id,
+        course_schedule: {
+          courses: {
+            gym_id: gym_id
+          }
+        }
+      }
+    })
+    return !!canTakeAttendance;
+  }
+
   async findUniqueUserScheduleID(user_id: number, course_schedule_id: number, gym_id: number) {
     const user_schedule_id = await this.prisma.userSchedule.findFirst({
       select: {
@@ -206,10 +224,9 @@ export class UserSchedulesService {
   }
 
   async findAllAttendedUsers(course_schedule_id: number) {
-   return await this.prisma.userSchedule.findMany({
+    return await this.prisma.userSchedule.findMany({
       where: {
         course_schedule_id: course_schedule_id,
-        attendance_type_id: 2
       },
       select: {
         user_id: true,

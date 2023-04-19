@@ -125,12 +125,19 @@ export class UserSchedulesController {
   @Patch('gym/take_attendance')
   async takeAttendance(@Request() req, @Body() takeAttendanceData: TakeAttendanceData) {
     const gymID = req.user.id;
+    const canTakeAttendance = await this.userSchedulesService.findCanUserTakeAttendance(
+      takeAttendanceData.user_id,
+      takeAttendanceData.course_schedule_id,
+      gymID
+    );
+    if (!canTakeAttendance) {
+      throw new HttpException('No attendance to be taken', HttpStatus.BAD_REQUEST)
+    }
     const user_schedule_id = await this.userSchedulesService.findUniqueUserScheduleID(
       takeAttendanceData.user_id,
       takeAttendanceData.course_schedule_id,
       gymID
     );
-
     await this.userSchedulesService.takeAttendance(user_schedule_id);
     const calorieGained = await this.userSchedulesService.findCalorieGain(user_schedule_id);
     await this.calorieTransactionService.createTransaction({

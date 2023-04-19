@@ -96,6 +96,11 @@ export async function gymFoodTaken(foodTakenData: FoodTakenData) {
         },
         body: JSON.stringify(foodTakenData)
     })
-    const result = await res.json();
-    return result
+    console.log('res.ok: ', res.ok);
+    if (res.ok) {
+        const result = await res.json();
+        return result
+    } else {
+        throw new Error('cannot take food')
+    }
 }

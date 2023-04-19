@@ -30,6 +30,17 @@ export class FoodHistoryService {
     return orders;
   }
 
+  async checkIfUserCanTakeFood(user_id: number, gym_id: number) {
+    const food = await this.prisma.foodHistory.findFirst({
+      where: {
+        user_id: user_id,
+        gym_id: gym_id,
+        collection_status: false
+      }
+    })
+    return !!food;
+  }
+
   async findFoodsToBeCollectedForUser(user_id: number) {
     const foodsToBeCollected = await this.prisma.foodHistory.findMany({
       include: {
