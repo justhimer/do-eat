@@ -1,7 +1,7 @@
 import NotificationStyle from "../../scss/Notification.module.scss";
 import AppStyle from "../../scss/App.module.scss"
 
-import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow, useIonViewWillLeave } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow, useIonViewWillLeave, IonRefresher, IonRefresherContent, RefresherEventDetail } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { deleteCart, fetchAddItem, fetchAllCartItems, OrderDetails, updateCart } from "../../api/cartAPI";
@@ -209,6 +209,14 @@ export function ShoppingCart() {
         refetchMyCalories();
     })
 
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetchMyCalories().then(() => {
+            refetchCart().then(() => {
+                event.detail.complete();
+            })
+        })
+    }
+
     return (
         <IonPage >
             <IonHeader >
@@ -221,6 +229,10 @@ export function ShoppingCart() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
 
                 {cartFoods && cartFoods.length > 0 &&
                     <IonCard>
@@ -248,31 +260,31 @@ export function ShoppingCart() {
                                 }
                             </IonList>
                             <br />
-                                <>
-                                    <div className={AppStyle.padding}>
-                                        <IonLabel>Total Calories: {totalCalories}</IonLabel>
-                                    </div>
-                                    <div className={AppStyle.padding}>
-                                        <IonSelect aria-label="PICK" placeholder="Select Pickup Location"
-                                            onIonChange={(event) => setGymID(parseInt(`${event.detail.value!}`))}>
-                                            {
-                                                gyms && gyms.length > 0 && gyms.map((gym: any, index: number) => (
-                                                    <CartSelectGymItems
-                                                        key={index}
-                                                        gym_id={gym.id}
-                                                        gym_name={gym.name}
-                                                    />
-                                                ))
-                                            }
-                                        </IonSelect>
-                                    </div>
-                                    <IonGrid>
-                                        <IonRow>
-                                            <IonCol><IonButton expand="block" onClick={onSave}>Save Cart</IonButton></IonCol>
-                                            <IonCol><IonButton expand="block" onClick={onCheckout}>Checkout</IonButton></IonCol>
-                                        </IonRow>
-                                    </IonGrid>
-                                </>
+                            <>
+                                <div className={AppStyle.padding}>
+                                    <IonLabel>Total Calories: {totalCalories}</IonLabel>
+                                </div>
+                                <div className={AppStyle.padding}>
+                                    <IonSelect aria-label="PICK" placeholder="Select Pickup Location"
+                                        onIonChange={(event) => setGymID(parseInt(`${event.detail.value!}`))}>
+                                        {
+                                            gyms && gyms.length > 0 && gyms.map((gym: any, index: number) => (
+                                                <CartSelectGymItems
+                                                    key={index}
+                                                    gym_id={gym.id}
+                                                    gym_name={gym.name}
+                                                />
+                                            ))
+                                        }
+                                    </IonSelect>
+                                </div>
+                                <IonGrid>
+                                    <IonRow>
+                                        <IonCol><IonButton expand="block" onClick={onSave}>Save Cart</IonButton></IonCol>
+                                        <IonCol><IonButton expand="block" onClick={onCheckout}>Checkout</IonButton></IonCol>
+                                    </IonRow>
+                                </IonGrid>
+                            </>
                         </IonCardContent>
                     </IonCard>
                 }

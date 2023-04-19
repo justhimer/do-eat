@@ -1,4 +1,4 @@
-import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent } from "@ionic/react";
+import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, RefresherEventDetail } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoursesInNext24Hours } from "../../api/coursesSchedulesAPI";
 import { GymScheduleItem } from "./GymScheduleItem";
@@ -28,6 +28,12 @@ export function GymScheduleList() {
         refetch();
     }, [])
 
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetch().then(() => {
+            event.detail.complete();
+        })
+    }
+
     return (
         <IonPage >
             <IonHeader >
@@ -39,6 +45,9 @@ export function GymScheduleList() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
                 {
                     courses && courses.length > 0 && courses.map((course: any) => (
                         <GymScheduleItem

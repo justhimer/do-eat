@@ -6,7 +6,7 @@ import { fetchFoods } from "../../api/foodAPIs";
 import { NoResult } from "./../NoResult";
 import { fetchFoodTypes } from "../../api/foodTypeAPIs";
 import { FoodTypes } from "./FoodTypes";
-import { IonList, IonItem, IonSelect, IonSelectOption } from "@ionic/react";
+import { IonList, IonItem, IonSelect, IonSelectOption, IonRefresher, IonRefresherContent, RefresherEventDetail } from "@ionic/react";
 import { useState } from "react";
 
 
@@ -33,8 +33,17 @@ export function FoodList() {
         return;
     }
 
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetchFoods().then(() => {
+            event.detail.complete();
+        })
+    }
+
     return (
         <div>
+            <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                <IonRefresherContent></IonRefresherContent>
+            </IonRefresher>
             <div className={AppStyle.title} >Food List  </div>
 
             <IonList>
