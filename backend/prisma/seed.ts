@@ -15,7 +15,7 @@ async function main() {
         {
             name: "Premium",
             unlimited: true,
-            credits: 99999,
+            credits: 9999,
             fee: 5999,
             duration: 30,
         }
@@ -69,11 +69,11 @@ async function main() {
             password: await hashPassword('user1'),
             subscribed: true,
             sub_plan_id: 2,
-            sub_plan_start: new Date(),
+            sub_plan_start: new Date('2023-04-01T17:00:00+08:00'),
             sub_plan_end: new Date(Date.now() + 2592000000),
             CalorieTransaction: {
                 create: {
-                    calorie: 5000,
+                    calorie: 3000,
                     transaction_type_id: 1,
                     details: "default",
                 }
@@ -90,11 +90,11 @@ async function main() {
             password: await hashPassword('user2'),
             subscribed: true,
             sub_plan_id: 1,
-            sub_plan_start: new Date(),
+            sub_plan_start: new Date('2023-04-01T17:00:00+08:00'),
             sub_plan_end: new Date(Date.now() + 2592000000),
             CalorieTransaction: {
                 create: {
-                    calorie: 3000,
+                    calorie: 1500,
                     transaction_type_id: 1,
                     details: "default",
                 }
@@ -106,16 +106,16 @@ async function main() {
         where: { email: "user3@gmail.com" },
         update: {},
         create: {
-            email: "user3@gamil.com",
+            email: "user3@gmail.com",
             username: "user3",
             password: await hashPassword('user3'),
             subscribed: true,
             sub_plan_id: 1,
-            sub_plan_start: new Date(),
+            sub_plan_start: new Date('2023-04-01T17:00:00+08:00'),
             sub_plan_end: new Date(Date.now() + 2592000000),
             CalorieTransaction: {
                 create: {
-                    calorie: 1000,
+                    calorie: 0,
                     transaction_type_id: 1,
                     details: "default",
                 }
@@ -1513,6 +1513,8 @@ async function main() {
             details: "test add"
         }
     })
+
+
 
 
 }
