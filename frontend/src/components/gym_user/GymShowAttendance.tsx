@@ -2,7 +2,7 @@ import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import courseStyle from '../../scss/GymCourses.module.scss'
 
 import { useParams } from "react-router";
-import { gymFindAllAttendedUsers } from "../../api/userScheduleAPI";
+import { gymFindAllAttendance } from "../../api/userScheduleAPI";
 import { useQuery } from "@tanstack/react-query";
 import { GymShowAttendanceItem } from "./GymShowAttendanceItem";
 import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonCard, IonCardContent, IonList, IonItem, IonLabel, RefresherEventDetail, IonCardHeader, IonCardSubtitle, IonChip, IonCardTitle, useIonViewWillEnter } from "@ionic/react";
@@ -25,7 +25,7 @@ export function GymShowAttendance() {
     const { data: attendedUsers, refetch: refetchAttendedUsers } = useQuery({
         queryKey: ["attended_users"],
         queryFn: async () => {
-            const attendedUsers = await gymFindAllAttendedUsers(parseInt(param.course_schedule_id));
+            const attendedUsers = await gymFindAllAttendance(parseInt(param.course_schedule_id));
             // console.log('attendedUsers: ', attendedUsers);
             return attendedUsers;
         },
@@ -39,7 +39,7 @@ export function GymShowAttendance() {
         })
     }
 
-    useIonViewWillEnter(()=>{
+    useIonViewWillEnter(() => {
         refetchAttendedUsers();
     })
 
@@ -83,6 +83,7 @@ export function GymShowAttendance() {
                                     <GymShowAttendanceItem
                                         key={index}
                                         user_name={attendedUser.user.username}
+                                        attendance_status={attendedUser.attendance_type.details}
                                     />
                                 ))
                             }

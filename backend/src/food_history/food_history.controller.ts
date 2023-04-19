@@ -54,7 +54,7 @@ export class FoodHistoryController {
     try {
 
       // console.log('createFoodHistoryDto: ', createFoodHistoryDto);
-      
+
       const foodHistory = await this.foodHistoryService.createHistory(createFoodHistoryDto);
       // console.log('foodHistory: ', foodHistory);
 
@@ -127,14 +127,15 @@ export class FoodHistoryController {
   @UseGuards(AuthGuard('jwt_gym'))
   @Patch('gym/food_taken')
   async gymFoodTaken(@Req() req, @Body() foodTakenData: FoodTakenData) {
-    try {
       const gym_id = req.user.id;
       const user_id = foodTakenData.user_id;
+      const canTake = await this.foodHistoryService.checkIfUserCanTakeFood(user_id, gym_id);
+      // console.log('canTake: ', canTake);
+      if (!canTake) {
+        throw new HttpException('No food to be taken', HttpStatus.BAD_REQUEST)
+      }
       await this.foodHistoryService.takenFood(user_id, gym_id);
       return { msg: `User #${user_id} has taken all food from gym #${gym_id}` }
-    } catch (err) {
-      return new HttpException('Fail to take food', HttpStatus.BAD_REQUEST)
-    }
   }
 
 }

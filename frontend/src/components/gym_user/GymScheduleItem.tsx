@@ -70,7 +70,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
                         </IonItem>
                     </IonList>
                     <br />
-                    <IonButton expand="block" onClick={onShowAttendance}>Show Attendence</IonButton>
+                    <IonButton expand="block" onClick={onShowAttendance}>Show Attendance</IonButton>
                 </IonCardContent>
 
             </IonCard>

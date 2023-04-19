@@ -86,11 +86,15 @@ export async function gymTakeAttendance(takeAttendanceData: TakeAttendanceData) 
         },
         body: JSON.stringify(takeAttendanceData)
     })
-    const result = await res.json();
-    return result
+    if (res.ok) {
+        const result = await res.json();
+        return result
+    } else {
+        throw new Error('cannot take attendance')
+    }
 }
 
-export async function gymFindAllAttendedUsers(course_schedule_id: number) {
+export async function gymFindAllAttendance(course_schedule_id: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/${controllerName}/gym/find_attendance/${course_schedule_id}`, {
         method: 'GET',
         headers: {
