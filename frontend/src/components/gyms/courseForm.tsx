@@ -61,6 +61,7 @@ export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
         setCourseTrainer(selectedCourse.default_trainer_id)
         setCourseIntensity(selectedCourse.intensity_id);
         setCourseType(selectedCourse.course_type_id)
+        setTrainerPic(selectedCourse.trainer_icon)
     })
 
     const [courseName, setCourseName] = useState<string>(selectedCourse.name);
@@ -71,6 +72,7 @@ export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
     const [courseTrainer, setCourseTrainer] = useState<number>(selectedCourse.default_trainer_id)
     const [courseIntensity, setCourseIntensity] = useState<number>(selectedCourse.intensity_id);
     const [courseType, setCourseType] = useState<number>(selectedCourse.course_type_id)
+    const [trainerPic, setTrainerPic] = useState<string>(selectedCourse.trainer_icon)
 
     async function handleSignup(event: any) {
         event.preventDefault();
@@ -166,21 +168,21 @@ export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
 
             <form onSubmit={handleSignup}>
 
-            {
-                selectedCourse.trainer_icon? <div className={UserStyle.image_container}>
+            <div className={UserStyle.image_container}>
                 <img
-                    src={selectedCourse.trainer_icon} //change to image src later
+                    src={trainerPic} //change to image src later
                     className={UserStyle.image_box}
                     id="change_profile_pic" />
             </div>:
-            <></>
-            }
+
                 
 
                 <h5>Trainer</h5>
 
                 {trainerList.data && trainerList.data.length > 0 ?
-                    <IonRadioGroup value={courseTrainer} name="trainer_choice" onIonChange={(e) => { setCourseTrainer(e.detail.value) }}>
+                    <IonRadioGroup value={courseTrainer} name="trainer_choice" onIonChange={(e) => { 
+                        setTrainerPic((trainerList.data.find((i:any)=>i.id == e.detail.value)).icon)
+                        setCourseTrainer(e.detail.value) }}>
                         {trainerList.data.map((trainer: any, index: number) => <IonRadio key={index} value={trainer.id} labelPlacement="end">{trainer.name}</IonRadio>)}
                     </IonRadioGroup>
                     : <></>
