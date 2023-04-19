@@ -930,7 +930,7 @@ async function main() {
     ]
 
     const gym1 = await prisma.gyms.create({
-        data:{
+        data: {
             name: "PureFitness Causeway Bay",
             username: "pure_cwb",
             password: await hashPassword('pfcwb'),
@@ -1164,7 +1164,7 @@ async function main() {
         },
     })
     const trainers7 = await prisma.trainers.create({
-        data:{
+        data: {
             name: "Chris Hemsworth",
             icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/chris.jpg",
             certifications: "",
@@ -1172,14 +1172,14 @@ async function main() {
         }
     })
     const trainers8 = await prisma.trainers.create({
-        data:{
+        data: {
             name: "Dwayne Johnson",
             icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/dwayne.jpg",
             certifications: "",
             franchise_id: franchise3.id
         }
     })
-    
+
 
     const courseTypes1 = await prisma.courseTypes.upsert({
         where: { name: "Yoga" },
@@ -1561,15 +1561,23 @@ async function main() {
         }
     })
 
-    const creditTransaction = await prisma.creditTransaction.create({
+    const creditTransaction1 = await prisma.creditTransaction.create({
         data: {
-            credit: 10000,
+            credit: 0,
+            credit_transaction_type_id: creditTransactionAdd.id,
+            user_id: user1.id,
+            details: "test add"
+        }
+    })
+
+    const creditTransaction2 = await prisma.creditTransaction.create({
+        data: {
+            credit: 20,
             credit_transaction_type_id: creditTransactionAdd.id,
             user_id: user2.id,
             details: "test add"
         }
     })
-
 
 
 
