@@ -63,12 +63,13 @@ export function UserMenu() {
     useIonViewWillEnter(() => {
         refetchCalories();
         refetchCredits();
+        refetchIsCreditUnlimited();
     })
 
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
         refetchCalories().then(() => {
             refetchCredits().then(() => {
-                refetchIsCreditUnlimited().then(()=>{
+                refetchIsCreditUnlimited().then(() => {
                     event.detail.complete();
                 })
             });
