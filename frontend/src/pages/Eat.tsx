@@ -9,21 +9,21 @@ import { fetchCalories } from '../api/calorieTransactionAPIs';
 
 function EatTab() {
 
-  const { data: userCalories, refetch, isError } = useQuery({
-    queryKey: ["eat_calories"],
-    queryFn: fetchCalories,
-  });
+  // const { data: userCalories, refetch, isError } = useQuery({
+  //   queryKey: ["eat_calories"],
+  //   queryFn: fetchCalories,
+  // });
 
-  useIonViewWillEnter(() => {
-    refetch()
-  })
+  // useIonViewWillEnter(() => {
+  //   refetch()
+  // })
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Eat</IonTitle>
-          {userCalories && (<IonLabel slot='end'> <IonIcon icon={flameSharp} slot="end"></IonIcon>{userCalories}</IonLabel>)}
+          {/* {userCalories && (<IonLabel slot='end'> <IonIcon icon={flameSharp} slot="end"></IonIcon>{userCalories}</IonLabel>)} */}
           {/* <IonIcon icon={cartOutline} slot="end"> </IonIcon> */}
         </IonToolbar>
       </IonHeader>
