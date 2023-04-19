@@ -1356,7 +1356,7 @@ async function main() {
                         {
                             trainer_id: trainers4.id,
                             quota: 20,
-                            time: new Date('2023-04-20T17:00:00+08:00')
+                            time: new Date('2023-04-21T17:00:00+08:00')
                         },
                         {
                             trainer_id: trainers2.id,

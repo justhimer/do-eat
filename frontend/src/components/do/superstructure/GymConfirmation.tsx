@@ -92,9 +92,19 @@ export function GymConfirmation() {
     const containerClick = async () => {
         if (userData.data) {
             if (userData.data.sub_plan_id) {
-                if (creditData.data<selectedCourse.credits){
-                    notify('noCredit')
+                console.log("userData.data.unlimited", userData.data.subPlan.unlimited)
+                if (userData.data.subPlan.unlimited){
+                    setPopupBoolean(true)
                     return
+                }else{
+                    console.log("creditData.data<selectedCourse.credits",creditData.data<selectedCourse.credits)
+                    if (creditData.data<selectedCourse.credits){
+                        notify('noCredit')
+                        return
+                    }else{
+                        setPopupBoolean(true)
+                    return
+                    }
                 }
                 setPopupBoolean(true)
             } else {

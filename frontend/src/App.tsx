@@ -90,6 +90,8 @@ import { userAction } from './redux/userSlice';
 import { QR } from './components/qr/QR';
 import { UserPrivateRouter } from './components/private_routes/UserPrivateRoute';
 import { GymShowAttendance } from './components/gym_user/GymShowAttendance';
+import AppUrlListener from './components/AppUrlListener';
+
 
 setupIonicReact();
 
@@ -170,6 +172,7 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
+      <AppUrlListener></AppUrlListener>
         <IonTabs>
 
           <IonRouterOutlet>
