@@ -1676,7 +1676,7 @@ async function main() {
             {
                 user_id: user1.id,
                 course_schedule_id:elem.id,
-                attendance_type_id: 1
+                attendance_type_id: 2
             }
         )
         calorieTransactionData.push(
