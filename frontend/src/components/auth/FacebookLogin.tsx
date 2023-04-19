@@ -1,5 +1,6 @@
-import { IonButton } from "@ionic/react";
+import { IonButton, IonIcon } from "@ionic/react";
 import UserStyle from '../../scss/User.module.scss';
+import { logoFacebook } from "ionicons/icons";
 
 const onFacebookLogin = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -18,6 +19,6 @@ const onFacebookLogin = (event: React.MouseEvent) => {
 
 export function FacebookLogin() {
     return (
-        <IonButton onClick={onFacebookLogin} className={UserStyle.button}>Facebook Login</IonButton>
+        <IonButton onClick={onFacebookLogin} className={UserStyle.button}><IonIcon icon={logoFacebook}></IonIcon>Facebook Login</IonButton>
     )
 }
