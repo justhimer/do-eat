@@ -2,7 +2,8 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, Ion
 import { SubscriptionPlan } from "../../api/subscriptionsAPI";
 
 export interface SubscriptionChildCard extends SubscriptionPlan {
-    clickToModal: () => void
+    clickToModal: (plan: SubscriptionPlan) => void
+
 }
 
 
@@ -30,15 +31,22 @@ export function SubscriptionCard(props: SubscriptionChildCard) {
                                 </IonItem>
                             </>
                             :
+                            <>
                             <IonItem >
                                 <IonLabel>Add Credits:</IonLabel>
                                 <IonLabel>{props.credits} credits</IonLabel>
                             </IonItem>
+                            <IonItem >
+                                <IonLabel>Duration:</IonLabel>
+                                <IonLabel>{props.duration} days</IonLabel>
+                            </IonItem>
+                            </>
+                            
                         }
 
                     </IonList>
                     <br />
-                    <IonButton onClick={props.clickToModal} expand="block">Subscript</IonButton>
+                    <IonButton onClick={()=>props.clickToModal({id:props.id,name:props.name,unlimited:props.unlimited,credits:props.credits,fee:props.fee,duration:props.duration})} expand="block">Subscribe</IonButton>
                 </IonCardContent>
 
             </IonCard>

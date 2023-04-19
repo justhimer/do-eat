@@ -739,7 +739,7 @@ async function main() {
 
 
 
-    const districts1 = await prisma.districts.upsert({
+    const district1 = await prisma.districts.upsert({
         where: { name: "CausewayBay" },
         update: {},
         create: {
@@ -929,10 +929,8 @@ async function main() {
         }
     ]
 
-    const gym1 = await prisma.gyms.upsert({
-        where: { username: "pure_cwb" },
-        update: {},
-        create: {
+    const gym1 = await prisma.gyms.create({
+        data:{
             name: "PureFitness Causeway Bay",
             username: "pure_cwb",
             password: await hashPassword('pfcwb'),
@@ -942,7 +940,7 @@ async function main() {
             address: "Shop 101, 1/F, 1-3 Paterson Street, Causeway Bay, Hong Kong",
             google_position: { lat: 22.27847, lng: 114.18320 },
             franchise_id: franchise1.id,
-            district_id: districts1.id,
+            district_id: district1.id,
             GymFoodStock: {
                 createMany: {
                     data: foodData
@@ -951,10 +949,8 @@ async function main() {
         }
     })
 
-    const gym2 = await prisma.gyms.upsert({
-        where: { username: "pure_central" },
-        update: {},
-        create: {
+    const gym2 = await prisma.gyms.create({
+        data: {
             name: "PureFitness Central",
             username: "pure_central",
             password: await hashPassword('pfcentral'),
@@ -973,10 +969,8 @@ async function main() {
         }
     })
 
-    const gym3 = await prisma.gyms.upsert({
-        where: { username: "pure_wc" },
-        update: {},
-        create: {
+    const gym3 = await prisma.gyms.create({
+        data: {
             name: "PureFitness Wan Chai",
             username: "pure_wc",
             password: await hashPassword('pfwc'),
@@ -995,10 +989,8 @@ async function main() {
         }
     })
 
-    const gym4 = await prisma.gyms.upsert({
-        where: { username: "pure_tst" },
-        update: {},
-        create: {
+    const gym4 = await prisma.gyms.create({
+        data: {
             name: "PureFitness Tsim Sha Tsui",
             username: "pure_tst",
             password: await hashPassword('pftst'),
@@ -1017,10 +1009,8 @@ async function main() {
         }
     })
 
-    const gym5 = await prisma.gyms.upsert({
-        where: { username: "pure_mk" },
-        update: {},
-        create: {
+    const gym5 = await prisma.gyms.create({
+        data: {
             name: "PureFitness Monk Kok",
             username: "pure_mk",
             password: await hashPassword('pfmk'),
@@ -1039,10 +1029,8 @@ async function main() {
         }
     })
 
-    const gym6 = await prisma.gyms.upsert({
-        where: { username: "247_cwb" },
-        update: {},
-        create: {
+    const gym6 = await prisma.gyms.create({
+        data: {
             name: "24/7 Fitness Causeway Bay",
             username: "247_cwb",
             password: await hashPassword('247cwb'),
@@ -1050,7 +1038,58 @@ async function main() {
             address: "Shop 101, 1/F, 1-3 LeaGarden, Causeway Bay, Hong Kong",
             google_position: { lat: 22.28020809554962, lng: 114.1822722244828 },
             franchise_id: franchise2.id,
-            district_id: districts1.id,
+            district_id: district1.id,
+            GymFoodStock: {
+                createMany: {
+                    data: foodData
+                }
+            }
+        }
+    })
+    const gym7 = await prisma.gyms.create({
+        data: {
+            name: "24/7 Mongkok (Golden Era)",
+            username: "247_mk",
+            password: await hashPassword('247mk'),
+            no_close: true,
+            address: "7th Floor, Golden Era Plaza, 39-55 Sai Yee Street, Mongkok",
+            google_position: { lat: 22.318378665803944, lng: 114.17175293726268 },
+            franchise_id: franchise2.id,
+            district_id: district1.id,
+            GymFoodStock: {
+                createMany: {
+                    data: foodData
+                }
+            }
+        }
+    })
+    const gym8 = await prisma.gyms.create({
+        data: {
+            name: "Snap Fitness Tin Hau",
+            username: "sf_th",
+            password: await hashPassword('sfth'),
+            no_close: true,
+            address: "1/F Kiu Hing Mansion 14 Kings Road, Tin Hau Hong Kong Eastern",
+            google_position: { lat: 22.28295607090984, lng: 114.1924671612818 },
+            franchise_id: franchise3.id,
+            district_id: district1.id,
+            GymFoodStock: {
+                createMany: {
+                    data: foodData
+                }
+            }
+        }
+    })
+    const gym9 = await prisma.gyms.create({
+        data: {
+            name: "Snap Fitness Wan Chai",
+            username: "sf_wc",
+            password: await hashPassword('sfwc'),
+            no_close: true,
+            address: "1F, The Morrison 28 Yat Sin Street, Wan Chai Hong Kong Wan Chai",
+            google_position: { lat: 22.277800953346745, lng: 114.17939403123557 },
+            franchise_id: franchise3.id,
+            district_id: district3.id,
             GymFoodStock: {
                 createMany: {
                     data: foodData
@@ -1124,6 +1163,23 @@ async function main() {
             franchise_id: franchise2.id,
         },
     })
+    const trainers7 = await prisma.trainers.create({
+        data:{
+            name: "Chris Hemsworth",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/chris.jpg",
+            certifications: "",
+            franchise_id: franchise3.id
+        }
+    })
+    const trainers8 = await prisma.trainers.create({
+        data:{
+            name: "Dwayne Johnson",
+            icon: "https://doeat.s3.ap-southeast-1.amazonaws.com/dwayne.jpg",
+            certifications: "",
+            franchise_id: franchise3.id
+        }
+    })
+    
 
     const courseTypes1 = await prisma.courseTypes.upsert({
         where: { name: "Yoga" },
@@ -1165,7 +1221,7 @@ async function main() {
             gym_id: gym1.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calories: 200,
+            calories: 450,
             default_trainer_id: trainers2.id,
             default_quota: 20,
             courseSchedules: {
@@ -1200,7 +1256,7 @@ async function main() {
             gym_id: gym1.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calories: 300,
+            calories: 600,
             default_trainer_id: trainers2.id,
             default_quota: 20,
 
@@ -1212,10 +1268,10 @@ async function main() {
             name: "Yoga Advanced",
             credits: 3,
             course_type_id: courseTypes1.id,
-            gym_id: gym2.id,
+            gym_id: gym3.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calories: 400,
+            calories: 800,
             default_trainer_id: trainers2.id,
             default_quota: 20,
             courseSchedules: {
@@ -1247,10 +1303,10 @@ async function main() {
             name: "Pilates Beginner",
             credits: 1,
             course_type_id: courseTypes2.id,
-            gym_id: gym1.id,
+            gym_id: gym2.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calories: 200,
+            calories: 450,
             default_trainer_id: trainers4.id,
             default_quota: 20,
             courseSchedules: {
@@ -1282,10 +1338,10 @@ async function main() {
             name: "Pilates Intermediate",
             credits: 2,
             course_type_id: courseTypes2.id,
-            gym_id: gym4.id,
+            gym_id: gym2.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calories: 300,
+            calories: 600,
             default_trainer_id: trainers4.id,
             default_quota: 20,
             courseSchedules: {
@@ -1317,10 +1373,10 @@ async function main() {
             name: "Pilates Advanced",
             credits: 3,
             course_type_id: courseTypes2.id,
-            gym_id: gym5.id,
+            gym_id: gym4.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calories: 400,
+            calories: 800,
             default_trainer_id: trainers4.id,
             default_quota: 20,
         },
@@ -1331,10 +1387,10 @@ async function main() {
             name: "HIIT Beginner",
             credits: 1,
             course_type_id: courseTypes3.id,
-            gym_id: gym2.id,
+            gym_id: gym5.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calories: 200,
+            calories: 450,
             default_trainer_id: trainers5.id,
             default_quota: 20,
             courseSchedules: {
@@ -1366,10 +1422,10 @@ async function main() {
             name: "HIIT Intermediate",
             credits: 2,
             course_type_id: courseTypes3.id,
-            gym_id: gym3.id,
+            gym_id: gym6.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calories: 300,
+            calories: 600,
             default_trainer_id: trainers5.id,
             default_quota: 20,
             courseSchedules: {
@@ -1401,10 +1457,10 @@ async function main() {
             name: "HIIT Advanced",
             credits: 3,
             course_type_id: courseTypes3.id,
-            gym_id: gym6.id,
+            gym_id: gym7.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calories: 400,
+            calories: 800,
             default_trainer_id: trainers5.id,
             default_quota: 20,
         },
@@ -1415,10 +1471,10 @@ async function main() {
             name: "Boxing Beginner",
             credits: 1,
             course_type_id: courseTypes4.id,
-            gym_id: gym2.id,
+            gym_id: gym8.id,
             intensity_id: intensities1.id,
             duration: 60,
-            calories: 200,
+            calories: 450,
             default_trainer_id: trainers6.id,
             default_quota: 20,
             courseSchedules: {
@@ -1450,10 +1506,10 @@ async function main() {
             name: "Boxing Intermediate",
             credits: 2,
             course_type_id: courseTypes4.id,
-            gym_id: gym3.id,
+            gym_id: gym8.id,
             intensity_id: intensities2.id,
             duration: 60,
-            calories: 300,
+            calories: 600,
             default_trainer_id: trainers6.id,
             default_quota: 20,
         },
@@ -1464,10 +1520,10 @@ async function main() {
             name: "Boxing Advanced",
             credits: 3,
             course_type_id: courseTypes4.id,
-            gym_id: gym6.id,
+            gym_id: gym8.id,
             intensity_id: intensities3.id,
             duration: 60,
-            calories: 400,
+            calories: 800,
             default_trainer_id: trainers6.id,
             default_quota: 20,
             courseSchedules: {
