@@ -73,6 +73,7 @@ export function SelectedGymsDisplay(props: SelectedGymDisplayInterface) {
                             district={gym.district.name}
                             icon={""}
                             details={gym.address}
+                            selected={selectedGyms.some(i=>i.id===gym.id)}
                         />
                     ))
                 )}

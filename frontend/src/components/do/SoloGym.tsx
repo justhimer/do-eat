@@ -16,6 +16,7 @@ interface GymCardInterface {
     icon: string;
     details: string;
     id: number;
+    selected: boolean;
 }
 
 
@@ -38,10 +39,9 @@ export function SoloGym(props: GymCardInterface) {
         dispatch((toggleGymSelection({id:props.id, name:props.name})))
       }
     }
-
-
+    console.log(props.name ," ", props.selected)
     return (
-        <IonItem onClick={clickGym} lines='none' className={GymCourseStyle.soloGym}>
+        <IonItem onClick={clickGym} lines='none' className={GymCourseStyle.soloGym} style={props.selected? {"filter": "grayscale(60%)"} : {}}>
             <IonThumbnail slot="start">
               <img src='./assets/gym_image/default_gym_icon.png' />
             </IonThumbnail>
