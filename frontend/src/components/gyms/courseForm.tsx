@@ -105,6 +105,7 @@ export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
                     position: "top",
                     cssClass: NotificationStyle.ionicToast,
                 });
+                history.push('/gyms-do')
             },
             onError: (error) => {
                 present({
@@ -165,12 +166,16 @@ export function CourseForm(props: { mode: 'PUT' | 'POST' }) {
 
             <form onSubmit={handleSignup}>
 
-                <div className={UserStyle.image_container}>
-                    <img
-                        src={selectedCourse.trainer_icon} //change to image src later
-                        className={UserStyle.image_box}
-                        id="change_profile_pic" />
-                </div>
+            {
+                selectedCourse.trainer_icon? <div className={UserStyle.image_container}>
+                <img
+                    src={selectedCourse.trainer_icon} //change to image src later
+                    className={UserStyle.image_box}
+                    id="change_profile_pic" />
+            </div>:
+            <></>
+            }
+                
 
                 <h5>Trainer</h5>
 
