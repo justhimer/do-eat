@@ -9,8 +9,6 @@ import { fetchCalories } from '../api/calorieTransactionAPIs';
 
 function EatTab() {
 
-  const isUserLoggedIn = useSelector((state: RootState) => state.user.isAuthenticated);
-
   const { data: userCalories, refetch, isError } = useQuery({
     queryKey: ["eat_calories"],
     queryFn: fetchCalories,
@@ -25,7 +23,7 @@ function EatTab() {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Eat</IonTitle>
-          {userCalories && (<IonLabel slot='end'> <IonIcon icon={flameSharp} slot="end" />{userCalories}</IonLabel>)}
+          {userCalories && (<IonLabel slot='end'> <IonIcon icon={flameSharp} slot="end"></IonIcon>{userCalories}</IonLabel>)}
           {/* <IonIcon icon={cartOutline} slot="end"> </IonIcon> */}
         </IonToolbar>
       </IonHeader>

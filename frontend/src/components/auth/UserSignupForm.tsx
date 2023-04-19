@@ -101,7 +101,7 @@ export function UserSignupForm() {
                     dispatch(gymAction.logout());
                     dispatch(userAction.login(data));
                     present({
-                        message: 'User Login Success',
+                        message: 'User Signup Success',
                         duration: 1500,
                         position: "top",
                         cssClass: NotificationStyle.ionicToast,
@@ -109,7 +109,7 @@ export function UserSignupForm() {
                     history.push("/user-tab");
                 } else {
                     present({
-                        message: 'User Login Failed',
+                        message: 'Email registered',
                         duration: 1500,
                         position: "top",
                         cssClass: NotificationStyle.ionicToast,

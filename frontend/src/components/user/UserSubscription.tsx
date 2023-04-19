@@ -24,8 +24,8 @@ export function UserSubscription() {
         queryKey: ["subscription_details"],
         queryFn: async () => {
             const subscriptionDetails = await fetchUserSubscriptionDetails();
-            console.log('subscriptionDetails: ', subscriptionDetails);
-            console.log(subscriptionDetails?.subPlan.updated_at);
+            // console.log('subscriptionDetails: ', subscriptionDetails);
+            // console.log(subscriptionDetails?.subPlan.updated_at);
 
             return subscriptionDetails;
         },

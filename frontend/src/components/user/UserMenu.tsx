@@ -1,7 +1,7 @@
 import { IonButton, IonCol, IonGrid, IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonRow, IonSpinner, RefresherEventDetail, useIonViewWillEnter } from "@ionic/react";
 import { Logout } from "../auth/Logout";
 import { useHistory } from "react-router";
-import { fetchProfilePic } from "../../api/userAPIs";
+import { fetchProfilePic, fetchUserSubscriptionDetails } from "../../api/userAPIs";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -35,6 +35,15 @@ export function UserMenu() {
         queryFn: fetchCredits,
     });
 
+    const { data: isCreditUnlimited, refetch: refetchIsCreditUnlimited } = useQuery({
+        queryKey: ["is_credit_unlimited"],
+        queryFn: async () => {
+            const subscriptionDetails = await fetchUserSubscriptionDetails();
+            console.log('subscriptionDetails: ', subscriptionDetails);
+            return subscriptionDetails.subPlan.unlimited;
+        },
+    });
+
     const onProfile = () => {
         history.push("/user-profile");
     }
@@ -59,7 +68,9 @@ export function UserMenu() {
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
         refetchCalories().then(() => {
             refetchCredits().then(() => {
-                event.detail.complete();
+                refetchIsCreditUnlimited().then(()=>{
+                    event.detail.complete();
+                })
             });
         });
     }
@@ -87,7 +98,7 @@ export function UserMenu() {
             <IonGrid>
                 <IonRow>
                     <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Calories: {calories}</IonButton></IonCol>
-                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Credits: {credits}</IonButton></IonCol>
+                    <IonCol><IonButton expand="block" className={UserMenuStyle.button}>Credits: {isCreditUnlimited ? 'ထ' : credits}</IonButton></IonCol>
                 </IonRow>
 
                 <IonRow>
