@@ -93,7 +93,7 @@ export class UsersService {
       select: {
         sub_plan_start: true,
         sub_plan_end: true,
-        subPlan: true
+        subPlan: true,
       },
       where: {
         id: id,
