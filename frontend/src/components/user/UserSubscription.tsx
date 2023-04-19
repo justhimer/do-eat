@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { SubscriptionPlan, getSubscriptionPlans } from "../../api/subscriptionsAPI";
@@ -57,7 +57,7 @@ export function UserSubscription() {
         subscriptionPlans.remove()
     })
 
-
+    console.log(subscriptionDetails)
 
     return (
         <IonPage >
@@ -80,12 +80,19 @@ export function UserSubscription() {
                         </IonToolbar>
                     </IonHeader>
                     <IonContent className="ion-padding">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
-                            reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
-                            Eaque, dicta.
-                        </p>
-                        <IonButton onClick={() => paymentProceed(modalData!.id)}>Proceed To Payment</IonButton>
+                        <IonCardContent>
+                            <IonList>
+                                <IonItem>
+                                    <IonLabel>Plan:</IonLabel>
+                                    <IonLabel>{modalData?.name} Plan</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Cost:</IonLabel>
+                                    <IonLabel>{modalData?.fee} HKD</IonLabel>
+                                </IonItem>
+                            </IonList>
+                            <IonButton onClick={() => paymentProceed(modalData!.id)}>Proceed To Payment</IonButton>
+                        </IonCardContent>
                     </IonContent>
                 </IonModal>
                 <IonList className={UserMenuStyle.list}>
@@ -110,8 +117,8 @@ export function UserSubscription() {
                         subscriptionDetails &&
                         <UserSubscriptionItem
                             plan_name={subscriptionDetails.subPlan.name}
-                            plan_updated_at={subscriptionDetails.subPlan.updated_at}
-                            plan_duration={subscriptionDetails.subPlan.duration}
+                            plan_start={subscriptionDetails.sub_plan_start}
+                            plan_end={subscriptionDetails.sub_plan_end}
                         />
                     }
 

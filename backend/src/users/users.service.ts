@@ -91,6 +91,8 @@ export class UsersService {
   async findSubscriptionDetails(id: number){
     const result = await this.prisma.users.findFirst({
       select: {
+        sub_plan_start: true,
+        sub_plan_end: true,
         subPlan: true
       },
       where: {

@@ -28,7 +28,7 @@ export function ScheduleListItem(props:ScheduleListItemInterface) {
         },
         onError:()=>{
             present({
-                message: 'Error when deleting',
+                message: 'Cannot delete less than 3 Days before course',
                 duration: 1500,
                 position: 'top',
                 cssClass: NotificationStyle.ionicToast,

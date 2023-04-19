@@ -8,6 +8,11 @@ export async function fetchCalories() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
     });
-    const result = await res.json();
-    return result;
+
+    if (res.ok) {
+        const result = await res.json();
+        return result;
+    } else {
+        throw new Error;
+    }
 }

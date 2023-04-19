@@ -318,25 +318,25 @@ const App: React.FC = () => {
         </IonTabs>
 
         <IonFab vertical="bottom" horizontal="center" slot="fixed" className={TabStyle.reposition} hidden={isOpen}>
-        {
-                  isUserLoggedIn &&
-                  <IonFabButton routerLink="/user-qr" className={TabStyle.button} translucent={true}>
-                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-                  </IonFabButton>
-                }
-                {
-                  isGymLoggedIn &&
-                  <IonFabButton routerLink="/gym-qr" className={TabStyle.button} translucent={true}>
-                    <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
-                  </IonFabButton>
-                }
-                {
-                  !isGymLoggedIn && !isUserLoggedIn &&
-                  <IonFabButton routerLink="/user-tab" className={TabStyle.button} translucent={true}>
-                    <IonIcon aria-hidden="true" icon={logInOutline} style={{"font-size": "2rem" ,transform: "translateX(-2px)"}}></IonIcon>
-                  </IonFabButton>
-                }
-            </IonFab>
+          {
+            isUserLoggedIn &&
+            <IonFabButton routerLink="/user-qr" className={TabStyle.button} translucent={true}>
+              <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+            </IonFabButton>
+          }
+          {
+            isGymLoggedIn &&
+            <IonFabButton routerLink="/gym-qr" className={TabStyle.button} translucent={true}>
+              <IonIcon aria-hidden="true" icon={qrCodeOutline}></IonIcon>
+            </IonFabButton>
+          }
+          {
+            !isGymLoggedIn && !isUserLoggedIn &&
+            <IonFabButton routerLink="/user-tab" className={TabStyle.button} translucent={true}>
+              <IonIcon aria-hidden="true" icon={logInOutline} style={{ fontSize: "2rem", transform: "translateX(-2px)" }}></IonIcon>
+            </IonFabButton>
+          }
+        </IonFab>
 
       </IonReactRouter>
 

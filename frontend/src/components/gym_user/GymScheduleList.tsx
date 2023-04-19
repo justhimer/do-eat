@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCoursesInNext24Hours } from "../../api/coursesSchedulesAPI";
 import { GymScheduleItem } from "./GymScheduleItem";
 import { fetchCourseRemainingSlots } from "../../api/userScheduleAPI";
+import { NoResult } from "../NoResult";
 
 
 export function GymScheduleList() {
@@ -55,6 +56,7 @@ export function GymScheduleList() {
                         />
                     ))
                 }
+                {courses && courses.length === 0 && <NoResult />}
             </IonContent>
         </IonPage >
     )

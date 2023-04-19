@@ -10,10 +10,12 @@ export class CreditTransactionService {
         _sum: {
             credit: true
         },where:{
-            user_id:id,
-            credit_transaction_type: {
+            AND:[{
+                user_id:id
+            },{                credit_transaction_type: {
                 name:"add"
-            }
+            }}]
+            
         }
        }))._sum.credit || 0
        
@@ -21,10 +23,12 @@ export class CreditTransactionService {
         _sum: {
             credit: true
         },where:{
-            user_id:id,
-            credit_transaction_type: {
+            AND:[{
+                user_id:id
+            },{                credit_transaction_type: {
                 name:"minus"
-            }
+            }}]
+
         }
        }))._sum.credit || 0
 

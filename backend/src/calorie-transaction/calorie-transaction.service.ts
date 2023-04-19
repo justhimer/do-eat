@@ -12,10 +12,17 @@ export class CalorieTransactionService {
                 calorie: true
             },
             where: {
-                user_id: id,
-                transaction_type: {
-                    name: "add"
-                }
+                AND:[
+                    {
+                        user_id: id,
+                       
+                    },
+                    {
+                        transaction_type: {
+                            name: "add"
+                        }
+                    }
+                ]
             }
         }))._sum.calorie || 0
 
@@ -24,10 +31,17 @@ export class CalorieTransactionService {
                 calorie: true
             },
             where: {
-                user_id: id,
-                transaction_type: {
-                    name: "minus"
-                }
+                AND:[
+                    {
+                        user_id: id,
+                       
+                    },
+                    {
+                        transaction_type: {
+                            name: "minus"
+                        }
+                    }
+                ]
             }
         }))._sum.calorie || 0
 

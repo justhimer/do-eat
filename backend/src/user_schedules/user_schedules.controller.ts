@@ -9,6 +9,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { CourseSchedulesService } from 'src/course_schedules/course_schedules.service';
 import { differenceInHours } from 'date-fns';
+import { CalorieTransactionService } from 'src/calorie-transaction/calorie-transaction.service';
 
 
 interface TakeAttendanceData {
@@ -24,7 +25,8 @@ export class UserSchedulesController {
     private readonly creditService: CreditTransactionService,
     private readonly usersService: UsersService,
     private readonly coursesService: CoursesService,
-    private readonly courseScheduleService: CourseSchedulesService
+    private readonly courseScheduleService: CourseSchedulesService,
+    private readonly calorieTransactionService: CalorieTransactionService
   ) { }
 
   @Post('remaining/:course')
@@ -111,7 +113,7 @@ export class UserSchedulesController {
       if (timeDifference <= 24) {
         throw new ForbiddenException('24 hours or less until course starts', { cause: new Error() });
       } else {
-        return {data: await this.userSchedulesService.deleteUserFromCourse(registeredCourse)}
+        return { data: await this.userSchedulesService.deleteUserFromCourse(registeredCourse) }
       }
 
     } else {
@@ -128,8 +130,15 @@ export class UserSchedulesController {
       takeAttendanceData.course_schedule_id,
       gymID
     );
-    const attendanceTaken = await this.userSchedulesService.takeAttendance(user_schedule_id);
-    console.log('attendanceTaken: ', attendanceTaken);
+
+    await this.userSchedulesService.takeAttendance(user_schedule_id);
+    const calorieGained = await this.userSchedulesService.findCalorieGain(user_schedule_id);
+    await this.calorieTransactionService.createTransaction({
+      user_id: takeAttendanceData.user_id,
+      calorie: calorieGained,
+      transaction_type_id: 1,
+      user_schedule_id: user_schedule_id
+    });
     return {
       msg: `User #${takeAttendanceData.user_id} has attended to class #${takeAttendanceData.course_schedule_id}`
     }

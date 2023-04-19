@@ -1,6 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonGrid, IonRow, IonCol, IonList, IonItem, IonChip, IonLabel, IonIcon } from '@ionic/react';
 import FoodStyle from '../../scss/Food.module.scss'
 import courseStyle from '../../scss/GymCourses.module.scss'
+import UserMenuStyle from '../../scss/UserMenu.module.scss';
 import { useHistory } from 'react-router-dom';
 import { flameOutline, flameSharp } from 'ionicons/icons';
 export interface FoodItemProps {
@@ -32,7 +33,7 @@ export function FoodItem(props: FoodItemProps) {
                         <IonLabel>{props.calories}</IonLabel>
                     </IonChip>
                 </div>
-                <IonItem onClick={() => toFoodDetails(props.id)}>
+                <IonItem onClick={() => toFoodDetails(props.id)} className={UserMenuStyle.item_last}>
                     <img alt="food image" src={addPath(props.image)} className={FoodStyle.image} />
                     <IonCardHeader>
                         <IonCardSubtitle>{props.type}</IonCardSubtitle>

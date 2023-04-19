@@ -84,7 +84,7 @@ export class CourseSchedulesService {
                     {
                         time: {
                             gte: zonedTimeToUtc(now, "Asia/Hong_Kong"),
-                            lt: addHours(zonedTimeToUtc(now, "Asia/Hong_Kong"), 2)
+                            lt: addHours(zonedTimeToUtc(now, "Asia/Hong_Kong"), 24)
                         }
                     }
                 ]

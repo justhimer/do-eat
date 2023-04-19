@@ -2,6 +2,7 @@ import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBack
 import { useQuery } from "@tanstack/react-query";
 import { fetchFoodsOrdersForGym } from "../../api/foodHistoryAPIs";
 import { GymOrderItem } from "./GymOrderItem";
+import { NoResult } from "../NoResult";
 
 
 export function GymOrderList() {
@@ -45,6 +46,7 @@ export function GymOrderList() {
                         />
                     ))
                 }
+                {orders && orders.length === 0 && <NoResult />}
             </IonContent>
         </IonPage >
     )

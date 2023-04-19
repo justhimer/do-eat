@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { gymFindAllAttendedUsers } from "../../api/userScheduleAPI";
 import { useQuery } from "@tanstack/react-query";
 import { GymShowAttendanceItem } from "./GymShowAttendanceItem";
-import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonCard, IonCardContent, IonList, IonItem, IonLabel, RefresherEventDetail, IonCardHeader, IonCardSubtitle, IonChip, IonCardTitle } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonCard, IonCardContent, IonList, IonItem, IonLabel, RefresherEventDetail, IonCardHeader, IonCardSubtitle, IonChip, IonCardTitle, useIonViewWillEnter } from "@ionic/react";
 import { fetchCourseName } from "../../api/coursesSchedulesAPI";
 
 
@@ -38,6 +38,10 @@ export function GymShowAttendance() {
             })
         })
     }
+
+    useIonViewWillEnter(()=>{
+        refetchAttendedUsers();
+    })
 
     return (
         <IonPage >

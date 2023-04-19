@@ -4,13 +4,13 @@ import { flameOutline, cardOutline } from "ionicons/icons"
 
 // State Management
 import { CoursesInterface, changeSelectedCourse } from "../../redux/userCourseSlice";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 // Routing
 import { useHistory } from "react-router";
 
 // Date Formating
-import {format, isPast} from "date-fns";
+import { format, isPast } from "date-fns";
 
 // CSS Style
 import courseStyle from '../../scss/GymCourses.module.scss'
@@ -22,7 +22,7 @@ export function CoursesItem(props: CoursesInterface) {
     const filled = props.filled >= props.quota
     const passed = isPast(new Date(props.time))
     const [present] = useIonToast();
-    const presentToast = (position: 'top' | 'middle' | 'bottom' ,message:string) => {
+    const presentToast = (position: 'top' | 'middle' | 'bottom', message: string) => {
         present({
             message: message,
             duration: 1500,
@@ -31,31 +31,31 @@ export function CoursesItem(props: CoursesInterface) {
         });
     };
     const notify = () => {
-        if(passed){
+        if (passed) {
             presentToast('top', 'Course has passed already')
-        }else{
-            presentToast('top' , 'Course is Full');
+        } else {
+            presentToast('top', 'Course is Full');
         }
-        
-       
+
+
     }
     const history = useHistory()
     const dispatch = useDispatch()
 
     const changeData = () => {
-        if (passed){
+        if (passed) {
             notify()
-        }else{
+        } else {
             dispatch(changeSelectedCourse(props))
             history.push('/do-it')
         }
- 
+
     }
 
-    const classSwitch = ()=>{
-        if(filled || passed){
+    const classSwitch = () => {
+        if (filled || passed) {
             return courseStyle.filledCourse + ' ion-padding'
-        }else{
+        } else {
             return 'ion-padding'
         }
     }
@@ -71,18 +71,19 @@ export function CoursesItem(props: CoursesInterface) {
                 </div>
                 <div className={courseStyle.cardContent}>
                     <IonCardHeader>
+                        <br />
                         <IonCardSubtitle>{props.franchise}</IonCardSubtitle>
-                        <IonCardTitle>{props.name}</IonCardTitle>
+                        <IonCardTitle >{props.name}</IonCardTitle>
                         <IonCardSubtitle>{props.gym}</IonCardSubtitle>
                         <IonCardSubtitle>{format(new Date(props.time), "p")} | {props.duration} min</IonCardSubtitle>
                     </IonCardHeader>
                 </div>
                 <div className={courseStyle.cardTopRightChips}>
-                    <IonChip >
+                    <IonChip outline={true} color="danger">
                         <IonIcon icon={flameOutline} />
                         <IonLabel>{props.calories}</IonLabel>
                     </IonChip>
-                    <IonChip>
+                    <IonChip outline={true} color="danger">
                         <IonIcon icon={cardOutline} />
                         <IonLabel>{props.credits}</IonLabel>
                     </IonChip>
@@ -92,11 +93,11 @@ export function CoursesItem(props: CoursesInterface) {
                         <IonLabel>{props.level} Intensity</IonLabel>
                     </IonChip>
                     {!filled ?
-                    <IonChip>
-                        <IonLabel>Slots Left: {props.quota - props.filled}</IonLabel>
-                    </IonChip>
-                    : <IonChip className={courseStyle.cardBottomChips}><IonLabel>Filled</IonLabel></IonChip>
-                }
+                        <IonChip>
+                            <IonLabel>Slots Left: {props.quota - props.filled}</IonLabel>
+                        </IonChip>
+                        : <IonChip className={courseStyle.cardBottomChips}><IonLabel>Filled</IonLabel></IonChip>
+                    }
                 </div>
             </div>
 
