@@ -15,9 +15,9 @@ export function UserSubscriptionItem(props: UserSubscriptionItemProps) {
 
     console.log(props.plan_start)
     console.log(props.plan_end)
-    const [subPlanUpdateDate, setSubPlanUpdateDate] = useState<Date>(utcToZonedTime(new Date(props.plan_start), "Asia/Hong_Kong"));
+    const [subPlanStartDate, setSubPlanUpdateDate] = useState<Date>(utcToZonedTime(new Date(props.plan_start), "Asia/Hong_Kong"));
     const [subPlanEndDate, setSubPlanEndDate] = useState<Date>(utcToZonedTime(new Date(props.plan_end), "Asia/Hong_Kong"))
-    console.log(subPlanUpdateDate)
+    console.log(subPlanStartDate)
     console.log(subPlanEndDate)
     return (
         <>
@@ -30,13 +30,13 @@ export function UserSubscriptionItem(props: UserSubscriptionItemProps) {
             <IonItem button detail={true} className={UserMenuStyle.item}>
                 <IonLabel className={UserMenuStyle.label}>
                     <h2 className={UserMenuStyle.width_30}>Plan Start:</h2>
-                    <p className={UserMenuStyle.width_70}>{format(subPlanUpdateDate, "dd MMM yyyy, hh:mm aaa")}</p>
+                    <p className={UserMenuStyle.width_70}>{format(subPlanStartDate, "dd MMM yyyy, hh:mm aaa")}</p>
                 </IonLabel>
             </IonItem>
             <IonItem button detail={true} className={UserMenuStyle.item_last}>
                 <IonLabel className={UserMenuStyle.label}>
-                    <h2 className={UserMenuStyle.width_50}>Plan End:</h2>
-                    <p className={UserMenuStyle.width_50}>{format(subPlanEndDate, "dd MMM yyyy, hh:mm aaa")}</p>
+                    <h2 className={UserMenuStyle.width_30}>Plan End:</h2>
+                    <p className={UserMenuStyle.width_70}>{format(subPlanEndDate, "dd MMM yyyy, hh:mm aaa")}</p>
                 </IonLabel>
             </IonItem>
         </>

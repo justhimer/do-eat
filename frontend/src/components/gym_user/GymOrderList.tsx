@@ -1,4 +1,4 @@
-import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent } from "@ionic/react";
+import { useIonViewWillEnter, IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, RefresherEventDetail } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFoodsOrdersForGym } from "../../api/foodHistoryAPIs";
 import { GymOrderItem } from "./GymOrderItem";
@@ -25,6 +25,12 @@ export function GymOrderList() {
         refetch();
     }, [])
 
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetch().then(() => {
+            event.detail.complete();
+        })
+    }
+
     return (
         <IonPage >
             <IonHeader >
@@ -36,6 +42,9 @@ export function GymOrderList() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
                 {
                     orders && orders.length > 0 && orders.map((order: any) => (
                         <GymOrderItem

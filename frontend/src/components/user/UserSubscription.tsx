@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRefresher, IonRefresherContent, IonRow, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter, useIonViewWillLeave } from "@ionic/react";
 import UserMenuStyle from "../../scss/UserMenu.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { SubscriptionPlan, getSubscriptionPlans } from "../../api/subscriptionsAPI";
@@ -48,6 +48,8 @@ export function UserSubscription() {
     }
 
     useIonViewWillEnter(() => {
+        refetchIsSubscribed();
+        refetchSubscriptionDetails();
         subscriptionPlans.refetch()
     })
 
@@ -57,7 +59,13 @@ export function UserSubscription() {
         subscriptionPlans.remove()
     })
 
-    console.log(subscriptionDetails)
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        refetchIsSubscribed().then(() => {
+            refetchSubscriptionDetails().then(() => {
+                event.detail.complete();
+            })
+        })
+    }
 
     return (
         <IonPage >
@@ -70,6 +78,11 @@ export function UserSubscription() {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
                 <IonModal isOpen={modalOpen}>
                     <IonHeader>
                         <IonToolbar>
@@ -114,7 +127,7 @@ export function UserSubscription() {
                     }
 
                     {
-                        subscriptionDetails &&
+                        isSubscribed && subscriptionDetails &&
                         <UserSubscriptionItem
                             plan_name={subscriptionDetails.subPlan.name}
                             plan_start={subscriptionDetails.sub_plan_start}
