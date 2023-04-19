@@ -15,7 +15,7 @@ export function UserSubscriptionItem(props: UserSubscriptionItemProps) {
 
     console.log(props.plan_start)
     console.log(props.plan_end)
-    const [subPlanStartDate, setSubPlanUpdateDate] = useState<Date>(utcToZonedTime(new Date(props.plan_start), "Asia/Hong_Kong"));
+    const [subPlanStartDate, setSubPlanStartDate] = useState<Date>(utcToZonedTime(new Date(props.plan_start), "Asia/Hong_Kong"));
     const [subPlanEndDate, setSubPlanEndDate] = useState<Date>(utcToZonedTime(new Date(props.plan_end), "Asia/Hong_Kong"))
     console.log(subPlanStartDate)
     console.log(subPlanEndDate)

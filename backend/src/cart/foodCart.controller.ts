@@ -18,7 +18,7 @@ export class FoodCartController {
         const userId = req.user.id;
         const data = await this.foodCartService.findAllByUserId(userId);
 
-        console.log("data: ", data)
+        // console.log("data: ", data)
         return data
     }
 
@@ -50,7 +50,7 @@ export class FoodCartController {
             quantity: number,
         }[]) {
 
-        console.log('items: ', items);
+        // console.log('items: ', items);
 
         for (let item of items) {
             await this.foodCartService.update(item);
@@ -90,7 +90,7 @@ export class FoodCartController {
     @Delete(':id')
     async delete(@Request() req: any, @Param('id', ParseIntPipe) id: number) {
         try {
-            console.log('deleting ', id)
+            // console.log('deleting ', id)
             return await this.foodCartService.deleteCart(id);
         } catch (error) {
             console.log(error)
