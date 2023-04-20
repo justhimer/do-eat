@@ -12,7 +12,7 @@ import { SelectedGymInterface, toggleGymSelection } from '../../redux/userGymSli
 import { GymChip } from './GymChip';
 
 // Ionic Components
-import { IonButton, IonCard, IonContent, IonPopover, useIonToast, useIonViewWillEnter } from '@ionic/react';
+import { IonButton, IonCard, IonContent, IonPopover, IonRefresher, IonRefresherContent, RefresherEventDetail, useIonToast, useIonViewWillEnter } from '@ionic/react';
 
 // API Data
 import { useQuery } from '@tanstack/react-query';
@@ -54,11 +54,11 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
 
   const gyms = useQuery({
     queryKey: ["gymLocations", props.selectedDistricts],
-    queryFn: () => {
+    queryFn: async () => {
       if (props.selectedDistricts.length > 0) {
-        return gymSome(props.selectedDistricts);
+        return await gymSome(props.selectedDistricts);
       } else {
-        return gymAll();
+        return await gymAll();
       }
     },
   });
@@ -127,14 +127,26 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
 
   }
 
-  useIonViewWillEnter(async () => {
-    await gyms.data
-    createMap()
-  })
+  // useIonViewWillEnter(async () => {
+  //   await gyms.refetch();
+  //   await createMap()
+  // })
+
+  function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    gyms.refetch().then(() => {
+      createMap().then(() => {
+            event.detail.complete();
+        })
+    })
+}
 
 
   return (
     <>
+      <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+
       {selectedGyms.length > 0 &&
         selectedGyms.map((i: SelectedGymInterface, index) => (
           <GymChip key={index} id={i.id} name={i.name} />
