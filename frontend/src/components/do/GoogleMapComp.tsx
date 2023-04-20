@@ -12,7 +12,7 @@ import { SelectedGymInterface, toggleGymSelection } from '../../redux/userGymSli
 import { GymChip } from './GymChip';
 
 // Ionic Components
-import { IonButton, IonCard, IonContent, IonPopover, useIonToast } from '@ionic/react';
+import { IonButton, IonCard, IonContent, IonPopover, useIonToast, useIonViewWillEnter } from '@ionic/react';
 
 // API Data
 import { useQuery } from '@tanstack/react-query';
@@ -123,6 +123,10 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
     })
 
   }
+
+  useIonViewWillEnter(()=>{
+    createMap()
+  })
 
 
   return (
