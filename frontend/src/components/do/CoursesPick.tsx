@@ -1,5 +1,5 @@
 // Ionic Component
-import { IonContent} from "@ionic/react";
+import { IonContent, useIonViewWillLeave} from "@ionic/react";
 
 // Custom Component
 import { CoursesItem} from "./CoursesItem";
@@ -39,12 +39,17 @@ export function CoursesPick(){
     
     const fetchedCourses = useQuery({
         queryKey: ["gettingCoursesOnDay", singleDate],
-        queryFn: () => getCoursesOnDate(singleDate, gymArray())
+        queryFn: () => getCoursesOnDate(singleDate, gymArray()),
+        keepPreviousData: false
+        
     })
     useEffect(() => {
         setCoursesOnDay(fetchedCourses.data)
     },[fetchedCourses.data])
    
+    useIonViewWillLeave(()=>{
+        fetchedCourses.remove()
+    })
     //#endregion
 
     const noCourse = (

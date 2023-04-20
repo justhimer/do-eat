@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'doeat.io',
-  appName: 'frontend',
+  appName: 'Do Eat',
   webDir: 'build',
   bundledWebRuntime: false
 };
