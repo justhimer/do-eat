@@ -1,5 +1,6 @@
 import NotificationStyle from "../../scss/Notification.module.scss";
 import AppStyle from "../../scss/App.module.scss"
+import Fooddetailsstyle from '../../scss/Fooddetails.module.scss'
 
 import { IonPage, IonHeader, IonToolbar, IonButton, IonBackButton, IonTitle, IonContent, IonList, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonSelect, IonSelectOption, useIonToast, useIonViewWillEnter, IonIcon, IonLabel, IonCol, IonGrid, IonRow, useIonViewWillLeave, IonRefresher, IonRefresherContent, RefresherEventDetail } from "@ionic/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -9,7 +10,6 @@ import { UserOrderItem } from "../user/UserOrderItem";
 import { CartItem } from "./cartItem";
 import { createFoodHistory } from "../../api/foodHistoryAPIs";
 import { useParams } from "react-router-dom";
-
 import { CheckoutDeatils } from "../../api/foodHistoryAPIs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -225,7 +225,7 @@ export function ShoppingCart() {
                         <IonBackButton default-href="/"></IonBackButton>
                     </IonButton>
                     <IonTitle>Cart</IonTitle>
-                    {isUserLoggedIn && <IonLabel slot='end'> <IonIcon icon={flameSharp} /> {myCalories}</IonLabel>}
+                    {isUserLoggedIn && <IonLabel slot='end' className={Fooddetailsstyle.icon}> <IonIcon icon={flameSharp} /> {myCalories}</IonLabel>}
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

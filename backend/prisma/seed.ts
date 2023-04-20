@@ -1234,7 +1234,7 @@ async function main() {
                             time: new Date('2023-04-20T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers2.id,
+                            trainer_id: trainers1.id,
                             quota: 20,
                             time: new Date('2023-04-21T17:00:00+08:00')
                         },
@@ -1314,7 +1314,7 @@ async function main() {
                 createMany: {
                     data: [
                         {
-                            trainer_id: trainers4.id,
+                            trainer_id: trainers3.id,
                             quota: 20,
                             time: new Date('2023-04-20T09:00:00+08:00')
                         },
@@ -1324,7 +1324,7 @@ async function main() {
                             time: new Date('2023-04-21T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers4.id,
+                            trainer_id: trainers3.id,
                             quota: 20,
                             time: new Date('2023-04-25T09:00:00+08:00')
                         }
@@ -1354,7 +1354,7 @@ async function main() {
                             time: new Date('2023-04-20T09:00:00+08:00')
                         },
                         {
-                            trainer_id: trainers4.id,
+                            trainer_id: trainers1.id,
                             quota: 20,
                             time: new Date('2023-04-21T17:00:00+08:00')
                         },
@@ -1542,7 +1542,12 @@ async function main() {
                             trainer_id: trainers6.id,
                             quota: 1,
                             time: new Date('2023-04-08T17:00:00+08:00')
+                        },{
+                            trainer_id: trainers6.id,
+                            quota: 10,
+                            time: new Date('2023-04-23T17:00:00+08:00')
                         }
+
                     ]
                 }
             }
