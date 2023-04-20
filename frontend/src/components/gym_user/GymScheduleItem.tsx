@@ -50,7 +50,7 @@ export function GymScheduleItem(props: GymScheduleItemProps) {
                     <IonList>
                         <IonItem className={UserMenuStyle.item}>
                             <IonLabel>Date:</IonLabel>
-                            <IonLabel>{format(date, "dd MMM yyyy, E")}</IonLabel>
+                            <IonLabel>{format(date, "dd MMM yy, E")}</IonLabel>
                         </IonItem>
                         <IonItem className={UserMenuStyle.item}>
                             <IonLabel>Start at:</IonLabel>

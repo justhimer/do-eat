@@ -27,7 +27,7 @@ import NotificationStyle from "../../scss/Notification.module.scss"
 import GymCourseStyle from "../../scss/GymCourses.module.scss"
 
 export function GoogleMapComp(props: SelectedGymDisplayInterface) {
-  
+
   const [present] = useIonToast();
   const dispatch = useDispatch()
   const selectedGyms = useSelector((state: RootState) => state.userGym);
@@ -77,7 +77,7 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
   const apiKey = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY)
   let newMap: GoogleMap;
   const mapRef = useRef<HTMLElement>();
-  
+
   useEffect(() => {
     if (gyms.data) {
       let markerData: Marker[] = [];
@@ -114,17 +114,21 @@ export function GoogleMapComp(props: SelectedGymDisplayInterface) {
         zoom: 12
       }
     })
-    const markers = await newMap.addMarkers(gymMarkers)
+    if (gymMarkers.length > 0) {
+      const markers = await newMap.addMarkers(gymMarkers)
 
-    await newMap.setOnMarkerClickListener(async (marker) => {
-      const index = markers.indexOf(marker.markerId)
-      setGymPopup(availableGyms[index])
-      onPopover()
-    })
+      await newMap.setOnMarkerClickListener(async (marker) => {
+        const index = markers.indexOf(marker.markerId)
+        setGymPopup(availableGyms[index])
+        onPopover()
+      })
+    }
+
 
   }
 
-  useIonViewWillEnter(()=>{
+  useIonViewWillEnter(async () => {
+    await gyms.data
     createMap()
   })
 
